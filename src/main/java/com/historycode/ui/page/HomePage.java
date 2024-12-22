@@ -13,8 +13,6 @@ public class HomePage extends BaseComponent {
     public HomePage(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
         PageFactory.initElements(driver, this);
-        HeaderComponent header = new HeaderComponent(driver, rootElement);
-        FooterComponent footer = new FooterComponent(driver, rootElement);
         PersonCardComponent personCard = new PersonCardComponent(driver, rootElement);
         NewsCardComponent newsCard = new NewsCardComponent(driver, rootElement);
         StaticBannerComponent staticBanner = new StaticBannerComponent(driver, rootElement);
