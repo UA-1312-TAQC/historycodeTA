@@ -1,4 +1,4 @@
-package com.historycode.ui.page.adminpanel.BasePartnersPage;
+package com.historycode.ui.page.adminpanel.PartnersPage;
 
 import org.openqa.selenium.WebDriver;
 
