@@ -5,12 +5,15 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
 public class StreetCodeCatalogPage extends BasePage {
-    final By CATALOG_CONTAINER_LOCATOR = By.xpath("//div[@class='steetcodeCatalogContainer']");
+    private static final By CATALOG_CONTAINER_LOCATOR = By.xpath("//div[@class='steetcodeCatalogContainer']");
 
     @FindBy(xpath = "//h1[@class='streetcodeCatalogHeading']")
     private WebElement catalogTitle;
@@ -22,7 +25,9 @@ public class StreetCodeCatalogPage extends BasePage {
 
     public StreetCodeCatalogPage(WebDriver driver) {
         super(driver);
-        catalogContainer = new CatalogContainerComponent(driver, driver.findElement(CATALOG_CONTAINER_LOCATOR));
+        WebElement containerElement = new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.presenceOfElementLocated(CATALOG_CONTAINER_LOCATOR));
+        catalogContainer = new CatalogContainerComponent(driver, containerElement);
     }
 
     public String getCatalogTitle() {
@@ -39,12 +44,12 @@ public class StreetCodeCatalogPage extends BasePage {
 }
 
 class CatalogContainerComponent extends BaseComponent {
-    final By CATALOG_ITEM_LOCATOR = By.xpath("/a[@class='catalogItem']");
-    final By CATALOG_ITEM_TITLE_LOCATOR = By.xpath("/div/div[@class='heading']/p[1]");
-    final By CATALOG_ITEM_DESCRIPTION_LOCATOR = By.xpath("/div/div[@class='heading']/p[2]");
+    private static final By CATALOG_ITEM_LOCATOR = By.xpath(".//a[@class='catalogItem']");
+    private static final By CATALOG_ITEM_TITLE_LOCATOR = By.xpath(".//div/div[@class='heading']/p[1]");
+    private static final By CATALOG_ITEM_DESCRIPTION_LOCATOR = By.xpath(".//div/div[@class='heading']/p[2]");
 
-    CatalogContainerComponent(WebDriver driver, WebElement catalogContainer) {
-        super(driver, catalogContainer);
+    CatalogContainerComponent(WebDriver driver, WebElement rootElement) {
+        super(driver, rootElement);
     }
 
     List<String> getCatalogNames() {
