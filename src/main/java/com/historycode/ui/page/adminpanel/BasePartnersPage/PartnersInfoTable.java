@@ -9,6 +9,7 @@ public class PartnersInfoTable extends BaseComponent {
 
     public PartnersInfoTable(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
+        
 
     }
 }
