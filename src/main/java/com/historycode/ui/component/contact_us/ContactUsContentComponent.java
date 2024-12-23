@@ -10,11 +10,11 @@ import java.util.List;
 
 @FindBy(xpath = "//*[@id=\"root\"]/div/div[4]/div[2]/div/div/div/div[3]")
 @Getter
-public class ContactUsContentElement extends BaseComponent {
+public class ContactUsContentComponent extends BaseComponent {
     private List<WebElement> text;
     private WebElement button;
 
-    public ContactUsContentElement(WebDriver driver, WebElement rootElement) {
+    public ContactUsContentComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
 }

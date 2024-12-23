@@ -7,7 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 @Getter
-public class ContactUsFormElement extends BaseComponent {
+public class ContactUsFormComponent extends BaseComponent {
     @FindBy(xpath = "//*[@id=\"root\"]/div/div[4]/div[2]/div/div/div/div[2]/div[2]/div/div[1]")
     private WebElement formTitle;
     @FindBy(xpath = "//*[@id=\"root\"]/div/div[4]/div[2]/div/div/div/div[2]/div[2]/div/div[2]")
@@ -18,7 +18,7 @@ public class ContactUsFormElement extends BaseComponent {
     private WebElement email;
     @FindBy(xpath = "//*[@id=\"root\"]/div/div[4]/div[2]/div/div/div/div[2]/div[2]/form/div[4]/div/div/div/div/button")
     private WebElement button;
-    public ContactUsFormElement(WebDriver driver, WebElement rootElement) {
+    public ContactUsFormComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
 }
