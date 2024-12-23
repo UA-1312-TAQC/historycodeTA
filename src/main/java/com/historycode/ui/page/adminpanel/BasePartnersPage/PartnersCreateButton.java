@@ -9,7 +9,5 @@ public class PartnersCreateButton extends BaseComponent {
 
     public PartnersCreateButton(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        this.driver = driver;
-        this.rootElement = rootElement;
     }
 }
