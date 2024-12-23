@@ -1,11 +1,10 @@
-package com.historycode.ui.page.streetCodePage;
+package com.historycode.ui.page;
 
 import com.historycode.ui.component.BaseComponent;
 import com.historycode.ui.component.BaseModal;
 import com.historycode.ui.elements.BaseElement;
 import com.historycode.ui.elements.BreadcrumbsElement;
 import com.historycode.ui.elements.ScrollTopButtonElement;
-import com.historycode.ui.page.BasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
