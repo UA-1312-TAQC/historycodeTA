@@ -7,7 +7,10 @@ import org.openqa.selenium.WebDriver;
 
 @Getter
 public abstract class BasePageAdminPanel extends BasePage {
+
+
     public BasePageAdminPanel(WebDriver driver) {
         super(driver);
+
     }
 }
