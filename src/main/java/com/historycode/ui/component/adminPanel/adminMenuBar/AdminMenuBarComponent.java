@@ -3,6 +3,8 @@ package com.historycode.ui.component.adminPanel.adminMenuBar;
 import com.historycode.ui.component.BaseComponent;
 import com.historycode.ui.page.adminpanel.newspage.NewsPageAdminPanel;
 import com.historycode.ui.page.adminpanel.jobspage.JobsPageAdminPanel;
+import com.historycode.ui.page.adminpanel.teamPage.TeamPageAdminPanel;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -37,11 +39,12 @@ public class AdminMenuBarComponent extends BaseComponent {
 
     EditorPageAdminPanel goToEditorPage() {
         return new EditorPageAdminPanel(driver);
-    }
+    }*/
 
     TeamPageAdminPanel goToTeamPage() {
+        teamMenuItem.click();
         return new TeamPageAdminPanel(driver);
-    }*/
+    }
 
     NewsPageAdminPanel goToNewsPage() {
         newsMenuItem.click();
