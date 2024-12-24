@@ -1,4 +1,4 @@
-package com.historycode.ui.page.adminpanel.teamPage;
+package com.historycode.ui.page.adminpanel.teampage;
 
 import com.historycode.ui.component.adminPanel.gridAdminPanel.BaseGridComponent;
 import com.historycode.ui.component.adminPanel.paginationAdminPanel.PaginationAdminPanelComponent;
