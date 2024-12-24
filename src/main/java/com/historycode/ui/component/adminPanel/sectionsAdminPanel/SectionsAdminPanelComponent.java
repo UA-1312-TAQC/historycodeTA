@@ -1,4 +1,4 @@
-package com.historycode.ui.component.sectionsAdminPanel;
+package com.historycode.ui.component.adminPanel.sectionsAdminPanel;
 
 import com.historycode.ui.component.BaseComponent;
 import org.openqa.selenium.WebDriver;
