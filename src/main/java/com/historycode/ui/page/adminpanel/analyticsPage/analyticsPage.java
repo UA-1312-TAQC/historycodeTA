@@ -1,6 +1,6 @@
 package com.historycode.ui.page.adminpanel.analyticsPage;
 
-import com.historycode.ui.component.sectionsAdminPanel.SectionsAdminPanelComponent;
+import com.historycode.ui.component.adminPanel.sectionsAdminPanel.SectionsAdminPanelComponent;
 import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
