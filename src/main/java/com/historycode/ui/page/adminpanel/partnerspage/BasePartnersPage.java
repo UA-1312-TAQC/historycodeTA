@@ -1,4 +1,4 @@
-package com.historycode.ui.page.adminpanel.PartnersPage;
+package com.historycode.ui.page.adminpanel.partnerspage;
 
 import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
 

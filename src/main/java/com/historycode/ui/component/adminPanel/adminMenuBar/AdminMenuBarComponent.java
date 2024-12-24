@@ -1,9 +1,10 @@
 package com.historycode.ui.component.adminPanel.adminMenuBar;
 
 import com.historycode.ui.component.BaseComponent;
-import com.historycode.ui.page.adminpanel.NewsPageAdminPanel;
-import com.historycode.ui.page.adminpanel.jobsPage.JobsPageAdminPanel;
+import com.historycode.ui.page.adminpanel.newspage.NewsPageAdminPanel;
+import com.historycode.ui.page.adminpanel.jobspage.JobsPageAdminPanel;
 import com.historycode.ui.page.adminpanel.teamPage.TeamPageAdminPanel;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

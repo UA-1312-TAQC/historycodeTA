@@ -1,4 +1,4 @@
-package com.historycode.ui.page.adminpanel.jobsPage;
+package com.historycode.ui.page.adminpanel.jobspage;
 
 import com.historycode.ui.component.BaseComponent;
 import org.openqa.selenium.WebDriver;
