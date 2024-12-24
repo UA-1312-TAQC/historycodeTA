@@ -1,5 +1,6 @@
-package com.historycode.ui.page.adminpanel;
+package com.historycode.ui.page.adminpanel.streetcodeeditpage;
 
+import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

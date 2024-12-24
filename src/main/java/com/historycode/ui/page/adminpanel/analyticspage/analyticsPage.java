@@ -1,4 +1,4 @@
-package com.historycode.ui.page.adminpanel.analyticsPage;
+package com.historycode.ui.page.adminpanel.analyticspage;
 
 import com.historycode.ui.component.adminPanel.sectionsAdminPanel.SectionsAdminPanelComponent;
 import com.historycode.ui.page.adminpanel.BasePageAdminPanel;

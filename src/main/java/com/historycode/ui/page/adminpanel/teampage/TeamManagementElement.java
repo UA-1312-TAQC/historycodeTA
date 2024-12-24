@@ -1,4 +1,4 @@
-package com.historycode.ui.page.adminpanel.teamPage;
+package com.historycode.ui.page.adminpanel.teampage;
 
 import com.historycode.ui.elements.BaseElement;
 import org.openqa.selenium.WebDriver;

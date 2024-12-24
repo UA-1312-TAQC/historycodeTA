@@ -1,4 +1,4 @@
-package com.historycode.ui.page.adminpanel.jobsPage;
+package com.historycode.ui.page.adminpanel.jobspage;
 
 import com.historycode.ui.component.adminPanel.gridAdminPanel.BaseGridComponent;
 import com.historycode.ui.component.adminPanel.paginationAdminPanel.PaginationAdminPanelComponent;
