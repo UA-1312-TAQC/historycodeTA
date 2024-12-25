@@ -25,11 +25,11 @@ public class StreetCodesPage extends BasePage {
         streetCodesCatalogComponent = new StreetCodesCatalogComponent(driver, rootContainerNode);
     }
 
-    public String getCatalogTitle() {
+    public String getStreetCodesTitle() {
         return streetCodesTitleNode.getText();
     }
 
-    public String getCatalogCaption() {
+    public String getStreetCodesCaption() {
         return streetsCodesCaptionNode.getText();
     }
 
