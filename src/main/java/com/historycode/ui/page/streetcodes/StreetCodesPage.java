@@ -6,6 +6,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.List;
+
 @Getter
 public class StreetCodesPage extends BasePage {
 
@@ -33,7 +35,11 @@ public class StreetCodesPage extends BasePage {
         return streetsCodesCaptionNode.getText();
     }
 
-    public int getStreetCodesItemCount() {
-        return streetCodesCatalogComponent.getStreetCodeItemCount();
+    public List<String> getStreetCodesNames() {
+        return streetCodesCatalogComponent
+                .getStreetCodesCatalogItems()
+                .stream()
+                .map(item -> item.getCatalogItemName().getText())
+                .toList();
     }
 }

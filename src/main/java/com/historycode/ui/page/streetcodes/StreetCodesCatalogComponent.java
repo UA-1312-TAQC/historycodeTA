@@ -14,17 +14,13 @@ class StreetCodesCatalogComponent extends BaseComponent {
     @FindBy(xpath = ".//a[@class='catalogItem']")
     private List<WebElement> streetCodeElements;
 
-    private final List<StreetCodesItemComponent> streetCodesCatalogItems;
-
     StreetCodesCatalogComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-
-        streetCodesCatalogItems = streetCodeElements.stream()
-                .map(element -> new StreetCodesItemComponent(driver, element))
-                .toList();
     }
 
-    public int getStreetCodeItemCount() {
-        return streetCodesCatalogItems.size();
+    public List<StreetCodesItemComponent> getStreetCodesCatalogItems() {
+        return streetCodeElements.stream()
+                .map(element -> new StreetCodesItemComponent(driver, element))
+                .toList();
     }
 }
