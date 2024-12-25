@@ -8,9 +8,6 @@ import org.openqa.selenium.support.FindBy;
 
 @Getter
 class StreetCodesItemComponent extends BaseComponent {
-    @FindBy(xpath = ".//a[@class='catalogItem']")
-    WebElement catalogItem;
-
     @FindBy(xpath = ".//div/div[@class='heading']/p[1]")
     WebElement catalogItemName;
 
