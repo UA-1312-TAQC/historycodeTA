@@ -15,8 +15,6 @@ public abstract class Base {
         try {
             Thread.sleep(millisSeconds);
         } catch (InterruptedException e) {
-
         }
     }
-
 }

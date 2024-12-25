@@ -9,16 +9,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-
 @Getter
 public abstract class BasePage extends Base {
 
     @FindBy(xpath = "//div[@class='HeaderBlock']")
     private WebElement headerNode;
 
-    @FindBy(css = ".footerContainer")
+    @FindBy(xpath = "//div[@class='footerContainer']")
     private WebElement footerNode;
-
 
     protected HeaderComponent header;
     protected FooterComponent footer;
@@ -28,6 +26,5 @@ public abstract class BasePage extends Base {
         PageFactory.initElements(driver, this);
         this.header = new HeaderComponent(driver, headerNode);
         this.footer = new FooterComponent(driver, footerNode);
-
     }
 }
