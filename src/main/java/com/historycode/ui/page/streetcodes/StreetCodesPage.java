@@ -10,27 +10,27 @@ import org.openqa.selenium.support.FindBy;
 public class StreetCodesPage extends BasePage {
 
     @FindBy(xpath = "//h1[@class='streetcodeCatalogHeading']")
-    private WebElement streetCodesTitle;
+    private WebElement streetCodesTitleNode;
 
     @FindBy(xpath = "//p[@class='streetcodeCatalogCaption']")
-    private WebElement streetsCodesCaption;
+    private WebElement streetsCodesCaptionNode;
 
     @FindBy(xpath = "//div[@class='steetcodeCatalogContainer']")
-    private WebElement rootContainerElement;
+    private WebElement rootContainerNode;
 
     private final StreetCodesCatalogComponent streetCodesCatalogComponent;
 
     public StreetCodesPage(WebDriver driver) {
         super(driver);
-        streetCodesCatalogComponent = new StreetCodesCatalogComponent(driver, rootContainerElement);
+        streetCodesCatalogComponent = new StreetCodesCatalogComponent(driver, rootContainerNode);
     }
 
     public String getCatalogTitle() {
-        return streetCodesTitle.getText();
+        return streetCodesTitleNode.getText();
     }
 
     public String getCatalogCaption() {
-        return streetsCodesCaption.getText();
+        return streetsCodesCaptionNode.getText();
     }
 
     public int getStreetCodesItemCount() {
