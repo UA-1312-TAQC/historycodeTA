@@ -19,8 +19,9 @@ class StreetCodesCatalogComponent extends BaseComponent {
     }
 
     public List<StreetCodesItemComponent> getStreetCodesCatalogItems() {
-        return streetCodeElements.stream()
-                .map(element -> new StreetCodesItemComponent(driver, element))
+        return streetCodeElements
+                .stream()
+                .map(root -> new StreetCodesItemComponent(driver, root))
                 .toList();
     }
 }

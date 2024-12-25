@@ -36,8 +36,7 @@ public class StreetCodesPage extends BasePage {
     }
 
     public List<String> getStreetCodesNames() {
-        return streetCodesCatalogComponent
-                .getStreetCodesCatalogItems()
+        return streetCodesCatalogComponent.getStreetCodesCatalogItems()
                 .stream()
                 .map(item -> item.getCatalogItemName().getText())
                 .toList();
