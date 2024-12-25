@@ -7,12 +7,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 class StreetCodesCatalogComponent extends BaseComponent {
 
-    @FindBy(xpath = "//a[@class='catalogItem']")
+    @FindBy(xpath = ".//a[@class='catalogItem']")
     private List<WebElement> streetCodeElements;
 
     private final List<StreetCodesItemComponent> streetCodesCatalogItems;
