@@ -4,8 +4,7 @@ import com.historycode.ui.component.BaseComponent;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-//components
-class MainCardComponent extends BaseComponent {
+public class MainCardComponent extends BaseComponent {
     private KeywordPersonsModal keywordPersonsModal;
 
     public MainCardComponent(WebDriver driver, WebElement rootElement) {
