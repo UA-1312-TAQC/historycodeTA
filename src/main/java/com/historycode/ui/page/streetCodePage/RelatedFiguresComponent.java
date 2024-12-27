@@ -9,12 +9,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class RelatedFiguresComponent extends BaseComponent {
-    @FindBy(xpath = "")
+    @FindBy(xpath = ".//div[@class='slider-item-container']")
     private List<WebElement> figureCardNodes;
 
-    @FindBy(xpath = "")
+    @FindBy(xpath = ".//button[@class='slick-arrow slick-next']")
     private WebElement rightArrow;
-    @FindBy(xpath = "")
+    @FindBy(xpath = ".//button[@class='slick-arrow slick-prev']")
     private WebElement leftArrow;
 
     private List<PersonsCardComponent> figureCards;

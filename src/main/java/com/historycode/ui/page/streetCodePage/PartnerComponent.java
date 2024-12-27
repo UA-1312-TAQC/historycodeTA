@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class PartnerComponent extends BaseComponent {
-    @FindBy(xpath = "")
+    @FindBy(xpath = ".//div[@class='partnerItem']")
     private List<WebElement> partnerLogoNodes;
 
     private List<PartnerLogoComponent> partnerLogos;

@@ -9,13 +9,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class TimelineComponent extends BaseComponent {
-    @FindBy(xpath = ".//h2")
+    @FindBy(xpath = ".//div[@class='blockHeadingText']")
     private WebElement title;
 
-    @FindBy(xpath = ".//div[@class='pagination']")
+    @FindBy(xpath = ".//div[@class='timeSpanContainer']")
     private WebElement paginationNode;
 
-    @FindBy(xpath = ".//div[@class='event-card']")
+    @FindBy(xpath = ".//div[@class='timelineItem']")
     private List<WebElement> timelineCardsNodes;
 
     private List<TimelineCardComponent> events;

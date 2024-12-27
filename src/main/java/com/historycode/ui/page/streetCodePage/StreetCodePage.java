@@ -30,10 +30,10 @@ public class StreetCodePage extends BasePage {
     @FindBy(xpath = "//div[@class='sourcesContainer']")
     private WebElement additionalInfoNode;
 
-    @FindBy(xpath = "///div[@class='partnerContainer']")
+    @FindBy(xpath = "//div[@class='partnerContainer']")
     private WebElement partnersNode;
 
-    @FindBy(xpath = "//div[@class='tickerContainer']]")
+    @FindBy(xpath = "//div[@class='tickerContainer']")
     private WebElement runningLineNode;
 
     @FindBy(xpath = "//div[@class='progressBarContainer']")
@@ -44,6 +44,7 @@ public class StreetCodePage extends BasePage {
 
     @FindBy(xpath = "//div[@class='donateBtnContainer']")
     private WebElement quickDonateButtonNode;
+
     @FindBy(xpath = "//div[@class='ant-modal-content']")
     private WebElement surveyModalNode;
 

@@ -9,13 +9,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class FactsComponent extends BaseComponent {
-    @FindBy(xpath = ".//h2")
+    @FindBy(xpath = ".//h1[@class='blockHeadingText']")
     private WebElement title;
 
-    @FindBy(xpath = ".//div[@class='fact-card']")
+    @FindBy(xpath = ".//div[@class='interestingFactSlide']")
     private List<WebElement> factCardNodes;
 
-    @FindBy(xpath = ".//div[@class='pagination']")
+    @FindBy(xpath = ".//ul[@class='slick-dots']")
     private WebElement paginationNode;
     private List<FactCardComponent> factCards;
     private PaginationComponent pagination;
