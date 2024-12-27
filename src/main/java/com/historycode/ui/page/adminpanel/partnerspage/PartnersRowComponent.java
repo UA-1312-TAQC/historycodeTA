@@ -7,7 +7,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import com.historycode.ui.component.adminPanel.gridAdminPanel.BaseRowComponent;
-import com.historycode.ui.page.adminpanel.teampage.PartnersSocialMediaComponent;
 
 public class PartnersRowComponent extends BaseRowComponent {
 
