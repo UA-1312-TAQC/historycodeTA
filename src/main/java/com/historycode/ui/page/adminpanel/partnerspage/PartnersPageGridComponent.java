@@ -11,11 +11,11 @@ import com.historycode.ui.component.adminPanel.paginationAdminPanel.PaginationAd
 import lombok.Getter;
 
 @Getter
-public class PartnersGridComponent extends BaseGridComponent {
+public class PartnersPageGridComponent extends BaseGridComponent {
 
     List<PartnersRowComponent> partnersRowComponents;
 
-    public PartnersGridComponent(WebDriver driver, WebElement rootElement, List<WebElement> headerItems, PaginationAdminPanelComponent pagination) {
+    public PartnersPageGridComponent(WebDriver driver, WebElement rootElement, List<WebElement> headerItems, PaginationAdminPanelComponent pagination) {
         super(driver, rootElement, headerItems, pagination);
     }
 }
