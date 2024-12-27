@@ -16,20 +16,32 @@ public class TitleContainerComponent extends BaseComponent {
     }
 
     public String titleName() {
-        String name;
-        WebElement nameElement = titleContainer.findElement(By.xpath(".//div[@class='titleBig']"));
-        return nameElement.getText();
-    }
+        try {
+            WebElement nameElement = titleContainer.findElement(By.xpath(".//div[@class='titleBig']"));
+            return nameElement.getText();
+        } catch (NoSuchElementException e) {
+            System.out.println("Title element not found.");
+            return "Title not found";
+        }
+     }
 
-    public String subTitle() {
-        String subTitleText;
-        WebElement subTitleElement = titleContainer.findElement(By.xpath(".//div[@class='subTitle']"));
-        return subTitleElement.getText();
-    }
-    public String disclaimer() {
-        String disclaimerText;
-        WebElement disclaimerElement = titleContainer.findElement(By.xpath("//div[@class='disclaimer']"));
-        return disclaimerElement.getText();
+     public String subTitle() {
+        try {
+            WebElement subTitleElement = titleContainer.findElement(By.xpath(".//div[@class='subTitle']"));
+            return subTitleElement.getText();
+        } catch (NoSuchElementException e) {
+            System.out.println("Subtitle element not found.");
+            return "Subtitle not found";
+        }
+     }
+     public String disclaimer() {
+        try {
+            WebElement disclaimerElement = titleContainer.findElement(By.xpath(".//div[@class='disclaimer']"));
+            return disclaimerElement.getText();
+        } catch (NoSuchElementException e) {
+            System.out.println("Disclaimer element not found.");
+            return "Disclaimer not found";
+        }
     }
 
 
