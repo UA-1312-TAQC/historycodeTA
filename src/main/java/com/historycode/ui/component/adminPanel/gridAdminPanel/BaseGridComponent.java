@@ -6,17 +6,21 @@ import com.historycode.ui.component.adminPanel.paginationAdminPanel.PaginationAd
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
 @Getter
 public abstract class BaseGridComponent extends BaseComponent {
-    List<WebElement> headerItems;
-    PaginationAdminPanelComponent pagination;
+    @FindBy(xpath = "//thead[@class = 'ant-table-thead']//th")
+    protected List<WebElement> headerItems;
+    protected PaginationAdminPanelComponent pagination;
+    @FindBy(xpath = "//div[@class = 'underTableElement']//ul")
+    protected WebElement rootPaginationNode;
 
-    public BaseGridComponent(WebDriver driver, WebElement rootElement, List<WebElement> headerItems, PaginationAdminPanelComponent pagination) {
+    public BaseGridComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        this.headerItems = headerItems;
-        this.pagination = pagination;
+        this.pagination = new PaginationAdminPanelComponent(driver, rootPaginationNode);
     }
+    //TODO запитати де реалізувати методи пагінацій( на сторінці чи тут )
 }

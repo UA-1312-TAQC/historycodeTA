@@ -1,11 +1,11 @@
 package com.historycode.ui.page.adminpanel.editorpage;
 
-import com.historycode.ui.component.adminPanel.gridAdminPanel.BaseRowComponent;
+import com.historycode.ui.component.BaseComponent;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class EditorPageRowComponent extends BaseRowComponent {
+public class EditorPageRowComponent  extends BaseComponent {
     @FindBy(xpath = "")
     WebElement title;
     @FindBy(xpath = "")
