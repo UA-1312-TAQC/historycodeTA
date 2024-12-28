@@ -1,7 +1,10 @@
 package com.historycode.ui.component.adminPanel.adminMenuBar;
 
 import com.historycode.ui.component.BaseComponent;
+import com.historycode.ui.page.adminpanel.editorpage.EditorPageAdminPanel;
 import com.historycode.ui.page.adminpanel.jobspage.JobsPageAdminPanel;
+import com.historycode.ui.page.adminpanel.newspage.NewsPageAdminPanel;
+import com.historycode.ui.page.adminpanel.partnerspage.PartnersPageAdminPanel;
 import com.historycode.ui.page.adminpanel.teampage.TeamPageAdminPanel;
 
 import org.openqa.selenium.WebDriver;
@@ -10,49 +13,46 @@ import org.openqa.selenium.support.FindBy;
 
 public class AdminMenuBarComponent extends BaseComponent {
     @FindBy(xpath = "")
-    WebElement streetCodesMenuItem;
+    WebElement streetCodes;
     @FindBy(xpath = "")
-    WebElement partnersMenuItem;
+    WebElement partners;
     @FindBy(xpath = "")
-    WebElement editorMenuItem;
+    WebElement editor;
     @FindBy(xpath = "")
-    WebElement teamMenuItem;
+    WebElement team;
     @FindBy(xpath = "")
-    WebElement newsMenuItem;
+    WebElement news;
     @FindBy(xpath = "")
-    WebElement jobsMenuItem;
+    WebElement jobs;
 
     public AdminMenuBarComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
 
-// TODO according to new blueprint
-
 /*    StreetCodeCatalogPageAdminPanel goToSreetcodePage() {
         return new StreetCodeCatalogPageAdminPanel(driver);
-    }
+    }*/
 
     PartnersPageAdminPanel goToPartnersPage() {
         return new PartnersPageAdminPanel(driver);
     }
 
-    EditorPageAdminPanel goToEditorPage() {
+/*    EditorPageAdminPanel goToEditorPage() {
         return new EditorPageAdminPanel(driver);
-    }
+    }*/
 
     NewsPageAdminPanel goToNewsPage() {
-        newsMenuItem.click();
+        news.click();
         return new NewsPageAdminPanel(driver);
     }
-    */
 
     TeamPageAdminPanel goToTeamPage() {
-        teamMenuItem.click();
+        team.click();
         return new TeamPageAdminPanel(driver);
     }
 
     JobsPageAdminPanel goToJobsPage() {
-        jobsMenuItem.click();
+        jobs.click();
         return new JobsPageAdminPanel(driver);
     }
 }

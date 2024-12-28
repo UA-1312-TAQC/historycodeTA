@@ -12,7 +12,8 @@ import java.util.List;
 public class JobsPageGridComponent extends BaseGridComponent {
     List<JobsRowComponent> jobsRowComponents;
     
-    public JobsPageGridComponent(WebDriver driver, WebElement rootElement, List<WebElement> headerItems, PaginationAdminPanelComponent pagination) {
-        super(driver, rootElement, headerItems, pagination);
+    public JobsPageGridComponent(WebDriver driver, WebElement rootElement) {
+        super(driver, rootElement);
     }
+
 }

@@ -3,13 +3,12 @@ package com.historycode.ui.page.adminpanel.partnerspage;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.historycode.ui.component.BaseComponent;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import com.historycode.ui.component.adminPanel.gridAdminPanel.BaseRowComponent;
 
-public class PartnersRowComponent extends BaseRowComponent {
-
+public class PartnersRowComponent extends BaseComponent {
     @FindBy(xpath = "")
     WebElement name;
     @FindBy(xpath = "")
@@ -23,7 +22,7 @@ public class PartnersRowComponent extends BaseRowComponent {
     @FindBy(xpath = "")
     WebElement actionEdit;
 
-    public PartnersRowComponent(WebDriver driver, WebElement root){
-        super(driver, root);
+    public PartnersRowComponent(WebDriver driver, WebElement rootElement){
+        super(driver, rootElement);
     }
 }

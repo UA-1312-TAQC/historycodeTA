@@ -1,6 +1,6 @@
 package com.historycode.ui.page.adminpanel.teampage;
 
-import com.historycode.ui.component.adminPanel.gridAdminPanel.BaseRowComponent;
+import com.historycode.ui.component.BaseComponent;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -8,8 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TeamRowComponent extends BaseRowComponent {
-
+public class TeamRowComponent extends BaseComponent {
     @FindBy(xpath = "")
     WebElement lastFirstName;
     @FindBy(xpath = "")

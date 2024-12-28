@@ -1,11 +1,11 @@
 package com.historycode.ui.page.adminpanel.jobspage;
 
-import com.historycode.ui.component.adminPanel.gridAdminPanel.BaseRowComponent;
+import com.historycode.ui.component.BaseComponent;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class JobsRowComponent extends BaseRowComponent {
+public class JobsRowComponent extends BaseComponent {
     @FindBy(xpath = "")
     WebElement title;
     @FindBy(xpath = "")
@@ -21,6 +21,6 @@ public class JobsRowComponent extends BaseRowComponent {
     JobsDropdownComponent dropdown;
 
     public JobsRowComponent(WebDriver driver, WebElement rootElement) {
-        super(driver, rootElement);
+        super(driver,rootElement);
     }
 }

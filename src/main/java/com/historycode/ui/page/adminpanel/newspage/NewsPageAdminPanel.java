@@ -6,12 +6,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 
-public class NewsAdminPanel extends BasePageAdminPanel{
+public class NewsPageAdminPanel extends BasePageAdminPanel{
     @FindBy(xpath="")
     WebElement addNewInfo;
     NewsGridComponent newsGridComponent;
 
-    public NewsAdminPanel(WebDriver driver) { 
+    public NewsPageAdminPanel(WebDriver driver) {
         super(driver); 
     }
 }
