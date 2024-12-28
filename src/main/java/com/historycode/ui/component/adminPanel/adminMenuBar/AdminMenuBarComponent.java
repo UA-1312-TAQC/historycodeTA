@@ -1,7 +1,6 @@
 package com.historycode.ui.component.adminPanel.adminMenuBar;
 
 import com.historycode.ui.component.BaseComponent;
-import com.historycode.ui.page.adminpanel.editorpage.EditorPageAdminPanel;
 import com.historycode.ui.page.adminpanel.jobspage.JobsPageAdminPanel;
 import com.historycode.ui.page.adminpanel.newspage.NewsPageAdminPanel;
 import com.historycode.ui.page.adminpanel.partnerspage.PartnersPageAdminPanel;
