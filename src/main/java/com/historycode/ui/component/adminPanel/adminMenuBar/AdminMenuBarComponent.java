@@ -34,6 +34,7 @@ public class AdminMenuBarComponent extends BaseComponent {
     }*/
 
     PartnersPageAdminPanel goToPartnersPage() {
+        partners.click();
         return new PartnersPageAdminPanel(driver);
     }
 
