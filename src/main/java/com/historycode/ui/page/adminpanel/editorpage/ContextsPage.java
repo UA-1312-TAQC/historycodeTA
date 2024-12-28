@@ -4,11 +4,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class ContextsEditorPage extends BaseEditorPage{
+public class ContextsPage extends BasePage {
     @FindBy(xpath="//div[@class = 'container-justify-end']//button[contains(@class, 'partners')]")
     WebElement addNewContextsButton;
 
-    public ContextsEditorPage(WebDriver driver) {
+    public ContextsPage(WebDriver driver) {
         super(driver);
     }
 }

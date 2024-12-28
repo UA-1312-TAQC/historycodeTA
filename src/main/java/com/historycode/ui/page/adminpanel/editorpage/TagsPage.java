@@ -4,11 +4,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class TagsEditorPage extends BaseEditorPage{
+public class TagsPage extends BasePage {
     @FindBy(xpath="//div[@class = 'container-justify-end']//button[contains(@class, 'tags')]")
     WebElement addNewTagButton;
 
-    public TagsEditorPage(WebDriver driver) {
+    public TagsPage(WebDriver driver) {
         super(driver);
     }
 }

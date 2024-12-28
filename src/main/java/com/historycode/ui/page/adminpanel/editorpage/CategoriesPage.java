@@ -4,11 +4,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class CategoriesEditorPage extends BaseEditorPage{
+public class CategoriesPage extends BasePage {
     @FindBy(xpath="//div[@class = 'container-justify-end']//button[contains(@class, 'categories')]")
     WebElement addNewCategoryButton;
 
-    public CategoriesEditorPage(WebDriver driver) {
+    public CategoriesPage(WebDriver driver) {
         super(driver);
     }
 }
