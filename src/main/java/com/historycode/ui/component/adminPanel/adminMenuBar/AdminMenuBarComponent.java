@@ -17,7 +17,7 @@ public class AdminMenuBarComponent extends BaseComponent {
     WebElement partners;
     @FindBy(xpath = "")
     WebElement editor;
-    @FindBy(xpath = "")
+    @FindBy(xpath = "//div[@class='BarContainer']//a[@href='/admin-panel/team']")
     WebElement team;
     @FindBy(xpath = "")
     WebElement news;
