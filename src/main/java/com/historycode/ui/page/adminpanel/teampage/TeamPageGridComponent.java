@@ -13,8 +13,11 @@ public class TeamPageGridComponent extends BaseGridComponent {
 
     List<TeamRowComponent> teamRowComponents;
 
-    public TeamPageGridComponent(WebDriver driver, WebElement rootElement, List<WebElement> headerItems, PaginationAdminPanelComponent pagination) {
-        super(driver, rootElement, headerItems, pagination);
+    public TeamPageGridComponent(WebDriver driver, WebElement rootElement) {
+        super(driver, rootElement);
     }
 
+    public List<TeamRowComponent> getTeamRowComponents() {
+        return teamRowComponents;
+    }
 }
