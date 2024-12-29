@@ -1,13 +1,14 @@
-package com.historycode.ui.elements.news;
+package com.historycode.ui.page.newspage;
 
-import com.historycode.ui.elements.BaseElement;
+import com.historycode.ui.component.BaseComponent;
+import lombok.Getter;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
-public class NavigationElement extends BaseElement {
+@Getter
+public class NavigationComponent extends BaseComponent {
 
     @FindBy(xpath = "//a[text()='Попередня новина']")
     private WebElement previousNewsLink;
@@ -15,9 +16,8 @@ public class NavigationElement extends BaseElement {
     @FindBy(xpath = "//a[text()='Наступна новина']")
     private WebElement nextNewsLink;
 
-    public NavigationElement(WebDriver driver) {
-        super(driver);
-        PageFactory.initElements(driver, this);
+    public NavigationComponent(WebDriver driver, WebElement rootElement) {
+        super(driver, rootElement);
     }
 
     public void clickPreviousNewsLink() {
@@ -28,10 +28,10 @@ public class NavigationElement extends BaseElement {
         }
     }
     public void clickNextNewsLink() {
-        if (isPreviousNewsLinkEnabled()) {
+        if (isNextNewsLinkEnabled()) {
             nextNewsLink.click();
         } else {
-            throw new IllegalStateException("Previous news link is not enabled.");
+            throw new IllegalStateException("Next news link is not enabled.");
         }
     }
 
