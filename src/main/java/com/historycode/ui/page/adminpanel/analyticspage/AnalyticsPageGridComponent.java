@@ -19,4 +19,16 @@ public class AnalyticsPageGridComponent extends BaseGridComponent {
     public AnalyticsRowCompoment getRowById(int id){ return analyticsRowCompoments.get(id);}
 
     public int getRowCount(){ return analyticsRowCompoments.size();}
+
+    public void clickNextPage() {
+        pagination.clickNextPage();
+    }
+
+    public void clickPrevPage() {
+        pagination.clickPrevPage();
+    }
+
+    public void clickPaginationItem(int index) {
+        pagination.clickPaginationItem(index);
+    }
 }

@@ -32,7 +32,7 @@ public class AdminMenuBarComponent extends BaseComponent {
         return new StreetCodeCatalogPageAdminPanel(driver);
     }*/
 
-    PartnersPageAdminPanel goToPartnersPage() {
+    public PartnersPageAdminPanel goToPartnersPage() {
         partners.click();
         return new PartnersPageAdminPanel(driver);
     }
@@ -41,17 +41,17 @@ public class AdminMenuBarComponent extends BaseComponent {
         return new EditorPageAdminPanel(driver);
     }*/
 
-    NewsPageAdminPanel goToNewsPage() {
+    public NewsPageAdminPanel goToNewsPage() {
         news.click();
         return new NewsPageAdminPanel(driver);
     }
 
-    TeamPageAdminPanel goToTeamPage() {
+    public TeamPageAdminPanel goToTeamPage() {
         team.click();
         return new TeamPageAdminPanel(driver);
     }
 
-    JobsPageAdminPanel goToJobsPage() {
+    public JobsPageAdminPanel goToJobsPage() {
         jobs.click();
         return new JobsPageAdminPanel(driver);
     }
