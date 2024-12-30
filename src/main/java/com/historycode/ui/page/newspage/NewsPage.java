@@ -1,24 +1,65 @@
 package com.historycode.ui.page.newspage;
 
-import com.historycode.ui.Base;
-import com.historycode.ui.elements.news.NavigationElement;
-import com.historycode.ui.elements.news.NewsArticleElement;
-import com.historycode.ui.elements.news.RelatedNewsElement;
 import com.historycode.ui.page.BasePage;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 
 @Getter
 public class NewsPage extends BasePage {
-    private NewsArticleElement newsArticleElement;
+    private NewsArticleComponent newsArticleComponent;
 
-    private RelatedNewsElement relatedNewsElement;
-    private NavigationElement navigationElement;
+    private RelatedNewsComponent relatedNewsComponent;
+    private NavigationComponent navigationComponent;
 
-    public NewsPage(WebDriver driver, NewsArticleElement newsArticleElement, RelatedNewsElement relatedNewsElement, NavigationElement navigationElement) {
+    public NewsPage(WebDriver driver, NewsArticleComponent newsArticleComponent, RelatedNewsComponent relatedNewsComponent, NavigationComponent navigationComponent) {
         super(driver);
-        this.newsArticleElement = newsArticleElement;
-        this.relatedNewsElement = relatedNewsElement;
-        this.navigationElement = navigationElement;
+        this.newsArticleComponent = newsArticleComponent;
+        this.relatedNewsComponent = relatedNewsComponent;
+        this.navigationComponent = navigationComponent;
     }
+
+    public String getNewsTitle() {
+        return newsArticleComponent.isNewsTitleVisible();
+    }
+
+    public String getNewsDate() {
+        return newsArticleComponent.isPublicationDateVisible();
+    }
+
+    public String getNewsContent() {
+        return newsArticleComponent.isNewsContentVisible();
+    }
+
+    public boolean isNewsImageVisible() {
+        return newsArticleComponent.isNewsImageVisible();
+    }
+
+    public boolean isPreviousButtonEnabled() {
+        return navigationComponent.isPreviousNewsLinkEnabled();
+    }
+
+    public void goToPreviousPage() {
+        navigationComponent.clickPreviousNewsLink();
+    }
+
+    public boolean isNextButtonEnabled() {
+        return navigationComponent.isNextNewsLinkEnabled();
+    }
+
+    public void goToNextPage() {
+        navigationComponent.clickNextNewsLink();
+    }
+
+    public String getRelatedNewsTitle() {
+        return relatedNewsComponent.getRelatedNewsTitle();
+    }
+
+    public void clickRelatedNewsButton() {
+        relatedNewsComponent.clickRelatedNewsButton();
+    }
+
+    public boolean isRelatedNewsVisible() {
+        return relatedNewsComponent.isRelatedNewsVisible();
+    }
+
 }
