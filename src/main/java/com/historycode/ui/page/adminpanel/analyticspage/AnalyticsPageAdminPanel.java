@@ -21,10 +21,10 @@ public class AnalyticsPageAdminPanel extends BasePageAdminPanel {
     public AnalyticsPageGridComponent getGridComponent(){return analyticsPageGridComponent;}
 
 
-    //TODO implement methods
-    public void clickNextPagePaginationItem(){}
-    public void clickPreviousPagePaginationItem(){}
-    public void clickPagePaginationItemByPageNumber(int pageNumber){}
+    //TODO add new table creation
+    public void clickNextPagePaginationItem(){analyticsPageGridComponent.clickNextPage();}
+    public void clickPreviousPagePaginationItem(){analyticsPageGridComponent.clickPrevPage();}
+    public void clickPagePaginationItemByPageNumber(int pageNumber){analyticsPageGridComponent.clickPaginationItem(pageNumber);}
 
 
 }
