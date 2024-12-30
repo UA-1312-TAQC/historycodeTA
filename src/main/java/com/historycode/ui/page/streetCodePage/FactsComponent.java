@@ -29,4 +29,21 @@ public class FactsComponent extends BaseComponent {
         this.pagination = new PaginationComponent(driver, paginationNode);
         this.factCardModal = new FactCardModal(driver, rootElement);
     }
+
+    public String getTitle() {
+        return title.getText();
+    }
+
+    public FactCardComponent getCurrentFact() {
+        int currentIndex = pagination.getActiveDotIndex();
+        return factCards.get(currentIndex);
+    }
+
+    public List<FactCardComponent> getAllFacts() {
+        return factCards;
+    }
+
+    public int getTotalFacts() {
+        return factCards.size();
+    }
 }
