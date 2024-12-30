@@ -1,9 +1,9 @@
-package com.historycode.ui.page;
+package com.historycode.ui.page.HelpUsPage;
 
 import com.historycode.ui.Base;
-import com.historycode.ui.component.DonatesBlockComponent;
-import com.historycode.ui.component.FooterDonatesComponent;
-import com.historycode.ui.component.PartnerModalComponent;
+import com.historycode.ui.component.HelpUs.DonatesBlockComponent;
+import com.historycode.ui.component.HelpUs.DonateEndComponent;
+import com.historycode.ui.component.HelpUs.PartnerModalComponent;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,10 +12,9 @@ import org.openqa.selenium.support.PageFactory;
 
 @Getter
 public class HelpUsPage extends Base {
-    // private WebDriver driver;
 
     private DonatesBlockComponent donatesBlockComponent;
-    private FooterDonatesComponent footerDonatesComponent;
+    private DonateEndComponent donateEndComponent;
     private PartnerModalComponent partnerModalComponent;
 
 
@@ -23,7 +22,7 @@ public class HelpUsPage extends Base {
     private WebElement helpUsLabel;
 
     @FindBy(xpath = "(//button[contains(@class, 'supportButton')])[1]")
-    private WebElement footerDonateButton;
+    private WebElement donateEndButton;
 
     @FindBy(xpath = "(//button[contains(@class, 'supportButton')])[2]")
     private WebElement becomePartnerButton;
@@ -36,7 +35,7 @@ public class HelpUsPage extends Base {
         PageFactory.initElements(driver, this);
 
         this.donatesBlockComponent = new DonatesBlockComponent(driver);
-        this.footerDonatesComponent = new FooterDonatesComponent(driver);
+        this.donateEndComponent = new DonateEndComponent(driver);
         this.partnerModalComponent = new PartnerModalComponent(driver);
     }
 
@@ -44,25 +43,32 @@ public class HelpUsPage extends Base {
         return helpUsLabel.getText();
     }
 
-//    public boolean isFooterDonateButtonDisplayed() {
-//        return footerDonateButton.isDisplayed();
-//    }
-
-    public void clickFooterDonateButton() {
-        footerDonateButton.click();
+    public boolean isDonateEndButtonDisplayed() {
+        try {
+           Thread.sleep(4000);
+        } catch (InterruptedException e) {
+           throw new RuntimeException(e);
+        }
+        scrollToEndOfPage();
+        return donateEndButton.isDisplayed();
     }
 
-//    public boolean isBecomePartnerButtonDisplayed() {
-//        return becomePartnerButton.isDisplayed();
-//    }
+    public void clickDonatesEndButton() {
+        donateEndButton.click();
+    }
+
+    public boolean isBecomePartnerButtonDisplayed() {
+        return becomePartnerButton.isDisplayed();
+    }
 
     public void clickBecomePartnerButton() {
+        scrollToEndOfPage();
         becomePartnerButton.click();
     }
 
-//    public boolean isCopyUahAccountButtonDisplayed() {
-//        return copyUahAccountButton.isDisplayed();
-//    }
+    public boolean isCopyUahAccountButtonDisplayed() {
+        return copyUahAccountButton.isDisplayed();
+    }
 
     public void clickCopyUahAccountButton() {
         copyUahAccountButton.click();
@@ -72,13 +78,11 @@ public class HelpUsPage extends Base {
         return donatesBlockComponent;
     }
 
-    public FooterDonatesComponent getFooterDonatesComponent() {
-        return footerDonatesComponent;
-        }
+    public DonateEndComponent getDonateEndComponent() {
+        return donateEndComponent;
+    }
 
     public PartnerModalComponent getPartnerModalComponent() {
         return partnerModalComponent;
     }
 }
-
-

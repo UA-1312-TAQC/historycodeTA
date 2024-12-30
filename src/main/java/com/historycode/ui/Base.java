@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public abstract class Base {
+
     protected WebDriver driver;
     private WebDriverWait threadWait;
     private JavascriptExecutor threadJs;
