@@ -1,6 +1,7 @@
 package com.historycode.ui.page.adminpanel.jobspage;
 
 import com.historycode.ui.component.BaseComponent;
+import com.historycode.ui.component.adminPanel.dropDownAdminPanel.DropdownComponent;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -18,7 +19,7 @@ public class JobsRowComponent extends BaseComponent {
     WebElement editAction;
 
     //TODO Ask about how to find dropdown
-    JobsDropdownComponent dropdown;
+    DropdownComponent dropdown;
 
     public JobsRowComponent(WebDriver driver, WebElement rootElement) {
         super(driver,rootElement);
