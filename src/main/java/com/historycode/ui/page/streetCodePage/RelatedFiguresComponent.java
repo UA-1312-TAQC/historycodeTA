@@ -14,8 +14,12 @@ public class RelatedFiguresComponent extends BaseComponent {
 
     @FindBy(xpath = ".//button[@class='slick-arrow slick-next']")
     private WebElement rightArrow;
+
     @FindBy(xpath = ".//button[@class='slick-arrow slick-prev']")
     private WebElement leftArrow;
+
+    @FindBy(xpath = "")
+    private WebElement sectionTitle;
 
     private List<PersonsCardComponent> figureCards;
     private CarouselsComponent carousel;
@@ -25,7 +29,25 @@ public class RelatedFiguresComponent extends BaseComponent {
         this.figureCards = figureCardNodes.stream()
                 .map(node -> new PersonsCardComponent(driver, node))
                 .collect(Collectors.toList());
-
         this.carousel = new CarouselsComponent(driver, rootElement, leftArrow, rightArrow);
+    }
+
+    public void clickNext() {
+        rightArrow.click();
+    }
+
+    public void clickPrevious() {
+        leftArrow.click();
+    }
+
+    public void clickPersonCard(String personName) {
+        figureCards.stream()
+                .filter(card -> card.getName().equals(personName))
+                .findFirst()
+                .ifPresent(PersonsCardComponent::click);
+    }
+
+    public String getSectionTitle() {
+        return sectionTitle.getText();
     }
 }

@@ -12,7 +12,10 @@ public class TimelineComponent extends BaseComponent {
     @FindBy(xpath = ".//div[@class='blockHeadingText']")
     private WebElement title;
 
-    @FindBy(xpath = ".//div[@class='timeSpanContainer']")
+    @FindBy(xpath = ".//div[@class='timeSpanContainer']//span")
+    private List<WebElement> years;
+
+    @FindBy(xpath = "")
     private WebElement paginationNode;
 
     @FindBy(xpath = ".//div[@class='timelineItem']")
@@ -27,5 +30,34 @@ public class TimelineComponent extends BaseComponent {
         this.events = timelineCardsNodes.stream()
                 .map(node -> new TimelineCardComponent(driver, node))
                 .collect(Collectors.toList());
+    }
+
+    public String getTitle() {
+        return title.getText();
+    }
+
+    public void selectYear(String year) {
+        for (int i = 0; i < years.size(); i++) {
+            if (years.get(i).getText().equals(year)) {
+                pagination.clickDot(i);
+                break;
+            }
+        }
+    }
+
+    public List<String> getAllYears() {
+        return years.stream()
+                .map(WebElement::getText)
+                .collect(Collectors.toList());
+    }
+
+    public TimelineCardComponent getCurrentEvent() {
+        int currentIndex = pagination.getActiveDotIndex();
+        return events.get(currentIndex);
+    }
+
+    public String getCurrentYear() {
+        int currentIndex = pagination.getActiveDotIndex();
+        return years.get(currentIndex).getText();
     }
 }

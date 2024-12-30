@@ -6,8 +6,10 @@ import com.historycode.ui.elements.BaseElement;
 import com.historycode.ui.elements.BreadcrumbsElement;
 import com.historycode.ui.elements.ScrollTopButtonElement;
 import com.historycode.ui.page.BasePage;
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 public class StreetCodePage extends BasePage {
@@ -48,16 +50,28 @@ public class StreetCodePage extends BasePage {
     @FindBy(xpath = "//div[@class='ant-modal-content']")
     private WebElement surveyModalNode;
 
+    @Getter
     private BreadcrumbsElement breadcrumbs;
+    @Getter
     private ScrollTopButtonElement scrollTopButton;
+    @Getter
     private QuickDonateButtonElement quickDonateButton;
+
+    @Getter
     private MainCardComponent mainCard;
+    @Getter
     private StreetCodeDetailsComponent details;
+    @Getter
     private FactsComponent facts;
+    @Getter
     private TimelineComponent timeline;
+    @Getter
     private RelatedFiguresComponent relatedFigures;
+    @Getter
     private AdditionalInfoComponent additionalInfo;
+    @Getter
     private PartnerComponent partners;
+    @Getter
     private RunningLineComponent runningLine;
     private VerticalProgressComponent verticalProgress;
     private SurveyModal surveyModal;
@@ -77,6 +91,27 @@ public class StreetCodePage extends BasePage {
         this.runningLine = new RunningLineComponent(driver, runningLineNode);
         this.verticalProgress = new VerticalProgressComponent(driver, verticalProgressNode);
         this.surveyModal = new SurveyModal(driver, surveyModalNode);
+    }
+
+
+    public void openDonateModal() {
+        quickDonateButton.click();
+    }
+
+    public void closeSurveyModal() {
+        surveyModal.close();
+    }
+
+    public void scrollToTop() {
+        scrollTopButton.clickScrollTop();
+    }
+
+    public void toggleProgressBar() {
+        verticalProgress.toggle();
+    }
+
+    public boolean isSurveyModalOpen() {
+        return surveyModal.isDisplayed();
     }
 }
 
