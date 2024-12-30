@@ -9,7 +9,7 @@ import java.util.List;
 
 @Getter
 public class PositionsGridComponent extends BaseGridComponent {
-    List<PositiosRowComponent> positionsRowComponents;
+    List<PositionsRowComponent> positionsRowComponents;
 
     public PositionsGridComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
