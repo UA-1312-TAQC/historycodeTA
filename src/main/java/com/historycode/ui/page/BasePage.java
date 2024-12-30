@@ -23,8 +23,7 @@ public abstract class BasePage extends Base {
 
     public BasePage(WebDriver driver) {
         super(driver);
-        PageFactory.initElements(driver, this);
-        this.header = new HeaderComponent(driver, headerNode);
-        this.footer = new FooterComponent(driver, footerNode);
+        this.header = new HeaderComponent(driver, this.headerNode);
+        this.footer = new FooterComponent(driver, this.footerNode);
     }
 }
