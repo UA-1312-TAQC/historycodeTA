@@ -1,2 +1,10 @@
 # historycodeTA
-#2 Дана гілка була створена для роботи із адмін понелю. Для зменшення кількості конфліктів у гіт
+
+
+
+## before run
+create file `src/test/resources/config.properties`
+```properties
+base.ui.url=base_frontend_url
+implicitlyWait=10
+```

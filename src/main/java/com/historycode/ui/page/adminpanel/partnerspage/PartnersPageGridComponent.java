@@ -15,7 +15,7 @@ public class PartnersPageGridComponent extends BaseGridComponent {
 
     List<PartnersRowComponent> partnersRowComponents;
 
-    public PartnersPageGridComponent(WebDriver driver, WebElement rootElement, List<WebElement> headerItems, PaginationAdminPanelComponent pagination) {
-        super(driver, rootElement, headerItems, pagination);
+    public PartnersPageGridComponent(WebDriver driver, WebElement rootElement) {
+        super(driver, rootElement);
     }
 }
