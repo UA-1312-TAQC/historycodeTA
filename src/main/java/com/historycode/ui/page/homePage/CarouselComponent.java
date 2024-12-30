@@ -5,47 +5,32 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class CarouselComponent<T extends BaseComponent> extends BaseComponent {
-
-    @FindBy(css = ".carousel-item")
-    private List<WebElement> carouselItems;
+public abstract class CarouselComponent<T extends BaseComponent> extends BaseComponent {
 
     @FindBy(css = ".carousel-arrow-left")
-    private WebElement leftArrow;
+    protected WebElement leftArrow;
 
     @FindBy(css = ".carousel-arrow-right")
-    private WebElement rightArrow;
+    protected WebElement rightArrow;
 
-    private final Class<T> componentClass;
-
-    public CarouselComponent(WebDriver driver, WebElement rootElement, Class<T> componentClass) {
+    public CarouselComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        PageFactory.initElements(rootElement, this);
-        this.componentClass = componentClass;
+        PageFactory.initElements(new DefaultElementLocatorFactory(rootElement), this);
     }
 
-    public List<T> getCarouselItems() {
-        return carouselItems.stream()
-                .map(e -> {
-                    try {
-                        return componentClass.getConstructor(WebDriver.class, WebElement.class)
-                                .newInstance(driver, e);
-                    } catch (Exception ex) {
-                        throw new RuntimeException("Cant create component: " + componentClass.getSimpleName(), ex);
-                    }
-                })
-                .collect(Collectors.toList());
-    }
 
     public void clickLeftArrow() {
         leftArrow.click();
     }
 
+
     public void clickRightArrow() {
         rightArrow.click();
     }
+
+    public abstract List<T> getCarouselItems();
 }

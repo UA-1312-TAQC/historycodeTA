@@ -12,6 +12,9 @@ import java.util.stream.Collectors;
 @Getter
 public class HomePage extends BasePage {
 
+    @FindBy(css = ".top-carousel")
+    private WebElement topCarouselElement;
+
     @FindBy(css = ".news-carousel")
     private WebElement newsCarouselElement;
 
@@ -27,17 +30,19 @@ public class HomePage extends BasePage {
     @FindBy(css = ".static-banner")
     private List<WebElement> staticBannerElements;
 
-    private CarouselComponent<NewsCardComponent> newsCarousel;
-    private CarouselComponent<PersonCardComponent> personCarousel;
-    private CarouselComponent<TeamCardComponent> teamCarousel;
+    private TopCarousel topCarousel;
+    private TeamCardCarousel teamCarousel;
+    private NewsCardCarousel newsCarousel;
+    private PersonCardCarousel personsCarousel;
 
     public HomePage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
 
-        newsCarousel = new CarouselComponent<>(driver, newsCarouselElement, NewsCardComponent.class);
-        personCarousel = new CarouselComponent<>(driver, personCarouselElement, PersonCardComponent.class);
-        teamCarousel = new CarouselComponent<>(driver, teamCarouselElement, TeamCardComponent.class);
+        topCarousel = new TopCarousel(driver, topCarouselElement);
+        teamCarousel = new TeamCardCarousel(driver, teamCarouselElement);
+        newsCarousel = new NewsCardCarousel(driver, newsCarouselElement);
+        personsCarousel = new PersonCardCarousel(driver, personCarouselElement);
     }
 
     public List<PartnersComponent> getPartners() {
