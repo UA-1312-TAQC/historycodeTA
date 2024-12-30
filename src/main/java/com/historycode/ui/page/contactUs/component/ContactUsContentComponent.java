@@ -1,4 +1,4 @@
-package com.historycode.ui.component.contact_us;
+package com.historycode.ui.page.contactUs.component;
 
 import com.historycode.ui.component.BaseComponent;
 import lombok.Getter;
