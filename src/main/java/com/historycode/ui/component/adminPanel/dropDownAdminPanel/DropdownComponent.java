@@ -1,6 +1,7 @@
 package com.historycode.ui.component.adminPanel.dropDownAdminPanel;
 
 import com.historycode.ui.component.BaseComponent;
+import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,6 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
 
+@Getter
 public class DropdownComponent extends BaseComponent {
     @FindBy(xpath = "//td[contains(@class, 'ant-table-cell')]//button[contains(@class, 'ant-btn')]")
     private WebElement dropdownButton;
@@ -19,6 +21,8 @@ public class DropdownComponent extends BaseComponent {
     private WebElement dropdownMenuContainer;
     @FindBy(xpath = "//ul[contains(@class, 'ant-dropdown-menu')]/li")
     private List<WebElement> options;
+    @FindBy(xpath = "//div[@class='ant-space-item'][1]")
+    private WebElement selectedOption;
 
     private final String OPTION_BY_TEXT_TEMPLATE = "//ul[contains(@class, 'ant-dropdown-menu')]/li[span[contains(text(), '%s')]]";
 
@@ -39,8 +43,12 @@ public class DropdownComponent extends BaseComponent {
         option.click();
     }
 
-    public List<String> getOptionTexts() {
+    public List<String> getOptionsTexts() {
         openDropdown();
         return options.stream().map(option -> option.getText().trim()).toList();
+    }
+
+    public String getSelectedOptionText() {
+        return selectedOption.getText().trim();
     }
 }
