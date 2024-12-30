@@ -19,7 +19,7 @@ public class AdminMenuBarComponent extends BaseComponent {
     WebElement editor;
     @FindBy(xpath = "//div[@class='BarContainer']//a[@href='/admin-panel/team']")
     WebElement team;
-    @FindBy(xpath = "")
+    @FindBy(xpath = "//div[@class='BarContainer']//a[@href='/admin-panel/news']")
     WebElement news;
     @FindBy(xpath = "")
     WebElement jobs;
