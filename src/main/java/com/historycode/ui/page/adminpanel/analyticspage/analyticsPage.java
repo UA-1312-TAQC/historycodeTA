@@ -1,18 +1,14 @@
 package com.historycode.ui.page.adminpanel.analyticspage;
 
-import com.historycode.ui.component.adminPanel.sectionsAdminPanel.SectionsAdminPanelComponent;
 import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class analyticsPage extends BasePageAdminPanel {
-
-    public analyticsPage(WebDriver driver, SectionsAdminPanelComponent sectionsAdminPanelComponent) {
+    public analyticsPage(WebDriver driver) {
         super(driver);
-        this.sectionsAdminPanelComponent = sectionsAdminPanelComponent;
         //TODO add streetCodeName initialization
     }
-    private SectionsAdminPanelComponent sectionsAdminPanelComponent;
 
     private WebElement streetCodeName;
 

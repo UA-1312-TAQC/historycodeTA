@@ -1,7 +1,6 @@
 package com.historycode.ui.component.adminPanel.adminMenuBar;
 
 import com.historycode.ui.component.BaseComponent;
-import com.historycode.ui.page.adminpanel.editorpage.EditorPageAdminPanel;
 import com.historycode.ui.page.adminpanel.jobspage.JobsPageAdminPanel;
 import com.historycode.ui.page.adminpanel.newspage.NewsPageAdminPanel;
 import com.historycode.ui.page.adminpanel.partnerspage.PartnersPageAdminPanel;
@@ -18,7 +17,7 @@ public class AdminMenuBarComponent extends BaseComponent {
     WebElement partners;
     @FindBy(xpath = "")
     WebElement editor;
-    @FindBy(xpath = "")
+    @FindBy(xpath = "//div[@class='BarContainer']//a[@href='/admin-panel/team']")
     WebElement team;
     @FindBy(xpath = "")
     WebElement news;
@@ -34,6 +33,7 @@ public class AdminMenuBarComponent extends BaseComponent {
     }*/
 
     PartnersPageAdminPanel goToPartnersPage() {
+        partners.click();
         return new PartnersPageAdminPanel(driver);
     }
 

@@ -1,4 +1,4 @@
-package com.historycode.ui.page.adminpanel.teampage;
+package com.historycode.ui.page.adminpanel.editorpage.components;
 
 import com.historycode.ui.component.adminPanel.gridAdminPanel.BaseGridComponent;
 import com.historycode.ui.component.adminPanel.paginationAdminPanel.PaginationAdminPanelComponent;
@@ -9,15 +9,12 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 
 @Getter
-public class TeamPageGridComponent extends BaseGridComponent {
+public class CategoriesGridComponent extends BaseGridComponent {
+    List<CategoriesRowComponent> categoriesRowComponents;
 
-    List<TeamRowComponent> teamRowComponents;
-
-    public TeamPageGridComponent(WebDriver driver, WebElement rootElement) {
+    public CategoriesGridComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
-
-    public List<TeamRowComponent> getTeamRowComponents() {
-        return teamRowComponents;
-    }
 }
+
+

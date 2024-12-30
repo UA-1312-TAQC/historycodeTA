@@ -1,11 +1,11 @@
-package com.historycode.ui.page.adminpanel.editorpage;
+package com.historycode.ui.page.adminpanel.editorpage.components;
 
 import com.historycode.ui.component.BaseComponent;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class EditorPageSectionsComponent extends BaseComponent {
+public class SectionsComponent extends BaseComponent {
     @FindBy(xpath = "")
     WebElement categories;
     @FindBy(xpath = "")
@@ -15,7 +15,7 @@ public class EditorPageSectionsComponent extends BaseComponent {
     @FindBy(xpath = "")
     WebElement positions;
 
-    public EditorPageSectionsComponent(WebDriver driver, WebElement rootElement) {
+    public SectionsComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
 }
