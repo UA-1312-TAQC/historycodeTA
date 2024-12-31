@@ -12,10 +12,15 @@ import java.util.List;
 public class PaginationAdminPanelComponent extends BaseComponent {
     @FindBy(xpath = "//li[@title = 'Next Page']")
     WebElement nextPage;
+
     @FindBy(xpath = "//li[@title = 'Previous Page']")
     WebElement prevPage;
 
-    //TODO ask about title="Previous 5 Pages" ...
+    @FindBy(xpath = "//li[@title = 'Previous 5 Pages']")
+    WebElement prevFivePages;
+
+    @FindBy(xpath = "//li[@title = 'Next 5 Pages']")
+    WebElement nextFivePages;
 
     @FindBy(xpath = "//*[@title and number(@title) = number(@title)]")
     List<WebElement> paginationItems;
@@ -30,6 +35,14 @@ public class PaginationAdminPanelComponent extends BaseComponent {
 
     public void clickPrevPage() {
         prevPage.click();
+    }
+
+    public void clickPrevFivePages() {
+        prevFivePages.click();
+    }
+
+    public void clickNextFivePages() {
+        nextFivePages.click();
     }
 
     public void clickPaginationItem(int index) {

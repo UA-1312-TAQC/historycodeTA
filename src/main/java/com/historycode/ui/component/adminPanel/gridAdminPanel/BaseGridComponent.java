@@ -14,7 +14,9 @@ import java.util.List;
 public abstract class BaseGridComponent extends BaseComponent {
     @FindBy(xpath = "//thead[@class = 'ant-table-thead']//th")
     protected List<WebElement> headerItems;
+
     protected PaginationAdminPanelComponent pagination;
+
     @FindBy(xpath = "//div[@class = 'underTableElement']//ul")
     protected WebElement rootPaginationNode;
 
@@ -22,5 +24,25 @@ public abstract class BaseGridComponent extends BaseComponent {
         super(driver, rootElement);
         this.pagination = new PaginationAdminPanelComponent(driver, rootPaginationNode);
     }
-    //TODO запитати де реалізувати методи пагінацій( на сторінці чи тут )
+
+    public void goToNextPage() {
+        pagination.clickNextPage();
+    }
+
+    public void goToPreviousPage() {
+        pagination.clickPrevPage();
+    }
+
+    public void goToSelectedPage(int pageNumber) {
+        pagination.clickPaginationItem(pageNumber);
+    }
+
+    public void goToPreviousFivePages() {
+        pagination.clickPrevFivePages();
+    }
+
+    public void goToNextFivePages() {
+        pagination.clickNextFivePages();
+    }
+
 }
