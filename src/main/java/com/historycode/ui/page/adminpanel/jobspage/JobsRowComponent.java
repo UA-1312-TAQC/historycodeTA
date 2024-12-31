@@ -2,7 +2,7 @@ package com.historycode.ui.page.adminpanel.jobspage;
 
 import com.historycode.ui.component.BaseComponent;
 import com.historycode.ui.component.adminPanel.dropDownAdminPanel.DropdownComponent;
-import com.historycode.ui.page.adminpanel.jobspage.modal.DeleteJobModal;
+import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
 import com.historycode.ui.page.adminpanel.jobspage.modal.EditJobModal;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
@@ -38,8 +38,8 @@ public class JobsRowComponent extends BaseComponent {
         return new EditJobModal(driver, rootElement);
     }
 
-    public DeleteJobModal clickDelete() {
+    public DeleteItemModal clickDelete() {
         deleteAction.click();
-        return new DeleteJobModal(driver, rootElement);
+        return new DeleteItemModal(driver, rootElement);
     }
 }
