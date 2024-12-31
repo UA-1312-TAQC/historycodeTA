@@ -44,5 +44,4 @@ public abstract class BaseGridComponent extends BaseComponent {
     public void goToNextFivePages() {
         pagination.clickNextFivePages();
     }
-
 }
