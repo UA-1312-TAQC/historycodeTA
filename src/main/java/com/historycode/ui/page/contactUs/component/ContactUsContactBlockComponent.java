@@ -7,15 +7,23 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Getter
 public class ContactUsContactBlockComponent extends BaseComponent {
-    @FindBy(xpath = "//*[@id=\"root\"]/div/div[4]/div[2]/div/div/div/div[2]/div[1]/div")
+    @Getter @FindBy(xpath = "//div[@class='socials']")
     private List<WebElement> socialNetworks;
-    @FindBy(xpath = "//*[@id=\"root\"]/div/div[4]/div[2]/div/div/div/div[2]/div[1]/div/div[1]/span")
+    @Getter @FindBy(xpath = "//div[@class='email']")
     private WebElement emailText;
+    @Getter @FindBy(xpath = "//div[@class='emailLink']")
+    private WebElement emailLink;
 
     public ContactUsContactBlockComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
+    }
+
+    public List<String> getAllKeywords() {
+        return socialNetworks.stream()
+                .map(WebElement::getText)
+                .collect(Collectors.toList());
     }
 }

@@ -6,18 +6,19 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-@Getter
+
 public class ContactUsFormComponent extends BaseComponent {
-    @FindBy(xpath = "//*[@id=\"root\"]/div/div[4]/div[2]/div/div/div/div[2]/div[2]/div/div[1]")
+    @Getter @FindBy(xpath = "//div[@class='formTitle']")
     private WebElement formTitle;
-    @FindBy(xpath = "//*[@id=\"root\"]/div/div[4]/div[2]/div/div/div/div[2]/div[2]/div/div[2]")
+    @Getter @FindBy(xpath = "//div[@class='formSubTitle']")
     private WebElement formSubTitle;
-    @FindBy(xpath = "//*[@id=\"message\"]")
+    @Getter @FindBy(xpath = "//div[@class='ant-input css-k7429z']")
     private WebElement message;
-    @FindBy(xpath = "//*[@id=\"email\"]")
+    @Getter @FindBy(xpath = "//div[@class='ant-input css-k7429z input']")
     private WebElement email;
-    @FindBy(xpath = "//*[@id=\"root\"]/div/div[4]/div[2]/div/div/div/div[2]/div[2]/form/div[4]/div/div/div/div/button")
+    @Getter@FindBy(xpath = "//div[@class='ant-btn css-k7429z ant-btn-primary']")
     private WebElement button;
+
     public ContactUsFormComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
