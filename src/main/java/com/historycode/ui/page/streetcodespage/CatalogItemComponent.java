@@ -1,4 +1,4 @@
-package com.historycode.ui.page.streetcodes;
+package com.historycode.ui.page.streetcodespage;
 
 import com.historycode.ui.component.BaseComponent;
 import lombok.Getter;
@@ -7,14 +7,15 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 @Getter
-class CatalogItemComponent extends BaseComponent {
-    @FindBy(xpath = ".//div/div[@class='heading']/p[1]")
+public class CatalogItemComponent extends BaseComponent {
+
+    @FindBy(xpath = ".//div[@class='heading']/p[1]")
     private WebElement nameNode;
 
-    @FindBy(xpath = ".//div/div[@class='heading']/p[2]")
+    @FindBy(xpath = ".//div[@class='heading']/p[2]")
     private WebElement descriptionNode;
 
-    CatalogItemComponent(WebDriver driver, WebElement rootElement) {
+    public CatalogItemComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
 
@@ -24,9 +25,5 @@ class CatalogItemComponent extends BaseComponent {
 
     public String getDescription() {
         return descriptionNode.getText();
-    }
-
-    public WebElement getRootNode() {
-        return rootElement;
     }
 }
