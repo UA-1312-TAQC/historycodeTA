@@ -22,4 +22,30 @@ public class ContactUsFormComponent extends BaseComponent {
     public ContactUsFormComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
+
+    public void setMessage(String text) {
+        message.clear();
+        message.sendKeys(text);
+    }
+
+    public void setEmail(String emailAddress) {
+        email.clear();
+        email.sendKeys(emailAddress);
+    }
+
+    public void clickSubmitButton() {
+        button.click();
+    }
+
+    public boolean isButtonEnabled() {
+        return button.isEnabled();
+    }
+
+    public String getFormTitle() {
+        return formTitle.getText();
+    }
+
+    public String getFormSubTitle() {
+        return formSubTitle.getText();
+    }
 }

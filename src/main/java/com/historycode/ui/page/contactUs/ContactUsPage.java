@@ -38,4 +38,5 @@ public class ContactUsPage extends BasePage {
         this.contactUsContentComponent = new ContactUsContentComponent(driver, contactUsContentNode);
         this.footerComponent = new FooterComponent(driver, footerNode);
     }
+
 }
