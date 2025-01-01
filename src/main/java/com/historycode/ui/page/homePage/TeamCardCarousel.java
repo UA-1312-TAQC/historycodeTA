@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class TeamCardCarousel extends CarouselComponent<TeamCardComponent> {
-    @FindBy(css = ".team-carousel-item")
+    @FindBy(css = "//div[contains(@class, 'teamComponent')]//div[contains(@class, 'teamItemSlider')]//div[contains(@class, 'itemTeam')]")
     private List<WebElement> itemElements;
 
     public TeamCardCarousel(WebDriver driver, WebElement rootElement) {
