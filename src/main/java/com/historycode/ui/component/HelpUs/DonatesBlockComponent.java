@@ -1,6 +1,6 @@
 package com.historycode.ui.component.HelpUs;
 
-import com.historycode.ui.Base;
+import com.historycode.ui.component.BaseComponent;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,7 +12,7 @@ import java.util.List;
 import org.openqa.selenium.NoSuchElementException;
 
 @Getter
-public class DonatesBlockComponent extends Base {
+public class DonatesBlockComponent extends BaseComponent {
 
     @FindBy(css = "h1")
     private WebElement donatesLabel;
@@ -64,22 +64,14 @@ public class DonatesBlockComponent extends Base {
     }
 
     public void clickCheckbox() {
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        sleep(5000);
         checkbox.click();
     }
 
     public void clickDonateButton() {
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-       }
-            scrollToElement(donateButton);
-            donateButton.click();
-        }
-
+        sleep(5000);
+        scrollToElement(donateButton);
+        donateButton.click();
     }
+
+}

@@ -1,6 +1,6 @@
 package com.historycode.ui.page.HelpUsPage;
 
-import com.historycode.ui.Base;
+import com.historycode.ui.component.BaseComponent;
 import com.historycode.ui.component.HelpUs.DonatesBlockComponent;
 import com.historycode.ui.component.HelpUs.DonateEndComponent;
 import com.historycode.ui.component.HelpUs.PartnerModalComponent;
@@ -11,7 +11,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 @Getter
-public class HelpUsPage extends Base {
+public class HelpUsPage extends BaseComponent {
 
     private DonatesBlockComponent donatesBlockComponent;
     private DonateEndComponent donateEndComponent;
@@ -44,11 +44,7 @@ public class HelpUsPage extends Base {
     }
 
     public boolean isDonateEndButtonDisplayed() {
-        try {
-           Thread.sleep(4000);
-        } catch (InterruptedException e) {
-           throw new RuntimeException(e);
-        }
+        sleep(5000);
         scrollToEndOfPage();
         return donateEndButton.isDisplayed();
     }
