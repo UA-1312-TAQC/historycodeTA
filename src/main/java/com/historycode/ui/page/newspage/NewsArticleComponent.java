@@ -6,6 +6,14 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Getter
 public class NewsArticleComponent extends BaseComponent {
@@ -20,6 +28,9 @@ public class NewsArticleComponent extends BaseComponent {
 
     @FindBy(xpath = "//div[contains(@class,'newsGoodImageClass Full')]")
     private WebElement newsImage;
+
+    @FindBy(xpath = "//div[contains(@class,'newsTextArea')]//a")
+    private List<WebElement> linkInNewsContent;
 
     public NewsArticleComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
@@ -56,5 +67,53 @@ public class NewsArticleComponent extends BaseComponent {
         } catch (NoSuchElementException e) {
             return false;
         }
+    }
+
+    public Map<String, Boolean> isLinkInNewsContentClickable() {
+        Map<String, Boolean> linkStatus = new HashMap<>();
+
+        try {
+            for (WebElement link : linkInNewsContent) {
+                String url = link.getDomAttribute("href");
+
+                if (url == null || url.isEmpty()) {
+                    linkStatus.put("Invalid link / empty href", false);
+                    continue;
+                }
+
+                try {
+                    System.out.println("Checking link: " + url);
+
+                    link.click();
+                    waitForUrlToBe(url);
+
+                    boolean isPageCorrect = driver.getCurrentUrl().equals(url);
+                    linkStatus.put(url, isPageCorrect);
+
+                    navigateBackToRootElement();
+                } catch (Exception e) {
+                    linkStatus.put(url, false);
+                }
+            }
+        } catch (NoSuchElementException e) {
+            linkStatus.put("No links found", false);
+        }
+
+        return linkStatus;
+    }
+
+    private void waitForUrlToBe(String url) {
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.urlToBe(url));
+    }
+
+    private void waitForRootElementVisibility() {
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.visibilityOf(rootElement));
+    }
+
+    private void navigateBackToRootElement() {
+        driver.navigate().back();
+        waitForRootElementVisibility();
     }
 }

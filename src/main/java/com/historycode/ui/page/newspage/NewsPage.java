@@ -4,6 +4,8 @@ import com.historycode.ui.page.BasePage;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 
+import java.util.Map;
+
 @Getter
 public class NewsPage extends BasePage {
     private NewsArticleComponent newsArticleComponent;
@@ -62,4 +64,7 @@ public class NewsPage extends BasePage {
         return relatedNewsComponent.isRelatedNewsVisible();
     }
 
+    public Map<String, Boolean> checkLinksInNewsContent() {
+        return newsArticleComponent.isLinkInNewsContentClickable();
+    }
 }
