@@ -13,4 +13,6 @@ public class JobsPageAdminPanel extends BasePageAdminPanel {
     public JobsPageAdminPanel(WebDriver driver) {
         super(driver);
     }
+    //TODO what functionality should be here?
+    //TODO what about loading new tables when using pagination? Should I return new Grid or smth?
 }
