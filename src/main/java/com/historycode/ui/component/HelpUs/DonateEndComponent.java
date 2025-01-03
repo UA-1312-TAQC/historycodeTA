@@ -2,6 +2,7 @@ package com.historycode.ui.component.HelpUs;
 
 import com.historycode.ui.Base;
 import com.historycode.ui.elements.HelpUs.CurrencyModalElement;
+import com.historycode.ui.elements.HelpUs.PaymentMethodElement;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,6 +13,7 @@ import org.openqa.selenium.support.PageFactory;
 public class DonateEndComponent extends Base {
 
     private CurrencyModalElement currencyModalElement;
+    private PaymentMethodElement paymentMethodElement;
 
     @FindBy(css = "h2.merchant-name")
     private WebElement donatesLabel;
@@ -31,6 +33,8 @@ public class DonateEndComponent extends Base {
         PageFactory.initElements(driver, this);
 
         this.currencyModalElement = new CurrencyModalElement(driver);
+        this.paymentMethodElement = new PaymentMethodElement(driver);
+
     }
 
     public String getDonatesLabelText() {
@@ -64,5 +68,8 @@ public class DonateEndComponent extends Base {
 
     public CurrencyModalElement getCurrencyModalElement() {
         return currencyModalElement;
+    }
+    public PaymentMethodElement getPaymentMethodElement() {
+        return paymentMethodElement;
     }
 }
