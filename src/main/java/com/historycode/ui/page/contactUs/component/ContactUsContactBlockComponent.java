@@ -47,11 +47,6 @@ public class ContactUsContactBlockComponent extends BaseComponent {
         return socialNetworks.stream().allMatch(WebElement::isDisplayed);
     }
 
-    public boolean hasValidEmailFormat() {
-        String email = getEmailText();
-        return email != null && email.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}");
-    }
-
     public boolean areSocialNetworksNotEmpty() {
         return socialNetworks.stream()
                 .map(WebElement::getText)
@@ -62,11 +57,11 @@ public class ContactUsContactBlockComponent extends BaseComponent {
         emailLink.click();
     }
 
-    public void clickOnSocialNetwork(int index) {
-        if (index >= 0 && index < socialNetworks.size()) {
-            socialNetworks.get(index).click();
-        } else {
-            throw new IndexOutOfBoundsException("Invalid index for social networks: " + index);
-        }
-    }
+//    public void clickOnSocialNetwork(int index) {
+//        if (index >= 0 && index < socialNetworks.size()) {
+//            socialNetworks.get(index).click();
+//        } else {
+//            throw new IndexOutOfBoundsException("Invalid index for social networks: " + index);
+//        }
+//    }
 }
