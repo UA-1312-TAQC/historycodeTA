@@ -60,6 +60,7 @@ public class TeamRowComponent extends BaseComponent {
 
     public void clickDelete() {
         deleteAction.click();
+        //return new DeleteItemModal(driver, rootElement);
     }
 
     public void clickEdit() {
