@@ -9,10 +9,10 @@ import org.openqa.selenium.support.FindBy;
 public class PartnersPageAdminPanel extends BasePageAdminPanel {
 
     @FindBy(xpath = "//button[span[text()='Створити партнера']]")
-    WebElement addNewPartnersButton;
+    private WebElement addNewPartnersButton;
     @FindBy(xpath = "//div[@class='partners-page']//div[@class='partners-page-container']")
-    WebElement rooElement;
-    PartnersPageGridComponent partnersPageGridComponent;
+    private WebElement rooElement;
+    private PartnersPageGridComponent partnersPageGridComponent;
 
     public PartnersPageAdminPanel(WebDriver driver) {
         super(driver);

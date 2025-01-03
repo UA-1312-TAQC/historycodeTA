@@ -12,7 +12,7 @@ import lombok.Getter;
 @Getter
 public class PartnersPageGridComponent extends BaseGridComponent {
 
-    protected List<PartnersRowComponent> partnersRowComponents;
+    private List<PartnersRowComponent> partnersRowComponents;
 
     public PartnersPageGridComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
