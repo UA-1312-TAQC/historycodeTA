@@ -24,8 +24,8 @@ public class PartnersPageGridComponent extends BaseGridComponent {
 
         List<WebElement> gridRows = driver.findElements(By.xpath("//tbody//tr"));
 
-        for (WebElement element : gridRows) {
-            partnersRowComponents.add(new PartnersRowComponent(driver, element));
+        for (WebElement rootElement : gridRows) {
+            partnersRowComponents.add(new PartnersRowComponent(driver, rootElement));
         }
         return partnersRowComponents;
     }

@@ -11,26 +11,37 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-@Getter
 public class PartnersRowComponent extends BaseComponent {
+
+    @Getter
     @FindBy(xpath = "//td[1]//div[@class='partner-table-item-name']//p")
     private WebElement name;
+
+    @Getter
     @FindBy(xpath = "//td[2]//a[@class = 'site-link']")
     private WebElement link;
+
+    @Getter
     @FindBy(xpath = "//td[2]//a[@class = 'site-link']")
     private WebElement logo;
+
+    @Getter
     @FindBy(xpath = "/td[4]//div[@class = 'partner-links']")
     List<PartnersSocialMediaComponent> socialMediaComponents;
+
+    @Getter
     @FindBy(xpath = "//td[5]//span[@aria-label = 'delete']")
     private WebElement deleteAction;
+
+    @Getter
     @FindBy(xpath = "//td[5]//span[@aria-label = 'edit']")
     private WebElement editAction;
 
-    public PartnersRowComponent(WebDriver driver, WebElement rootElement){
+    public PartnersRowComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
 
-    /*TODO. Do function which return list of objects social media */
+    /* TODO. Do function which return list of objects social media */
     public void getSocialMediaLinks() {
     }
 
@@ -38,8 +49,8 @@ public class PartnersRowComponent extends BaseComponent {
         deleteAction.click();
         return new DeleteItemModal(driver, rootElement);
     }
-    
-    /*TODO. rewrite this function used modal class EditPartnerModal */
+
+    /* TODO. rewrite this function used modal class EditPartnerModal */
     public void clickEdit() {
         editAction.click();
     }
