@@ -63,4 +63,13 @@ public class EditJobModal extends BaseEditModal {
     public void closeEditJobModal() {
         clickCloseButton();
     }
+
+    public boolean isTooltipVisibleOnHoverCloseButton() {
+        hoverOverCloseButton();
+        return isTooltipVisible();
+    }
+
+    public String getTextFromTooltip() {
+        return getTooltipText();
+    }
 }
