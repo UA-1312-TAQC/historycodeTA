@@ -9,26 +9,25 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class TimelineComponent extends BaseComponent {
-    @FindBy(xpath = ".//div[@class='blockHeadingText']")
+    @FindBy(xpath = ".//div[@id='timeline']//h1")
     private WebElement title;
 
-    @FindBy(xpath = ".//div[@class='timeSpanContainer']//span")
-    private List<WebElement> years;
-
-    @FindBy(xpath = "")
-    private WebElement paginationNode;
+    @FindBy(xpath = ".//div[@class='tickContainer ']//span")
+    private List<WebElement> yearNodes;
 
     @FindBy(xpath = ".//div[@class='timelineItem']")
     private List<WebElement> timelineCardsNodes;
 
-    private List<TimelineCardComponent> events;
-    private PaginationComponent pagination;
+    private List<TimelineCardComponent> timelineCards;
+    private List<TimelineYearComponent> timelineYears;
 
     public TimelineComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        this.pagination = new PaginationComponent(driver, paginationNode);
-        this.events = timelineCardsNodes.stream()
+        this.timelineCards = timelineCardsNodes.stream()
                 .map(node -> new TimelineCardComponent(driver, node))
+                .collect(Collectors.toList());
+        this.timelineYears = yearNodes.stream()
+                .map(node -> new TimelineYearComponent(driver, node))
                 .collect(Collectors.toList());
     }
 
@@ -37,27 +36,25 @@ public class TimelineComponent extends BaseComponent {
     }
 
     public void selectYear(String year) {
-        for (int i = 0; i < years.size(); i++) {
-            if (years.get(i).getText().equals(year)) {
-                pagination.clickDot(i);
-                break;
-            }
-        }
+        timelineYears.stream()
+                .filter(yearComponent -> yearComponent.getYear().equals(year))
+                .findFirst()
+                .ifPresent(TimelineYearComponent::click);
     }
 
-    public List<String> getAllYears() {
-        return years.stream()
-                .map(WebElement::getText)
+    public List<String> getYears() {
+        return timelineYears.stream()
+                .map(TimelineYearComponent::getYear)
                 .collect(Collectors.toList());
     }
 
-    public TimelineCardComponent getCurrentEvent() {
-        int currentIndex = pagination.getActiveDotIndex();
-        return events.get(currentIndex);
+    public List<TimelineCardComponent> getVisibleCards() {
+        return timelineCards.stream()
+                .filter(TimelineCardComponent::isDisplayed)
+                .collect(Collectors.toList());
     }
 
-    public String getCurrentYear() {
-        int currentIndex = pagination.getActiveDotIndex();
-        return years.get(currentIndex).getText();
+    public int getCardsCount() {
+        return timelineCards.size();
     }
 }

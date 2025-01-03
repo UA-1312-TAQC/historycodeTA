@@ -93,9 +93,8 @@ public class StreetCodePage extends BasePage {
         this.surveyModal = new SurveyModal(driver, surveyModalNode);
     }
 
-
     public void openDonateModal() {
-        quickDonateButton.click();
+        quickDonateButton.clickDonateButton();
     }
 
     public void closeSurveyModal() {
@@ -107,7 +106,7 @@ public class StreetCodePage extends BasePage {
     }
 
     public void toggleProgressBar() {
-        verticalProgress.toggle();
+        verticalProgress.toggleProgressBar();
     }
 
     public boolean isSurveyModalOpen() {

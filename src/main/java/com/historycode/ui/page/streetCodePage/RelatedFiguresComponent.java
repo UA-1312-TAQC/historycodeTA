@@ -9,45 +9,42 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class RelatedFiguresComponent extends BaseComponent {
-    @FindBy(xpath = ".//div[@class='slider-item-container']")
-    private List<WebElement> figureCardNodes;
-
-    @FindBy(xpath = ".//button[@class='slick-arrow slick-next']")
-    private WebElement rightArrow;
-
-    @FindBy(xpath = ".//button[@class='slick-arrow slick-prev']")
-    private WebElement leftArrow;
-
-    @FindBy(xpath = "")
+    @FindBy(xpath = ".//div[@class='relatedFiguresContainer']//h1")
     private WebElement sectionTitle;
 
-    private List<PersonsCardComponent> figureCards;
-    private CarouselsComponent carousel;
+    @FindBy(xpath = ".//div[@class='relatedFiguresSliderContainer']")
+    private WebElement carouselRoot;
+
+    private PersonsCarousel carousel;
 
     public RelatedFiguresComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        this.figureCards = figureCardNodes.stream()
-                .map(node -> new PersonsCardComponent(driver, node))
-                .collect(Collectors.toList());
-        this.carousel = new CarouselsComponent(driver, rootElement, leftArrow, rightArrow);
+        this.carousel = new PersonsCarousel(driver, carouselRoot);
     }
 
-    public void clickNext() {
-        rightArrow.click();
-    }
-
-    public void clickPrevious() {
-        leftArrow.click();
-    }
-
-    public void clickPersonCard(String personName) {
-        figureCards.stream()
-                .filter(card -> card.getName().equals(personName))
-                .findFirst()
-                .ifPresent(PersonsCardComponent::click);
-    }
-
-    public String getSectionTitle() {
+    public String getTitle() {
         return sectionTitle.getText();
+    }
+
+    public List<PersonsCardComponent> getPersonCards() {
+        return carousel.getCards();
+    }
+
+    public void clickNextSlide() {
+        carousel.clickNext();
+    }
+
+    public void clickPreviousSlide() {
+        carousel.clickPrevious();
+    }
+
+    public void clickPersonCard(int index) {
+        if (index >= 0 && index < getPersonCards().size()) {
+            getPersonCards().get(index).click();
+        }
+    }
+
+    public boolean hasNavigationArrows() {
+        return carousel.hasArrows();
     }
 }

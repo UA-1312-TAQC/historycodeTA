@@ -6,17 +6,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class StreetCodeDetailsComponent extends BaseComponent {
-    @FindBy(xpath = "")
+    @FindBy(xpath = ".//div[@id='text']//div[@class='text']//p")
     private WebElement mainTextContent;
 
-    @FindBy(xpath = "")
+    @FindBy(xpath = ".//span[@class='readMore false']")
     private WebElement expandButton;
-
-    @FindBy(xpath = "")
-    private WebElement videoContainer;
-
-    @FindBy(xpath = "")
-    private WebElement additionalLink;
 
     public StreetCodeDetailsComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
@@ -24,14 +18,6 @@ public class StreetCodeDetailsComponent extends BaseComponent {
 
     public void toggleTextContent() {
         expandButton.click();
-    }
-
-    public void clickAdditionalLink() {
-        additionalLink.click();
-    }
-
-    public void playVideo() {
-        videoContainer.click();
     }
 }
 

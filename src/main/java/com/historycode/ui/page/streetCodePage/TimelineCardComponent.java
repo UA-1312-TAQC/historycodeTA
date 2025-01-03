@@ -6,19 +6,16 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class TimelineCardComponent extends BaseComponent {
-    @FindBy(xpath = "")
-    private WebElement backgroundImage;
-
-    @FindBy(xpath = "")
+    @FindBy(xpath = ".//div[@class='timelineItem']//p[@class='timelineItemMetadata']/text()[1]")
     private WebElement year;
 
-    @FindBy(xpath = "")
+    @FindBy(xpath = ".//div[@class='timelineItem']//p[@class='timelineItemMetadata']/span[@class='historicalContext']")
     private WebElement historicalContext;
 
-    @FindBy(xpath = "")
+    @FindBy(xpath = ".//div[@class='timelineItem']//p[@class='timelineItemTitle']")
     private WebElement title;
 
-    @FindBy(xpath = "")
+    @FindBy(xpath = ".//div[@class='timelineItem']//p[@class='timelineItemDescription']")
     private WebElement description;
 
     public TimelineCardComponent(WebDriver driver, WebElement rootElement) {
@@ -41,7 +38,7 @@ public class TimelineCardComponent extends BaseComponent {
         return description.getText();
     }
 
-    public String getBackgroundImageUrl() {
-        return backgroundImage.getAttribute("src");
+    public boolean isDisplayed() {
+        return rootElement.isDisplayed();
     }
 }

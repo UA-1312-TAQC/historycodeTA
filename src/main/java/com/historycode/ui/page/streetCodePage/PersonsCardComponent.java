@@ -10,19 +10,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class PersonsCardComponent extends BaseComponent {
-    @FindBy(xpath = "")
+    @FindBy(xpath = ".//div[@class='slider-item-container']//a[1]")
     private WebElement photo;
 
-    @FindBy(xpath = "")
+    @FindBy(xpath = ".//div[@class='heading']/p[1]")
     private WebElement name;
 
-    @FindBy(xpath = "")
+    @FindBy(xpath = ".//p[@class='aliasText']")
     private WebElement position;
 
-    @FindBy(xpath = "")
+    @FindBy(xpath = ".//div[@class='figureSlideText']//div[@class='relatedTagList undefined']")
     private WebElement keywordsContainer;
 
-    @FindBy(xpath = "")
+    @FindBy(xpath = ".//div[@class='figureSlideText']//div[@class='relatedTagList undefined']/button/p")
     private List<WebElement> keywords;
 
     public PersonsCardComponent(WebDriver driver, WebElement rootElement) {
@@ -31,6 +31,10 @@ public class PersonsCardComponent extends BaseComponent {
 
     public void click() {
         rootElement.click();
+    }
+
+    public boolean isDisplayed() {
+        return rootElement.isDisplayed();
     }
 
     public String getName() {

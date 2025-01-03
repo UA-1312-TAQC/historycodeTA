@@ -8,25 +8,33 @@ import org.openqa.selenium.support.FindBy;
 import java.util.List;
 
 public class VerticalProgressComponent extends BaseComponent {
-    @FindBy(xpath = "")
+    @FindBy(xpath = ".//div[@class='progressBarPopupContent']/div/span")
     private List<WebElement> sectionNumbers;
 
-    @FindBy(xpath = "")
+    @FindBy(xpath = ".//div[@class='progressBarPopupContainer']")
     private WebElement hideButton;
 
     public VerticalProgressComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
 
-    public void toggle() {
-        if (isHidden()) {
-            hideButton.click();
+    public void clickSection(int sectionNumber) {
+        if (sectionNumber > 0 && sectionNumber <= sectionNumbers.size()) {
+            sectionNumbers.get(sectionNumber - 1).click();
         } else {
-            hideButton.click();
+            throw new IllegalArgumentException("Invalid section number");
         }
     }
 
-    public boolean isHidden() {
-        return !rootElement.isDisplayed();
+    public void toggleProgressBar() {
+        hideButton.click();
+    }
+
+    public boolean isProgressBarVisible() {
+        return sectionNumbers.get(0).isDisplayed();
+    }
+
+    public int getSectionsCount() {
+        return sectionNumbers.size();
     }
 }

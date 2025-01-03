@@ -7,29 +7,20 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 public class FactCardComponent extends BaseComponent {
-    @FindBy(xpath = "")
+    @FindBy(xpath = ".//div[@class='interestingFactSlide']//img")
     private WebElement image;
 
-    @FindBy(xpath = "")
+    @FindBy(xpath = ".//p[@class='cardTextContainerTitle']")
     private WebElement title;
 
-    @FindBy(xpath = "")
+    @FindBy(xpath = ".//p[@class='cardTextContainerText']")
     private WebElement description;
 
-    @FindBy(xpath = "")
+    @FindBy(xpath = ".//div[@class='description-popup ']/p")
     private WebElement hoverDescription;
 
     public FactCardComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-    }
-
-    public void click() {
-        rootElement.click();
-    }
-
-    public void hover() {
-        Actions actions = new Actions(driver);
-        actions.moveToElement(image).perform();
     }
 
     public String getTitle() {
@@ -40,11 +31,28 @@ public class FactCardComponent extends BaseComponent {
         return description.getText();
     }
 
-    public String getHoverDescription() {
+    public String getImageSource() {
+        return image.getAttribute("src");
+    }
+
+    public void clickCard() {
+        rootElement.click();
+    }
+
+    public void hoverOverImage() {
+        Actions actions = new Actions(driver);
+        actions.moveToElement(image).perform();
+    }
+
+    public String getHoverText() {
         return hoverDescription.getText();
     }
 
-    public String getImageUrl() {
-        return image.getAttribute("src");
+    public boolean isDisplayed() {
+        return rootElement.isDisplayed();
+    }
+
+    public void click() {
+        rootElement.click();
     }
 }

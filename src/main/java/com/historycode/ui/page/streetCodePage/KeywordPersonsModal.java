@@ -1,20 +1,23 @@
 package com.historycode.ui.page.streetCodePage;
 
 import com.historycode.ui.component.BaseModal;
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public class KeywordPersonsModal extends BaseModal {
-    @FindBy(xpath = "")
+    @FindBy(xpath = ".//div[@class='tagModalContainer']//button")
     private List<WebElement> keywords;
 
-    @FindBy(xpath = "")
+    @FindBy(xpath = "//div[@class='relatedFiguresByTagsContentContainer']//a[1]")
     private List<WebElement> personCards;
 
+    @Getter
     private List<PersonsCardComponent> persons;
 
     public KeywordPersonsModal(WebDriver driver, WebElement rootElement) {
@@ -28,16 +31,13 @@ public class KeywordPersonsModal extends BaseModal {
         keywords.stream()
                 .filter(k -> k.getText().equals(keyword))
                 .findFirst()
-                .ifPresent(WebElement::click);
+                .orElseThrow(() -> new NoSuchElementException("Keyword not found: " + keyword))
+                .click();
     }
 
-    public List<String> getAllKeywords() {
+    public List<String> getAvailableKeywords() {
         return keywords.stream()
                 .map(WebElement::getText)
                 .collect(Collectors.toList());
-    }
-
-    public List<PersonsCardComponent> getVisiblePersons() {
-        return persons;
     }
 }

@@ -10,36 +10,41 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class PartnerComponent extends BaseComponent {
-    @FindBy(xpath = ".//div[@class='partnerItem']")
-    private List<WebElement> partnerLogoNodes;
-
-    @FindBy(xpath = "")
-    private WebElement carouselContainer;
-
-    private List<PartnerLogoComponent> partnerLogos;
+    @FindBy(xpath = ".//div[@class='partnerContainer']")
+    private WebElement carouselRoot;
+    private PartnersCarousel carousel;
 
     public PartnerComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        this.partnerLogos = partnerLogoNodes.stream()
-                .map(node -> new PartnerLogoComponent(driver, node))
-                .collect(Collectors.toList());
+        this.carousel = new PartnersCarousel(driver, carouselRoot);
     }
 
-    public void pauseCarousel() {
-        Actions actions = new Actions(driver);
-        actions.moveToElement(carouselContainer).perform();
+    public List<PartnerLogoComponent> getPartnerLogos() {
+        return carousel.getLogos();
     }
 
-    public List<String> getAllPartnerNames() {
-        return partnerLogos.stream()
-                .map(PartnerLogoComponent::getPartnerName)
-                .collect(Collectors.toList());
+    public void hoverPartnerLogo(int index) {
+        carousel.hoverLogo(index);
     }
 
-    public void clickPartnerByName(String partnerName) {
-        partnerLogos.stream()
-                .filter(partner -> partner.getPartnerName().equals(partnerName))
-                .findFirst()
-                .ifPresent(PartnerLogoComponent::clickPartnerLink);
+    public boolean isCarouselScrolling() {
+        return carousel.isAutoScrollActive();
+    }
+
+    public void clickPartnerLogo(int index) {
+        PartnerLogoComponent logo = carousel.getLogo(index);
+        if (logo != null) {
+            logo.click();
+        }
+    }
+
+    public String getPartnerDescription(int index) {
+        PartnerLogoComponent logo = carousel.getLogo(index);
+        return logo != null ? logo.getPartnerDescription() : "";
+    }
+
+    public boolean isTooltipDisplayed(int index) {
+        PartnerLogoComponent logo = carousel.getLogo(index);
+        return logo != null && logo.isTooltipDisplayed();
     }
 }

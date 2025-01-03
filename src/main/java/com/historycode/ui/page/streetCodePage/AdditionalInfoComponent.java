@@ -6,33 +6,43 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public class AdditionalInfoComponent extends BaseComponent {
     @FindBy(xpath = ".//div[@class='sourcesSliderItem']")
-    private List<WebElement> categoryCards;
+    private List<WebElement> categoryCardsNode;
 
-    private List<InfoCardComponent> infoCards;
+    private List<InfoCardComponent> categoryCards;
     private AdditionalInfoModal additionalInfoModal;
 
     public AdditionalInfoComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        this.infoCards = categoryCards.stream()
+        this.categoryCards = categoryCardsNode.stream()
                 .map(node -> new InfoCardComponent(driver, node))
                 .collect(Collectors.toList());
         this.additionalInfoModal = new AdditionalInfoModal(driver, rootElement);
     }
 
-    public void selectCategory(String categoryName) {
-        infoCards.stream()
-                .filter(card -> card.getTitle().equals(categoryName))
+    public InfoCardComponent getCardByTitle(String title) {
+        return categoryCards.stream()
+                .filter(card -> card.getTitle().equals(title))
                 .findFirst()
-                .ifPresent(InfoCardComponent::click);
+                .orElseThrow(() -> new NoSuchElementException("Card with title '" + title + "' not found"));
     }
 
-    public List<String> getAvailableCategories() {
-        return infoCards.stream()
+    public boolean isCardPresent(String title) {
+        return categoryCards.stream()
+                .anyMatch(card -> card.getTitle().equals(title));
+    }
+
+    public List<String> getAllCardTitles() {
+        return categoryCards.stream()
                 .map(InfoCardComponent::getTitle)
                 .collect(Collectors.toList());
+    }
+
+    public AdditionalInfoModal getModal() {
+        return additionalInfoModal;
     }
 }

@@ -9,13 +9,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class AdditionalInfoModal extends BaseModal {
-    @FindBy(xpath = "")
+    @FindBy(xpath = ".//div[contains(@class, 'sourceImgContainer')]/h1")
     private WebElement modalTitle;
 
-    @FindBy(xpath = "")
+    @FindBy(xpath = ".//div[contains(@class, 'mainContentContainer')]//p")
     private List<WebElement> contentItems;
 
-    @FindBy(xpath = "")
+    @FindBy(xpath = ".//button[@type='button' and @aria-label='Close' and contains(@class, 'ant-modal-close')]")
     private WebElement closeButton;
 
     public AdditionalInfoModal(WebDriver driver, WebElement rootElement) {
@@ -32,7 +32,11 @@ public class AdditionalInfoModal extends BaseModal {
                 .collect(Collectors.toList());
     }
 
-    public void close() {
+    public void closeModal() {
         closeButton.click();
+    }
+
+    public boolean isModalDisplayed() {
+        return modalTitle.isDisplayed();
     }
 }

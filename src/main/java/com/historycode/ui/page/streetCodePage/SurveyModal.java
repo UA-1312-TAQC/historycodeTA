@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class SurveyModal extends BaseModal {
-    @FindBy(xpath = "")
+    @FindBy(xpath = ".//div[@class='ant-modal css-k7429z surveyModal']//button[@class='ant-modal-close']")
     private WebElement closeButton;
     public SurveyModal(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
@@ -19,5 +19,4 @@ public class SurveyModal extends BaseModal {
     public boolean isDisplayed() {
         return rootElement.isDisplayed();
     }
-
 }
