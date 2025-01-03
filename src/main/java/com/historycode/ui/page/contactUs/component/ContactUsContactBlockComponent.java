@@ -7,15 +7,61 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Getter
 public class ContactUsContactBlockComponent extends BaseComponent {
-    @FindBy(xpath = "//*[@id=\"root\"]/div/div[4]/div[2]/div/div/div/div[2]/div[1]/div")
+    @Getter @FindBy(xpath = "//div[@class='socials']")
     private List<WebElement> socialNetworks;
-    @FindBy(xpath = "//*[@id=\"root\"]/div/div[4]/div[2]/div/div/div/div[2]/div[1]/div/div[1]/span")
+    @Getter @FindBy(xpath = "//div[@class='email']")
     private WebElement emailText;
+    @Getter @FindBy(xpath = "//div[@class='emailLink']")
+    private WebElement emailLink;
 
     public ContactUsContactBlockComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
+
+    public List<String> getAllKeywords() {
+        return socialNetworks.stream()
+                .map(WebElement::getText)
+                .collect(Collectors.toList());
+    }
+
+    public String getEmailText() {
+        return emailText.getText();
+    }
+
+    public String getEmailLink() {
+        return emailLink.getAttribute("href");
+    }
+
+    public boolean isEmailTextDisplayed() {
+        return emailText.isDisplayed();
+    }
+
+    public boolean isEmailLinkDisplayed() {
+        return emailLink.isDisplayed();
+    }
+
+    public boolean areSocialNetworksDisplayed() {
+        return socialNetworks.stream().allMatch(WebElement::isDisplayed);
+    }
+
+    public boolean areSocialNetworksNotEmpty() {
+        return socialNetworks.stream()
+                .map(WebElement::getText)
+                .allMatch(text -> text != null && !text.isEmpty());
+    }
+
+    public void clickOnEmailLink() {
+        emailLink.click();
+    }
+
+//    public void clickOnSocialNetwork(int index) {
+//        if (index >= 0 && index < socialNetworks.size()) {
+//            socialNetworks.get(index).click();
+//        } else {
+//            throw new IndexOutOfBoundsException("Invalid index for social networks: " + index);
+//        }
+//    }
 }
