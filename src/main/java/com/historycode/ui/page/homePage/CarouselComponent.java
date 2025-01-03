@@ -11,10 +11,10 @@ import java.util.List;
 
 public abstract class CarouselComponent<T extends BaseComponent> extends BaseComponent {
 
-    @FindBy(css = ".carousel-arrow-left")
+    @FindBy(xpath = "//button[contains(@class, 'slick-prev')]")
     protected WebElement leftArrow;
 
-    @FindBy(css = ".carousel-arrow-right")
+    @FindBy(xpath = "//button[contains(@class, 'slick-next')]")
     protected WebElement rightArrow;
 
     public CarouselComponent(WebDriver driver, WebElement rootElement) {
