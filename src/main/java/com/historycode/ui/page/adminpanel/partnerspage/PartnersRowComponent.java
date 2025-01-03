@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.historycode.ui.component.BaseComponent;
 import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
-import com.historycode.ui.page.adminpanel.teampage.TeamSocialMediaComponent;
 
 import lombok.Getter;
 
