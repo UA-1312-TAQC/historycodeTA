@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class PersonCardCarousel extends CarouselComponent<PersonCardComponent> {
 
-    @FindBy(css = ".person-carousel-item")
+    @FindBy(xpath = "//div[contains(@class, 'streetcodeSliderContainer')]//div[contains(@class, 'slider-item-container')]")
     private List<WebElement> itemElements;
 
     public PersonCardCarousel(WebDriver driver, WebElement rootElement) {

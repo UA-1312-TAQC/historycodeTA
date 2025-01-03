@@ -8,13 +8,13 @@ import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
 
 public class PartnerPopupComponent extends BaseComponent {
 
-    @FindBy(css = ".partner-details-title")
+    @FindBy(css = ".ant-popover-inner .partner-details-title")
     private WebElement titleElement;
 
-    @FindBy(css = ".partner-details-link")
+    @FindBy(css = ".ant-popover-inner .partner-details-link")
     private WebElement linkElement;
 
-    @FindBy(css = ".partner-details-text")
+    @FindBy(css = ".ant-popover-inner .partner-details-text")
     private WebElement descriptionElement;
 
     public PartnerPopupComponent(WebDriver driver, WebElement rootElement) {
