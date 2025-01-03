@@ -11,9 +11,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Getter
 public class NewsArticleComponent extends BaseComponent {
@@ -37,7 +36,7 @@ public class NewsArticleComponent extends BaseComponent {
     }
 
 
-    public String isNewsTitleVisible() {
+    public String getNewsTitle() {
         try {
             return newsTitle.getText();
         } catch (NoSuchElementException e) {
@@ -45,7 +44,7 @@ public class NewsArticleComponent extends BaseComponent {
         }
     }
 
-    public String isPublicationDateVisible() {
+    public String getPublicationDate() {
         try {
             return publicationDate.getText();
         } catch (NoSuchElementException e) {
@@ -53,7 +52,7 @@ public class NewsArticleComponent extends BaseComponent {
         }
     }
 
-    public String isNewsContentVisible() {
+    public String getNewsContent() {
         try {
             return newsContent.getText();
         } catch (NoSuchElementException e) {
@@ -69,51 +68,18 @@ public class NewsArticleComponent extends BaseComponent {
         }
     }
 
-    public Map<String, Boolean> isLinkInNewsContentClickable() {
-        Map<String, Boolean> linkStatus = new HashMap<>();
-
+    public List<String> getLinksInNewsContent() {
+        List<String> links = new ArrayList<>();
         try {
             for (WebElement link : linkInNewsContent) {
                 String url = link.getDomAttribute("href");
-
-                if (url == null || url.isEmpty()) {
-                    linkStatus.put("Invalid link / empty href", false);
-                    continue;
-                }
-
-                try {
-                    System.out.println("Checking link: " + url);
-
-                    link.click();
-                    waitForUrlToBe(url);
-
-                    boolean isPageCorrect = driver.getCurrentUrl().equals(url);
-                    linkStatus.put(url, isPageCorrect);
-
-                    navigateBackToRootElement();
-                } catch (Exception e) {
-                    linkStatus.put(url, false);
+                if (url != null && !url.isEmpty()) {
+                    links.add(url);
                 }
             }
         } catch (NoSuchElementException e) {
-            linkStatus.put("No links found", false);
+            System.out.println("No links found");
         }
-
-        return linkStatus;
-    }
-
-    private void waitForUrlToBe(String url) {
-        new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.urlToBe(url));
-    }
-
-    private void waitForRootElementVisibility() {
-        new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOf(rootElement));
-    }
-
-    private void navigateBackToRootElement() {
-        driver.navigate().back();
-        waitForRootElementVisibility();
+        return links;
     }
 }
