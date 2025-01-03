@@ -7,7 +7,6 @@ import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 @Getter
 public abstract class BasePage extends Base {
@@ -15,7 +14,7 @@ public abstract class BasePage extends Base {
     @FindBy(xpath = "//div[@class='HeaderBlock']")
     private WebElement headerNode;
 
-    @FindBy(xpath = "//div[@class='footerContainer']")
+    @FindBy(xpath = "//div[@class='footerWrapper']")
     private WebElement footerNode;
 
     protected HeaderComponent header;
