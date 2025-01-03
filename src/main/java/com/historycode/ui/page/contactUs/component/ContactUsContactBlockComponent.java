@@ -57,11 +57,20 @@ public class ContactUsContactBlockComponent extends BaseComponent {
         emailLink.click();
     }
 
-//    public void clickOnSocialNetwork(int index) {
-//        if (index >= 0 && index < socialNetworks.size()) {
-//            socialNetworks.get(index).click();
-//        } else {
-//            throw new IndexOutOfBoundsException("Invalid index for social networks: " + index);
-//        }
-//    }
+    public void clickOnSocialNetwork(String networkName) {
+        boolean found = false;
+
+        for (WebElement socialNetwork : socialNetworks) {
+            if (socialNetwork.getText().equalsIgnoreCase(networkName)) {
+                socialNetwork.click();
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            throw new IllegalArgumentException("Social network not found: " + networkName);
+        }
+    }
+
 }
