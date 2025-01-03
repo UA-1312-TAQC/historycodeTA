@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 public class TeamPageGridComponent extends BaseGridComponent {
 
-    List<TeamRowComponent> teamRowComponents;
+    protected List<TeamRowComponent> teamRowComponents;
 
     public TeamPageGridComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);

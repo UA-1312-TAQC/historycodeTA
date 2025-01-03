@@ -10,8 +10,8 @@ import org.openqa.selenium.support.PageFactory;
 public class TeamPageAdminPanel extends BasePageAdminPanel {
 
     @FindBy(xpath = "//button[span[text()='Створити нового члена команди']]")
-    WebElement addNewMemberButton;
-    TeamPageGridComponent teamPageGridComponent;
+    protected WebElement addNewMemberButton;
+    protected TeamPageGridComponent teamPageGridComponent;
 
     public TeamPageAdminPanel(WebDriver driver) {
         super(driver);

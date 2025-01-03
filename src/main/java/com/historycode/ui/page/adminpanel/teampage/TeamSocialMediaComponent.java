@@ -9,7 +9,11 @@ import org.openqa.selenium.support.PageFactory;
 public class TeamSocialMediaComponent extends BaseComponent {
 
     @FindBy(xpath = "//td[@class='ant-table-cell']//div[@class='team-links']//a")
-    private WebElement link;
+    protected WebElement link;
+
+    //TODO It doesn't see such xpath in the inspect window
+    @FindBy(xpath = "//td[@class='ant-table-cell']//div[@class='team-links']//a//svg//path")
+    protected WebElement icon;
 
     public TeamSocialMediaComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
@@ -18,27 +22,19 @@ public class TeamSocialMediaComponent extends BaseComponent {
 
     //Extracts the URL directly from the href attribute
     public String getUrl() {
-        return link.getAttribute("href");
+        if (link == null) {
+            throw new IllegalStateException("Link element is not initialized or missing.");
+        }
+        return link.getDomAttribute("href");
+    }
+
+    //TODO Is it correct?
+    public String getIcon() {
+        return icon.getDomAttribute("d");
     }
 
     public void clickLink() {
         link.click();
     }
 
-    //TODO Do I need to specify these url: what if we have any other different urls except for the specified ones (Wikipedia, Medium, Git...)??
-    //Infers the platform based on the URL
-    public String getPlatform() {
-        String href = getUrl().toLowerCase();
-        if (href.contains("instagram")) {
-            return "Instagram";
-        } else if (href.contains("behance")) {
-            return "Behance";
-        } else if (href.contains("facebook")) {
-            return "Facebook";
-        } else if (href.contains("linkedin")) {
-            return "LinkedIn";
-        } else {
-            return null;
-        }
-    }
 }

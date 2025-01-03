@@ -11,48 +11,43 @@ import java.util.List;
 
 public class TeamRowComponent extends BaseComponent {
     @FindBy(xpath = "//td[1]//div[@class='team-table-item-name']//p")
-    WebElement lastFirstName;
+    protected WebElement lastFirstName;
     @FindBy(xpath = "//td[2]//div[@class='team-table-item-name']//p")
-    WebElement position;
+    protected WebElement position;
     @FindBy(xpath = "//td[3]//div[@class='team-table-item-name']//p")
-    WebElement description;
+    protected WebElement description;
     @FindBy(xpath = "//td[4]//img")
-    WebElement photo;
+    protected WebElement photo;
     @FindBy(xpath = "//td[5]//a")
-    List<WebElement> socialMediaElements;
+    protected List<WebElement> socialMediaElements;
     @FindBy(xpath = "//td[6]//span[contains(@class, 'delete')]")
-    WebElement deleteAction;
+    protected WebElement deleteAction;
     @FindBy(xpath = "//td[6]//span[contains(@class, 'edit')]")
-    WebElement editAction;
+    protected WebElement editAction;
+
+    private List<TeamSocialMediaComponent> socialMediaLinks;
 
     public TeamRowComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
         PageFactory.initElements(driver, this);
     }
 
-    public WebElement getLastFirstName() {
-        return lastFirstName;
+    public String getLastFirstName() {
+        return lastFirstName.getText();
     }
 
-    public WebElement getPosition() {
-        return position;
+    public String getPosition() {
+        return position.getText();
     }
 
-    public WebElement getDescription() {
-        return description;
+    public String getDescription() {
+        return description.getText();
     }
 
-    public WebElement getPhoto() {
-        return photo;
-    }
-    //TODO Which method is better and more needful for the photo WebElement: the above one or the bottom one??
-    public boolean hasPhoto() {
-        return photo.isDisplayed();
+    public String getPhoto() {
+        return photo.getDomAttribute("src");
     }
 
-    //TODO Is it the right approach for the getSocialMediaLinks method??
-    //List<WebElement> socialMediaElements; or List<TeamSocialMediaComponent> socialMediaElements;
-    private List<TeamSocialMediaComponent> socialMediaLinks;
     public List<TeamSocialMediaComponent> getSocialMediaLinks() {
         if (socialMediaLinks == null) {
             socialMediaLinks = new ArrayList<>();
@@ -66,6 +61,7 @@ public class TeamRowComponent extends BaseComponent {
     public void clickDelete() {
         deleteAction.click();
     }
+
     public void clickEdit() {
         editAction.click();
     }
