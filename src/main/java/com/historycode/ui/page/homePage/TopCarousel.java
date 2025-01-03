@@ -10,12 +10,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Objects;
 
 public class TopCarousel extends BaseComponent {
-    @FindBy(css = ".carousel-dots .dot")
+    @FindBy(css = ".slick-dots li")
     private List<WebElement> dots;
 
-    @FindBy(css = ".top-carousel-item")
+    @FindBy(css = ".slick-slide")
     private List<WebElement> slideElements;
 
     public TopCarousel(WebDriver driver, WebElement rootElement) {
@@ -34,18 +35,13 @@ public class TopCarousel extends BaseComponent {
 
     public boolean isDotActive(int index) {
         String classes = dots.get(index).getAttribute("class");
-        return classes != null && classes.contains("active");
+        return classes != null && classes.contains("slick-active");
     }
 
     public void waitForAutoScroll(int previousActiveIndex) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        wait.until(driver -> {
-            for (int i = 0; i < getDotsCount(); i++) {
-                if (isDotActive(i) && i != previousActiveIndex) {
-                    return true;
-                }
-            }
-            return false;
-        });
+        new WebDriverWait(driver, Duration.ofSeconds(5))
+                .until(driver -> dots.stream()
+                        .anyMatch(dot -> Objects.requireNonNull(dot.getAttribute("class")).contains("slick-active") &&
+                                         dots.indexOf(dot) != previousActiveIndex));
     }
 }

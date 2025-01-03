@@ -8,7 +8,7 @@ import org.openqa.selenium.WebDriver;
 
 @Getter
 public abstract class BasePageAdminPanel extends BasePage {
-    AdminMenuBarComponent adminMenuBar;
+    protected AdminMenuBarComponent adminMenuBar;
 
     public BasePageAdminPanel(WebDriver driver) {
         super(driver);
