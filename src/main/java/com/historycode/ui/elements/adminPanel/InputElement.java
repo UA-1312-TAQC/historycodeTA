@@ -1,25 +1,27 @@
 package com.historycode.ui.elements.adminPanel;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-@Getter
-@Setter
+import lombok.Getter;
+
 public class InputElement {
-    @FindBy(xpath = "//div[contains(@class, 'ant-form-item-label')]")
+
+    @Getter
+    @FindBy(xpath = "//div[contains(@class, 'ant-form-item-label')]/label")
     WebElement label;
 
+    @Getter
     @FindBy(xpath = "//div[contains(@class, 'input-content')]//span//input[@type='text']")
     WebElement inputField;
 
+    @Getter
     @FindBy(xpath = "//span[@class='ant-input-suffix']/span")
     WebElement showCountSymbols;
 
-    public InputElement(WebDriver driver) {
+    public InputElement(WebDriver driver, WebElement rootElement) {
         PageFactory.initElements(driver, this);
     }
 }

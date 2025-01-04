@@ -5,6 +5,8 @@ import java.util.List;
 import com.historycode.ui.component.BaseComponent;
 import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
 
+import com.historycode.ui.page.adminpanel.partnerspage.modal.EditPartnersModal;
+
 import lombok.Getter;
 
 import org.openqa.selenium.WebDriver;
@@ -41,18 +43,15 @@ public class PartnersRowComponent extends BaseComponent {
         super(driver, rootElement);
     }
 
-    /* TODO. Do function which return list of objects social media */
-    public void getSocialMediaLinks() {
-    }
-
     public DeleteItemModal clickDelete() {
         deleteAction.click();
         return new DeleteItemModal(driver, rootElement);
     }
 
-    /* TODO. rewrite this function used modal class EditPartnerModal */
-    public void clickEdit() {
+    /* Звітки в нас буде іти роот елемент ? Який саме він буде ? */
+    public EditPartnersModal clickEdit() {
         editAction.click();
+        return new EditPartnersModal(driver, rootElement);
     }
 
 }
