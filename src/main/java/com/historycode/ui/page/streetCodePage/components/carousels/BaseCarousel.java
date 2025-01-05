@@ -9,7 +9,7 @@ public abstract class BaseCarousel extends BaseComponent {
         super(driver, rootElement);
     }
 
-    protected boolean hasArrows() {
+    public boolean hasArrows() {
         return false;
     }
 }

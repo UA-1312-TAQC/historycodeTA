@@ -40,7 +40,7 @@ public class PersonsCarousel extends BaseCarousel {
     }
 
     @Override
-    protected boolean hasArrows() {
+    public boolean hasArrows() {
         return personCards.size() > 4;
     }
 
