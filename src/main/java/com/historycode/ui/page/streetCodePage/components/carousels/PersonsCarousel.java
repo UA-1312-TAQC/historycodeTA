@@ -1,6 +1,6 @@
-package com.historycode.ui.page.streetCodePage;
+package com.historycode.ui.page.streetCodePage.components.carousels;
 
-import com.historycode.ui.page.streetCodePage.PersonsCardComponent;
+import com.historycode.ui.page.streetCodePage.components.PersonsCardComponent;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -8,7 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class PersonsCarousel extends BaseCarousel{
+public class PersonsCarousel extends BaseCarousel {
     @FindBy(xpath = ".//div[@class='slider-item-container']")
     private List<WebElement> personCardNodes;
 

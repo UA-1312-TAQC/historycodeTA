@@ -1,6 +1,8 @@
-package com.historycode.ui.page.streetCodePage;
+package com.historycode.ui.page.streetCodePage.components;
 
 import com.historycode.ui.component.BaseComponent;
+import com.historycode.ui.page.streetCodePage.components.TimelineCardComponent;
+import com.historycode.ui.page.streetCodePage.components.TimelineYearComponent;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

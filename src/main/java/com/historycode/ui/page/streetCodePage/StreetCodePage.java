@@ -1,15 +1,14 @@
 package com.historycode.ui.page.streetCodePage;
 
-import com.historycode.ui.component.BaseComponent;
-import com.historycode.ui.component.BaseModal;
-import com.historycode.ui.elements.BaseElement;
 import com.historycode.ui.elements.BreadcrumbsElement;
 import com.historycode.ui.elements.ScrollTopButtonElement;
 import com.historycode.ui.page.BasePage;
+import com.historycode.ui.page.streetCodePage.components.*;
+import com.historycode.ui.page.streetCodePage.elememts.QuickDonateButtonElement;
+import com.historycode.ui.page.streetCodePage.modals.SurveyModal;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 public class StreetCodePage extends BasePage {

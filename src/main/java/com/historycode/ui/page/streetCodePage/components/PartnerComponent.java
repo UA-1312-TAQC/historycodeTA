@@ -1,13 +1,12 @@
-package com.historycode.ui.page.streetCodePage;
+package com.historycode.ui.page.streetCodePage.components;
 
 import com.historycode.ui.component.BaseComponent;
+import com.historycode.ui.page.streetCodePage.components.carousels.PartnersCarousel;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class PartnerComponent extends BaseComponent {
     @FindBy(xpath = ".//div[@class='partnerContainer']")

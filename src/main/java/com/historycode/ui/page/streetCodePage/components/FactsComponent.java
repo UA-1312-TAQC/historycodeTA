@@ -1,14 +1,14 @@
-package com.historycode.ui.page.streetCodePage;
+package com.historycode.ui.page.streetCodePage.components;
 
 import com.historycode.ui.component.BaseComponent;
+import com.historycode.ui.page.streetCodePage.components.carousels.FactsCarousel;
+import com.historycode.ui.page.streetCodePage.modals.FactCardModal;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 public class FactsComponent extends BaseComponent {
     @FindBy(xpath = ".//div[@id='wow-facts']//h1[@class='blockHeadingText']")

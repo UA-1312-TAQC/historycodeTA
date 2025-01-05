@@ -1,6 +1,7 @@
-package com.historycode.ui.page.streetCodePage;
+package com.historycode.ui.page.streetCodePage.modals;
 
 import com.historycode.ui.component.BaseModal;
+import com.historycode.ui.page.streetCodePage.components.PersonsCardComponent;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

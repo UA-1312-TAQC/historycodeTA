@@ -1,4 +1,4 @@
-package com.historycode.ui.page.streetCodePage;
+package com.historycode.ui.page.streetCodePage.elememts;
 
 import com.historycode.ui.elements.BaseElement;
 import org.openqa.selenium.WebDriver;

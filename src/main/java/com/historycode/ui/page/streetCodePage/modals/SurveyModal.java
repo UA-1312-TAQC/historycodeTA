@@ -1,4 +1,4 @@
-package com.historycode.ui.page.streetCodePage;
+package com.historycode.ui.page.streetCodePage.modals;
 
 import com.historycode.ui.component.BaseModal;
 import org.openqa.selenium.WebDriver;
