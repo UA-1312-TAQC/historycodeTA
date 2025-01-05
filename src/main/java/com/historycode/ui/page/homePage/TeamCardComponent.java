@@ -8,19 +8,20 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TeamCardComponent extends BaseComponent {
 
-    @FindBy(css = ".team-photo")
+    @FindBy(css = ".teamImg")
     private WebElement photo;
 
-    @FindBy(css = ".team-name")
+    @FindBy(css = ".teamItemTitle")
     private WebElement name;
 
-    @FindBy(css = ".team-position")
+    @FindBy(css = ".teamItemDescription")
     private WebElement position;
 
-    @FindBy(css = ".social-links")
+    @FindBy(css = ".teamLinkItems a")
     private List<WebElement> socialLinks;
 
     public TeamCardComponent(WebDriver driver, WebElement rootElement) {
@@ -28,24 +29,21 @@ public class TeamCardComponent extends BaseComponent {
         PageFactory.initElements(new DefaultElementLocatorFactory(rootElement), this);
     }
 
-
     public String getPhotoUrl() {
-        return photo.getAttribute("src");
+        return (photo != null) ? photo.getAttribute("src") : "";
     }
-
 
     public String getMemberName() {
-        return name.getText();
+        return (name != null) ? name.getText().trim() : "";
     }
 
-
     public String getMemberPosition() {
-        return position.getText();
+        return (position != null) ? position.getText().trim() : "";
     }
 
     public List<String> getSocialLinks() {
         return socialLinks.stream()
-                .map(el -> el.getAttribute("href"))
-                .toList();
+                .map(link -> link.getAttribute("href"))
+                .collect(Collectors.toList());
     }
 }

@@ -9,19 +9,19 @@ import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
 
 public class NewsCardComponent extends BaseComponent {
 
-    @FindBy(css = ".news-image")
+    @FindBy(xpath = "//div[contains(@class, 'newsSliderContainer')]//img[contains(@class, 'newsPageImg')]")
     private WebElement newsImage;
 
-    @FindBy(css = ".news-title")
+    @FindBy(xpath = "//div[contains(@class, 'newsSliderContainer')]//p[contains(@class, 'cardTextContainerTitle')]")
     private WebElement title;
 
-    @FindBy(css = ".news-date")
+    @FindBy(xpath = "//div[contains(@class, 'newsSliderContainer')]//p[contains(@class, 'cardTextContainerSubTitle')]")
     private WebElement publishDate;
 
-    @FindBy(css = ".news-summary")
+    @FindBy(xpath = "//div[contains(@class, 'newsSliderContainer')]//p[contains(@class, 'cardTextContainerText')]")
     private WebElement summary;
 
-    @FindBy(css = ".news-read-more")
+    @FindBy(xpath = "//div[contains(@class, 'newsSliderContainer')]//a[contains(@class, 'cardTextContainerButton')]")
     private WebElement readMoreLink;
 
     public NewsCardComponent(WebDriver driver, WebElement rootElement) {

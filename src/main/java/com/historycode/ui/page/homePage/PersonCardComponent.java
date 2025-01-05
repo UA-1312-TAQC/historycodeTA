@@ -9,18 +9,20 @@ import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
 
 public class PersonCardComponent extends BaseComponent {
 
-
-    @FindBy(css = ".person-name")
+    @FindBy(xpath = "//div[contains(@class, 'streetcodeSliderContainer')]//p[contains(@class, 'cardTextContainerTitle')]")
     private WebElement personName;
 
-    @FindBy(css = ".person-category")
+    @FindBy(xpath = "//div[contains(@class, 'streetcodeSliderContainer')]//p[contains(@class, 'cardTextContainerSubTitle')]")
     private WebElement category;
 
-    @FindBy(css = ".person-description")
+    @FindBy(xpath = "//div[contains(@class, 'streetcodeSliderContainer')]//p[contains(@class, 'cardTextContainerText')]")
     private WebElement description;
 
-    @FindBy(css = ".person-more-link")
+    @FindBy(xpath = "//div[contains(@class, 'streetcodeSliderContainer')]//a[contains(@class, 'cardTextContainerButton')]")
     private WebElement moreLink;
+
+    @FindBy(xpath = "//div[contains(@class, 'streetcodeSliderContainer')]//img")
+    private WebElement personImage;
 
     public PersonCardComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
@@ -41,5 +43,9 @@ public class PersonCardComponent extends BaseComponent {
 
     public void clickMore() {
         moreLink.click();
+    }
+
+    public String getImageSrc() {
+        return personImage.getAttribute("src");
     }
 }

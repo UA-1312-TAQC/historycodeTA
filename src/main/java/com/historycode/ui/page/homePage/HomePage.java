@@ -6,28 +6,30 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
 public class HomePage extends BasePage {
 
-    @FindBy(css = ".top-carousel")
+    @FindBy(css = ".slick-slider.top-carousel")
     private WebElement topCarouselElement;
 
-    @FindBy(css = ".news-carousel")
+    @FindBy(xpath = "//div[contains(@class, 'newsSliderContainer')]//div[contains(@class, 'slider-item-container')]")
     private WebElement newsCarouselElement;
 
-    @FindBy(css = ".person-carousel")
+    @FindBy(xpath = "//div[@class='streetcodeSliderContainer']//div[@class='slick-slider slick-initialized']")
     private WebElement personCarouselElement;
 
-    @FindBy(css = ".team-carousel")
+    @FindBy(xpath = "//div[@class='teamComponent']//div[@class='sliderClass']")
     private WebElement teamCarouselElement;
 
-    @FindBy(css = ".partners")
+    @FindBy(css = ".partnersBlock")
     private List<WebElement> partnersElements;
 
-    @FindBy(css = ".static-banner")
+    @FindBy(xpath = "//div[contains(@class, 'mainPageBlockStaticBanner')]")
     private List<WebElement> staticBannerElements;
 
     private TopCarousel topCarousel;
@@ -51,7 +53,7 @@ public class HomePage extends BasePage {
                 .collect(Collectors.toList());
     }
 
-    public List<StaticBannerComponent> getStaticBanners() {
+    public List<StaticBannerComponent> getBanners() {
         return staticBannerElements.stream()
                 .map(e -> new StaticBannerComponent(driver, e))
                 .collect(Collectors.toList());
