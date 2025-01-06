@@ -3,6 +3,7 @@ package com.historycode.ui;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -10,28 +11,27 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public abstract class Base {
-
     protected WebDriver driver;
-    private WebDriverWait threadWait;
+    protected WebDriverWait wait;
     private JavascriptExecutor threadJs;
+    protected Actions actions;
 
 
     public Base(WebDriver driver) {
         this.driver = driver;
-        this.threadWait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         this.threadJs = (JavascriptExecutor) driver;
+        this.actions = new Actions(driver);
         PageFactory.initElements(driver, this);
     }
+
     public void scrollToElement(WebElement element) {
-
-        threadWait.until(ExpectedConditions.visibilityOf(element));
+        wait.until(ExpectedConditions.visibilityOf(element));
         threadJs.executeScript("arguments[0].scrollIntoView(true);", element);
-        threadWait.until(ExpectedConditions.visibilityOf(element));
-
+        wait.until(ExpectedConditions.visibilityOf(element));
     }
 
     public void scrollToEndOfPage() {
-
         threadJs.executeScript("window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });");
         sleep(1000);
     }
@@ -41,6 +41,22 @@ public abstract class Base {
             Thread.sleep(millisSeconds);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
+        }
+    }
+
+    public void waitUntilElementVisible(WebElement element) {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(element));
+        } catch (Exception e) {
+            System.err.println("Error waiting for element to be visible: " + e.getMessage());
+        }
+    }
+
+    public void waitUntilElementClickable(WebElement element) {
+        try {
+            wait.until(ExpectedConditions.elementToBeClickable(element));
+        } catch (Exception e) {
+            System.err.println("Error waiting for element to be clickable: " + e.getMessage());
         }
     }
 }

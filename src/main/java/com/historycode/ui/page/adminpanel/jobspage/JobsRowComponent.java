@@ -11,16 +11,23 @@ import org.openqa.selenium.support.FindBy;
 
 @Getter
 public class JobsRowComponent extends BaseComponent {
+    @Getter
     @FindBy(xpath = "//td[@class='ant-table-cell'][1]")
     WebElement title;
+
+    @Getter
     @FindBy(xpath = "//td[@class='ant-table-cell'][2]")
     WebElement salary;
+
+    @Getter
     DropdownComponent dropdownStatus;
-    @FindBy(xpath = "//td[contains(@class, 'ant-table-cell')][4]//span[contains(@class, 'anticon-delete')]//*[name()='svg']")
+    @FindBy(xpath = "//td[contains(@class, 'ant-table-cell')][4]//span[contains(@class, 'delete')]")
     WebElement deleteAction;
-    @FindBy(xpath = "//td[contains(@class, 'ant-table-cell')][4]//span[contains(@class, 'anticon-edit')]//*[name()='svg']")
+
+    @FindBy(xpath = "//td[contains(@class, 'ant-table-cell')][4]//span[contains(@class, 'edit')]")
     WebElement editAction;
 
+    //TODO ask about root element
     public JobsRowComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }

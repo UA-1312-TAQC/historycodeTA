@@ -1,27 +1,32 @@
 package com.historycode.ui.elements.adminPanel;
 
+import com.historycode.ui.component.BaseComponent;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 import lombok.Getter;
 
-public class InputElement {
-
+//TODO what about rootElement for input, do we need it and is it ok extend BaseComponent for it?
+public class InputElement extends BaseComponent {
     @Getter
     @FindBy(xpath = "//div[contains(@class, 'ant-form-item-label')]/label")
-    WebElement label;
+    protected WebElement label;
 
     @Getter
     @FindBy(xpath = "//div[contains(@class, 'input-content')]//span//input[@type='text']")
-    WebElement inputField;
+    protected WebElement inputField;
 
     @Getter
     @FindBy(xpath = "//span[@class='ant-input-suffix']/span")
-    WebElement showCountSymbols;
+    protected WebElement showCountSymbols;
 
     public InputElement(WebDriver driver, WebElement rootElement) {
-        PageFactory.initElements(driver, this);
+        super(driver, rootElement);
+    }
+
+    public void setInputField(String value) {
+        inputField.clear();
+        inputField.sendKeys(value);
     }
 }

@@ -7,20 +7,22 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
 import java.util.List;
 
-@Getter
 public class DropdownComponent extends BaseComponent {
+    @Getter
     @FindBy(xpath = "//td[contains(@class, 'ant-table-cell')]//button[contains(@class, 'ant-btn')]")
     private WebElement dropdownButton;
+
+    @Getter
     @FindBy(xpath = "//ul[contains(@class, 'ant-dropdown-menu')]")
     private WebElement dropdownMenuContainer;
+
+    @Getter
     @FindBy(xpath = "//ul[contains(@class, 'ant-dropdown-menu')]/li")
     private List<WebElement> options;
+
+    @Getter
     @FindBy(xpath = "//div[@class='ant-space-item'][1]")
     private WebElement selectedOption;
 
@@ -33,8 +35,7 @@ public class DropdownComponent extends BaseComponent {
 
     public void openDropdown() {
         dropdownButton.click();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        wait.until(ExpectedConditions.visibilityOf(dropdownMenuContainer));
+        waitUntilElementVisible(dropdownMenuContainer);
     }
 
     public void clickOptionByText(String optionText) {

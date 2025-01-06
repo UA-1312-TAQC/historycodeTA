@@ -11,12 +11,12 @@ public class PartnersPageAdminPanel extends BasePageAdminPanel {
     @FindBy(xpath = "//button[span[text()='Створити партнера']]")
     private WebElement addNewPartnersButton;
     @FindBy(xpath = "//div[@class='partners-page']//div[@class='partners-page-container']")
-    private WebElement rooElement;
+    private WebElement rootElement;
     private PartnersPageGridComponent partnersPageGridComponent;
 
     public PartnersPageAdminPanel(WebDriver driver) {
         super(driver);
-        partnersPageGridComponent = new PartnersPageGridComponent(driver, rooElement);
+        partnersPageGridComponent = new PartnersPageGridComponent(driver, rootElement);
     }
 
     public void clickAddNewPartnersButton() {

@@ -9,31 +9,47 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-@Getter
-@Setter
 public class EditJobModal extends BaseEditModal {
-    InputElement jobTitleInput;
+    @FindBy(xpath = "//label[@for = 'title']/../..")
+    private WebElement titleContainer;
 
-    DropdownComponent jobStatusDropdown;
+    @Getter
+    private InputElement title;
 
+    @FindBy(xpath = "//label[@for = 'status']/../..")
+    private WebElement statusContainer;
+
+    private DropdownComponent jobStatusDropdown;
+
+    @Getter
     @FindBy(xpath = "//div[contains(@class, 'ant-form-item-label')]")
-    WebElement jobDescriptionLabel;
+    private WebElement jobDescriptionLabel;
 
+    @Getter
+    @Setter
     @FindBy(xpath = "//div[@class='ql-editor ql-blank']")
-    WebElement jobDescriptionTextArea;
+    private WebElement jobDescriptionTextArea;
 
+    @Getter
     @FindBy(xpath = "//div[@class= 'editorInfoContainer']/div")
-    WebElement charsCounter;
+    private WebElement charsCounter;
 
-    InputElement salaryInput;
+    @FindBy(xpath = "//label[@for = 'salary']/../..")
+    private WebElement salaryContainer;
+
+    @Getter
+    private InputElement salary;
 
     public EditJobModal(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
+        this.title = new InputElement(driver, titleContainer);
+        this.salary = new InputElement(driver, salaryContainer);
+        this.jobStatusDropdown = new DropdownComponent(driver, statusContainer);
     }
 
     public void inputNewJobTitle(String jobTitle) {
-        jobTitleInput.getInputField().clear();
-        jobTitleInput.getInputField().sendKeys(jobTitle);
+        this.title.getInputField().clear();
+        this.title.setInputField(jobTitle);
     }
 
     public String getJobStatusDropdown() {
@@ -45,14 +61,14 @@ public class EditJobModal extends BaseEditModal {
         return jobStatusDropdown;
     }
 
-    public void inputNewJobDescription(String jobTitle) {
+    public void inputNewJobDescription(String jobDescription) {
         jobDescriptionTextArea.clear();
-        jobDescriptionTextArea.sendKeys(jobTitle);
+        jobDescriptionTextArea.sendKeys(jobDescription);
     }
 
     public void inputNewSalary(Float salary) {
-        salaryInput.getInputField().clear();
-        salaryInput.getInputField().sendKeys(String.valueOf(salary));
+        this.salary.getInputField().clear();
+        this.salary.setInputField(salary.toString());
     }
 
     public EditJobModal saveEditedJob() {

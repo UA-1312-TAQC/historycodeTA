@@ -10,13 +10,14 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
-@Getter
 public abstract class BaseGridComponent extends BaseComponent {
     @FindBy(xpath = "//thead[@class = 'ant-table-thead']//th")
     protected List<WebElement> headerItems;
 
+    @Getter
     protected PaginationAdminPanelComponent pagination;
 
+    @Getter
     @FindBy(xpath = "//div[@class = 'underTableElement']//ul")
     protected WebElement rootPaginationNode;
 
