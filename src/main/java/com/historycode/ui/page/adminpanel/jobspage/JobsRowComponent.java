@@ -27,7 +27,6 @@ public class JobsRowComponent extends BaseComponent {
     @FindBy(xpath = "//td[contains(@class, 'ant-table-cell')][4]//span[contains(@class, 'edit')]")
     WebElement editAction;
 
-    //TODO ask about root element
     public JobsRowComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }

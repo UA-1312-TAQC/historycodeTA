@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+//TODO N3 is it ok to pass root for Edit Modal and other root for grid component?
 public class JobsPageAdminPanel extends BasePageAdminPanel {
     @FindBy(xpath = "//button[span[text()='Додати нову вакансію']]")
     WebElement addNewJobButton;
@@ -34,7 +35,7 @@ public class JobsPageAdminPanel extends BasePageAdminPanel {
         JobsRowComponent jobToDelete = jobsPageGridComponent.getRowById(id);
         jobToDelete.clickDelete();
         return null;
-        //TODO what rootElement should I pass here?
+        //TODO N4 what rootElement should I pass here?
 //        return new DeleteItemModal(driver);
     }
 
@@ -43,6 +44,9 @@ public class JobsPageAdminPanel extends BasePageAdminPanel {
         return new EditJobModal(driver, editModalRootElement);
     }
 
+
+    //TODO N5 Does this logic ok for managing Pagination?
+    // In jobsPageGridComponent pagination methods i return new JobsPageGridComponent(driver, rootElement);
     public JobsPageAdminPanel clickNextPage() {
         jobsPageGridComponent.clickNextPage();
         return this;

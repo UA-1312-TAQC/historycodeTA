@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 
 import lombok.Getter;
 
-//TODO what about rootElement for input, do we need it and is it ok extend BaseComponent for it?
+//TODO N1 what about rootElement for input, do we need it and is it ok extend BaseComponent for it?
 public class InputElement extends BaseComponent {
     @Getter
     @FindBy(xpath = "//div[contains(@class, 'ant-form-item-label')]/label")

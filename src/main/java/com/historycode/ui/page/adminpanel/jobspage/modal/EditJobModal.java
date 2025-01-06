@@ -10,6 +10,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class EditJobModal extends BaseEditModal {
+    //TODO N2 is it ok to pass this rootElement for input and dropdown and then initialise it in constructor?
     @FindBy(xpath = "//label[@for = 'title']/../..")
     private WebElement titleContainer;
 
