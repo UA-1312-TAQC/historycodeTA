@@ -30,10 +30,6 @@ public class SectionListComponent extends BaseComponent {
                 ListOfSections.add(titleElement.getText());
             } catch (NoSuchElementException e) {
                 System.out.println("Section title not found: " + e.getMessage());
-                ListOfSections.add("Title not found");
-            } catch (Exception e) {
-                System.out.println("Unexpected error: " + e.getMessage());
-                ListOfSections.add("Error processing section");
             }
         }
         return ListOfSections;
@@ -47,10 +43,6 @@ public class SectionListComponent extends BaseComponent {
                 ListOfSectionsText.add(contentElement.getText());
             } catch (NoSuchElementException e) {
                 System.out.println("Section content not found: " + e.getMessage());
-                ListOfSectionsText.add("Content not found");
-            } catch (Exception e) {
-                System.out.println("Unexpected error: " + e.getMessage());
-                ListOfSectionsText.add("Error processing content");
             }
         }
         return ListOfSectionsText;
@@ -68,14 +60,9 @@ public class SectionListComponent extends BaseComponent {
                     }
                 } else {
                     System.out.println("No links found in content.");
-                    ListOfSectionsLinks.add("No links");
                 }
             } catch (NoSuchElementException e) {
                 System.out.println("Link element not found: " + e.getMessage());
-                ListOfSectionsLinks.add("Link not found");
-            } catch (Exception e) {
-                System.out.println("Unexpected error: " + e.getMessage());
-                ListOfSectionsLinks.add("Error processing links");
             }
         }
 
