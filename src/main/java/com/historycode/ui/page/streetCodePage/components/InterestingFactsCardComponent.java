@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
-public class FactCardComponent extends BaseComponent {
+public class InterestingFactsCardComponent extends BaseComponent {
     @FindBy(xpath = ".//div[@class='interestingFactSlide']//img")
     private WebElement image;
 
@@ -19,7 +19,7 @@ public class FactCardComponent extends BaseComponent {
     @FindBy(xpath = ".//div[@class='description-popup ']/p")
     private WebElement hoverDescription;
 
-    public FactCardComponent(WebDriver driver, WebElement rootElement) {
+    public InterestingFactsCardComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
 
@@ -52,7 +52,4 @@ public class FactCardComponent extends BaseComponent {
         return rootElement.isDisplayed();
     }
 
-    public void click() {
-        rootElement.click();
-    }
 }

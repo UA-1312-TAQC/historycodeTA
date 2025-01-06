@@ -1,8 +1,8 @@
 package com.historycode.ui.page.streetCodePage.components;
 
 import com.historycode.ui.component.BaseComponent;
-import com.historycode.ui.page.streetCodePage.components.carousels.FactsCarousel;
-import com.historycode.ui.page.streetCodePage.modals.FactCardModal;
+import com.historycode.ui.page.streetCodePage.components.carousels.InterestingFactsCarousel;
+import com.historycode.ui.page.streetCodePage.modals.InterestingFactsModal;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,7 +10,7 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
-public class FactsComponent extends BaseComponent {
+public class InterestingFactsComponent extends BaseComponent {
     @FindBy(xpath = ".//div[@id='wow-facts']//h1[@class='blockHeadingText']")
     private WebElement title;
 
@@ -18,21 +18,21 @@ public class FactsComponent extends BaseComponent {
     private WebElement carouselRoot;
 
     @Getter
-    private FactCardModal factCardModal;
+    private InterestingFactsModal interestingFactsModal;
     @Getter
-    private FactsCarousel carousel;
+    private InterestingFactsCarousel carousel;
 
-    public FactsComponent(WebDriver driver, WebElement rootElement) {
+    public InterestingFactsComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        this.carousel = new FactsCarousel(driver, carouselRoot);
-        this.factCardModal = new FactCardModal(driver, rootElement);
+        this.carousel = new InterestingFactsCarousel(driver, carouselRoot);
+        this.interestingFactsModal = new InterestingFactsModal(driver, rootElement);
     }
 
     public String getTitle() {
         return title.getText();
     }
 
-    public List<FactCardComponent> getFactCards() {
+    public List<InterestingFactsCardComponent> getFactCards() {
         return carousel.getCards();
     }
 
@@ -46,12 +46,19 @@ public class FactsComponent extends BaseComponent {
 
     public void clickFactCard(int index) {
         if (index >= 0 && index < getFactCards().size()) {
-            getFactCards().get(index).click();
+            getFactCards().get(index).clickCard();
         }
     }
 
-    public PaginationComponent getPagination() {
-        return carousel.getPagination();
+    public void goToSlide(int index) {
+        carousel.goToSlide(index);
     }
 
+    public int getCurrentSlideIndex() {
+        return carousel.getCurrentSlideIndex();
+    }
+
+    public int getTotalSlides() {
+        return carousel.getTotalSlides();
+    }
 }

@@ -7,9 +7,13 @@ import com.historycode.ui.page.streetCodePage.components.*;
 import com.historycode.ui.page.streetCodePage.elememts.QuickDonateButtonElement;
 import com.historycode.ui.page.streetCodePage.modals.SurveyModal;
 import lombok.Getter;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 public class StreetCodePage extends BasePage {
 
@@ -28,8 +32,11 @@ public class StreetCodePage extends BasePage {
     @FindBy(xpath = "//div[@class='relatedFiguresContainer']")
     private WebElement relatedFiguresNode;
 
-    @FindBy(xpath = "//div[@class='sourcesContainer']")
+    @FindBy(xpath = "")
     private WebElement additionalInfoNode;
+
+    @FindBy(xpath = "//div[@class='art-gallery']")
+    private WebElement artGalleryNode;
 
     @FindBy(xpath = "//div[@class='partnerContainer']")
     private WebElement partnersNode;
@@ -59,20 +66,21 @@ public class StreetCodePage extends BasePage {
     @Getter
     private MainCardComponent mainCard;
     @Getter
-    private StreetCodeDetailsComponent details;
+    private StreetCodeTextBlockComponent details;
     @Getter
-    private FactsComponent facts;
+    private InterestingFactsComponent facts;
     @Getter
-    private TimelineComponent timeline;
+    private ChronologyComponent timeline;
     @Getter
-    private RelatedFiguresComponent relatedFigures;
+    private RelatedPersonasComponent relatedFigures;
     @Getter
-    private AdditionalInfoComponent additionalInfo;
+    private SourcesComponent additionalInfo;
+    private ArtGalleryComponent artGallery;
     @Getter
     private PartnerComponent partners;
     @Getter
     private RunningLineComponent runningLine;
-    private VerticalProgressComponent verticalProgress;
+    private PageNavigationBarComponent verticalProgress;
     private SurveyModal surveyModal;
 
     public StreetCodePage(WebDriver driver){
@@ -81,15 +89,35 @@ public class StreetCodePage extends BasePage {
         this.scrollTopButton = new ScrollTopButtonElement(driver);
         this.quickDonateButton = new QuickDonateButtonElement(driver);
         this.mainCard = new MainCardComponent(driver, mainCardNode);
-        this.details = new StreetCodeDetailsComponent(driver, detailsNode);
-        this.facts = new FactsComponent(driver, factsNode);
-        this.timeline = new TimelineComponent(driver, timelineNode);
-        this.relatedFigures = new RelatedFiguresComponent(driver, relatedFiguresNode);
-        this.additionalInfo = new AdditionalInfoComponent(driver, additionalInfoNode);
+        this.details = new StreetCodeTextBlockComponent(driver, detailsNode);
+        this.facts = new InterestingFactsComponent(driver, factsNode);
+        this.timeline = new ChronologyComponent(driver, timelineNode);
+        this.relatedFigures = new RelatedPersonasComponent(driver, relatedFiguresNode);
+        this.additionalInfo = new SourcesComponent(driver, additionalInfoNode);
         this.partners = new PartnerComponent(driver, partnersNode);
         this.runningLine = new RunningLineComponent(driver, runningLineNode);
-        this.verticalProgress = new VerticalProgressComponent(driver, verticalProgressNode);
+        this.verticalProgress = new PageNavigationBarComponent(driver, verticalProgressNode);
         this.surveyModal = new SurveyModal(driver, surveyModalNode);
+        initializeArtGallery();
+    }
+
+    private void initializeArtGallery() {
+        if (isElementPresent(By.xpath("//div[@class='art-gallery']"))) {
+            this.artGallery = new ArtGalleryComponent(driver, artGalleryNode);
+        }
+    }
+
+    public Optional<ArtGalleryComponent> getArtGallery() {
+        return Optional.ofNullable(artGallery);
+    }
+
+    private boolean isElementPresent(By locator) {
+        try {
+            driver.findElement(locator);
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
     }
 
     public void openDonateModal() {

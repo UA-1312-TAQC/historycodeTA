@@ -1,7 +1,7 @@
 package com.historycode.ui.page.streetCodePage.components;
 
 import com.historycode.ui.component.BaseComponent;
-import com.historycode.ui.page.streetCodePage.modals.KeywordPersonsModal;
+import com.historycode.ui.page.streetCodePage.modals.KeywordPersonasModal;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -32,16 +32,16 @@ public class MainCardComponent extends BaseComponent {
     @FindBy(xpath = ".//div[@class='cardFooter']/button")
     private WebElement audioButton;
 
-    @FindBy(xpath = ".//div[@class='leftSider']//ul")
-    private WebElement paginationContainer;
+    @FindBy(xpath = ".//div[@class='leftSider']//ul[@class='slick-dots']")
+    private WebElement paginationNode;
 
-    private KeywordPersonsModal keywordPersonsModal;
-    private PaginationComponent paginationComponent;
+    private KeywordPersonasModal keywordPersonsModal;
+    private PaginationComponent pagination;
 
     public MainCardComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        this.keywordPersonsModal = new KeywordPersonsModal(driver, rootElement);
-        this.paginationComponent = new PaginationComponent(driver, paginationContainer);
+        this.keywordPersonsModal = new KeywordPersonasModal(driver, rootElement);
+        this.pagination = new PaginationComponent(driver, paginationNode);
     }
 
     public List<String> getPersonPhotos() {
@@ -88,7 +88,19 @@ public class MainCardComponent extends BaseComponent {
         audioButton.click();
     }
 
-    public KeywordPersonsModal getKeywordModal() {
+    public void goToPhoto(int index) {
+        pagination.selectDot(index);
+    }
+
+    public int getCurrentPhotoIndex() {
+        return pagination.getActiveIndex();
+    }
+
+    public int getTotalPhotos() {
+        return pagination.getTotalDots();
+    }
+
+    public KeywordPersonasModal getKeywordModal() {
         return keywordPersonsModal;
     }
 }

@@ -9,7 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class PersonsCardComponent extends BaseComponent {
+public class RelatedPersonasCardComponent extends BaseComponent {
     @FindBy(xpath = ".//div[@class='slider-item-container']//a[1]")
     private WebElement photo;
 
@@ -23,9 +23,9 @@ public class PersonsCardComponent extends BaseComponent {
     private WebElement keywordsContainer;
 
     @FindBy(xpath = ".//div[@class='figureSlideText']//div[@class='relatedTagList undefined']/button/p")
-    private List<WebElement> keywords;
+    private List<WebElement> streetCodeTags;
 
-    public PersonsCardComponent(WebDriver driver, WebElement rootElement) {
+    public RelatedPersonasCardComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
 
@@ -50,9 +50,13 @@ public class PersonsCardComponent extends BaseComponent {
         actions.moveToElement(rootElement).perform();
     }
 
-    public List<String> getKeywords() {
-        return keywords.stream()
+    public List<String> getStreetCodeTags() {
+        return streetCodeTags.stream()
                 .map(WebElement::getText)
                 .collect(Collectors.toList());
+    }
+
+    public boolean areTagsVisible() {
+        return !streetCodeTags.isEmpty() && streetCodeTags.get(0).isDisplayed();
     }
 }

@@ -1,32 +1,40 @@
 package com.historycode.ui.page.streetCodePage.components;
 
 import com.historycode.ui.component.BaseComponent;
-import com.historycode.ui.page.streetCodePage.components.carousels.PersonsCarousel;
+import com.historycode.ui.page.streetCodePage.components.carousels.PersonasCarousel;
+import com.historycode.ui.page.streetCodePage.modals.RelatedPersonasModal;
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
-public class RelatedFiguresComponent extends BaseComponent {
+public class RelatedPersonasComponent extends BaseComponent {
     @FindBy(xpath = ".//div[@class='relatedFiguresContainer']//h1")
     private WebElement sectionTitle;
 
     @FindBy(xpath = ".//div[@class='relatedFiguresSliderContainer']")
     private WebElement carouselRoot;
 
-    private PersonsCarousel carousel;
+    @FindBy(xpath = ".//div[@class='relatedFiguresContainer']//div[@class='moreInfo']/p")
+    private WebElement viewAllButton;
 
-    public RelatedFiguresComponent(WebDriver driver, WebElement rootElement) {
+    @Getter
+    private RelatedPersonasModal modal;
+    private PersonasCarousel carousel;
+
+    public RelatedPersonasComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        this.carousel = new PersonsCarousel(driver, carouselRoot);
+        this.carousel = new PersonasCarousel(driver, carouselRoot);
+        this.modal = new RelatedPersonasModal(driver, rootElement);
     }
 
     public String getTitle() {
         return sectionTitle.getText();
     }
 
-    public List<PersonsCardComponent> getPersonCards() {
+    public List<RelatedPersonasCardComponent> getPersonCards() {
         return carousel.getCards();
     }
 
@@ -47,4 +55,13 @@ public class RelatedFiguresComponent extends BaseComponent {
     public boolean hasNavigationArrows() {
         return carousel.hasArrows();
     }
+
+    public boolean isViewAllButtonVisible() {
+        return viewAllButton.isDisplayed();
+    }
+
+    public void clickViewAllButton() {
+        viewAllButton.click();
+    }
+
 }

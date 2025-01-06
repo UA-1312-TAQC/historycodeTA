@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class TimelineCardComponent extends BaseComponent {
+public class ChronologyCardComponent extends BaseComponent {
     @FindBy(xpath = ".//div[@class='timelineItem']//p[@class='timelineItemMetadata']/text()[1]")
     private WebElement year;
 
@@ -18,7 +18,7 @@ public class TimelineCardComponent extends BaseComponent {
     @FindBy(xpath = ".//div[@class='timelineItem']//p[@class='timelineItemDescription']")
     private WebElement description;
 
-    public TimelineCardComponent(WebDriver driver, WebElement rootElement) {
+    public ChronologyCardComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
 

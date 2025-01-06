@@ -7,14 +7,14 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
-public class VerticalProgressComponent extends BaseComponent {
+public class PageNavigationBarComponent extends BaseComponent {
     @FindBy(xpath = ".//div[@class='progressBarPopupContent']/div/span")
     private List<WebElement> sectionNumbers;
 
     @FindBy(xpath = ".//div[@class='progressBarPopupContainer']")
     private WebElement hideButton;
 
-    public VerticalProgressComponent(WebDriver driver, WebElement rootElement) {
+    public PageNavigationBarComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
 

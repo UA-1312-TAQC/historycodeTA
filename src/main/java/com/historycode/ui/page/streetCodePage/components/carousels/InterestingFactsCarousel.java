@@ -1,7 +1,8 @@
 package com.historycode.ui.page.streetCodePage.components.carousels;
 
-import com.historycode.ui.page.streetCodePage.components.FactCardComponent;
+import com.historycode.ui.page.streetCodePage.components.InterestingFactsCardComponent;
 import com.historycode.ui.page.streetCodePage.components.PaginationComponent;
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,7 +10,7 @@ import org.openqa.selenium.support.FindBy;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class FactsCarousel extends BaseCarousel {
+public class InterestingFactsCarousel extends BaseCarousel {
     @FindBy(xpath = ".//div[@class='interestingFactSlide']")
     private List<WebElement> factCardNodes;
 
@@ -20,32 +21,45 @@ public class FactsCarousel extends BaseCarousel {
     private WebElement rightArrow;
 
     @FindBy(xpath = ".//div[@class='interestingFactsSliderContainer']//ul[@class='slick-dots']")
-    private WebElement pagination;
+    private WebElement paginationNode;
 
-    private List<FactCardComponent> factCards;
-    private PaginationComponent paginationComponent;
+    private List<InterestingFactsCardComponent> factCards;
+    @Getter
+    private PaginationComponent pagination;
 
-    public FactsCarousel(WebDriver driver, WebElement rootElement) {
+    public InterestingFactsCarousel(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
         this.factCards = factCardNodes.stream()
-                .map(node -> new FactCardComponent(driver, node))
+                .map(node -> new InterestingFactsCardComponent(driver, node))
                 .collect(Collectors.toList());
-        this.paginationComponent = new PaginationComponent(driver, pagination);
+        this.pagination = new PaginationComponent(driver, paginationNode);
     }
 
     public void clickNext() {
-        rightArrow.click();
+        if (hasArrows()) {
+            rightArrow.click();
+        }
     }
 
     public void clickPrevious() {
-        leftArrow.click();
+        if (hasArrows()) {
+            leftArrow.click();
+        }
     }
 
-    public List<FactCardComponent> getCards() {
+    public void goToSlide(int index) {
+        pagination.selectDot(index);
+    }
+
+    public int getCurrentSlideIndex() {
+        return pagination.getActiveIndex();
+    }
+
+    public int getTotalSlides() {
+        return pagination.getTotalDots();
+    }
+
+    public List<InterestingFactsCardComponent> getCards() {
         return factCards;
-    }
-
-    public PaginationComponent getPagination() {
-        return paginationComponent;
     }
 }

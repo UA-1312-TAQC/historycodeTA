@@ -1,7 +1,7 @@
 package com.historycode.ui.page.streetCodePage.modals;
 
 import com.historycode.ui.component.BaseModal;
-import com.historycode.ui.page.streetCodePage.components.PersonsCardComponent;
+import com.historycode.ui.page.streetCodePage.components.RelatedPersonasCardComponent;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
-public class KeywordPersonsModal extends BaseModal {
+public class KeywordPersonasModal extends BaseModal {
     @FindBy(xpath = ".//div[@class='tagModalContainer']//button")
     private List<WebElement> keywords;
 
@@ -19,12 +19,12 @@ public class KeywordPersonsModal extends BaseModal {
     private List<WebElement> personCards;
 
     @Getter
-    private List<PersonsCardComponent> persons;
+    private List<RelatedPersonasCardComponent> persons;
 
-    public KeywordPersonsModal(WebDriver driver, WebElement rootElement) {
+    public KeywordPersonasModal(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
         this.persons = personCards.stream()
-                .map(card -> new PersonsCardComponent(driver, card))
+                .map(card -> new RelatedPersonasCardComponent(driver, card))
                 .collect(Collectors.toList());
     }
 

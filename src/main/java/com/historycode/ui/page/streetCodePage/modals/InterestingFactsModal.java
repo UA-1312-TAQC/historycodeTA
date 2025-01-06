@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
-public class FactCardModal extends BaseModal {
+public class InterestingFactsModal extends BaseModal {
     @FindBy(xpath = ".//div[@class='factsImgContainer']//img")
     private WebElement modalImage;
 
@@ -22,7 +22,7 @@ public class FactCardModal extends BaseModal {
     @FindBy(xpath = ".//div[@class='ant-modal css-k7429z interestingFactsModal']//button")
     private WebElement closeButton;
 
-    public FactCardModal(WebDriver driver, WebElement rootElement) {
+    public InterestingFactsModal(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
 

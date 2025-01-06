@@ -8,7 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class AdditionalInfoModal extends BaseModal {
+public class SourcesModal extends BaseModal {
     @FindBy(xpath = ".//div[contains(@class, 'sourceImgContainer')]/h1")
     private WebElement modalTitle;
 
@@ -18,7 +18,7 @@ public class AdditionalInfoModal extends BaseModal {
     @FindBy(xpath = ".//button[@type='button' and @aria-label='Close' and contains(@class, 'ant-modal-close')]")
     private WebElement closeButton;
 
-    public AdditionalInfoModal(WebDriver driver, WebElement rootElement) {
+    public SourcesModal(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
 

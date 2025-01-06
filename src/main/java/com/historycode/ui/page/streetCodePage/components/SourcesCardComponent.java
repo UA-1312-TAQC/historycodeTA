@@ -5,11 +5,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class InfoCardComponent extends BaseComponent {
+public class SourcesCardComponent extends BaseComponent {
     @FindBy(xpath = ".//div[contains(@class, 'sourcesSliderItem')]/h1")
     private WebElement categoryTitle;
 
-    public InfoCardComponent(WebDriver driver, WebElement rootElement) {
+    public SourcesCardComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
 
