@@ -1,4 +1,4 @@
-package com.historycode.ui.page.streetCodePage;
+package com.historycode.ui.page.streetCodePage.modals;
 
 import com.historycode.ui.component.BaseModal;
 import org.openqa.selenium.WebDriver;
@@ -8,17 +8,17 @@ import org.openqa.selenium.support.FindBy;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class AdditionalInfoModal extends BaseModal {
-    @FindBy(xpath = "")
+public class SourcesModal extends BaseModal {
+    @FindBy(xpath = ".//div[contains(@class, 'sourceImgContainer')]/h1")
     private WebElement modalTitle;
 
-    @FindBy(xpath = "")
+    @FindBy(xpath = ".//div[contains(@class, 'mainContentContainer')]//p")
     private List<WebElement> contentItems;
 
-    @FindBy(xpath = "")
+    @FindBy(xpath = ".//div[@class='ant-modal css-k7429z sourcesModal']//button")
     private WebElement closeButton;
 
-    public AdditionalInfoModal(WebDriver driver, WebElement rootElement) {
+    public SourcesModal(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
 
@@ -32,7 +32,11 @@ public class AdditionalInfoModal extends BaseModal {
                 .collect(Collectors.toList());
     }
 
-    public void close() {
+    public void closeModal() {
         closeButton.click();
+    }
+
+    public boolean isModalDisplayed() {
+        return modalTitle.isDisplayed();
     }
 }
