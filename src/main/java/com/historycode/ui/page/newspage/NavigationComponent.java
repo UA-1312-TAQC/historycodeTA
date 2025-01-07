@@ -20,21 +20,6 @@ public class NavigationComponent extends BaseComponent {
         super(driver, rootElement);
     }
 
-    public void clickPreviousNewsLink() {
-        if (isPreviousNewsLinkEnabled()) {
-            previousNewsLink.click();
-        } else {
-            throw new IllegalStateException("Previous news link is not enabled.");
-        }
-    }
-    public void clickNextNewsLink() {
-        if (isNextNewsLinkEnabled()) {
-            nextNewsLink.click();
-        } else {
-            throw new IllegalStateException("Next news link is not enabled.");
-        }
-    }
-
     public boolean isPreviousNewsLinkEnabled() {
         try {
             return previousNewsLink.isEnabled();

@@ -4,6 +4,9 @@ import com.historycode.ui.page.BasePage;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 
+import java.util.List;
+import java.util.Map;
+
 @Getter
 public class NewsPage extends BasePage {
     private NewsArticleComponent newsArticleComponent;
@@ -19,47 +22,38 @@ public class NewsPage extends BasePage {
     }
 
     public String getNewsTitle() {
-        return newsArticleComponent.isNewsTitleVisible();
+        return newsArticleComponent.getNewsTitle();
     }
 
-    public String getNewsDate() {
-        return newsArticleComponent.isPublicationDateVisible();
+    public String getPublicationDate() {
+        return newsArticleComponent.getPublicationDate();
     }
 
     public String getNewsContent() {
-        return newsArticleComponent.isNewsContentVisible();
+        return newsArticleComponent.getNewsContent();
     }
 
     public boolean isNewsImageVisible() {
         return newsArticleComponent.isNewsImageVisible();
     }
 
-    public boolean isPreviousButtonEnabled() {
-        return navigationComponent.isPreviousNewsLinkEnabled();
+    public List<String> checkLinksInNewsContent() {
+        return newsArticleComponent.getLinksInNewsContent();
     }
 
-    public void goToPreviousPage() {
-        navigationComponent.clickPreviousNewsLink();
+    public boolean isPreviousButtonEnabled() {
+        return navigationComponent.isPreviousNewsLinkEnabled();
     }
 
     public boolean isNextButtonEnabled() {
         return navigationComponent.isNextNewsLinkEnabled();
     }
 
-    public void goToNextPage() {
-        navigationComponent.clickNextNewsLink();
-    }
-
     public String getRelatedNewsTitle() {
         return relatedNewsComponent.getRelatedNewsTitle();
     }
 
-    public void clickRelatedNewsButton() {
-        relatedNewsComponent.clickRelatedNewsButton();
-    }
-
     public boolean isRelatedNewsVisible() {
-        return relatedNewsComponent.isRelatedNewsVisible();
+        return relatedNewsComponent.isRelatedNewsButtonEnabled();
     }
-
 }
