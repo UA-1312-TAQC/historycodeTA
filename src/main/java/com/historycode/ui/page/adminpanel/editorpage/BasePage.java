@@ -5,26 +5,52 @@ import com.historycode.ui.page.adminpanel.editorpage.components.SectionsComponen
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+
+import java.util.List;
+import java.util.NoSuchElementException;
 
 public abstract class BasePage extends BasePageAdminPanel {
     private static final String ROOT_SECTIONS_XPATH = "//div[@class='ant-tabs-nav-list']";
     private static final String ROOT_ADD_BUTTON_XPATH = "//div[@class='ant-tabs-content-holder']//div[@class='container-justify-end']";
     private static final String ROOT_GRID_XPATH = "//div[contains(@class, 'ant-table-wrapper')]";
-    public WebElement rootAddButton;
+
+    @FindBy(xpath = ROOT_ADD_BUTTON_XPATH)
+    private List<WebElement> rootAddButtonAll;
+    @FindBy(xpath = ROOT_SECTIONS_XPATH)
     private WebElement rootSections;
-    public WebElement rootGrid;
-    private SectionsComponent sections;
+    private final SectionsComponent sections = new SectionsComponent(driver, rootSections);
+    @FindBy(xpath = ROOT_GRID_XPATH)
+    private WebElement rootGrid;
+    private WebElement rootAddButton;
 
     public BasePage(WebDriver driver) {
         super(driver);
-        this.rootAddButton = driver.findElement(By.xpath(ROOT_ADD_BUTTON_XPATH));
-        this.rootSections = driver.findElement(By.xpath(ROOT_SECTIONS_XPATH));
-        this.rootGrid = driver.findElement(By.xpath(ROOT_GRID_XPATH));
-        this.sections = new SectionsComponent(driver, rootSections);
+        setRootAddButton();
     }
 
-    public CategoriesPage moveToCategories(){
+    public static void moveToElement(WebDriver driver, WebElement element) {
+        Actions actions = new Actions(driver);
+        actions.moveToElement(element).perform();
+    }
+
+    public void setRootAddButton() {
+        rootAddButton = rootAddButtonAll.stream()
+                .filter(WebElement::isDisplayed)
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException("No visible element found"));
+    }
+
+    public WebElement getRootAddButton() {
+        return rootAddButton;
+    }
+
+    public WebElement getRootGrid() {
+        return rootGrid;
+    }
+
+    public CategoriesPage moveToCategories() throws InterruptedException {
         sections.clickCategories();
         //TODO Maybe add waiting
         return new CategoriesPage(driver);
@@ -47,5 +73,16 @@ public abstract class BasePage extends BasePageAdminPanel {
         Thread.sleep(2000);
         return new ContextsPage(driver);
     }
+
+    public WebElement getDisplayedModalRoot() {
+        String MODAL_XPATH = "//div[@class='ant-modal-content']";
+        List<WebElement> rootElementAll = driver.findElements(By.xpath(MODAL_XPATH));
+        return rootElementAll
+                .stream()
+                .filter(WebElement::isDisplayed)
+                .findFirst()
+                .orElse(null);
+    }
+
     //TODO Add pagination component
 }

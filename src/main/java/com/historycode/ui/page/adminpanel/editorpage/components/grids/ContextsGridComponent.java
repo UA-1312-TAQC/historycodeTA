@@ -1,17 +1,13 @@
 package com.historycode.ui.page.adminpanel.editorpage.components.grids;
 
-import com.historycode.ui.page.adminpanel.editorpage.components.rows.CategoriesRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.ContextsRowComponent;
-import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.w3c.dom.ls.LSInput;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Getter
 public class ContextsGridComponent extends GridComponent {
     List<ContextsRowComponent> rows = new ArrayList<>();
 

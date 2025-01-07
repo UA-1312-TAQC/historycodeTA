@@ -1,28 +1,34 @@
 package com.historycode.ui.page.adminpanel.editorpage;
 
 import com.historycode.ui.page.adminpanel.editorpage.components.grids.ContextsGridComponent;
+import com.historycode.ui.page.adminpanel.editorpage.components.modals.ContextsModalComponent;
+import com.historycode.ui.page.adminpanel.editorpage.components.modals.ModalComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.ContextsRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.elements.addButtonElement;
+import com.sun.source.tree.Tree;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
 public class ContextsPage extends BasePage {
-    private addButtonElement addContextButton = new addButtonElement(driver, rootAddButton);
-    private ContextsGridComponent grid = new ContextsGridComponent(driver, rootGrid);
+    private final addButtonElement addContextButton = new addButtonElement(driver, getRootAddButton());
+    private final ContextsGridComponent grid = new ContextsGridComponent(driver, getRootGrid());
 
     public ContextsPage(WebDriver driver) {
         super(driver);
     }
 
-    public void addContext() {
-        //TODO Update to return modal
+    public ContextsModalComponent addContext() throws InterruptedException {
         addContextButton.clickButton();
+        Thread.sleep(1000);
+        return new ContextsModalComponent(driver, getDisplayedModalRoot());
     }
 
     public int getTableHeadersCount(){
-        return grid.headerItems.size();
+        return grid.getHeaderItems().size();
     }
 
     public List<String> getTableHeadersString() {
@@ -30,7 +36,7 @@ public class ContextsPage extends BasePage {
     }
 
     public List<WebElement> getTableHeaders(){
-        return grid.headerItems;
+        return grid.getHeaderItems();
     }
 
     public int getTableRowsCount() {
@@ -57,9 +63,14 @@ public class ContextsPage extends BasePage {
         return grid.getRowByTitle(title);
     }
 
-    public void editTableRow(ContextsRowComponent row) {
-        //TODO Implement return of modal
+    public String getAddButtonText(){
+        return addContextButton.getButtonText();
+    }
+
+    public ContextsModalComponent editTableRow(ContextsRowComponent row) throws InterruptedException {
         grid.editRow(row);
+        Thread.sleep(500);
+        return new ContextsModalComponent(driver, getDisplayedModalRoot());
     }
 
     public void deleteTableRow(ContextsRowComponent row) {

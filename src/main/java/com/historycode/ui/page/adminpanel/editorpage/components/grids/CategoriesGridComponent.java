@@ -1,8 +1,6 @@
 package com.historycode.ui.page.adminpanel.editorpage.components.grids;
 
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.CategoriesRowComponent;
-import com.historycode.ui.page.adminpanel.editorpage.components.rows.ContextsRowComponent;
-import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -10,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Getter
 public class CategoriesGridComponent extends GridComponent {
     List<CategoriesRowComponent> rows = new ArrayList<>();
 

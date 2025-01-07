@@ -1,13 +1,14 @@
 package com.historycode.ui.page.adminpanel.editorpage.elements;
 
 import com.historycode.ui.component.BaseComponent;
+import com.historycode.ui.page.adminpanel.editorpage.BasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class addButtonElement extends BaseComponent {
-    private static final String BUTTON_XPATH = "//div[@class = 'container-justify-end']//button[contains(@class, 'categories')]";
-    private static final String LABEL_XPATH = "//div[@class = 'container-justify-end']//button[contains(@class, 'categories')]//span";
+    private static final String BUTTON_XPATH = ".//button[contains(@class, 'add-button')]";
+    private static final String LABEL_XPATH = ".//button[contains(@class, 'add-button')]//span";
 
     @FindBy(xpath = BUTTON_XPATH)
     private WebElement button;
@@ -19,7 +20,8 @@ public class addButtonElement extends BaseComponent {
     }
 
     public void clickButton() {
-        this.button.click();
+        BasePage.moveToElement(driver, button);
+        button.click();
     }
 
     public String getButtonText() {

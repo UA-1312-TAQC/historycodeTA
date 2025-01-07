@@ -1,18 +1,21 @@
 package com.historycode.ui.page.adminpanel.editorpage.components.rows;
 
 import com.historycode.ui.component.BaseComponent;
+import jdk.jfr.Frequency;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
 
 public class RowComponent extends BaseComponent {
-    private static final String TITLE_XPATH = ".//td[@class='ant-table-cell'][1]//div";  // Relative to rootElement
+    private static final String TITLE_XPATH = ".//td[@class='ant-table-cell'][1]//div";
 
-    private final WebElement title;
+    @FindBy(xpath = TITLE_XPATH)
+    private WebElement title;
 
     public RowComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        this.title = rootElement.findElement(By.xpath(TITLE_XPATH));
     }
 
     public String getTitle() {

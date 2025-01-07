@@ -1,28 +1,34 @@
 package com.historycode.ui.page.adminpanel.editorpage;
 
 import com.historycode.ui.page.adminpanel.editorpage.components.grids.PositionsGridComponent;
+import com.historycode.ui.page.adminpanel.editorpage.components.modals.ContextsModalComponent;
+import com.historycode.ui.page.adminpanel.editorpage.components.modals.ModalComponent;
+import com.historycode.ui.page.adminpanel.editorpage.components.modals.PositionsModalComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.PositionsRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.elements.addButtonElement;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
 public class PositionsPage extends BasePage {
-    private addButtonElement addPositionButton = new addButtonElement(driver, rootAddButton);
-    private PositionsGridComponent grid = new PositionsGridComponent(driver, rootGrid);
+    private final addButtonElement addPositionButton = new addButtonElement(driver, getRootAddButton());
+    private final PositionsGridComponent grid = new PositionsGridComponent(driver, getRootGrid());
 
-    public PositionsPage(WebDriver driver){
+    public PositionsPage(WebDriver driver) {
         super(driver);
     }
 
-    public void addPosition() {
-        //TODO Update to return modal
+    public PositionsModalComponent addPosition() throws InterruptedException {
         addPositionButton.clickButton();
+        Thread.sleep(1000);
+        return new PositionsModalComponent(driver, getDisplayedModalRoot());
     }
 
     public int getTableHeadersCount(){
-        return grid.headerItems.size();
+        return grid.getHeaderItems().size();
     }
 
     public List<String> getTableHeadersString() {
@@ -30,7 +36,7 @@ public class PositionsPage extends BasePage {
     }
 
     public List<WebElement> getTableHeaders(){
-        return grid.headerItems;
+        return grid.getHeaderItems();
     }
 
     public int getTableRowsCount() {
@@ -57,9 +63,14 @@ public class PositionsPage extends BasePage {
         return grid.getRowByTitle(title);
     }
 
-    public void editTableRow(PositionsRowComponent row) {
-        //TODO Implement return of modal
+    public String getAddButtonText(){
+        return addPositionButton.getButtonText();
+    }
+
+    public PositionsModalComponent editTableRow(PositionsRowComponent row) throws InterruptedException {
         grid.editRow(row);
+        Thread.sleep(500);
+        return new PositionsModalComponent(driver, getDisplayedModalRoot());
     }
 
     public void deleteTableRow(PositionsRowComponent row) {
