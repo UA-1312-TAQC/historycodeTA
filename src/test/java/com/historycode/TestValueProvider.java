@@ -30,4 +30,11 @@ public class TestValueProvider {
     public String getAdminPass(){
         return  properties != null ? properties.getProperty("admin.pass") : System.getenv("ADMIN_PASS");
     }
+    public String getAccessToken(){
+        return  properties != null ? properties.getProperty("AccessToken") : System.getenv("AccessToken");
+    }
+    public String getRefreshToken(){
+        return  properties != null ? properties.getProperty("RefreshToken") : System.getenv("RefreshToken");
+    }
+
 }

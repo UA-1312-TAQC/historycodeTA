@@ -4,6 +4,7 @@ import com.historycode.ui.page.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 public class LoginPageAdminPanel extends BasePage {
@@ -34,12 +35,14 @@ public class LoginPageAdminPanel extends BasePage {
         return password.getLabel();
     }
 
-    public void enterLogin(String inputData) {
+    public LoginPageAdminPanel enterLogin(String inputData) {
         login.fillInput(inputData);
+        return this;
     }
 
-    public void enterPassword(String inputData) {
+    public LoginPageAdminPanel enterPassword(String inputData) {
         password.fillInput(inputData);
+        return this;
     }
 
 
@@ -51,6 +54,13 @@ public class LoginPageAdminPanel extends BasePage {
 
     public LoginPageAdminPanel clickSighInButtonNegative() {
         sighInButton.click();
+        return this;
+    }
+    public LoginPageAdminPanel clickCaptcha() {
+        WebElement passwordLabel = driver.findElement(By.xpath("//*[@id='root']/div/div[4]/div[2]/form/div[2]/div/div[1]/label"));
+        sleep(3000);
+        new Actions(driver).moveToElement(passwordLabel).moveByOffset(30, 70).click().perform();
+        sleep(10000);
         return this;
     }
 
