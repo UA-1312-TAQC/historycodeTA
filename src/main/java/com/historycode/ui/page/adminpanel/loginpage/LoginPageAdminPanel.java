@@ -12,8 +12,8 @@ public class LoginPageAdminPanel extends BasePage {
     private final String PASSWORD_CSS = "form .ant-form-item:nth-child(2) div";
 
 
-    private LoginInputComponent login;
-    private LoginInputComponent password;
+    private final LoginInputComponent login;
+    private final LoginInputComponent password;
 
 
     @FindBy(css = "button.loginBtn")
@@ -26,24 +26,32 @@ public class LoginPageAdminPanel extends BasePage {
         password = new LoginInputComponent(driver, driver.findElement(By.cssSelector(PASSWORD_CSS)));
     }
 
-    public String getLoginLabel(){return login.getLabel();}
-    public String getPasswordLabel(){return password.getLabel();}
-
-    public void enterLogin(String inputData){login.fillInput(inputData);}
-
-    public void enterPassword(String inputData){password.fillInput(inputData);}
-
-
-    //TODO set correct page as a return value
-    /*
-    public StreetCodeCatalogPageAdminPanel clickSighInButtonPositive(){
-        sighInButton.click();
-        return new StreetCodeCatalogPageAdminPanel
+    public String getLoginLabel() {
+        return login.getLabel();
     }
-*/
 
-    public void clickSighInButtonNegative(){
+    public String getPasswordLabel() {
+        return password.getLabel();
+    }
+
+    public void enterLogin(String inputData) {
+        login.fillInput(inputData);
+    }
+
+    public void enterPassword(String inputData) {
+        password.fillInput(inputData);
+    }
+
+
+    public void clickSighInButtonPositive() {
         sighInButton.click();
+//        return new StreetCodeCatalogPageAdminPanel
+    }
+
+
+    public LoginPageAdminPanel clickSighInButtonNegative() {
+        sighInButton.click();
+        return this;
     }
 
 }
