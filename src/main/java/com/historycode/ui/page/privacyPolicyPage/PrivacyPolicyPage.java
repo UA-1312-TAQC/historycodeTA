@@ -8,18 +8,21 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 
 public class PrivacyPolicyPage extends BasePage {
+    
+    @FindBy(xpath="//main")
+    private WebElement sectionRootElement;
+    @FindBy(xpath = "//div[@class='titleContainer']")
+    private WebElement titleRootElement;
 
-    SectionListComponent sectionComponent;
-    TitleContainerComponent title;
+    private SectionListComponent sectionComponent;
+    private TitleContainerComponent titleComponent;
 
     public PrivacyPolicyPage(WebDriver driver) {
         super(driver);
-        WebElement sectionRootElement = driver.findElement(By.xpath("//main"));
-        WebElement titleRootElement = driver.findElement(By.xpath("//div[@class='titleContainer']"));
-        sectionComponent = new SectionListComponent(driver, sectionRootElement);
-        title = new TitleContainerComponent(driver, titleRootElement);
+        this.sectionComponent = new SectionListComponent(driver, sectionRootElement);
+        this.titleComponent = new TitleContainerComponent(driver, titleRootElement);
     }
-
+    
     public List<String> getSectionsName() {
         return sectionComponent.SectionsName();
     }
@@ -30,13 +33,13 @@ public class PrivacyPolicyPage extends BasePage {
         return sectionComponent.SectionsLinks();
     }
     public String getTitleName() {
-        return title.titleName();
+        return titleComponent.titleName();
     }
     public String getSubTitle() {
-        return title.subTitle();
+        return titleComponent.subTitle();
     }
     public String getDisclaimer() {
-        return title.disclaimer();
+        return titleComponent.disclaimer();
     }
 
 

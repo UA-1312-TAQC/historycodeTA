@@ -5,7 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class ScrollTopButtonElement extends BaseElement{
-    @FindBy(xpath = "")
+    @FindBy(xpath = ".//div[@class='scrollToTopBtnContainer']")
     private WebElement scrollButton;
 
     public ScrollTopButtonElement(WebDriver driver) {
@@ -15,8 +15,7 @@ public class ScrollTopButtonElement extends BaseElement{
     public void clickScrollTop() {
         scrollButton.click();
     }
-
-    public boolean isButtonSticky() {
-        return scrollButton.getCssValue("position").equals("sticky");
+    public void isButtonDisplayed() {
+        scrollButton.isDisplayed();
     }
 }
