@@ -59,10 +59,10 @@ public class TeamRowComponent extends BaseComponent {
         return socialMediaLinks;
     }
 
-    public DeleteItemModal clickDelete() {
-        deleteAction.click();
-        return new DeleteItemModal(driver, rootElement);
-    }
+//    public DeleteItemModal clickDelete() {
+//        deleteAction.click();
+//        return new DeleteItemModal(driver, rootElement);
+//    }
 
     public EditMemberModal clickEdit() {
         editAction.click();

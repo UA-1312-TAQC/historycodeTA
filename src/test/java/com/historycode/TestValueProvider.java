@@ -24,4 +24,10 @@ public class TestValueProvider {
     public int getImplicitlyWait(){
         return  properties != null ? Integer.parseInt(properties.getProperty("implicitlyWait")) : Integer.parseInt(System.getenv("IMPLICITLY_WAIT"));
     }
+    public String getAdminEmail(){
+        return  properties != null ? properties.getProperty("admin.email") : System.getenv("ADMIN_EMAIL");
+    }
+    public String getAdminPass(){
+        return  properties != null ? properties.getProperty("admin.pass") : System.getenv("ADMIN_PASS");
+    }
 }

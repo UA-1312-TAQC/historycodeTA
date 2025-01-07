@@ -8,11 +8,9 @@ import org.openqa.selenium.support.PageFactory;
 
 public class TeamSocialMediaComponent extends BaseComponent {
 
-    @FindBy(xpath = "//td[@class='ant-table-cell']//div[@class='team-links']//a")
-    protected WebElement link;
 
     //TODO It doesn't see such xpath in the inspect window
-    @FindBy(xpath = "//td[@class='ant-table-cell']//div[@class='team-links']//a//svg//path")
+    @FindBy(xpath = "./svg/path")
     protected WebElement icon;
 
     public TeamSocialMediaComponent(WebDriver driver, WebElement rootElement) {
@@ -22,10 +20,7 @@ public class TeamSocialMediaComponent extends BaseComponent {
 
     //Extracts the URL directly from the href attribute
     public String getUrl() {
-        if (link == null) {
-            throw new IllegalStateException("Link element is not initialized or missing.");
-        }
-        return link.getDomAttribute("href");
+        return rootElement.getDomAttribute("href");
     }
 
     //TODO Is it correct?
@@ -34,7 +29,7 @@ public class TeamSocialMediaComponent extends BaseComponent {
     }
 
     public void clickLink() {
-        link.click();
+        rootElement.click();
     }
 
 }
