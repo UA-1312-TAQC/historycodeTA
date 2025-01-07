@@ -20,12 +20,16 @@ public class AnalyticsPageAdminPanel extends BasePageAdminPanel {
 
     public AnalyticsPageAdminPanel(WebDriver driver) {
         super(driver);
-        analyticsPageGridComponent = new AnalyticsPageGridComponent(driver, analyticsPageGridComponentRoot);
     }
 
-    public String getStreetcodeName(){return streetcodeName.getText();}
+    public String getStreetcodeName(){return streetcodeName.getText().trim();}
 
-    public AnalyticsPageGridComponent getGridComponent(){return analyticsPageGridComponent;}
+    public AnalyticsPageGridComponent getGridComponent(){
+        if(analyticsPageGridComponent == null){
+            analyticsPageGridComponent = new AnalyticsPageGridComponent(driver, analyticsPageGridComponentRoot);
+        }
+        return analyticsPageGridComponent;
+    }
     public AnalyticsPageAdminPanel clickNextPagePaginationItem(){
         analyticsPageGridComponent.clickNextPage();
         return new AnalyticsPageAdminPanel(driver);
