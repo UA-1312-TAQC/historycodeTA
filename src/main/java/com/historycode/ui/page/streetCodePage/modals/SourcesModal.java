@@ -15,7 +15,7 @@ public class SourcesModal extends BaseModal {
     @FindBy(xpath = ".//div[contains(@class, 'mainContentContainer')]//p")
     private List<WebElement> contentItems;
 
-    @FindBy(xpath = ".//button[@type='button' and @aria-label='Close' and contains(@class, 'ant-modal-close')]")
+    @FindBy(xpath = ".//div[@class='ant-modal css-k7429z sourcesModal']//button")
     private WebElement closeButton;
 
     public SourcesModal(WebDriver driver, WebElement rootElement) {
