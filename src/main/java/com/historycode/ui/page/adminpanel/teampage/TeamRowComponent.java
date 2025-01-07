@@ -1,6 +1,7 @@
 package com.historycode.ui.page.adminpanel.teampage;
 
 import com.historycode.ui.component.BaseComponent;
+import com.historycode.ui.page.adminpanel.teampage.modal.EditMemberModal;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -58,12 +59,13 @@ public class TeamRowComponent extends BaseComponent {
         return socialMediaLinks;
     }
 
-    public void clickDelete() {
+    public DeleteItemModal clickDelete() {
         deleteAction.click();
-        //return new DeleteItemModal(driver, rootElement);
+        return new DeleteItemModal(driver, rootElement);
     }
 
-    public void clickEdit() {
+    public EditMemberModal clickEdit() {
         editAction.click();
+        return new EditMemberModal(driver, rootElement);
     }
 }

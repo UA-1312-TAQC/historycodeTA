@@ -26,4 +26,6 @@ public class TeamPageAdminPanel extends BasePageAdminPanel {
     public TeamPageGridComponent getTeamPageGridComponent() {
         return teamPageGridComponent;
     }
+
+    //TODO What wrapper methods to implement here?
 }

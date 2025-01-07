@@ -21,7 +21,7 @@ public class TeamPageGridComponent extends BaseGridComponent {
         super(driver, rootElement);
 
         teamRowComponents = new ArrayList<>();
-        for(WebElement element: teamRowNodes ){
+        for(WebElement element: teamRowNodes){
             teamRowComponents.add(new TeamRowComponent(driver, element));
         }
     }
@@ -40,23 +40,28 @@ public class TeamPageGridComponent extends BaseGridComponent {
         return teamRowComponents.size();
     }
 
-    public void clickNextPage() {
+    public TeamPageGridComponent clickNextPage() {
         pagination.clickNextPage();
+        return new TeamPageGridComponent(driver, rootElement);
     }
 
-    public void clickPrevPage() {
+    public TeamPageGridComponent clickPrevPage() {
         pagination.clickPrevPage();
+        return new TeamPageGridComponent(driver, rootElement);
     }
 
-    public void clickPaginationItem(int index) {
+    public TeamPageGridComponent clickPaginationItem(int index) {
         pagination.clickPaginationItem(index);
+        return new TeamPageGridComponent(driver, rootElement);
     }
 
-    /*public void clickPrevFivePages() {
+    public TeamPageGridComponent clickPrevFivePages() {
         pagination.clickPrevFivePages();
+        return new TeamPageGridComponent(driver, rootElement);
     }
 
-    public void clickNextFivePages() {
+    public TeamPageGridComponent clickNextFivePages() {
         pagination.clickNextFivePages();
-    }*/
+        return new TeamPageGridComponent(driver, rootElement);
+    }
 }
