@@ -16,10 +16,6 @@ public class ChronologyCarousel extends BaseCarousel{
 
     public ChronologyCarousel(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        initializeCards(driver);
-    }
-
-    private void initializeCards(WebDriver driver) {
         this.cards = cardNodes.stream()
                 .map(node -> new ChronologyCardComponent(driver, node))
                 .collect(Collectors.toList());

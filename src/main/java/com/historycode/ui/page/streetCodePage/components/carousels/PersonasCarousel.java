@@ -12,12 +12,6 @@ public class PersonasCarousel extends BaseCarousel {
     @FindBy(xpath = ".//div[@class='slider-item-container']")
     private List<WebElement> personCardNodes;
 
-    @FindBy(xpath = ".//button[@class='slick-arrow slick-next']")
-    private WebElement rightArrow;
-
-    @FindBy(xpath = ".//button[@class='slick-arrow slick-prev']")
-    private WebElement leftArrow;
-
     private List<RelatedPersonasCardComponent> personCards;
 
     public PersonasCarousel(WebDriver driver, WebElement rootElement) {
@@ -25,18 +19,6 @@ public class PersonasCarousel extends BaseCarousel {
         this.personCards = personCardNodes.stream()
                 .map(node -> new RelatedPersonasCardComponent(driver, node))
                 .collect(Collectors.toList());
-    }
-
-    public void clickNext() {
-        if (hasArrows()) {
-            rightArrow.click();
-        }
-    }
-
-    public void clickPrevious() {
-        if (hasArrows()) {
-            leftArrow.click();
-        }
     }
 
     @Override
