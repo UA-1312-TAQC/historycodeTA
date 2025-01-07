@@ -10,7 +10,7 @@ import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
 
 class PartnersComponent extends BaseComponent {
 
-    @FindBy(css = "img")
+    @FindBy(css = ".partnersBlockMainContainer .partnerItem")
     private WebElement partnerLogo;
 
     public PartnersComponent(WebDriver driver, WebElement rootElement) {

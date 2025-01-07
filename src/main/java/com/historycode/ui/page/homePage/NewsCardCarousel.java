@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class NewsCardCarousel extends CarouselComponent<NewsCardComponent> {
 
-    @FindBy(css = ".news-carousel-item")
+    @FindBy(xpath = "//div[@class='newsSliderContainer']//div[contains(@class, 'slick-slide')]")
     private List<WebElement> itemElements;
 
     public NewsCardCarousel(WebDriver driver, WebElement rootElement) {

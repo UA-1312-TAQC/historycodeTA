@@ -1,6 +1,7 @@
 package com.historycode.ui.component.adminPanel.adminMenuBar;
 
 import com.historycode.ui.component.BaseComponent;
+import com.historycode.ui.page.adminpanel.editorpage.CategoriesPage;
 import com.historycode.ui.page.adminpanel.jobspage.JobsPageAdminPanel;
 import com.historycode.ui.page.adminpanel.newspage.NewsPageAdminPanel;
 import com.historycode.ui.page.adminpanel.partnerspage.PartnersPageAdminPanel;
@@ -37,9 +38,9 @@ public class AdminMenuBarComponent extends BaseComponent {
         return new PartnersPageAdminPanel(driver);
     }
 
-/*    EditorPageAdminPanel goToEditorPage() {
-        return new EditorPageAdminPanel(driver);
-    }*/
+    public CategoriesPage goToEditorPage() {
+        return new CategoriesPage(driver);
+    }
 
     public NewsPageAdminPanel goToNewsPage() {
         news.click();

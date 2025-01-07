@@ -21,18 +21,19 @@ public class RelatedNewsComponent extends BaseComponent {
     }
 
     public String getRelatedNewsTitle() {
-        return relatedNewsTitle.getText();
-    }
-
-    public void clickRelatedNewsButton() {
-        relatedNewsButton.click();
-    }
-
-    public boolean isRelatedNewsVisible() {
         try {
-            return relatedNewsTitle.isDisplayed();
+            return relatedNewsTitle.getText();
+        } catch (NoSuchElementException e) {
+            return "Related news title is not visible";
+        }
+    }
+
+    public boolean isRelatedNewsButtonEnabled() {
+        try {
+            return relatedNewsButton.isEnabled();
         } catch (NoSuchElementException e) {
             return false;
         }
     }
+
 }

@@ -2,6 +2,7 @@ package com.historycode.ui.testrunners;
 
 import com.historycode.TestValueProvider;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -21,6 +22,7 @@ public class BaseTestRunner {
         testValueProvider = new TestValueProvider();
     }
 
+    @Step("init ChromeDriver")
     @BeforeMethod
     public void beforeMethod(){
         ChromeOptions options = new ChromeOptions();

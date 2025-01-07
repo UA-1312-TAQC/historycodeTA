@@ -1,14 +1,80 @@
 package com.historycode.ui.page.adminpanel.editorpage;
 
+import com.historycode.ui.page.adminpanel.editorpage.components.grids.TagsGridComponent;
+import com.historycode.ui.page.adminpanel.editorpage.components.modals.ContextsModalComponent;
+import com.historycode.ui.page.adminpanel.editorpage.components.modals.ModalComponent;
+import com.historycode.ui.page.adminpanel.editorpage.components.modals.TagsModalComponent;
+import com.historycode.ui.page.adminpanel.editorpage.components.rows.TagsRowComponent;
+import com.historycode.ui.page.adminpanel.editorpage.elements.addButtonElement;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
+import java.util.List;
 
 public class TagsPage extends BasePage {
-    @FindBy(xpath="//div[@class = 'container-justify-end']//button[contains(@class, 'tags')]")
-    WebElement addNewTagButton;
+    private final addButtonElement addTagButton = new addButtonElement(driver, getRootAddButton());
+    private final TagsGridComponent grid = new TagsGridComponent(driver, getRootGrid());
 
     public TagsPage(WebDriver driver) {
         super(driver);
+    }
+
+    public TagsModalComponent addTag() throws InterruptedException {
+        addTagButton.clickButton();
+        Thread.sleep(1000);
+        return new TagsModalComponent(driver, getDisplayedModalRoot());
+    }
+
+    public int getTableHeadersCount(){
+        return grid.getHeaderItems().size();
+    }
+
+    public List<String> getTableHeadersString() {
+        return grid.getHeaderItemsString();
+    }
+
+    public List<WebElement> getTableHeaders(){
+        return grid.getHeaderItems();
+    }
+
+    public int getTableRowsCount() {
+        return grid.getRows().size();
+    }
+
+    public List<String> getTableRowsTitles(){
+        return grid.getRowsTitles();
+    }
+
+    public List<TagsRowComponent> getTableRows() {
+        return grid.getRows();
+    }
+
+    public List<TagsRowComponent> getTableRowsByTitlePart(String part) {
+        return grid.getRowsByTitlePart(part);
+    }
+
+    public TagsRowComponent getTableRowByNumber(int num) {
+        return grid.getRowByNum(num);
+    }
+
+    public TagsRowComponent getTableRowByTitle(String title) {
+        return grid.getRowByTitle(title);
+    }
+
+    public String getAddButtonText(){
+        return addTagButton.getButtonText();
+    }
+
+    public TagsModalComponent editTableRow(TagsRowComponent row) throws InterruptedException {
+        grid.editRow(row);
+        Thread.sleep(500);
+        return new TagsModalComponent(driver, getDisplayedModalRoot());
+    }
+
+    public void deleteTableRow(TagsRowComponent row) {
+        //TODO Implement return of modal
+        grid.deleteRow(row);
     }
 }

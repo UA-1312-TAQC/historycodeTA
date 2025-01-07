@@ -9,13 +9,13 @@ import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
 
 public class StaticBannerComponent extends BaseComponent {
 
-    @FindBy(css = ".banner-title")
+    @FindBy(xpath = ".//p[contains(@class, 'title')]")
     private WebElement titleElement;
 
-    @FindBy(css = ".banner-description")
+    @FindBy(xpath = ".//p[contains(@class, 'content')]")
     private WebElement descriptionElement;
 
-    @FindBy(css = ".banner-button")
+    @FindBy(xpath = ".//a[contains(@class, 'redirectButton')]")
     private WebElement bannerButton;
 
     public StaticBannerComponent(WebDriver driver, WebElement rootElement) {
@@ -23,31 +23,23 @@ public class StaticBannerComponent extends BaseComponent {
         PageFactory.initElements(new DefaultElementLocatorFactory(rootElement), this);
     }
 
-
     public String getTitle() {
-        return (titleElement != null) ? titleElement.getText().trim() : "";
+        return titleElement.getText().trim();
     }
 
     public String getDescription() {
-        return (descriptionElement != null) ? descriptionElement.getText().trim() : "";
+        return descriptionElement.getText().trim();
     }
-
 
     public String getButtonText() {
-        return (bannerButton != null) ? bannerButton.getText().trim() : "";
+        return bannerButton.getText().trim();
     }
-
-
-    public void clickBannerButton() {
-        if (bannerButton != null) {
-            bannerButton.click();
-        }
-    }
-
 
     public String getButtonLink() {
-        return (bannerButton != null)
-                ? bannerButton.getAttribute("href")
-                : null;
+        return bannerButton.getAttribute("href");
+    }
+
+    public void clickBannerButton() {
+        bannerButton.click();
     }
 }

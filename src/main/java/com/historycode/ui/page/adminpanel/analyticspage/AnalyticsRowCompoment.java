@@ -1,8 +1,10 @@
 package com.historycode.ui.page.adminpanel.analyticspage;
 
+import com.historycode.ui.component.BaseComponent;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class AnalyticsRowCompoment {
+public class AnalyticsRowCompoment extends BaseComponent {
 
     //TODO add element search
 
@@ -14,12 +16,16 @@ public class AnalyticsRowCompoment {
 
     private WebElement coordinates;
 
-    public String getAddressText(){return address.getText();}
+    public AnalyticsRowCompoment(WebDriver driver, WebElement rootElement) {
+        super(driver, rootElement);
+    }
 
-    public String getQRCodeTransitionsNumber(){return QRCodeTransitionsNumber.getText();}
+    public String getAddressText(){return address.getText().trim();}
 
-    public String getQRCodeNumber(){return QRCodeNumber.getText();}
+    public String getQRCodeTransitionsNumber(){return QRCodeTransitionsNumber.getText().trim();}
 
-    public String getCoordinates(){return coordinates.getText();}
+    public String getQRCodeNumber(){return QRCodeNumber.getText().trim();}
+
+    public String getCoordinates(){return coordinates.getText().trim();}
 
 }
