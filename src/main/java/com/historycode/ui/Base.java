@@ -1,5 +1,6 @@
 package com.historycode.ui;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -29,7 +30,7 @@ public abstract class Base {
         threadWait.until(ExpectedConditions.visibilityOf(element));
 
     }
-
+    @Step("scroll to end of page")
     public void scrollToEndOfPage() {
 
         threadJs.executeScript("window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });");
