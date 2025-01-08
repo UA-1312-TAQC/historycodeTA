@@ -1,6 +1,9 @@
 package com.historycode.ui.page.adminpanel.teampage.modal;
 
 import com.historycode.ui.component.adminPanel.dropDownAdminPanel.DropdownComponent;
+import com.historycode.ui.component.adminPanel.modalAdminPanel.BaseEditModal;
+import com.historycode.ui.elements.adminPanel.CheckboxElement;
+import com.historycode.ui.elements.adminPanel.InputElement;
 import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -88,13 +91,12 @@ public class EditMemberModal extends BaseEditModal {
 
     //TODO Do I need getters?
     public void setName(String name) {
-        nameInput.getInputField().clear();
         nameInput.setInputField(name);
     }
 
-    public String getName() {
-        return nameInput.getInputField().getAttribute("value");
-    }
+//    public String getName() {
+//        return nameInput.getInputField().getAttribute("value");
+//    }
 
     //TODO Which one is better?
     public DropdownComponent setPosition(String position) {
@@ -112,13 +114,12 @@ public class EditMemberModal extends BaseEditModal {
     //TODO What about getter for the method above?
 
     public void setDescription(String description) {
-        descriptionTextareaElement.clear();
-        descriptionTextareaElement.sendKeys(description);
+        descriptionTextareaElement.setInputField(description);
     }
 
-    public String getDescription() {
-        return descriptionTextareaElement.getAttribute("value");
-    }
+//    public String getDescription() {
+//        return descriptionTextareaElement.getAttribute("value");
+//    }
 
     //TODO Is it necessary?
     public boolean isUploadedPhotoVisible() {
@@ -146,8 +147,7 @@ public class EditMemberModal extends BaseEditModal {
 
     public void addSocialMedia(String platform, String link) {
         selectDropdownOption(socialMediaDropdown, platform);
-        socialMediaInput.clear();
-        socialMediaInput.sendKeys(link);
+        socialMediaInput.setInputField(link);
         addSocialMediaButton.click();
     }
 
