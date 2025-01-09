@@ -1,6 +1,8 @@
 package com.historycode.ui.page.adminpanel.newspage;
 
 import com.historycode.ui.component.BaseComponent;
+import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
+import com.historycode.ui.page.adminpanel.newspage.modal.EditNewsModal;
 
 import lombok.Getter;
 
@@ -34,11 +36,13 @@ public class NewsRowComponent extends BaseComponent {
         super(driver, rootElement);
     }
 
-    public void clickActionDelete(){
+    public DeleteItemModal clickDelete() {
         actionDelete.click();
+        return new DeleteItemModal(driver, rootElement);
     }
 
-    public void clickActionEdit(){
+    public EditNewsModal clickEdit() {
         actionEdit.click();
+        return new EditNewsModal(driver, rootElement);
     }
 }
