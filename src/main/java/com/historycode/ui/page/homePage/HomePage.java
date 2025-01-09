@@ -1,13 +1,12 @@
 package com.historycode.ui.page.homePage;
 
 import com.historycode.ui.page.BasePage;
+import com.historycode.ui.page.streetCodePage.StreetCodePage;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,22 +14,22 @@ import java.util.stream.Collectors;
 public class HomePage extends BasePage {
 
     @FindBy(css = ".slick-slider.top-carousel")
-    private WebElement topCarouselElement;
+    private WebElement topCarouselNode;
 
     @FindBy(xpath = "//div[contains(@class, 'newsSliderContainer')]//div[contains(@class, 'slider-item-container')]")
-    private WebElement newsCarouselElement;
+    private WebElement newsCarouselNode;
 
-    @FindBy(xpath = "//div[@class='streetcodeSliderContainer']//div[@class='slick-slider slick-initialized']")
-    private WebElement personCarouselElement;
+    @FindBy(xpath = "//div[@class='streetcodeSliderContainer']")
+    private WebElement personCarouselNode;
 
     @FindBy(xpath = "//div[@class='teamComponent']//div[@class='sliderClass']")
-    private WebElement teamCarouselElement;
+    private WebElement teamCarouselNode;
 
     @FindBy(css = ".partnersBlock")
-    private List<WebElement> partnersElements;
+    private List<WebElement> partnersNodes;
 
     @FindBy(xpath = "//div[contains(@class, 'mainPageBlockStaticBanner')]")
-    private List<WebElement> staticBannerElements;
+    private List<WebElement> staticBannerNodes;
 
     private TopCarousel topCarousel;
     private TeamCardCarousel teamCarousel;
@@ -39,23 +38,28 @@ public class HomePage extends BasePage {
 
     public HomePage(WebDriver driver) {
         super(driver);
-//        PageFactory.initElements(driver, this);
 
-        topCarousel = new TopCarousel(driver, topCarouselElement);
-        teamCarousel = new TeamCardCarousel(driver, teamCarouselElement);
-        newsCarousel = new NewsCardCarousel(driver, newsCarouselElement);
-        personsCarousel = new PersonCardCarousel(driver, personCarouselElement);
+        topCarousel = new TopCarousel(driver, topCarouselNode);
+        teamCarousel = new TeamCardCarousel(driver, teamCarouselNode);
+        newsCarousel = new NewsCardCarousel(driver, newsCarouselNode);
+        personsCarousel = new PersonCardCarousel(driver, personCarouselNode);
     }
 
     public List<PartnersComponent> getPartners() {
-        return partnersElements.stream()
+        return partnersNodes.stream()
                 .map(e -> new PartnersComponent(driver, e))
                 .collect(Collectors.toList());
     }
 
     public List<StaticBannerComponent> getBanners() {
-        return staticBannerElements.stream()
+        return staticBannerNodes.stream()
                 .map(e -> new StaticBannerComponent(driver, e))
                 .collect(Collectors.toList());
+    }
+
+    public StreetCodePage clickPersonCardCarouselItem(int index) {
+        scrollToElement(personCarouselNode);
+        personsCarousel.getCarouselItems().get(index).clickMore();
+        return new StreetCodePage(driver, "test");
     }
 }

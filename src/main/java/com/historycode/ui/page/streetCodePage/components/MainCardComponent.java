@@ -2,6 +2,7 @@ package com.historycode.ui.page.streetCodePage.components;
 
 import com.historycode.ui.component.BaseComponent;
 import com.historycode.ui.page.streetCodePage.modals.KeywordPersonasModal;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -27,7 +28,7 @@ public class MainCardComponent extends BaseComponent {
     private List<WebElement> keywords;
 
     @FindBy(xpath = ".//p[@class='teaserBlock']")
-    private WebElement description;
+    private List<WebElement> descriptionNodes;
 
     @FindBy(xpath = ".//div[@class='cardFooter']/button")
     private WebElement audioButton;
@@ -62,8 +63,23 @@ public class MainCardComponent extends BaseComponent {
         return lifeYears.getText();
     }
 
-    public String getDescription() {
-        return description.getText();
+    @Step("Get the text of the 'Teaser' element")
+    public List<String> getDescriptions() {
+        return descriptionNodes.stream()
+                .map(WebElement::getText)
+                .toList();
+    }
+
+    @Step("Check if the 'Teaser' text has truncation or overflow")
+    public boolean isTeaserTextOverflowing() {
+        boolean isFirstParagraphOverflowing = isContentOverflowing(descriptionNodes.getFirst());
+
+        if (descriptionNodes.size() > 1) {
+            boolean isSecondParagraphOverflowing = isContentOverflowing(descriptionNodes.get(1));
+            return isFirstParagraphOverflowing || isSecondParagraphOverflowing;
+        }
+
+        return isFirstParagraphOverflowing;
     }
 
     public void clickAudioButton() {

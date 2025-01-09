@@ -10,8 +10,8 @@ import java.util.stream.Collectors;
 
 public class PersonCardCarousel extends CarouselComponent<PersonCardComponent> {
 
-    @FindBy(xpath = "//div[contains(@class, 'streetcodeSliderContainer')]//div[contains(@class, 'slider-item-container')]")
-    private List<WebElement> itemElements;
+    @FindBy(xpath = ".//div[@class = 'slick-slide']")
+    private List<WebElement> itemNodes;
 
     public PersonCardCarousel(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
@@ -44,7 +44,7 @@ public class PersonCardCarousel extends CarouselComponent<PersonCardComponent> {
 
     @Override
     public List<PersonCardComponent> getCarouselItems() {
-        return itemElements.stream()
+        return itemNodes.stream()
                 .map(el -> new PersonCardComponent(driver, el))
                 .collect(Collectors.toList());
     }

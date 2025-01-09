@@ -9,20 +9,20 @@ import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
 
 public class PersonCardComponent extends BaseComponent {
 
-    @FindBy(xpath = "//div[contains(@class, 'streetcodeSliderContainer')]//p[contains(@class, 'cardTextContainerTitle')]")
-    private WebElement personName;
+    @FindBy(xpath = ".//div[contains(@class, 'streetcodeSliderContainer')]//p[contains(@class, 'cardTextContainerTitle')]")
+    private WebElement personNameNode;
 
-    @FindBy(xpath = "//div[contains(@class, 'streetcodeSliderContainer')]//p[contains(@class, 'cardTextContainerSubTitle')]")
-    private WebElement category;
+    @FindBy(xpath = ".//div[contains(@class, 'streetcodeSliderContainer')]//p[contains(@class, 'cardTextContainerSubTitle')]")
+    private WebElement categoryNode;
 
-    @FindBy(xpath = "//div[contains(@class, 'streetcodeSliderContainer')]//p[contains(@class, 'cardTextContainerText')]")
-    private WebElement description;
+    @FindBy(xpath = ".//div[contains(@class, 'streetcodeSliderContainer')]//p[contains(@class, 'cardTextContainerText')]")
+    private WebElement descriptionNode;
 
-    @FindBy(xpath = "//div[contains(@class, 'streetcodeSliderContainer')]//a[contains(@class, 'cardTextContainerButton')]")
-    private WebElement moreLink;
+    @FindBy(xpath = ".//a[@class = 'cardTextContainerButton']")
+    private WebElement moreLinkNode;
 
-    @FindBy(xpath = "//div[contains(@class, 'streetcodeSliderContainer')]//img")
-    private WebElement personImage;
+    @FindBy(xpath = ".//div[contains(@class, 'streetcodeSliderContainer')]//img")
+    private WebElement personImageNode;
 
     public PersonCardComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
@@ -30,22 +30,22 @@ public class PersonCardComponent extends BaseComponent {
     }
 
     public String getPersonName() {
-        return personName.getText().trim();
+        return personNameNode.getText().trim();
     }
 
     public String getCategory() {
-        return category.getText().trim();
+        return categoryNode.getText().trim();
     }
 
     public String getDescription() {
-        return description.getText().trim();
+        return descriptionNode.getText().trim();
     }
 
     public void clickMore() {
-        moreLink.click();
+        moreLinkNode.click();
     }
 
     public String getImageSrc() {
-        return personImage.getAttribute("src");
+        return personImageNode.getAttribute("src");
     }
 }

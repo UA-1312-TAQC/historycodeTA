@@ -15,7 +15,7 @@ public class KeywordPersonasModal extends BaseModal {
     @FindBy(xpath = ".//div[@class='tagModalContainer']//button")
     private List<WebElement> keywords;
 
-    @FindBy(xpath = "//div[@class='relatedFiguresByTagsContentContainer']//a[1]")
+    @FindBy(xpath = ".//div[@class='relatedFiguresByTagsContentContainer']//a[1]")
     private List<WebElement> personCards;
 
     @Getter

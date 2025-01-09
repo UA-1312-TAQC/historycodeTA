@@ -35,7 +35,7 @@ public class StreetCodePage extends BasePage {
     @FindBy(xpath = "")
     private WebElement additionalInfoNode;
 
-    @FindBy(xpath = "//div[@class='art-gallery']")
+    @FindBy(xpath = "//div[@id='art-gallery']")
     private WebElement artGalleryNode;
 
     @FindBy(xpath = "//div[@class='partnerContainer']")
@@ -62,7 +62,6 @@ public class StreetCodePage extends BasePage {
     private ScrollTopButtonElement scrollTopButton;
     @Getter
     private QuickDonateButtonElement quickDonateButton;
-
     @Getter
     private MainCardComponent mainCard;
     @Getter
@@ -83,7 +82,12 @@ public class StreetCodePage extends BasePage {
     private PageNavigationBarComponent verticalProgress;
     private SurveyModal surveyModal;
 
-    public StreetCodePage(WebDriver driver){
+    public StreetCodePage(WebDriver driver, String onlyForTest) {
+        super(driver);
+        this.mainCard = new MainCardComponent(driver, mainCardNode);
+    }
+
+    public StreetCodePage(WebDriver driver) {
         super(driver);
         this.breadcrumbs = new BreadcrumbsElement(driver);
         this.scrollTopButton = new ScrollTopButtonElement(driver);
@@ -102,7 +106,7 @@ public class StreetCodePage extends BasePage {
     }
 
     private void initializeArtGallery() {
-        if (isElementPresent(By.xpath("//div[@class='art-gallery']"))) {
+        if (isElementPresent(By.xpath("//div[@id='art-gallery']"))) {
             this.artGallery = new ArtGalleryComponent(driver, artGalleryNode);
         }
     }

@@ -1,7 +1,6 @@
 package com.historycode.ui.page.streetCodePage.components;
 
 import com.historycode.ui.component.BaseComponent;
-import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -15,23 +14,24 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
     @FindBy(xpath = ".//span[@class='readMore false']")
     private WebElement expandButton;
 
-    @FindBy(xpath = ".//div[@class='video-container']")
-    private WebElement videoContainer;
+    //TODO: fix video container
+    //@FindBy(xpath = ".//div[contains(@class, 'video-container')]")
+    //private WebElement videoContainer;
 
     private boolean hasVideo;
 
     public StreetCodeTextBlockComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        checkVideoPresence();
+        //checkVideoPresence();
     }
 
-    private void checkVideoPresence() {
-        try {
-            hasVideo = videoContainer.isDisplayed();
-        } catch (NoSuchElementException e) {
-            hasVideo = false;
-        }
-    }
+//    private void checkVideoPresence() {
+//        try {
+//            hasVideo = videoContainer.isDisplayed();
+//        } catch (NoSuchElementException e) {
+//            hasVideo = false;
+//        }
+//    }
 
     public boolean hasVideo() {
         return hasVideo;
@@ -41,4 +41,3 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
         expandButton.click();
     }
 }
-

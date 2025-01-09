@@ -26,6 +26,8 @@ public abstract class BaseGridComponent extends BaseComponent {
     @FindBy(xpath = "//div[@class = 'underTableElement']//ul")
     protected WebElement rootPaginationNode;
 
+    protected NoDataComponent noDataComponent;
+
     public BaseGridComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
         this.pagination = new PaginationAdminPanelComponent(driver, rootPaginationNode);
