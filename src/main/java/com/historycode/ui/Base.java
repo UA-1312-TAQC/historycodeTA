@@ -1,7 +1,6 @@
 package com.historycode.ui;
 
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -40,10 +39,11 @@ public abstract class Base {
     }
 
     protected boolean isContentOverflowing(WebElement element) {
-        Boolean isOverflowing = (Boolean) threadJs.executeScript(
-                "var element = arguments[0];" +
-                        "return element.scrollWidth > element.clientWidth || element.scrollHeight > element.clientHeight;", element);
-        return Boolean.TRUE.equals(isOverflowing);
+        String script = "var element = arguments[0];" +
+                "return element.scrollWidth > element.clientWidth || " +
+                "element.scrollHeight > element.clientHeight;";
+        Boolean isOverflowing = (Boolean) threadJs.executeScript(script, element);
+        return isOverflowing != null && isOverflowing;
     }
 
     public void sleep(long millisSeconds) {
@@ -55,26 +55,10 @@ public abstract class Base {
     }
 
     public void waitUntilElementVisible(WebElement element) {
-        try {
-            wait.until(ExpectedConditions.visibilityOf(element));
-        } catch (Exception e) {
-            System.err.println("Error waiting for element to be visible: " + e.getMessage());
-        }
+        wait.until(ExpectedConditions.visibilityOf(element));
     }
 
     public void waitUntilElementClickable(WebElement element) {
-        try {
-            wait.until(ExpectedConditions.elementToBeClickable(element));
-        } catch (Exception e) {
-            System.err.println("Error waiting for element to be clickable: " + e.getMessage());
-        }
-    }
-
-    public void waitUntilCountOfElementsMoreThan(By elements, int count) {
-        try {
-            wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(elements, count));
-        } catch (Exception e) {
-            System.err.println("Error waiting for elements: " + e.getMessage());
-        }
+        wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 }
