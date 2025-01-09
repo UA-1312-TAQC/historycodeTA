@@ -5,17 +5,20 @@ import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 @Getter
 class CatalogItemComponent extends BaseComponent {
+
     @FindBy(xpath = ".//div/div[@class='heading']/p[1]")
     private WebElement nameNode;
 
     @FindBy(xpath = ".//div/div[@class='heading']/p[2]")
     private WebElement descriptionNode;
 
-    CatalogItemComponent(WebDriver driver, WebElement rootElement) {
-        super(driver, rootElement);
+    CatalogItemComponent(WebDriver driver) {
+        super(driver);
+        PageFactory.initElements(driver, this);
     }
 
     public String getName() {
