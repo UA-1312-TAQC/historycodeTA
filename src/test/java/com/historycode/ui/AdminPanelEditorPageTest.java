@@ -23,9 +23,9 @@ public class AdminPanelEditorPageTest extends BaseTestRunner {
         WebElement login = driver.findElement(By.xpath("//input[@id='login']"));
         WebElement password = driver.findElement(By.xpath("//input[@id='password']"));
         WebElement button = driver.findElement(By.xpath("//button[@type='submit']"));
-        login.sendKeys("streetcode@gmail.com");
+        login.sendKeys(testValueProvider.getAdminEmail());
         sleep(5);
-        password.sendKeys("qwLK7C349@#94sD&lt09");
+        password.sendKeys(testValueProvider.getAdminPass());
         sleep(40);
         button.click();
         sleep(20);
