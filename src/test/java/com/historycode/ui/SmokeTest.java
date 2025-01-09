@@ -19,4 +19,6 @@ public class SmokeTest extends BaseTestRunner {
         Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[3]/div[1]/div[1]/div[1]")).isDisplayed());
 
     }
+
+
 }
