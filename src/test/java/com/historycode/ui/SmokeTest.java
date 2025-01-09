@@ -1,7 +1,9 @@
 package com.historycode.ui;
 
 
+import com.historycode.ui.elements.BreadcrumbsElement;
 import com.historycode.ui.page.homePage.HomePage;
+import com.historycode.ui.page.streetCodePage.StreetCodePage;
 import com.historycode.ui.testrunners.BaseTestRunner;
 import io.qameta.allure.Issue;
 import org.openqa.selenium.By;
@@ -17,8 +19,13 @@ public class SmokeTest extends BaseTestRunner {
         homePage.getHeader().scrollToEndOfPage();
 
         Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[3]/div[1]/div[1]/div[1]")).isDisplayed());
-
     }
 
-
+    @Issue("78")
+    @Test
+    public void testOpenPreviousPage(){
+        StreetCodePage streetCodePage = new StreetCodePage(driver);
+        BreadcrumbsElement breadcrumbs = streetCodePage.getBreadcrumbs();
+        breadcrumbs.clickCatalog();
+    }
 }
