@@ -13,10 +13,11 @@ public class TeamPageAdminPanel extends BasePageAdminPanel {
     protected WebElement addNewMemberButton;
     protected TeamPageGridComponent teamPageGridComponent;
 
+
     public TeamPageAdminPanel(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
-        teamPageGridComponent = new TeamPageGridComponent(driver, driver.findElement(By.className("team-page-container")));
+        //teamPageGridComponent = new TeamPageGridComponent(driver, driver.findElement(By.className("team-page-container")));
     }
 
     public void clickAddNewMemberButton() {
