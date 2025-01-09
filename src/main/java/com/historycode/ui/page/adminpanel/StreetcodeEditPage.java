@@ -1,6 +1,7 @@
 package com.historycode.ui.page.adminpanel;
 
 import com.historycode.ui.component.DropdownBase;
+import com.historycode.ui.component.streetcodeEditor.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.openqa.selenium.By;
@@ -53,26 +54,34 @@ public class StreetcodeEditPage extends BasePageAdminPanel {
     @FindBy(id = "streetcodeSecondDate")
     private WebElement streetcodeSecondDate;
 
+    @Setter
     @FindBy(id = "teaser")
     private WebElement teaser;
 
-    @FindBy(id = "animations")
+    @FindBy(xpath = "//input[@id='animations']")
+    private WebElement AddPictureColorButton;
+
+    @FindBy(xpath = "//div[div/label[@title='Кольорове']]/div/div/div/span/div/div[@class='ant-upload-list-item-container']")
     private WebElement pictureColor;
 
-    @FindBy(id = "pictureBlackWhite")
-    private WebElement pictureBlackWhite;
+    @FindBy(xpath = "//input[@id='pictureBlackWhite']")
+    private WebElement addPictureBwButton;
 
-    @FindBy(id = "pictureRelations")
+    @FindBy (xpath = "//div[div/label[@title='Чорнобіле']]/div/div/div/span/div/div[@class='ant-upload-list-item-container']")
+    private WebElement pictureBW;
+
+    @FindBy(xpath = "//input[@id='pictureRelations']")
     private WebElement pictureRelations;
 
-    @FindBy(id = "audio")
+    @FindBy(id = "//input[@id='audio']")
     private WebElement audio;
 
+    @Setter
     @FindBy(id = "title")
     private WebElement title;
 
     @FindBy(xpath = "//button/span[text()='Попередній перегляд тексту']")
-    private WebElement previewButton;
+    private WebElement textPreviewButton;
 
     @FindBy(xpath = "//div[@class='TextContainer']")
     private WebElement textContainer;
@@ -86,12 +95,29 @@ public class StreetcodeEditPage extends BasePageAdminPanel {
     @FindBy(xpath = "//button/span[text()='Попередній перегляд']")
     private WebElement videoPreviewButton;
 
-    @FindBy(tagName = "iframe")
-    private WebElement videoIframe;
+    @FindBy(xpath = "//div[h2[text()='Wow-факти']]/div/button")
+    private WebElement addWowfactButton;
 
+    @FindBy(xpath = "//div[h2[text()='Хронологія']]/div/button")
+    private WebElement addChronologyButton;
+
+    @FindBy(xpath = "//div[h2[text()='Арт-галерея']]/div/span/div/div/span/input")
+    private WebElement addArtItemButton;
+
+    @FindBy(xpath = "//button/span[text()='Обрати шаблон']")
+    private WebElement chooseTemplateButton;
+
+    @FindBy(xpath = "//div[h2[text()='Для фанатів']]/div/button")
+    private WebElement addForfansButton;
+
+    @FindBy(xpath = "//button/span[text()='Додати']")
+    private WebElement addPartnersButton;
+
+    @Setter
     @FindBy(xpath = "//div[h2[text()='Бігуча стрічка']]/span/input")
     private WebElement ticker;
 
+    @Setter
     @FindBy(id = "arlink")
     private WebElement arlink;
 
@@ -103,26 +129,22 @@ public class StreetcodeEditPage extends BasePageAdminPanel {
 
 
     public StreetcodeEditPage(WebDriver driver) {super(driver);}
-        private DropdownBase dropdownBase;
 
-    public StreetcodeEditPage (WebDriver driver, DropdownBase dropdownBase) {
-        super(driver);
-        this.dropdownBase = dropdownBase;
+    /** Dropdowns */
+
+    public DropdownBase getFirstFormatdateDropdow() {
+        WebElement firstDropdownRoot = driver.findElement(By.xpath("(//div[@class='ant-select-selector'])[1]"));
+        return new DropdownBase(driver, firstDropdownRoot);
     }
 
-    public void selectFirstFormatdateDropdown(String text) {
-        String firstDropDownXpath = "(//div[@class='ant-select-selector'])[1]";
-        dropdownBase.selectOptionFromDropdown(firstDropDownXpath, text);
+    public DropdownBase getSecondFormatdateDropdown() {
+        WebElement secondDropdownRoot = driver.findElement(By.xpath("(//div[@class='ant-select-selector'])[2]"));
+        return new DropdownBase(driver, secondDropdownRoot);
     }
 
-    public void selectSecondFormatdateDropdown(String text) {
-        String firstDropDownXpath = "(//div[@class='ant-select-selector'])[2]";
-        dropdownBase.selectOptionFromDropdown(firstDropDownXpath, text);
-    }
-
-    public void selectTagsDropdown(String text) {
-        String firstDropDownXpath = "(//div[@class='ant-select-selector'])[3]";
-        dropdownBase.selectOptionFromDropdown(firstDropDownXpath, text);
+    public DropdownBase getTagsDropdown() {
+        WebElement tagsDropdownRoot = driver.findElement(By.xpath("(//div[@class='ant-select-selector'])[3]"));
+        return new DropdownBase(driver, tagsDropdownRoot);
     }
 
     public boolean checkAllTags(List<String> expectedTags) {
@@ -132,6 +154,58 @@ public class StreetcodeEditPage extends BasePageAdminPanel {
             actualTags.add(element.getText());
         }
         return actualTags.containsAll(expectedTags);
+    }
+
+    public DropdownBase getConnectionsDropdown() {
+        WebElement connectionsRootElement = driver.findElement(By.xpath("(//div[@class='ant-select-selector'])[4]"));
+        return new DropdownBase(driver, connectionsRootElement);
+    }
+
+    public DropdownBase getParntersDropdown() {
+        WebElement partnersRootElement = driver.findElement(By.xpath("(//div[@class='ant-select-selector'])[5]"));
+        return new DropdownBase(driver, partnersRootElement);
+    }
+
+    /** Datepickers */
+
+    public DatePicker getFirstDatePicker() {
+        WebElement firstDatepicker = driver.findElement(By.xpath("(//div[@class='ant-picker-input'])[1]"));
+        return new DatePicker(driver, firstDatepicker);
+    }
+
+    public DatePicker getSecondDatePicker() {
+        WebElement secondDatepicker = driver.findElement(By.xpath("(//div[@class='ant-picker-input'])[2]"));
+        return new DatePicker(driver, secondDatepicker);
+    }
+
+    /** Datepickers */
+
+    public ResolutionPopover getResolutionPopover360() {
+        WebElement resol360 = driver.findElement(By.xpath("//p[@class='device-size' and text()='360']"));
+        resol360.click();
+        WebElement popover = driver.findElement(By.xpath("//span[@class='ant-popover-open']"));
+        return new ResolutionPopover(driver, popover);
+    }
+
+    public ResolutionPopover getResolutionPopover768() {
+        WebElement resol360 = driver.findElement(By.xpath("//p[@class='device-size' and text()='768']"));
+        resol360.click();
+        WebElement popover = driver.findElement(By.xpath("//span[@class='ant-popover-open']"));
+        return new ResolutionPopover(driver, popover);
+    }
+
+    public ResolutionPopover getResolutionPopover1600() {
+        WebElement resol360 = driver.findElement(By.xpath("//p[@class='device-size' and text()='1600']"));
+        resol360.click();
+        WebElement popover = driver.findElement(By.xpath("//span[@class='ant-popover-open']"));
+        return new ResolutionPopover(driver, popover);
+    }
+
+    /** Wow-Fact methods */
+
+    public WowFactsModal getWowFactsModal() {
+        WebElement wowRootElement = driver.findElement(By.xpath("//div[@role='dialog']/div/div/div/form/div/h2[text()='Wow-Факт']"));
+        return new WowFactsModal(driver, wowRootElement);
     }
 
     public boolean checkAllWowFacts(List<String> expectedTags) {
@@ -155,6 +229,13 @@ public class StreetcodeEditPage extends BasePageAdminPanel {
         return element;
     }
 
+    /** Chronology methods */
+
+    public ChronologyModal getChronologyModal() {
+        WebElement chronologyRootElement = driver.findElement(By.xpath("//div[@role='dialog']/div/div/div/form/div/h2[text()='Хронологія']"));
+        return new ChronologyModal(driver, chronologyRootElement);
+    }
+
     public boolean checkAllChonologyItems(List<String> expectedTags) {
         List<WebElement> chronologyElements = driver.findElements(By.xpath("//div[h2[text()='Хронологія']]/div/div[@class='textBlockButton']"));
         List<String> actualChronology = new ArrayList<>();
@@ -176,10 +257,15 @@ public class StreetcodeEditPage extends BasePageAdminPanel {
         return element;
     }
 
-    public void selectConnectionsDropdown(String text) {
-        String firstDropDownXpath = "(//div[@class='ant-select-selector'])[4]";
-        dropdownBase.selectOptionFromDropdown(firstDropDownXpath, text);
+    /** Templates methods */
+
+    public TemplateModal getTemplateModal() {
+        WebElement templatesRootElement = driver.findElement(By.xpath("//div[@class='ArtGalleryImgContainer']"));
+        return new TemplateModal(driver, templatesRootElement);
     }
+
+
+    /** ForFans methods */
 
     public WebElement clickFansEditButton(int index) {
         WebElement element = driver.findElement(By.xpath("((//div[h2[text()='Для фанатів']]/div/div/div/div/span[@aria-label='edit'])[" + index + "]"));
@@ -193,8 +279,4 @@ public class StreetcodeEditPage extends BasePageAdminPanel {
         return element;
     }
 
-    public void selectParntersDropdown(String text) {
-        String firstDropDownXpath = "(//div[@class='ant-select-selector'])[5]";
-        dropdownBase.selectOptionFromDropdown(firstDropDownXpath, text);
-    }
 }

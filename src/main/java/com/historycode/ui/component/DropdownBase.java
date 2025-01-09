@@ -1,8 +1,10 @@
 package com.historycode.ui.component;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class DropdownBase extends BaseComponent {
 
@@ -10,15 +12,50 @@ public class DropdownBase extends BaseComponent {
         super(driver, rootElement);
     }
 
-    public void selectOptionFromDropdown(String dropdownTriggerXpath, String optionXpath) {
-        // Знайти елемент, який відкриває dropdown
-        WebElement dropdownTrigger = driver.findElement(By.xpath(dropdownTriggerXpath));
-        dropdownTrigger.click();
+    public void selectOptionFromDropdown(int currentOptionIndex, int targetOptionIndex) {
+        try {
+            WebElement input = rootElement.findElement(By.tagName("input"));
+            input.click();
 
-        // додати очікування
-        // додати вибір опції
+            // Обчислити кількість кроків
+            int stepsToMove = targetOptionIndex - currentOptionIndex;
 
-        WebElement option = driver.findElement(By.xpath(optionXpath));
-        option.click();
+            if (stepsToMove > 0) {
+                // Переміститися вниз
+                for (int i = 0; i < stepsToMove; i++) {
+                input.sendKeys(Keys.ARROW_DOWN);
+                }
+            } else if (stepsToMove < 0) {
+                // Переміститися вгору
+                for (int i = 0; i < Math.abs(stepsToMove); i++) {
+                input.sendKeys(Keys.ARROW_UP);
+                }
+            }
+
+            String expectedOptionId = "rc_select_0_list_" + targetOptionIndex;
+
+            // Чекати, поки `aria-activedescendant` оновиться
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+            wait.until((ExpectedCondition<Boolean>) d -> {
+                JavascriptExecutor jsExecutor = (JavascriptExecutor) d;
+                String activeDescendant = (String) jsExecutor.executeScript(
+                    "return arguments[0].getAttribute('aria-activedescendant');",
+                    input
+                );
+                return expectedOptionId.equals(activeDescendant);
+            });
+
+            // Натиснути Enter, щоб вибрати опцію
+            input.sendKeys(Keys.ENTER);
+            } catch (Exception e) {
+            System.err.println("Не вдалося вибрати опцію: " + e.getMessage());
+            }
         }
+
+        public boolean isChosenOptionCorrect(String expectedText) {
+            WebElement chosenOption = rootElement.findElement(By.xpath("./span[@class='ant-select-selection-item']"));
+            String actualText = chosenOption.getText().trim();
+            return expectedText.equals(actualText);
+        }
+
     }
