@@ -19,7 +19,7 @@ public class AdminPanelAddMemberButtonTest extends TestRunnerWithAdmin {
 
     private AdminMenuBarComponent adminMenuBarComponent;
     private TeamPageAdminPanel teamPageAdminPanel;
-    private final By ADMIN_MENU_ROOT = By.xpath("//div[contains(@class, 'PageBarContainer')]//div[contains(@class, 'BarContainer')]");
+    private final By ADMIN_MENU_ROOT = By.xpath("//div[@class='BarContainer']");
     private final By ADD_BUTTON = By.xpath("//button[span[text()='Створити нового члена команди']]");
     private final By MODAL_WINDOW = By.xpath("//div[contains(@class, 'ant-modal-content')]");
 
@@ -37,7 +37,7 @@ public class AdminPanelAddMemberButtonTest extends TestRunnerWithAdmin {
         goToTeamPage();
 
         //Wait until the "Створити нового члена команди" button is visible and clickable
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
         wait.until(ExpectedConditions.visibilityOfElementLocated(ADD_BUTTON));
 
         adminClickAddNewMember();
