@@ -27,9 +27,10 @@ public class ChronologyTest extends BaseTestRunner {
         basePage.openBurgerMenu();
         WebElement burgerMenuRoot = new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class, 'drawerContainer')]")));
+
         BurgerMenuComponent burgerMenuComponent = new BurgerMenuComponent(driver, burgerMenuRoot);
-        burgerMenuComponent.clickMenuItem("Головна");
-        Assert.assertTrue(driver.getCurrentUrl().contains("/"), "Page did not navigate to 'Головна'!");
+        burgerMenuComponent.clickMenuItem("History-коди");
+        Assert.assertTrue(driver.getCurrentUrl().contains("/catalog"), "Page did not navigate to 'History-коди'!");
     }
 
     @Issue("91")
