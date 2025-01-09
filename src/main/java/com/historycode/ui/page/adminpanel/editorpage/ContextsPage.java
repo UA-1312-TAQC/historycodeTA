@@ -2,27 +2,25 @@ package com.historycode.ui.page.adminpanel.editorpage;
 
 import com.historycode.ui.page.adminpanel.editorpage.components.grids.ContextsGridComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.ContextsModalComponent;
-import com.historycode.ui.page.adminpanel.editorpage.components.modals.ModalComponent;
-import com.historycode.ui.page.adminpanel.editorpage.components.rows.CategoriesRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.ContextsRowComponent;
-import com.historycode.ui.page.adminpanel.editorpage.elements.addButtonElement;
-import com.sun.source.tree.Tree;
-import org.openqa.selenium.By;
+import com.historycode.ui.page.adminpanel.editorpage.elements.AddButtonElement;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
-public class ContextsPage extends BasePage {
-    private final addButtonElement addContextButton = new addButtonElement(driver, getRootAddButton());
-    private final ContextsGridComponent grid = new ContextsGridComponent(driver, getRootGrid());
+public class ContextsPage extends EditorBasePage {
+    private AddButtonElement addContextButton;
+    private ContextsGridComponent grid;
 
     public ContextsPage(WebDriver driver) {
+
         super(driver);
+        addContextButton = new AddButtonElement(driver, getRootAddButton());
+        grid = new ContextsGridComponent(driver, getRootGrid());
     }
 
-    public ContextsModalComponent addContext() {
+    public ContextsModalComponent clickAddContext() {
         addContextButton.clickButton();
         sleep(1000);
         return new ContextsModalComponent(driver, getDisplayedModalRoot());

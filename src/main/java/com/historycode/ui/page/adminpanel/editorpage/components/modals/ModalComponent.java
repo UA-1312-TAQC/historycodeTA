@@ -1,7 +1,7 @@
 package com.historycode.ui.page.adminpanel.editorpage.components.modals;
 
 import com.historycode.ui.component.BaseComponent;
-import com.historycode.ui.page.adminpanel.editorpage.BasePage;
+import com.historycode.ui.page.adminpanel.editorpage.EditorBasePage;
 import com.historycode.ui.page.adminpanel.editorpage.elements.modalInputElement;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -29,13 +29,13 @@ public class ModalComponent extends BaseComponent {
     }
 
     public void close() {
-        BasePage.moveToElement(driver, closeButton);
-        closeButton.click();
+//        EditorBasePage.moveToElement(driver, closeButton);
+//        closeButton.click();
     }
 
     public void save() {
-        BasePage.moveToElement(driver, closeButton);
-        saveButton.click();
+//        EditorBasePage.moveToElement(driver, closeButton);
+//        saveButton.click();
     }
 
     public WebElement getTitle() {

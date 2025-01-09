@@ -3,14 +3,14 @@ package com.historycode.ui.page.adminpanel.editorpage;
 import com.historycode.ui.page.adminpanel.editorpage.components.grids.CategoriesGridComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.CategoriesModalComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.CategoriesRowComponent;
-import com.historycode.ui.page.adminpanel.editorpage.elements.addButtonElement;
+import com.historycode.ui.page.adminpanel.editorpage.elements.AddButtonElement;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-public class CategoriesPage extends BasePage {
-    private final addButtonElement addCategoryButton = new addButtonElement(driver, getRootAddButton());
+public class CategoriesPage extends EditorBasePage {
+    private final AddButtonElement addCategoryButton = new AddButtonElement(driver, getRootAddButton());
     private final CategoriesGridComponent grid = new CategoriesGridComponent(driver, getRootGrid());
 
     public CategoriesPage(WebDriver driver) {

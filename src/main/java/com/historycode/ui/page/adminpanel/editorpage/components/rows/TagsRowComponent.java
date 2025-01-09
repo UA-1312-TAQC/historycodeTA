@@ -1,7 +1,6 @@
 package com.historycode.ui.page.adminpanel.editorpage.components.rows;
 
-import com.historycode.ui.page.adminpanel.editorpage.BasePage;
-import org.openqa.selenium.By;
+import com.historycode.ui.page.adminpanel.editorpage.EditorBasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -20,13 +19,13 @@ public class TagsRowComponent extends RowComponent {
     }
 
     public void clickEdit() {
-        BasePage.moveToElement(driver, editAction);
-        editAction.click();
+//        EditorBasePage.moveToElement(editAction);
+//        editAction.click();
     }
 
     public void clickDelete() {
-        BasePage.moveToElement(driver, editAction);
-        deleteAction.click();
+//        EditorBasePage.moveToElement(editAction);
+//        deleteAction.click();
     }
 
     public WebElement getEditAction(){

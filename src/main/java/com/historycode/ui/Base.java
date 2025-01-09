@@ -60,4 +60,7 @@ public abstract class Base {
             System.err.println("Error waiting for element to be clickable: " + e.getMessage());
         }
     }
+    public void moveToElement(WebElement element) {
+        actions.moveToElement(element).perform();
+    }
 }

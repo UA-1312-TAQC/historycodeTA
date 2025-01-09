@@ -13,6 +13,7 @@ import java.util.List;
 
 public abstract class BaseGridComponent extends BaseComponent {
 
+    protected  NoDataComponent noDataComponent;
     private final String NO_DATA_COMPONENT_ROOT_ELEMENT_CSS = ".ant-table-tbody .ant-table-cell .ant-empty";
 
 

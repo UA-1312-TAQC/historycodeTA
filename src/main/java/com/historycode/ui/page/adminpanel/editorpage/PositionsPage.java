@@ -1,21 +1,16 @@
 package com.historycode.ui.page.adminpanel.editorpage;
 
 import com.historycode.ui.page.adminpanel.editorpage.components.grids.PositionsGridComponent;
-import com.historycode.ui.page.adminpanel.editorpage.components.modals.ContextsModalComponent;
-import com.historycode.ui.page.adminpanel.editorpage.components.modals.ModalComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.PositionsModalComponent;
-import com.historycode.ui.page.adminpanel.editorpage.components.rows.CategoriesRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.PositionsRowComponent;
-import com.historycode.ui.page.adminpanel.editorpage.elements.addButtonElement;
-import org.openqa.selenium.By;
+import com.historycode.ui.page.adminpanel.editorpage.elements.AddButtonElement;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
-public class PositionsPage extends BasePage {
-    private final addButtonElement addPositionButton = new addButtonElement(driver, getRootAddButton());
+public class PositionsPage extends EditorBasePage {
+    private final AddButtonElement addPositionButton = new AddButtonElement(driver, getRootAddButton());
     private final PositionsGridComponent grid = new PositionsGridComponent(driver, getRootGrid());
 
     public PositionsPage(WebDriver driver) {

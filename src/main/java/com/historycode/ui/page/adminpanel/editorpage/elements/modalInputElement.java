@@ -1,7 +1,7 @@
 package com.historycode.ui.page.adminpanel.editorpage.elements;
 
 import com.historycode.ui.component.BaseComponent;
-import com.historycode.ui.page.adminpanel.editorpage.BasePage;
+import com.historycode.ui.page.adminpanel.editorpage.EditorBasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -28,7 +28,7 @@ public class modalInputElement extends BaseComponent {
     }
 
     public void setInput(String text) {
-        BasePage.moveToElement(driver, input);
+        moveToElement(input);
         input.sendKeys(text);
     }
 

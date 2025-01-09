@@ -3,14 +3,14 @@ package com.historycode.ui.page.adminpanel.editorpage;
 import com.historycode.ui.page.adminpanel.editorpage.components.grids.TagsGridComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.TagsModalComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.TagsRowComponent;
-import com.historycode.ui.page.adminpanel.editorpage.elements.addButtonElement;
+import com.historycode.ui.page.adminpanel.editorpage.elements.AddButtonElement;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-public class TagsPage extends BasePage {
-    private final addButtonElement addTagButton = new addButtonElement(driver, getRootAddButton());
+public class TagsPage extends EditorBasePage {
+    private final AddButtonElement addTagButton = new AddButtonElement(driver, getRootAddButton());
     private final TagsGridComponent grid = new TagsGridComponent(driver, getRootGrid());
 
     public TagsPage(WebDriver driver) {

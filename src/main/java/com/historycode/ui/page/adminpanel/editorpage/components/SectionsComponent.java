@@ -1,7 +1,7 @@
 package com.historycode.ui.page.adminpanel.editorpage.components;
 
 import com.historycode.ui.component.BaseComponent;
-import com.historycode.ui.page.adminpanel.editorpage.BasePage;
+import com.historycode.ui.page.adminpanel.editorpage.EditorBasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -42,22 +42,22 @@ public class SectionsComponent extends BaseComponent {
     }
 
     public void clickCategories() {
-        BasePage.moveToElement(driver, categories);
+        moveToElement( categories);
         categories.click();
     }
 
     public void clickTags() {
-        BasePage.moveToElement(driver, tags);
+        moveToElement( tags);
         tags.click();
     }
 
     public void clickPositions() {
-        BasePage.moveToElement(driver, positions);
+        moveToElement( positions);
         positions.click();
     }
 
     public void clickContexts() {
-        BasePage.moveToElement(driver, contexts);
+        moveToElement( contexts);
         contexts.click();
     }
 }
