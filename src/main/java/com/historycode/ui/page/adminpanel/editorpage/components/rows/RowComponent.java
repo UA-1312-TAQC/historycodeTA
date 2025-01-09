@@ -7,6 +7,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class RowComponent extends BaseComponent {
     private static final String TITLE_XPATH = ".//td[@class='ant-table-cell'][1]//div";
@@ -16,12 +20,14 @@ public class RowComponent extends BaseComponent {
 
     public RowComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
+        wait.until(ExpectedConditions.visibilityOf(title));
     }
 
-    public String getTitle() {
+    public String getTitleString() {
         return title.getText();
     }
 
-    // TODO: Create method to get delete picture (e.g., SVG or image source)
-    // TODO: Create method to get edit picture (e.g., SVG or image source)
+    public WebElement getTitle() {
+        return title;
+    }
 }

@@ -3,6 +3,7 @@ package com.historycode.ui.page.adminpanel.editorpage;
 import com.historycode.ui.page.adminpanel.editorpage.components.grids.ContextsGridComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.ContextsModalComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.ModalComponent;
+import com.historycode.ui.page.adminpanel.editorpage.components.rows.CategoriesRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.ContextsRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.elements.addButtonElement;
 import com.sun.source.tree.Tree;
@@ -21,9 +22,9 @@ public class ContextsPage extends BasePage {
         super(driver);
     }
 
-    public ContextsModalComponent addContext() throws InterruptedException {
+    public ContextsModalComponent addContext() {
         addContextButton.clickButton();
-        Thread.sleep(1000);
+        sleep(1000);
         return new ContextsModalComponent(driver, getDisplayedModalRoot());
     }
 
@@ -76,5 +77,21 @@ public class ContextsPage extends BasePage {
     public void deleteTableRow(ContextsRowComponent row) {
         //TODO Implement return of modal
         grid.deleteRow(row);
+    }
+
+    public WebElement getTableRowEditAction(ContextsRowComponent row) {
+        return grid.getRowEditAction(row);
+    }
+
+    public WebElement getTableRowDeleteAction(ContextsRowComponent row) {
+        return grid.getRowDeleteAction(row);
+    }
+
+    public WebElement getTableRowTitle(ContextsRowComponent row) {
+        return grid.getRowTitle(row);
+    }
+
+    public String getTableRowTitleString(ContextsRowComponent row) {
+        return grid.getRowTitleString(row);
     }
 }

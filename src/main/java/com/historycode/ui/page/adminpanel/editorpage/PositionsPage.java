@@ -4,6 +4,7 @@ import com.historycode.ui.page.adminpanel.editorpage.components.grids.PositionsG
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.ContextsModalComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.ModalComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.PositionsModalComponent;
+import com.historycode.ui.page.adminpanel.editorpage.components.rows.CategoriesRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.PositionsRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.elements.addButtonElement;
 import org.openqa.selenium.By;
@@ -21,9 +22,9 @@ public class PositionsPage extends BasePage {
         super(driver);
     }
 
-    public PositionsModalComponent addPosition() throws InterruptedException {
+    public PositionsModalComponent addPosition() {
         addPositionButton.clickButton();
-        Thread.sleep(1000);
+        sleep(1000);
         return new PositionsModalComponent(driver, getDisplayedModalRoot());
     }
 
@@ -76,5 +77,21 @@ public class PositionsPage extends BasePage {
     public void deleteTableRow(PositionsRowComponent row) {
         //TODO Implement return of modal
         grid.deleteRow(row);
+    }
+
+    public WebElement getTableRowEditAction(PositionsRowComponent row) {
+        return grid.getRowEditAction(row);
+    }
+
+    public WebElement getTableRowDeleteAction(PositionsRowComponent row) {
+        return grid.getRowDeleteAction(row);
+    }
+
+    public WebElement getTableRowTitle(PositionsRowComponent row) {
+        return grid.getRowTitle(row);
+    }
+
+    public String getTableRowTitleString(PositionsRowComponent row) {
+        return grid.getRowTitleString(row);
     }
 }

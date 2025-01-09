@@ -5,6 +5,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.nio.file.WatchEvent;
+import java.time.Duration;
 
 public class CategoriesRowComponent extends RowComponent {
     private static final String PICTURE_XPATH = ".//td[@class='ant-table-cell'][2]//img";
@@ -30,6 +35,18 @@ public class CategoriesRowComponent extends RowComponent {
     public void clickDelete() {
         BasePage.moveToElement(driver, editAction);
         deleteAction.click();
+    }
+
+    public WebElement getPicture() {
+        return picture;
+    }
+
+    public WebElement getEditAction(){
+        return editAction;
+    }
+
+    public WebElement getDeleteAction() {
+        return deleteAction;
     }
     //TODO Create method to get row picture
     //TODO Create method to click picture

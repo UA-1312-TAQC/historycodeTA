@@ -1,5 +1,6 @@
 package com.historycode.ui.page.adminpanel.editorpage.components.grids;
 
+import com.historycode.ui.page.adminpanel.editorpage.components.rows.CategoriesRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.ContextsRowComponent;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -27,7 +28,7 @@ public class ContextsGridComponent extends GridComponent {
     public List<String> getRowsTitles(){
         List<String> titles = new ArrayList<>();
         for (ContextsRowComponent row : rows){
-            titles.add(row.getTitle());
+            titles.add(row.getTitleString());
         }
         return titles;
     }
@@ -41,14 +42,30 @@ public class ContextsGridComponent extends GridComponent {
     }
 
     public ContextsRowComponent getRowByTitle(String title) {
-        return rows.stream().filter(row -> row.getTitle().equals(title))
+        return rows.stream().filter(row -> row.getTitleString().equals(title))
                 .findFirst().orElse(null);
     }
 
     public List<ContextsRowComponent> getRowsByTitlePart(String part) {
         return rows.stream()
-                .filter(row -> row.getTitle().contains(part))
+                .filter(row -> row.getTitleString().contains(part))
                 .collect(Collectors.toList());
+    }
+
+    public WebElement getRowEditAction(ContextsRowComponent row) {
+        return row.getEditAction();
+    }
+
+    public WebElement getRowDeleteAction(ContextsRowComponent row) {
+        return row.getDeleteAction();
+    }
+
+    public String getRowTitleString(ContextsRowComponent row){
+        return row.getTitleString();
+    }
+
+    public WebElement getRowTitle(ContextsRowComponent row){
+        return row.getTitle();
     }
 
     public void editRow(ContextsRowComponent row) {
@@ -58,7 +75,6 @@ public class ContextsGridComponent extends GridComponent {
     public void deleteRow(ContextsRowComponent row) {
         row.clickDelete();
     }
-
     //TODO Update edit/deleteRow methods to return modals
 }
 

@@ -1,5 +1,6 @@
 package com.historycode.ui.page.adminpanel.editorpage.components.rows;
 
+import com.historycode.ui.page.adminpanel.editorpage.BasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -18,10 +19,20 @@ public class PositionsRowComponent extends RowComponent {
     }
 
     public void clickEdit() {
+        BasePage.moveToElement(driver, editAction);
         editAction.click();
     }
 
     public void clickDelete() {
+        BasePage.moveToElement(driver, editAction);
         deleteAction.click();
+    }
+
+    public WebElement getEditAction(){
+        return editAction;
+    }
+
+    public WebElement getDeleteAction() {
+        return deleteAction;
     }
 }

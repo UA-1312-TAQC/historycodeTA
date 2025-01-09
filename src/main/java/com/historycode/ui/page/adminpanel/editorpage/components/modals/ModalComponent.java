@@ -24,12 +24,17 @@ public class ModalComponent extends BaseComponent {
         inputComponent = new modalInputElement(driver, rootElement);
     }
 
+    public boolean isExist() {
+        return closeButton.isDisplayed() && title.isDisplayed() && saveButton.isDisplayed();
+    }
+
     public void close() {
         BasePage.moveToElement(driver, closeButton);
         closeButton.click();
     }
 
     public void save() {
+        BasePage.moveToElement(driver, closeButton);
         saveButton.click();
     }
 
@@ -49,7 +54,7 @@ public class ModalComponent extends BaseComponent {
         return title.getText();
     }
 
-    public String getSaveButtonText() {
+    public String getSaveButtonTitleString() {
         return saveButton.getText();
     }
 

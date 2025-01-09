@@ -1,5 +1,6 @@
 package com.historycode.ui.page.adminpanel.editorpage;
 
+import com.historycode.ui.Base;
 import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
 import com.historycode.ui.page.adminpanel.editorpage.components.SectionsComponent;
 import org.openqa.selenium.By;
@@ -50,27 +51,27 @@ public abstract class BasePage extends BasePageAdminPanel {
         return rootGrid;
     }
 
-    public CategoriesPage moveToCategories() throws InterruptedException {
+    public CategoriesPage moveToCategories() {
         sections.clickCategories();
-        //TODO Maybe add waiting
+        sleep(1000);
         return new CategoriesPage(driver);
     }
 
-    public TagsPage moveToTags() throws InterruptedException {
+    public TagsPage moveToTags() {
         sections.clickTags();
-        Thread.sleep(2000);
+        sleep(1000);
         return new TagsPage(driver);
     }
 
-    public PositionsPage moveToPositions() throws InterruptedException {
+    public PositionsPage moveToPositions() {
         sections.clickPositions();
-        Thread.sleep(2000);
+        sleep(1000);
         return new PositionsPage(driver);
     }
 
-    public ContextsPage moveToContexts() throws InterruptedException {
+    public ContextsPage moveToContexts() {
         sections.clickContexts();
-        Thread.sleep(2000);
+        sleep(1000);
         return new ContextsPage(driver);
     }
 

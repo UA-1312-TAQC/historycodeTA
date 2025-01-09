@@ -2,13 +2,10 @@ package com.historycode.ui.page.adminpanel.editorpage;
 
 import com.historycode.ui.page.adminpanel.editorpage.components.grids.CategoriesGridComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.CategoriesModalComponent;
-import com.historycode.ui.page.adminpanel.editorpage.components.modals.ModalComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.CategoriesRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.elements.addButtonElement;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
@@ -20,13 +17,13 @@ public class CategoriesPage extends BasePage {
         super(driver);
     }
 
-    public CategoriesModalComponent addCategory() throws InterruptedException {
+    public CategoriesModalComponent addCategory() {
         addCategoryButton.clickButton();
-        Thread.sleep(1000);
+        sleep(1000);
         return new CategoriesModalComponent(driver, getDisplayedModalRoot());
     }
 
-    public int getTableHeadersCount(){
+    public int getTableHeadersCount() {
         return grid.getHeaderItems().size();
     }
 
@@ -34,7 +31,7 @@ public class CategoriesPage extends BasePage {
         return grid.getHeaderItemsString();
     }
 
-    public List<WebElement> getTableHeaders(){
+    public List<WebElement> getTableHeaders() {
         return grid.getHeaderItems();
     }
 
@@ -42,7 +39,7 @@ public class CategoriesPage extends BasePage {
         return grid.getRows().size();
     }
 
-    public List<String> getTableRowsTitles(){
+    public List<String> getTableRowsTitles() {
         return grid.getRowsTitles();
     }
 
@@ -62,18 +59,38 @@ public class CategoriesPage extends BasePage {
         return grid.getRowByTitle(title);
     }
 
-    public String getAddButtonText(){
+    public String getAddButtonText() {
         return addCategoryButton.getButtonText();
     }
 
-    public CategoriesModalComponent editTableRow(CategoriesRowComponent row) throws InterruptedException {
+    public CategoriesModalComponent editTableRow(CategoriesRowComponent row) {
         grid.editRow(row);
-        Thread.sleep(500);
+        sleep(1000);
         return new CategoriesModalComponent(driver, getDisplayedModalRoot());
     }
 
     public void deleteTableRow(CategoriesRowComponent row) {
         //TODO Implement return of modal
         grid.deleteRow(row);
+    }
+
+    public WebElement getTableRowEditAction(CategoriesRowComponent row) {
+        return grid.getRowEditAction(row);
+    }
+
+    public WebElement getTableRowDeleteAction(CategoriesRowComponent row) {
+        return grid.getRowDeleteAction(row);
+    }
+
+    public WebElement getTableRowPicture(CategoriesRowComponent row) {
+        return grid.getRowPicture(row);
+    }
+
+    public WebElement getTableRowTitle(CategoriesRowComponent row) {
+        return grid.getRowTitle(row);
+    }
+
+    public String getTableRowTitleString(CategoriesRowComponent row) {
+        return grid.getRowTitleString(row);
     }
 }
