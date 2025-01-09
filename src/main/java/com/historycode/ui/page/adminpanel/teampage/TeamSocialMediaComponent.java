@@ -8,8 +8,6 @@ import org.openqa.selenium.support.PageFactory;
 
 public class TeamSocialMediaComponent extends BaseComponent {
 
-
-    //TODO It doesn't see such xpath in the inspect window
     @FindBy(xpath = "./svg/path")
     protected WebElement icon;
 
@@ -23,7 +21,7 @@ public class TeamSocialMediaComponent extends BaseComponent {
         return rootElement.getDomAttribute("href");
     }
 
-    //TODO Is it correct?
+    //TODO What should be done with this?
     public String getIcon() {
         return icon.getDomAttribute("d");
     }

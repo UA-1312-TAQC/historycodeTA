@@ -10,6 +10,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -24,8 +26,9 @@ public class EditMemberModal extends BaseEditModal {
     protected InputElement nameInput;
 
     @FindBy(xpath = "//label[normalize-space(text())='Позиції']/../..")
-    protected WebElement positionDropdownRoot;
-    protected DropdownComponent positionDropdown;
+    protected WebElement positionsDropdownRoot;
+    protected DropdownComponent positionsDropdown;
+    protected By SELECTED_POSITIONS_PATH = By.xpath("//div[@class='ant-select-selection-overflow']");
 
     @FindBy(xpath = "//label[@for = 'description']/../..")
     protected WebElement descriptionTextareaElementRoot;
@@ -42,10 +45,6 @@ public class EditMemberModal extends BaseEditModal {
 
     @FindBy(xpath = "//div[@class='ant-upload ant-upload-select']/span[@role='button']")
     protected WebElement uploadButton;
-
-    //--??--
-    @FindBy(xpath = "//div[@class='ant-upload ant-upload-select']/span/input[@type='file']")
-    protected WebElement fileInput;
 
     //TODO xpath to the 'team-source-list' or to a specific 'link-container'?
     // What about the buttons on the 'link-container'?
@@ -70,7 +69,7 @@ public class EditMemberModal extends BaseEditModal {
 
         this.keyMemberCheckbox = new CheckboxElement(driver, keyMemberCheckboxRoot);
         this.nameInput = new InputElement(driver, nameInputRoot);
-        this.positionDropdown = new DropdownComponent(driver, positionDropdownRoot);
+        this.positionsDropdown = new DropdownComponent(driver, positionsDropdownRoot);
         this.descriptionTextareaElement = new InputElement(driver, descriptionTextareaElementRoot);
         this.socialMediaDropdown = new DropdownComponent(driver, socialMediaDropdownRoot);
         this.socialMediaInput = new InputElement(driver, socialMediaInputRoot);
@@ -94,32 +93,37 @@ public class EditMemberModal extends BaseEditModal {
         nameInput.setInputField(name);
     }
 
-//    public String getName() {
-//        return nameInput.getInputField().getAttribute("value");
-//    }
-
-    //TODO Which one is better?
-    public DropdownComponent setPosition(String position) {
-        positionDropdown.clickOptionByText(position);
-        return positionDropdown;
+    public String getName() {
+        return nameInput.getInputField().getAttribute("value");
     }
 
-    //Multiple options from the dropdown list
-    public DropdownComponent setPosition(List<String> positions) {
+    public void setPositions(List<String> positions) {
+        positionsDropdown.openDropdown();
         for (String position : positions) {
-            positionDropdown.clickOptionByText(position);
+            positionsDropdown.clickOptionByText(position);
         }
-        return positionDropdown;
     }
-    //TODO What about getter for the method above?
+
+    public List<String> getPositions() {
+        List<String> selectedPositions = new ArrayList<>();
+
+        // Locate selected items directly from the dropdown's container
+        List<WebElement> selectedTags = positionsDropdownRoot.findElements(SELECTED_POSITIONS_PATH);
+
+        for (WebElement tag : selectedTags) {
+            selectedPositions.add(tag.getText().trim());
+        }
+        return selectedPositions;
+    }
+
 
     public void setDescription(String description) {
         descriptionTextareaElement.setInputField(description);
     }
 
-//    public String getDescription() {
-//        return descriptionTextareaElement.getAttribute("value");
-//    }
+    public String getDescription() {
+        return descriptionTextareaElement.getAttribute("value");
+    }
 
     //TODO Is it necessary?
     public boolean isUploadedPhotoVisible() {
