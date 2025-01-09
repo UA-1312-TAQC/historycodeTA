@@ -10,12 +10,16 @@ import org.openqa.selenium.support.FindBy;
 
 public class NewsPageAdminPanel extends BasePageAdminPanel{
     @FindBy(xpath="//button[span[text()='Створити новину']]")
-    WebElement addNewInfo;
-    NewsPageGridComponent newsGridComponent;
+    private WebElement addNewInfo;
+    private NewsPageGridComponent newsGridComponent;
 
     public NewsPageAdminPanel(WebDriver driver) {
         super(driver); 
         newsGridComponent = new NewsPageGridComponent(driver, driver.findElement(By.className("partners-page-container")));
+    }
+
+    public void clickAddNewInfo(){
+        addNewInfo.click();
     }
 
     public NewsPageGridComponent getNewsPageGridComponent() {
