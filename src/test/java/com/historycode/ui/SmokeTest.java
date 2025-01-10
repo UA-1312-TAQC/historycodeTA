@@ -2,12 +2,16 @@ package com.historycode.ui;
 
 import com.historycode.ui.page.homePage.HomePage;
 import com.historycode.ui.page.streetCodePage.StreetCodePage;
+import com.historycode.ui.page.streetCodePage.components.StreetCodeTextBlockComponent;
 import com.historycode.ui.testrunners.BaseTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import java.util.Optional;
 
 public class SmokeTest extends BaseTestRunner {
 
@@ -44,5 +48,26 @@ public class SmokeTest extends BaseTestRunner {
 
         //TODO: criteria overflow/truncated
         Assert.assertFalse(streetCodePage.getMainCard().isTeaserTextOverflowing());
+    }
+
+    @Issue("81")
+    @Test(priority = 1)
+    public void testStreetCodeClick(){
+        HomePage homePage = new HomePage(driver);
+
+        StreetCodePage streetCodePage = homePage.clickPersonCardCarouselItem(1);
+
+        Optional<StreetCodeTextBlockComponent> textBlockOptional = streetCodePage.getTextBlock();
+        Assert.assertTrue(textBlockOptional.isPresent(), "Text block component is not present.");
+
+        StreetCodeTextBlockComponent textBlock = textBlockOptional.get();
+
+        textBlock.clickReadMoreButton();
+
+        WebElement mainTextContent = textBlock.getMainTextContent();
+        Assert.assertTrue(mainTextContent.isDisplayed(), "Main text content is not fully visible.");
+
+        WebElement readLessButton = textBlock.getReadLessButton();
+        Assert.assertTrue(readLessButton.isDisplayed(), "'Дещо менше' button is not displayed.");
     }
 }
