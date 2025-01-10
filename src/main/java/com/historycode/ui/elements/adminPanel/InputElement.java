@@ -29,4 +29,8 @@ public class InputElement extends BaseComponent {
         inputField.clear();
         inputField.sendKeys(value);
     }
+
+    public String getInputField() {
+        return inputField.getDomAttribute("value");
+    }
 }
