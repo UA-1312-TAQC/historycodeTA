@@ -12,10 +12,10 @@ import java.util.List;
 
 public class SectionListComponent extends BaseComponent {
 
-    @FindBy(xpath = ".//section")
+    @FindBy(xpath = "./section")
     private List<WebElement> sectionComponent;
 
-    @FindBy(xpath = ".//div[@class='content']")
+    @FindBy(xpath = "./div[@class='content']")
     private List<WebElement> contentComponent;
 
     public SectionListComponent(WebDriver driver, WebElement rootElement) {
@@ -25,7 +25,7 @@ public class SectionListComponent extends BaseComponent {
     public List<String> SectionsName() {
         List<String> ListOfSections = new ArrayList<>();
         for (WebElement element : sectionComponent) {
-            WebElement titleElement = element.findElement(By.xpath(".//div[@class='title']"));
+            WebElement titleElement = element.findElement(By.xpath("./div[@class='title']"));
             ListOfSections.add(titleElement.getText());
         }
         return ListOfSections;
@@ -34,7 +34,7 @@ public class SectionListComponent extends BaseComponent {
     public List<String> SectionsText() {
         List<String> ListOfSectionsText = new ArrayList<>();
         for (WebElement element : sectionComponent) {
-            WebElement contentElement = element.findElement(By.xpath(".//div[@class='content']"));
+            WebElement contentElement = element.findElement(By.xpath("./div[@class='content']"));
             ListOfSectionsText.add(contentElement.getText());
         }
         return ListOfSectionsText;
@@ -43,7 +43,7 @@ public class SectionListComponent extends BaseComponent {
     public List<String> SectionsLinks() {
         List<String> ListOfSectionsLinks = new ArrayList<>();
         for (WebElement element : contentComponent) {
-            List<WebElement> links = element.findElements(By.xpath(".//a[@class='link']"));
+            List<WebElement> links = element.findElements(By.xpath("./a[@class='link']"));
             for (WebElement link : links) {
                 ListOfSectionsLinks.add(link.getText());
             }
