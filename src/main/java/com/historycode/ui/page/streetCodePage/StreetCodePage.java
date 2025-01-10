@@ -55,6 +55,17 @@ public class StreetCodePage extends BasePage {
     private PageNavigationBarComponent verticalProgress;
 
 
+    public StreetCodePage(WebDriver driver){
+        super(driver);
+
+        this.breadcrumbs = new BreadcrumbsElement(driver);
+        this.scrollTopButton = new ScrollTopButtonElement(driver);
+        this.quickDonateButton = new QuickDonateButtonElement(driver);
+        this.mainCard = new MainCardComponent(driver, mainCardNode);
+        this.verticalProgress = new PageNavigationBarComponent(driver, verticalProgressNode);
+        initializeOptionalComponents(driver);
+    }
+
     public StreetCodePage(WebDriver driver, boolean testMode){
         super(driver);
 
