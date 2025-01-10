@@ -4,7 +4,6 @@ package com.historycode.ui.component.adminPanel.gridAdminPanel;
 import com.historycode.ui.component.BaseComponent;
 import com.historycode.ui.component.adminPanel.paginationAdminPanel.PaginationAdminPanelComponent;
 import lombok.Getter;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -12,7 +11,6 @@ import org.openqa.selenium.support.FindBy;
 import java.util.List;
 
 public abstract class BaseGridComponent extends BaseComponent {
-
     private final String NO_DATA_COMPONENT_ROOT_ELEMENT_CSS = ".ant-table-tbody .ant-table-cell .ant-empty";
 
     protected NoDataComponent noDataComponent;

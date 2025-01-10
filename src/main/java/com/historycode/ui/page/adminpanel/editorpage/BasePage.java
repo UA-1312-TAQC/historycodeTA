@@ -62,9 +62,9 @@ public abstract class BasePage extends BasePageAdminPanel {
         return new TagsPage(driver);
     }
 
-    public PositionsPage moveToPositions() throws InterruptedException {
+    public PositionsPage moveToPositions() {
         sections.clickPositions();
-        Thread.sleep(2000);
+//        Thread.sleep(2000);
         return new PositionsPage(driver);
     }
 

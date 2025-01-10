@@ -96,12 +96,12 @@ public class EditMemberModal extends BaseEditModal {
         return keyMemberCheckbox.isChecked();
     }
 
-    public void setName(String name) {
-        nameInput.setInputField(name);
-    }
-
     public String getName() {
         return nameInput.getInputValue();
+    }
+
+    public void setName(String name) {
+        nameInput.setInputField(name);
     }
 
     public void setPositions(List<String> positions) {
@@ -113,12 +113,12 @@ public class EditMemberModal extends BaseEditModal {
         return positionsDropdown.getSelectedMultipleOptions();
     }
 
-    public void setDescription(String description) {
-        descriptionTextareaElement.setInputField(description);
-    }
-
     public String getDescription() {
         return descriptionTextareaElement.getInputValue();
+    }
+
+    public void setDescription(String description) {
+        descriptionTextareaElement.setInputField(description);
     }
 
     public void previewPhoto() {
