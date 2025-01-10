@@ -7,7 +7,6 @@ import com.historycode.ui.testrunners.BaseTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Step;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -28,10 +27,7 @@ public class StreetCodeInteractiveButtonsTest extends BaseTestRunner {
         homePage.waitUntilElementVisible(homePage.getPersonCarouselElement());
 
         homePage.waitUntilElementClickable(homePage.getPersonCarouselElement());
-        homePage.getPersonsCarousel()
-                .getCarouselItems()
-                .get(0)
-                .clickMore();
+        homePage.getPersonsCarousel().getCarouselItems().get(0).clickMore();
 
         streetCodePage = new StreetCodePage(driver);
     }
@@ -40,27 +36,14 @@ public class StreetCodeInteractiveButtonsTest extends BaseTestRunner {
     @Test
     @Description("Verify that all interactive buttons are displayed")
     public void testInteractiveButtons() {
-        verifyDonateButtonInitialState();
-        verifyAudioButton();
-        verifyDonateButtonSticky();
-        softAssert.assertAll();
-    }
-
-    @Step("Verify initial state of Donate button")
-    private void verifyDonateButtonInitialState() {
-        softAssert.assertTrue(
-                streetCodePage.getQuickDonateButton().isDonateButtonDisplayed(),
-                "Quick Donate button should be visible initially"
-        );
-    }
-
-    @Step("Verify Audio button state and functionality")
-    private void verifyAudioButton() {
+        //"Verify initial state of Donate button"
+        softAssert.assertTrue(streetCodePage.getQuickDonateButton().isDonateButtonDisplayed(),
+                "Quick Donate button should be visible initially");
+        //"Verify Audio button state and functionality"
         MainCardComponent mainCard = streetCodePage.getMainCard();
 
         if (mainCard.isAudioAvailable()) {
-            softAssert.assertTrue(mainCard.isAudioButtonEnabled(),
-                    "Audio button should be enabled");
+            softAssert.assertTrue(mainCard.isAudioButtonEnabled(), "Audio button should be enabled");
             softAssert.assertEquals(mainCard.getAudioButtonText(), "Прослухати текст",
                     "Audio button should display 'Прослухати текст'");
 
@@ -71,14 +54,13 @@ public class StreetCodeInteractiveButtonsTest extends BaseTestRunner {
             softAssert.assertFalse(mainCard.isAudioButtonEnabled(),
                     "Audio button should be disabled");
         }
+
+        // "Verify that Donate button remains sticky while scrolling"
+        streetCodePage.getQuickDonateButton().scrollToEndOfPage();
+        softAssert.assertTrue(streetCodePage.getQuickDonateButton().isDonateButtonDisplayed(),
+                "Donate button should be visible after scrolling to bottom");
+        softAssert.assertAll();
     }
 
-    @Step("Verify that Donate button remains sticky while scrolling")
-    private void verifyDonateButtonSticky() {
-        streetCodePage.getQuickDonateButton().scrollToEndOfPage();
-        softAssert.assertTrue(
-                streetCodePage.getQuickDonateButton().isDonateButtonDisplayed(),
-                "Donate button should be visible after scrolling to bottom"
-        );
-    }
+
 }
