@@ -10,12 +10,12 @@ import org.testng.annotations.Test;
 public class DeletePositionEditor extends TestRunnerWithAdmin {
     @BeforeMethod
     public void setupForDeleteJob() {
-        super.login();
+        login();
         driver.get(testValueProvider.getBaseUIUrl() + "admin-panel/editor");
         CategoriesPage categoriesPage = new CategoriesPage(driver);
         categoriesPage.moveToPositions()
                 .addPosition()
-                .enterPosition("Accountant");
+                .enterPosition("Accountant").close();
     }
 
     @Test
