@@ -43,7 +43,6 @@ public class PrivacyPolicyPage extends BasePage {
         return titleComponent.disclaimer();
     }
 
-
 }
 
 
