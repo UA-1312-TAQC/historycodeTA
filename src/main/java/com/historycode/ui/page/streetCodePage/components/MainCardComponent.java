@@ -28,7 +28,7 @@ public class MainCardComponent extends BaseComponent {
     private List<WebElement> keywords;
 
     @FindBy(xpath = ".//p[@class='teaserBlock']")
-    private List<WebElement> description;
+    private WebElement description;
 
     @FindBy(xpath = ".//div[@class='cardFooter']/button")
     private WebElement audioButton;
@@ -64,23 +64,13 @@ public class MainCardComponent extends BaseComponent {
     }
 
     @Step("Get the text of the 'Teaser' element")
-    public List<String> getDescriptions() {
-        return description.stream()
-                .map(WebElement::getText)
-                .toList();
+    public String getDescription() {
+        return description.getText();
     }
 
     @Step("Check if the 'Teaser' text has truncation or overflow")
     public boolean isTeaserTextOverflowing() {
-        //TODO: How to get paragraphs from the teaser
-        boolean isFirstParagraphOverflowing = isContentOverflowing(description.getFirst());
-
-        if (description.size() > 1) {
-            boolean isSecondParagraphOverflowing = isContentOverflowing(description.get(1));
-            return isFirstParagraphOverflowing || isSecondParagraphOverflowing;
-        }
-
-        return isFirstParagraphOverflowing;
+        return isContentOverflowing(description);
     }
 
     public void clickAudioButton() {

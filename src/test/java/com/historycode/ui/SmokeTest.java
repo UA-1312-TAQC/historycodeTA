@@ -1,17 +1,13 @@
 package com.historycode.ui;
 
-
 import com.historycode.ui.page.homePage.HomePage;
 import com.historycode.ui.page.streetCodePage.StreetCodePage;
 import com.historycode.ui.testrunners.BaseTestRunner;
 import io.qameta.allure.Description;
-import io.qameta.allure.Epic;
 import io.qameta.allure.Issue;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import java.util.List;
 
 public class SmokeTest extends BaseTestRunner {
 
@@ -26,23 +22,14 @@ public class SmokeTest extends BaseTestRunner {
 
     @Issue("73")
     @Test(priority = 1)
-    @Description("Verification of Teaser Text Length")
-    public void testTeaserTextLength() {
+    @Description("Verification of the teaser text Length for one paragraph")
+    public void testTeaserTextLengthForOneParagraph() {
         HomePage homePage = new HomePage(driver);
-        //TODO: How to get paragraphs from teaser
         StreetCodePage streetCodePage = homePage.clickPersonCardCarouselItem(1);
 
-        List<String> paragraphs = streetCodePage.getMainCard().getDescriptions();
+        String paragraph = streetCodePage.getMainCard().getDescription();
 
-        int paragraphCount = paragraphs.size();
-
-        Assert.assertTrue(paragraphCount < 3, "Text contains more than two paragraphs.");
-
-        if (paragraphCount == 1) {
-            Assert.assertTrue(paragraphs.getFirst().length() <= 520, "Description is too long for one paragraph.");
-        } else if (paragraphCount == 2) {
-            Assert.assertTrue((paragraphs.get(0).length() + paragraphs.get(1).length()) <= 455, "Description is too long for two paragraphs.");
-        }
+        Assert.assertTrue(paragraph.length() <= 520, "Description is too long for one paragraph.");
 
         Assert.assertFalse(streetCodePage.getMainCard().isTeaserTextOverflowing());
     }
