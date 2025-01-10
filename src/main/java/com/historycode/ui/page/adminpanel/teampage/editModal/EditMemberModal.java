@@ -1,15 +1,26 @@
-package com.historycode.ui.page.adminpanel.teampage.modal;
+package com.historycode.ui.page.adminpanel.teampage.editModal;
 
 import com.historycode.ui.component.adminPanel.dropDownAdminPanel.DropdownComponent;
 import com.historycode.ui.component.adminPanel.modalAdminPanel.BaseEditModal;
 import com.historycode.ui.elements.adminPanel.CheckboxElement;
 import com.historycode.ui.elements.adminPanel.InputElement;
+import com.historycode.ui.component.adminPanel.modalAdminPanel.BaseEditModal;
+import com.historycode.ui.elements.adminPanel.CheckboxElement;
+import com.historycode.ui.elements.adminPanel.InputElement;
+import com.historycode.ui.page.adminpanel.teampage.editModal.photoElement.PhotoModalComponent;
+import com.historycode.ui.page.adminpanel.teampage.editModal.photoElement.PhotoWindowComponent;
+import com.historycode.ui.page.adminpanel.teampage.editModal.socialMediaElement.SocialMediaExistedComponent;
 import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -24,8 +35,9 @@ public class EditMemberModal extends BaseEditModal {
     protected InputElement nameInput;
 
     @FindBy(xpath = "//label[normalize-space(text())='Позиції']/../..")
-    protected WebElement positionDropdownRoot;
-    protected DropdownComponent positionDropdown;
+    protected WebElement positionsDropdownRoot;
+    protected DropdownComponent positionsDropdown;
+    protected By SELECTED_POSITIONS_PATH = By.xpath("//div[@class='ant-select-selection-overflow']");
 
     @FindBy(xpath = "//label[@for = 'description']/../..")
     protected WebElement descriptionTextareaElementRoot;
@@ -43,12 +55,6 @@ public class EditMemberModal extends BaseEditModal {
     @FindBy(xpath = "//div[@class='ant-upload ant-upload-select']/span[@role='button']")
     protected WebElement uploadButton;
 
-    //--??--
-    @FindBy(xpath = "//div[@class='ant-upload ant-upload-select']/span/input[@type='file']")
-    protected WebElement fileInput;
-
-    //TODO xpath to the 'team-source-list' or to a specific 'link-container'?
-    // What about the buttons on the 'link-container'?
     @FindBy(xpath = "//div[@class='team-source-list']//div[contains(@class, 'link-container')]")
     protected List<WebElement> existingSocialMedia;
 
@@ -63,6 +69,8 @@ public class EditMemberModal extends BaseEditModal {
     @FindBy(xpath = "//button[@type='submit']")
     protected WebElement addSocialMediaButton;
 
+    protected PhotoModalComponent photoModalComponent;
+    protected PhotoWindowComponent photoWindowComponent;
 
     public EditMemberModal(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
@@ -70,12 +78,14 @@ public class EditMemberModal extends BaseEditModal {
 
         this.keyMemberCheckbox = new CheckboxElement(driver, keyMemberCheckboxRoot);
         this.nameInput = new InputElement(driver, nameInputRoot);
-        this.positionDropdown = new DropdownComponent(driver, positionDropdownRoot);
+        this.positionsDropdown = new DropdownComponent(driver, positionsDropdownRoot);
         this.descriptionTextareaElement = new InputElement(driver, descriptionTextareaElementRoot);
         this.socialMediaDropdown = new DropdownComponent(driver, socialMediaDropdownRoot);
         this.socialMediaInput = new InputElement(driver, socialMediaInputRoot);
-    }
 
+        this.photoModalComponent = new PhotoModalComponent(driver, rootElement);
+        this.photoWindowComponent = new PhotoWindowComponent(driver, rootElement);
+    }
 
     public void setKeyMemberStatus(boolean isKeyMember) {
         if (isKeyMember) {
@@ -89,74 +99,90 @@ public class EditMemberModal extends BaseEditModal {
         return keyMemberCheckbox.isChecked();
     }
 
-    //TODO Do I need getters?
     public void setName(String name) {
-        nameInput.getInputField().clear();
         nameInput.setInputField(name);
     }
 
     public String getName() {
-        return nameInput.getInputField().getAttribute("value");
+        return nameInput.getInputValue();
     }
 
-    //TODO Which one is better?
-    public DropdownComponent setPosition(String position) {
-        positionDropdown.clickOptionByText(position);
-        return positionDropdown;
+    public void setPositions(List<String> positions) {
+        positionsDropdown.openDropdown();
+        positionsDropdown.selectMultipleOptions(positions);
     }
 
-    //Multiple options from the dropdown list
-    public DropdownComponent setPosition(List<String> positions) {
-        for (String position : positions) {
-            positionDropdown.clickOptionByText(position);
-        }
-        return positionDropdown;
+    public List<String> getSelectedPositions() {
+        return positionsDropdown.getSelectedMultipleOptions();
     }
-    //TODO What about getter for the method above?
 
     public void setDescription(String description) {
-//        descriptionTextareaElement.clear();
-//        descriptionTextareaElement.sendKeys(description);
+        descriptionTextareaElement.setInputField(description);
     }
 
-//    public String getDescription() {
-//        return descriptionTextareaElement.getAttribute("value");
-//    }
+    public String getDescription() {
+        return descriptionTextareaElement.getInputValue();
+    }
 
-    //TODO Is it necessary?
-    public boolean isUploadedPhotoVisible() {
-        try {
-            // Check if the uploaded photo is displayed on the page
-            return uploadedPhoto.isDisplayed();
-        } catch (Exception e) {
-            return false;
+    public void previewPhoto() {
+        if (photoWindowComponent.isPhotoUploaded()) {
+            photoWindowComponent.clickPreviewButton();
         }
     }
 
     public void deletePhoto() {
-        deletePhotoButton.click();
+        if (photoWindowComponent.isPhotoUploaded()) {
+            photoWindowComponent.clickDeleteButton();
+        }
     }
 
-    public void previewPhoto() {
-        previewPhotoButton.click();
+    public void closePhotoModal() {
+        photoModalComponent.close();
     }
 
-    //TODO Do I need to implement both clicking and dragging the photo?
     public void uploadFile(String filePath) {
         uploadButton.click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement fileInput = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='ant-upload ant-upload-select']//input[@type='file']")));
         fileInput.sendKeys(filePath);
     }
 
- /*   public void addSocialMedia(String platform, String link) {
+    //TODO Do I need to check uploadedPhoto.isDisplayed(), too?
+    public boolean isPhotoUploaded() {
+        return !photoWindowComponent.isPlaceholderClickable(); //&& !uploadedPhoto.isDisplayed();
+    }
+
+    public void addSocialMedia(String platform, String link) {
         selectDropdownOption(socialMediaDropdown, platform);
-        socialMediaInput.clear();
-        socialMediaInput.sendKeys(link);
+        socialMediaInput.setInputField(link);
         addSocialMediaButton.click();
     }
 
+    public void navigateToSocialMediaAccount(int index) {
+        if (index >= 0 && index < existingSocialMedia.size()) {
+            SocialMediaExistedComponent socialMediaComponent = new SocialMediaExistedComponent(driver, existingSocialMedia.get(index));
+            socialMediaComponent.navigateToSocialMediaAccount();
+        } else {
+            throw new IndexOutOfBoundsException("Invalid social media index: " + index);
+        }
+    }
+
     public void deleteSocialMedia(int index) {
-        WebElement deleteButton = existingSocialMedia.get(index).findElement(By.className("anticon anticon-delete"));
-        deleteButton.click();
+        if (index >= 0 && index < existingSocialMedia.size()) {
+            SocialMediaExistedComponent socialMediaComponent = new SocialMediaExistedComponent(driver, existingSocialMedia.get(index));
+            socialMediaComponent.deleteSocialMedia();
+        } else {
+            throw new IndexOutOfBoundsException("Invalid social media index: " + index);
+        }
+    }
+
+    public List<String> getExistingSocialMediaLinks() {
+        List<String> socialMediaLinks = new ArrayList<>();
+        for (WebElement socialMediaElement : existingSocialMedia) {
+            SocialMediaExistedComponent socialMediaComponent = new SocialMediaExistedComponent(driver, socialMediaElement);
+            socialMediaLinks.add(socialMediaComponent.getLink());
+        }
+        return socialMediaLinks;
     }
 
     private void selectDropdownOption(DropdownComponent dropdown, String optionText) {
@@ -180,5 +206,5 @@ public class EditMemberModal extends BaseEditModal {
     public String getTextFromTooltip() {
         return getTooltipText();
     }
-*/
+
 }

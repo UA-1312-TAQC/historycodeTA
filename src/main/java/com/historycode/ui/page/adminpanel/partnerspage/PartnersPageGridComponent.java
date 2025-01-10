@@ -17,12 +17,12 @@ public class PartnersPageGridComponent extends BaseGridComponent {
 
     public PartnersPageGridComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        partnersRowComponents = updatePartnersRows(driver);
+        partnersRowComponents = getPartnersRows(driver);
     }
 
-    public List<PartnersRowComponent> updatePartnersRows(WebDriver driver) {
+    public List<PartnersRowComponent> getPartnersRows(WebDriver driver) {
 
-        List<WebElement> gridRows = driver.findElements(By.xpath("//tbody//tr"));
+        List<WebElement> gridRows = driver.findElements(By.xpath("./tbody//tr"));
 
         for (WebElement rootElement : gridRows) {
             partnersRowComponents.add(new PartnersRowComponent(driver, rootElement));
@@ -38,18 +38,18 @@ public class PartnersPageGridComponent extends BaseGridComponent {
         return partnersRowComponents.size();
     }
 
-    public void clickNextPage() {
+    public PartnersPageGridComponent clickNextPage() {
         pagination.clickNextPage();
-        this.partnersRowComponents = updatePartnersRows(driver);
+        return new PartnersPageGridComponent(driver, rootElement);
     }
 
-    public void clickPrevPage() {
+    public PartnersPageGridComponent clickPrevPage() {
         pagination.clickPrevPage();
-        this.partnersRowComponents = updatePartnersRows(driver);
+        return new PartnersPageGridComponent(driver, rootElement);
     }
 
     public void clickPaginationItem(int index) {
         pagination.clickPaginationItem(index);
-        this.partnersRowComponents = updatePartnersRows(driver);
+        this.partnersRowComponents = getPartnersRows(driver);
     }
 }

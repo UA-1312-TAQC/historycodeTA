@@ -35,6 +35,7 @@ public class EditJobModal extends BaseEditModal {
     @FindBy(xpath = "//div[@class= 'editorInfoContainer']/div")
     private WebElement charsCounter;
 
+    @Getter
     @FindBy(xpath = "//label[@for = 'salary']/../..")
     private WebElement salaryContainer;
 
