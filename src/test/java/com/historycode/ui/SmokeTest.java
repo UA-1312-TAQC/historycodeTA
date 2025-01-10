@@ -32,7 +32,7 @@ public class SmokeTest extends BaseTestRunner {
         //TODO: criteria paragraphs
         String[] paragraphs = teaserText.split("\n");
         int paragraphCount = paragraphs.length;
-        int characterCount = teaserText.length();
+        int characterCount = teaserText.replace("\n", "").length();
 
         Assert.assertTrue(paragraphCount <= 2, "Text contains more than 2 paragraphs.");
 
