@@ -22,15 +22,27 @@ public class SmokeTest extends BaseTestRunner {
 
     @Issue("73")
     @Test(priority = 1)
-    @Description("Verification of the teaser text Length for one paragraph")
-    public void testTeaserTextLengthForOneParagraph() {
+    @Description("Verification of the teaser text Length")
+    public void testTeaserTextLength() {
         HomePage homePage = new HomePage(driver);
         StreetCodePage streetCodePage = homePage.clickPersonCardCarouselItem(1);
 
-        String paragraph = streetCodePage.getMainCard().getDescription();
+        String teaserText = streetCodePage.getMainCard().getDescription();
 
-        Assert.assertTrue(paragraph.length() <= 520, "Description is too long for one paragraph.");
+        //TODO: criteria paragraphs
+        String[] paragraphs = teaserText.split("\n");
+        int paragraphCount = paragraphs.length;
+        int characterCount = teaserText.length();
 
+        Assert.assertTrue(paragraphCount <= 2, "Text contains more than 2 paragraphs.");
+
+        if (paragraphCount == 1) {
+            Assert.assertTrue(characterCount <= 520, "Description is too long for one paragraph.");
+        } else if (paragraphCount == 2) {
+            Assert.assertTrue(characterCount <= 455, "Description is too long for two paragraphs.");
+        }
+
+        //TODO: criteria overflow/truncated
         Assert.assertFalse(streetCodePage.getMainCard().isTeaserTextOverflowing());
     }
 }
