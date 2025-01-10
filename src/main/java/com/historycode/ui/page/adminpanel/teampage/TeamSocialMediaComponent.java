@@ -16,12 +16,10 @@ public class TeamSocialMediaComponent extends BaseComponent {
         PageFactory.initElements(driver, this);
     }
 
-    //Extracts the URL directly from the href attribute
     public String getUrl() {
         return rootElement.getDomAttribute("href");
     }
 
-    //TODO What should be done with this?
     public String getIcon() {
         return icon.getDomAttribute("d");
     }
