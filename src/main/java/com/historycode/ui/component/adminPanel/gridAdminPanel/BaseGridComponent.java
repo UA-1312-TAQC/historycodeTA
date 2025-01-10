@@ -52,6 +52,7 @@ public abstract class BaseGridComponent extends BaseComponent {
         pagination.clickNextFivePages();
     }
 
+    /* 
     public NoDataComponent getNoDataComponent(){
         if(noDataComponent == null){
             WebElement root = driver.findElement(By.cssSelector(NO_DATA_COMPONENT_ROOT_ELEMENT_CSS));
@@ -59,6 +60,7 @@ public abstract class BaseGridComponent extends BaseComponent {
         }
         return noDataComponent;
     }
+    */
 
     //TODO запитати де реалізувати методи пагінацій( на сторінці чи тут )
 }
