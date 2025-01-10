@@ -30,7 +30,7 @@ public class MainCardComponent extends BaseComponent {
     @FindBy(xpath = ".//p[@class='teaserBlock']")
     private WebElement description;
 
-    @FindBy(xpath = ".//div[@class='cardFooter']/button")
+    @FindBy(xpath = ".//button[contains(@class, 'audioBtn')]")
     private WebElement audioButton;
 
     @FindBy(xpath = ".//div[@class='leftSider']//ul[@class='slick-dots']")
@@ -91,10 +91,6 @@ public class MainCardComponent extends BaseComponent {
                 .click();
     }
 
-    public void toggleAudio() {
-        audioButton.click();
-    }
-
     public void goToPhoto(int index) {
         pagination.selectDot(index);
     }
@@ -109,5 +105,38 @@ public class MainCardComponent extends BaseComponent {
 
     public KeywordPersonasModal getKeywordModal() {
         return keywordPersonsModal;
+    }
+
+    public void toggleAudio() {
+        if (isAudioAvailable()) {
+            audioButton.click();
+        } else {
+            throw new IllegalStateException("Cannot toggle audio - audio is not available");
+        }
+    }
+
+    public String getAudioButtonText() {
+        return audioButton.getText();
+    }
+
+    public boolean isAudioButtonEnabled() {
+        return audioButton.isEnabled();
+    }
+
+    public boolean isAudioAvailable() {
+        try {
+            return !Boolean.valueOf(audioButton.getAttribute("disabled"));
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    public boolean isAudioComingSoonMessageDisplayed() {
+        try {
+            return Boolean.valueOf(audioButton.getAttribute("disabled")) &&
+                    audioButton.getText().equals("Аудіо на підході");
+        } catch (NoSuchElementException e) {
+            return false;
+        }
     }
 }

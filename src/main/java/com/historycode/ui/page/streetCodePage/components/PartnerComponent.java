@@ -9,7 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import java.util.List;
 
 public class PartnerComponent extends BaseComponent {
-    @FindBy(xpath = ".//div[@class='partnerContainer']")
+    @FindBy(xpath = ".//div[@class='sliderClass']")
     private WebElement carouselRoot;
     private PartnersCarousel carousel;
 
