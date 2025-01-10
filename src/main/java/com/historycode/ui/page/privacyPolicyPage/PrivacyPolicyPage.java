@@ -4,6 +4,7 @@ import com.historycode.ui.page.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
@@ -41,7 +42,6 @@ public class PrivacyPolicyPage extends BasePage {
     public String getDisclaimer() {
         return titleComponent.disclaimer();
     }
-
 
 }
 
