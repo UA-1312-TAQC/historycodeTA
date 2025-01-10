@@ -14,7 +14,7 @@ import java.util.List;
 public abstract class BaseGridComponent extends BaseComponent {
 
     private final String NO_DATA_COMPONENT_ROOT_ELEMENT_CSS = ".ant-table-tbody .ant-table-cell .ant-empty";
-
+    protected NoDataComponent noDataComponent;
 
     @FindBy(xpath = "//thead[@class = 'ant-table-thead']//th")
     protected List<WebElement> headerItems;

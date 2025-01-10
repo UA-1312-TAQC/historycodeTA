@@ -30,7 +30,7 @@ public class InputElement extends BaseComponent {
         inputField.sendKeys(value);
     }
 
-    public String getInputField() {
+    public String getInputValue() {
         return inputField.getDomAttribute("value");
     }
 }

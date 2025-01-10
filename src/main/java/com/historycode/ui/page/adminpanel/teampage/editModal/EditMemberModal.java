@@ -101,7 +101,7 @@ public class EditMemberModal extends BaseEditModal {
     }
 
     public String getName() {
-        return nameInput.getInputField();
+        return nameInput.getInputValue();
     }
 
     public void setPositions(List<String> positions) {
@@ -118,7 +118,7 @@ public class EditMemberModal extends BaseEditModal {
     }
 
     public String getDescription() {
-        return descriptionTextareaElement.getInputField();
+        return descriptionTextareaElement.getInputValue();
     }
 
     public void previewPhoto() {
