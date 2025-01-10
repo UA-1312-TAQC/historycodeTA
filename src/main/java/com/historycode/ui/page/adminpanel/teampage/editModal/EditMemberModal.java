@@ -4,9 +4,6 @@ import com.historycode.ui.component.adminPanel.dropDownAdminPanel.DropdownCompon
 import com.historycode.ui.component.adminPanel.modalAdminPanel.BaseEditModal;
 import com.historycode.ui.elements.adminPanel.CheckboxElement;
 import com.historycode.ui.elements.adminPanel.InputElement;
-import com.historycode.ui.component.adminPanel.modalAdminPanel.BaseEditModal;
-import com.historycode.ui.elements.adminPanel.CheckboxElement;
-import com.historycode.ui.elements.adminPanel.InputElement;
 import com.historycode.ui.page.adminpanel.teampage.editModal.photoElement.PhotoModalComponent;
 import com.historycode.ui.page.adminpanel.teampage.editModal.photoElement.PhotoWindowComponent;
 import com.historycode.ui.page.adminpanel.teampage.editModal.socialMediaElement.SocialMediaExistedComponent;
@@ -99,12 +96,12 @@ public class EditMemberModal extends BaseEditModal {
         return keyMemberCheckbox.isChecked();
     }
 
-    public void setName(String name) {
-        nameInput.setInputField(name);
-    }
-
     public String getName() {
         return nameInput.getInputValue();
+    }
+
+    public void setName(String name) {
+        nameInput.setInputField(name);
     }
 
     public void setPositions(List<String> positions) {
@@ -116,12 +113,12 @@ public class EditMemberModal extends BaseEditModal {
         return positionsDropdown.getSelectedMultipleOptions();
     }
 
-    public void setDescription(String description) {
-        descriptionTextareaElement.setInputField(description);
-    }
-
     public String getDescription() {
         return descriptionTextareaElement.getInputValue();
+    }
+
+    public void setDescription(String description) {
+        descriptionTextareaElement.setInputField(description);
     }
 
     public void previewPhoto() {
