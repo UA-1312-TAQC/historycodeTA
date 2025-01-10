@@ -2,6 +2,7 @@ package com.historycode.ui.page.streetCodePage.components;
 
 import com.historycode.ui.component.BaseComponent;
 import com.historycode.ui.page.streetCodePage.modals.KeywordPersonasModal;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -62,8 +63,14 @@ public class MainCardComponent extends BaseComponent {
         return lifeYears.getText();
     }
 
+    @Step("Get the text of the 'Teaser' element")
     public String getDescription() {
         return description.getText();
+    }
+
+    @Step("Check if the 'Teaser' text has truncation or overflow")
+    public boolean isTeaserTextOverflowing() {
+        return isContentOverflowing(description);
     }
 
     public void clickAudioButton() {
