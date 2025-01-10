@@ -10,32 +10,31 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class EditJobModal extends BaseEditModal {
-    //TODO N2 is it ok to pass this rootElement for input and dropdown and then initialise it in constructor?
-    @FindBy(xpath = "//label[@for = 'title']/../..")
+    @FindBy(xpath = "./label[@for = 'title']/../..")
     private WebElement titleContainer;
 
     @Getter
     private InputElement title;
 
-    @FindBy(xpath = "//label[@for = 'status']/../..")
+    @FindBy(xpath = "./label[@for = 'status']/../..")
     private WebElement statusContainer;
 
     private DropdownComponent jobStatusDropdown;
 
     @Getter
-    @FindBy(xpath = "//div[contains(@class, 'ant-form-item-label')]")
+    @FindBy(xpath = "./div[contains(@class, 'ant-form-item-label')]")
     private WebElement jobDescriptionLabel;
 
     @Getter
     @Setter
-    @FindBy(xpath = "//div[@class='ql-editor ql-blank']")
+    @FindBy(xpath = "./div[@class='ql-editor ql-blank']")
     private WebElement jobDescriptionTextArea;
 
     @Getter
-    @FindBy(xpath = "//div[@class= 'editorInfoContainer']/div")
+    @FindBy(xpath = "./div[@class= 'editorInfoContainer']/div")
     private WebElement charsCounter;
 
-    @FindBy(xpath = "//label[@for = 'salary']/../..")
+    @FindBy(xpath = "./label[@for = 'salary']/../..")
     private WebElement salaryContainer;
 
     @Getter

@@ -13,7 +13,7 @@ public class JobsPageGridComponent extends BaseGridComponent {
     @Getter
     protected List<JobsRowComponent> jobsRowComponents;
 
-    @FindBy(xpath = "//tbody//tr")
+    @FindBy(xpath = "./tbody//tr")
     protected List<WebElement> rowNodes;
 
     public JobsPageGridComponent(WebDriver driver, WebElement rootElement) {
