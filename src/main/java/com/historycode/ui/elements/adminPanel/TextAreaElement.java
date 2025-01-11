@@ -27,7 +27,7 @@ public class TextAreaElement extends BaseComponent {
     }
 
     public void setTextArea(String value) {
-        waitForTextAreaReady();
+        waitUntilElementVisible(textAreaField);
         textAreaField.clear();
         textAreaField.sendKeys(value);
     }
@@ -38,9 +38,5 @@ public class TextAreaElement extends BaseComponent {
 
     public String getCharCount() {
         return charCounter.getText();
-    }
-
-    public void waitForTextAreaReady() {
-        wait.until(ExpectedConditions.visibilityOf(textAreaField));
     }
 }
