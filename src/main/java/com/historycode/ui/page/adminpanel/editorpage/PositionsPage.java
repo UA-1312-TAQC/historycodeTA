@@ -1,80 +1,89 @@
 package com.historycode.ui.page.adminpanel.editorpage;
 
+import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
 import com.historycode.ui.page.adminpanel.editorpage.components.grids.PositionsGridComponent;
-import com.historycode.ui.page.adminpanel.editorpage.components.modals.ContextsModalComponent;
-import com.historycode.ui.page.adminpanel.editorpage.components.modals.ModalComponent;
+
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.PositionsModalComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.PositionsRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.elements.addButtonElement;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.FindBy;
+
 
 import java.util.List;
 
 public class PositionsPage extends BasePage {
-    private final addButtonElement addPositionButton = new addButtonElement(driver, getRootAddButton());
-    private final PositionsGridComponent grid = new PositionsGridComponent(driver, getRootGrid());
+    @FindBy(xpath = "//button[span[text()='Додати нову позицію']]")
+    WebElement addNewPositionButton;
+
+    @FindBy(xpath = "//div[contains(@class, 'ant-table-wrapper')]")
+    private WebElement gridRootElement;
+
+    @FindBy(xpath = "//div[@role = 'dialog']/div[2]")
+    private WebElement createModalRootElement;
+
+    private PositionsGridComponent gridComponent;
 
     public PositionsPage(WebDriver driver) {
         super(driver);
+        this.gridComponent = new PositionsGridComponent(driver, gridRootElement);
     }
 
     public PositionsModalComponent addPosition() {
-        addPositionButton.clickButton();
-//        Thread.sleep(1000);
-        return new PositionsModalComponent(driver, getDisplayedModalRoot());
+        addNewPositionButton.click();
+        return new PositionsModalComponent(driver, createModalRootElement);
     }
 
-    public int getTableHeadersCount(){
-        return grid.getHeaderItems().size();
+    public int getTableHeadersCount() {
+        return gridComponent.getHeaderItems().size();
     }
 
     public List<String> getTableHeadersString() {
-        return grid.getHeaderItemsString();
+        return gridComponent.getHeaderItemsString();
     }
 
-    public List<WebElement> getTableHeaders(){
-        return grid.getHeaderItems();
+    public List<WebElement> getTableHeaders() {
+        return gridComponent.getHeaderItems();
     }
 
     public int getTableRowsCount() {
-        return grid.getRows().size();
+        return gridComponent.getRows().size();
     }
 
-    public List<String> getTableRowsTitles(){
-        return grid.getRowsTitles();
+    public List<String> getTableRowsTitles() {
+        return gridComponent.getRowsTitles();
     }
 
     public List<PositionsRowComponent> getTableRows() {
-        return grid.getRows();
+        return gridComponent.getRows();
     }
 
     public List<PositionsRowComponent> getTableRowsByTitlePart(String part) {
-        return grid.getRowsByTitlePart(part);
+        return gridComponent.getRowsByTitlePart(part);
     }
 
     public PositionsRowComponent getTableRowByNumber(int num) {
-        return grid.getRowByNum(num);
+        return gridComponent.getRowByNum(num);
     }
 
     public PositionsRowComponent getTableRowByTitle(String title) {
-        return grid.getRowByTitle(title);
+        return gridComponent.getRowByTitle(title);
     }
 
-    public String getAddButtonText(){
-        return addPositionButton.getButtonText();
+    public String getAddButtonText() {
+        return addNewPositionButton.getText();
     }
 
     public PositionsModalComponent editTableRow(PositionsRowComponent row) throws InterruptedException {
-        grid.editRow(row);
+        gridComponent.editRow(row);
         Thread.sleep(500);
         return new PositionsModalComponent(driver, getDisplayedModalRoot());
     }
 
-    public void deleteTableRow(PositionsRowComponent row) {
-        //TODO Implement return of modal
-        grid.deleteRow(row);
+    public DeleteItemModal deleteTableRow(PositionsRowComponent row) {
+        gridComponent.deleteRow(row);
+        return new DeleteItemModal(driver, getDisplayedModalRoot());
+
     }
 }

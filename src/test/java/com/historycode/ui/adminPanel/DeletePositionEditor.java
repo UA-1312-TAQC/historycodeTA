@@ -1,6 +1,7 @@
 package com.historycode.ui.adminPanel;
 
 import com.historycode.ui.page.adminpanel.editorpage.CategoriesPage;
+import com.historycode.ui.page.adminpanel.editorpage.PositionsPage;
 import com.historycode.ui.testrunners.TestRunnerWithAdmin;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -9,19 +10,24 @@ import org.testng.annotations.Test;
 
 public class DeletePositionEditor extends TestRunnerWithAdmin {
     @BeforeMethod
-    public void setupForDeleteJob() {
+    public void setupForDeleteJob() throws InterruptedException {
         login();
         driver.get(testValueProvider.getBaseUIUrl() + "admin-panel/editor");
         CategoriesPage categoriesPage = new CategoriesPage(driver);
         categoriesPage.moveToPositions()
                 .addPosition()
-                .enterPosition("Accountant").close();
+                .inputNewPosition("Дизайнер")
+                .saveNewPosition()
+                .clickCloseButton();
     }
 
     @Test
     @Issue("108")
     @Description("Verify that the admin can delete position using the trash bin button")
     public void testDeleteJob() {
+        PositionsPage positionsPage = new PositionsPage(driver);
+
+        System.out.println(positionsPage.getTableRowByTitle("Дизайнер").getTitle());
         // 1) Get the last created position from list
         // 2) Delete it
         System.out.println("testDeleteJob");

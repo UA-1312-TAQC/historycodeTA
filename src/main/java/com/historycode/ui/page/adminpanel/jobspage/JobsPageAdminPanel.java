@@ -12,6 +12,8 @@ public class JobsPageAdminPanel extends BasePageAdminPanel {
     @FindBy(xpath = "//button[span[text()='Додати нову вакансію']]")
     WebElement addNewJobButton;
 
+
+    //TODO !!!!!
     @FindBy(xpath = "//div[@role = 'dialog']//div")
     private WebElement editModalRootElement;
 
