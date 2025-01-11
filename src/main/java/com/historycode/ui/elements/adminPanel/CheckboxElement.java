@@ -10,11 +10,11 @@ import lombok.Getter;
 public class CheckboxElement {
 
     @Getter
-    @FindBy(xpath = "//div[contains(@class, 'ant-form-item-label')]/label")
+    @FindBy(xpath = "./div[contains(@class, 'ant-form-item-label')]/label")
     private WebElement checboxLabel;
 
     @Getter
-    @FindBy(xpath = "//input[@type = 'checkbox']")
+    @FindBy(xpath = "./input[@type = 'checkbox']")
     private WebElement checkbox;
 
     public CheckboxElement(WebDriver driver, WebElement rootElement) {

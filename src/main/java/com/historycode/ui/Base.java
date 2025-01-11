@@ -14,9 +14,8 @@ import java.time.Duration;
 public abstract class Base {
     protected WebDriver driver;
     protected WebDriverWait wait;
-    private JavascriptExecutor threadJs;
+    protected JavascriptExecutor threadJs;
     protected Actions actions;
-
 
     public Base(WebDriver driver) {
         this.driver = driver;
@@ -26,15 +25,25 @@ public abstract class Base {
         PageFactory.initElements(driver, this);
     }
 
+    @Step("Scroll to the element")
     public void scrollToElement(WebElement element) {
         wait.until(ExpectedConditions.visibilityOf(element));
         threadJs.executeScript("arguments[0].scrollIntoView(true);", element);
         wait.until(ExpectedConditions.visibilityOf(element));
     }
-    @Step("scroll to end of page")
+
+    @Step("Scroll to the end of the page")
     public void scrollToEndOfPage() {
         threadJs.executeScript("window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });");
         sleep(1000);
+    }
+
+    protected boolean isContentOverflowing(WebElement element) {
+        String script = "var element = arguments[0];" +
+                "return element.scrollWidth > element.clientWidth || " +
+                "element.scrollHeight > element.clientHeight;";
+        Boolean isOverflowing = (Boolean) threadJs.executeScript(script, element);
+        return isOverflowing != null && isOverflowing;
     }
 
     public void sleep(long millisSeconds) {
@@ -46,18 +55,10 @@ public abstract class Base {
     }
 
     public void waitUntilElementVisible(WebElement element) {
-        try {
-            wait.until(ExpectedConditions.visibilityOf(element));
-        } catch (Exception e) {
-            System.err.println("Error waiting for element to be visible: " + e.getMessage());
-        }
+        wait.until(ExpectedConditions.visibilityOf(element));
     }
 
     public void waitUntilElementClickable(WebElement element) {
-        try {
-            wait.until(ExpectedConditions.elementToBeClickable(element));
-        } catch (Exception e) {
-            System.err.println("Error waiting for element to be clickable: " + e.getMessage());
-        }
+        wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 }

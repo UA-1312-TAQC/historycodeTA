@@ -5,44 +5,18 @@ import com.historycode.ui.elements.ScrollTopButtonElement;
 import com.historycode.ui.page.BasePage;
 import com.historycode.ui.page.streetCodePage.components.*;
 import com.historycode.ui.page.streetCodePage.elememts.QuickDonateButtonElement;
-import com.historycode.ui.page.streetCodePage.modals.SurveyModal;
 import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 public class StreetCodePage extends BasePage {
 
     @FindBy(xpath = "//div[@class='card']")
     private WebElement mainCardNode;
-
-    @FindBy(xpath = "//div[@id='text']")
-    private WebElement detailsNode;
-
-    @FindBy(xpath = "//div[@id='wow-facts']")
-    private WebElement factsNode;
-
-    @FindBy(xpath = "//div[@id='timeline']")
-    private WebElement timelineNode;
-
-    @FindBy(xpath = "//div[@class='relatedFiguresContainer']")
-    private WebElement relatedFiguresNode;
-
-    @FindBy(xpath = "")
-    private WebElement additionalInfoNode;
-
-    @FindBy(xpath = "//div[@class='art-gallery']")
-    private WebElement artGalleryNode;
-
-    @FindBy(xpath = "//div[@class='partnerContainer']")
-    private WebElement partnersNode;
-
-    @FindBy(xpath = "//div[@class='tickerContainer']")
-    private WebElement runningLineNode;
 
     @FindBy(xpath = "//div[@class='progressBarContainer']")
     private WebElement verticalProgressNode;
@@ -53,8 +27,6 @@ public class StreetCodePage extends BasePage {
     @FindBy(xpath = "//div[@class='donateBtnContainer']")
     private WebElement quickDonateButtonNode;
 
-    @FindBy(xpath = "//div[@class='ant-modal-content']")
-    private WebElement surveyModalNode;
 
     @Getter
     private BreadcrumbsElement breadcrumbs;
@@ -66,7 +38,7 @@ public class StreetCodePage extends BasePage {
     @Getter
     private MainCardComponent mainCard;
     @Getter
-    private StreetCodeTextBlockComponent details;
+    private StreetCodeTextBlockComponent textBlock;
     @Getter
     private InterestingFactsComponent facts;
     @Getter
@@ -74,58 +46,107 @@ public class StreetCodePage extends BasePage {
     @Getter
     private RelatedPersonasComponent relatedFigures;
     @Getter
-    private SourcesComponent additionalInfo;
+    private SourcesComponent sources;
     private ArtGalleryComponent artGallery;
     @Getter
     private PartnerComponent partners;
     @Getter
     private RunningLineComponent runningLine;
     private PageNavigationBarComponent verticalProgress;
-    private SurveyModal surveyModal;
+
 
     public StreetCodePage(WebDriver driver){
         super(driver);
+
         this.breadcrumbs = new BreadcrumbsElement(driver);
         this.scrollTopButton = new ScrollTopButtonElement(driver);
         this.quickDonateButton = new QuickDonateButtonElement(driver);
         this.mainCard = new MainCardComponent(driver, mainCardNode);
-        this.details = new StreetCodeTextBlockComponent(driver, detailsNode);
-        this.facts = new InterestingFactsComponent(driver, factsNode);
-        this.timeline = new ChronologyComponent(driver, timelineNode);
-        this.relatedFigures = new RelatedPersonasComponent(driver, relatedFiguresNode);
-        this.additionalInfo = new SourcesComponent(driver, additionalInfoNode);
-        this.partners = new PartnerComponent(driver, partnersNode);
-        this.runningLine = new RunningLineComponent(driver, runningLineNode);
         this.verticalProgress = new PageNavigationBarComponent(driver, verticalProgressNode);
-        this.surveyModal = new SurveyModal(driver, surveyModalNode);
-        initializeArtGallery();
+        initializeOptionalComponents(driver);
     }
 
-    private void initializeArtGallery() {
-        if (isElementPresent(By.xpath("//div[@class='art-gallery']"))) {
-            this.artGallery = new ArtGalleryComponent(driver, artGalleryNode);
+    public StreetCodePage(WebDriver driver, boolean testMode){
+        super(driver);
+
+        //TODO: remove testMode
+        if  (testMode) {
+            this.mainCard = new MainCardComponent(driver, mainCardNode);
+            return;
         }
+
+        this.breadcrumbs = new BreadcrumbsElement(driver);
+        this.scrollTopButton = new ScrollTopButtonElement(driver);
+        this.quickDonateButton = new QuickDonateButtonElement(driver);
+        this.mainCard = new MainCardComponent(driver, mainCardNode);
+        this.verticalProgress = new PageNavigationBarComponent(driver, verticalProgressNode);
+        initializeOptionalComponents(driver);
+    }
+
+    private WebElement findElement(String xpath) {
+        return driver.findElements(By.xpath(xpath)).stream().findFirst().orElse(null);
+    }
+
+    private void initializeOptionalComponents(WebDriver driver) {
+        Optional.ofNullable(findElement("//div[@id='text']"))
+                .ifPresent(element -> textBlock = new StreetCodeTextBlockComponent(driver, element));
+
+        Optional.ofNullable(findElement("//div[@id='wow-facts']"))
+                .ifPresent(element -> facts = new InterestingFactsComponent(driver, element));
+
+        Optional.ofNullable(findElement("//div[@id='timeline']"))
+                .ifPresent(element -> timeline = new ChronologyComponent(driver, element));
+
+        Optional.ofNullable(findElement("//div[@class='relatedFiguresContainer']"))
+                .ifPresent(element -> relatedFigures = new RelatedPersonasComponent(driver, element));
+
+        Optional.ofNullable(findElement("//div[@class='sourcesContainer']"))
+                .ifPresent(element -> sources = new SourcesComponent(driver, element));
+
+        Optional.ofNullable(findElement("//div[@class='art-gallery']"))
+                .ifPresent(element -> artGallery = new ArtGalleryComponent(driver, element));
+
+        Optional.ofNullable(findElement("//div[@class='partnerContainer']"))
+                .ifPresent(element -> partners = new PartnerComponent(driver, element));
+
+        Optional.ofNullable(findElement("//div[@class='tickerContainer']"))
+                .ifPresent(element -> runningLine = new RunningLineComponent(driver, element));
+    }
+
+    public Optional<StreetCodeTextBlockComponent> getTextBlock() {
+        return Optional.ofNullable(textBlock);
+    }
+
+    public Optional<InterestingFactsComponent> getFacts() {
+        return Optional.ofNullable(facts);
+    }
+
+    public Optional<ChronologyComponent> getTimeline() {
+        return Optional.ofNullable(timeline);
+    }
+
+    public Optional<RelatedPersonasComponent> getRelatedFigures() {
+        return Optional.ofNullable(relatedFigures);
+    }
+
+    public Optional<SourcesComponent> getSources() {
+        return Optional.ofNullable(sources);
     }
 
     public Optional<ArtGalleryComponent> getArtGallery() {
         return Optional.ofNullable(artGallery);
     }
 
-    private boolean isElementPresent(By locator) {
-        try {
-            driver.findElement(locator);
-            return true;
-        } catch (NoSuchElementException e) {
-            return false;
-        }
+    public Optional<PartnerComponent> getPartners() {
+        return Optional.ofNullable(partners);
+    }
+
+    public Optional<RunningLineComponent> getRunningLine() {
+        return Optional.ofNullable(runningLine);
     }
 
     public void openDonateModal() {
         quickDonateButton.clickDonateButton();
-    }
-
-    public void closeSurveyModal() {
-        surveyModal.close();
     }
 
     public void scrollToTop() {
@@ -134,10 +155,6 @@ public class StreetCodePage extends BasePage {
 
     public void toggleProgressBar() {
         verticalProgress.toggleProgressBar();
-    }
-
-    public boolean isSurveyModalOpen() {
-        return surveyModal.isDisplayed();
     }
 }
 

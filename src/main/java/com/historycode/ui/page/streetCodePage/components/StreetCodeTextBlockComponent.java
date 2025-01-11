@@ -15,23 +15,23 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
     @FindBy(xpath = ".//span[@class='readMore false']")
     private WebElement expandButton;
 
-    @FindBy(xpath = ".//div[@class='video-container']")
-    private WebElement videoContainer;
+//    @FindBy(xpath = ".//div[@class='video-container']")
+//    private WebElement videoContainer;
 
     private boolean hasVideo;
 
     public StreetCodeTextBlockComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        checkVideoPresence();
+//        checkVideoPresence();
     }
 
-    private void checkVideoPresence() {
-        try {
-            hasVideo = videoContainer.isDisplayed();
-        } catch (NoSuchElementException e) {
-            hasVideo = false;
-        }
-    }
+//    private void checkVideoPresence() {
+//        try {
+//            hasVideo = videoContainer.isDisplayed();
+//        } catch (NoSuchElementException e) {
+//            hasVideo = false;
+//        }
+//    }
 
     public boolean hasVideo() {
         return hasVideo;
