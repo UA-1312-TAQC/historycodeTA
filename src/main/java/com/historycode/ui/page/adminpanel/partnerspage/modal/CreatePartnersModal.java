@@ -3,6 +3,8 @@ package com.historycode.ui.page.adminpanel.partnerspage.modal;
 import com.historycode.ui.component.adminPanel.modalAdminPanel.BaseCreateModal;
 import com.historycode.ui.elements.adminPanel.CheckboxElement;
 import com.historycode.ui.elements.adminPanel.InputElement;
+import com.historycode.ui.elements.adminPanel.LogoElement;
+import com.historycode.ui.elements.adminPanel.TextAreaElement;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,21 +23,29 @@ public class CreatePartnersModal extends BaseCreateModal {
     private CheckboxElement visiblePartner = new CheckboxElement(driver, visiblePartnerCheckboxContainer);
 
     @FindBy(xpath = "./label[@for = 'title']/../..")
-    private WebElement partnerNameContainer;
+    private WebElement nameContainer;
     @Getter
-    private InputElement partnerName = new InputElement(driver, partnerNameContainer);
+    private InputElement name = new InputElement(driver, nameContainer);
 
     @FindBy(xpath = "./label[@for = 'url']/../..")
-    private WebElement partnerLinkContainer;
+    private WebElement linkContainer;
     @Getter
-    private InputElement partnerLink = new InputElement(driver, partnerLinkContainer);
+    private InputElement link = new InputElement(driver, linkContainer);
 
     @FindBy(xpath = "./label[@for = 'urlTitle']/../..")
-    private WebElement partnerLinkNameContainer;
+    private WebElement linkNameContainer;
     @Getter
-    private InputElement partnerLinkName = new InputElement(driver, partnerLinkNameContainer);
+    private InputElement linkName = new InputElement(driver, linkNameContainer);
 
+    @FindBy(xpath = "./label[@for = 'description']/../..")
+    private WebElement textAreaContainer;
+    @Getter
+    private TextAreaElement discription = new TextAreaElement(driver, textAreaContainer);
 
+    @FindBy(xpath = "./label[@for = 'logo']/../..")
+    private WebElement logoContainer;
+    @Getter
+    private LogoElement logo = new LogoElement(driver, logoContainer);
 
     public CreatePartnersModal(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
