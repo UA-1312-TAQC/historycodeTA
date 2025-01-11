@@ -6,15 +6,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class CategoriesRowComponent extends RowComponent {
-    private static final String PICTURE_XPATH = ".//td[@class='ant-table-cell'][2]//img";
-    private static final String DELETE_ACTION_XPATH = "./td[@class='ant-table-cell'][3]//span[contains(@class, 'anticon-delete')]//*[name()='svg']";  // Relative to rootElement
-    private static final String EDIT_ACTION_XPATH = ".//td[@class='ant-table-cell'][3]//span[contains(@class, 'anticon-edit')]//*[name()='svg']";  // Relative to rootElement
 
-    @FindBy(xpath = DELETE_ACTION_XPATH)
+    @FindBy(xpath = "./td[@class='ant-table-cell'][3]//span[contains(@class, 'anticon-delete')]//*[name()='svg']")
     private WebElement deleteAction;
-    @FindBy(xpath = EDIT_ACTION_XPATH)
+    @FindBy(xpath = ".//td[@class='ant-table-cell'][3]//span[contains(@class, 'anticon-edit')]//*[name()='svg']")
     private WebElement editAction;
-    @FindBy(xpath = PICTURE_XPATH)
+    @FindBy(xpath = ".//td[@class='ant-table-cell'][2]//img")
     private WebElement picture;
 
     public CategoriesRowComponent(WebDriver driver, WebElement rootElement) {
@@ -22,12 +19,12 @@ public class CategoriesRowComponent extends RowComponent {
     }
 
     public void clickEdit() {
-        moveToElement(editAction);
+        scrollToElement(editAction);
         editAction.click();
     }
 
     public void clickDelete() {
-        moveToElement(editAction);
+        scrollToElement(editAction);
         deleteAction.click();
     }
 
@@ -42,6 +39,4 @@ public class CategoriesRowComponent extends RowComponent {
     public WebElement getDeleteAction() {
         return deleteAction;
     }
-    //TODO Create method to get row picture
-    //TODO Create method to click picture
 }

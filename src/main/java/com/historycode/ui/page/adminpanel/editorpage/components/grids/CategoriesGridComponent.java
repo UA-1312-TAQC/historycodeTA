@@ -9,10 +9,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class CategoriesGridComponent extends GridComponent {
-    List<CategoriesRowComponent> rows = new ArrayList<>();
+    List<CategoriesRowComponent> rows;
 
     public CategoriesGridComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
+        rows = new ArrayList<>();
         initRows(driver);
     }
 

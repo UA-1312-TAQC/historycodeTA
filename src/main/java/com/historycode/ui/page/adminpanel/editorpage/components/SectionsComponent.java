@@ -7,18 +7,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class SectionsComponent extends BaseComponent {
-    private static final String CATEGORY_XPATH = ".//div[@data-node-key='1']//div[@role='tab']";
-    private static final String TAGS_XPATH = ".//div[@data-node-key='2']//div[@role='tab']";
-    private static final String CONTEXTS_XPATH = ".//div[@data-node-key='3']//div[@role='tab']";
-    private static final String POSITIONS_XPATH = ".//div[@data-node-key='4']//div[@role='tab']";
 
-    @FindBy(xpath = CATEGORY_XPATH)
+    @FindBy(xpath = ".//div[@data-node-key='1']//div[@role='tab']")
     private WebElement categories;
-    @FindBy(xpath = TAGS_XPATH)
+    @FindBy(xpath = ".//div[@data-node-key='2']//div[@role='tab']")
     private WebElement tags;
-    @FindBy(xpath = CONTEXTS_XPATH)
+    @FindBy(xpath = ".//div[@data-node-key='3']//div[@role='tab']")
     private WebElement contexts;
-    @FindBy(xpath = POSITIONS_XPATH)
+    @FindBy(xpath = ".//div[@data-node-key='4']//div[@role='tab']")
     private WebElement positions;
 
     public SectionsComponent(WebDriver driver, WebElement rootElement) {

@@ -6,9 +6,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class ContextsModalComponent extends ModalComponent {
-    private static final String TITLE_XPATH = ".//div[@class='center']//h2";
 
-    @FindBy(xpath = TITLE_XPATH)
+    @FindBy(xpath = ".//div[@class='center']/h2")
     private WebElement title;
 
     public ContextsModalComponent(WebDriver driver, WebElement rootElement) {
@@ -17,6 +16,10 @@ public class ContextsModalComponent extends ModalComponent {
 
     public void enterContext(String name) {
         inputComponent.setInput(name);
+    }
+
+    public boolean isExist() {
+        return closeButton.isDisplayed() && title.isDisplayed() && saveButton.isDisplayed();
     }
 
     public WebElement getTitle() {

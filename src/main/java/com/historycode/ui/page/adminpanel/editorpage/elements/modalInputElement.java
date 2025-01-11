@@ -7,12 +7,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class modalInputElement extends BaseComponent {
-    public static final String LABEL_XPATH = ".//label[@class='ant-form-item-required']";
-    public static final String INPUT_XPATH = ".//input[contains(@class, 'ant-input')]";
 
-    @FindBy(xpath = LABEL_XPATH)
+    @FindBy(xpath = ".//label[@class='ant-form-item-required']")
     private WebElement label;
-    @FindBy(xpath = INPUT_XPATH)
+    @FindBy(xpath = ".//input[contains(@class, 'ant-input')]")
     private WebElement input;
 
     public modalInputElement(WebDriver driver, WebElement rootElement) {

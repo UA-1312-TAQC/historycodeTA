@@ -10,10 +10,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class TagsGridComponent extends GridComponent {
-    List<TagsRowComponent> rows = new ArrayList<>();
+    List<TagsRowComponent> rows;
 
     public TagsGridComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
+        rows = new ArrayList<>();
         initRows(driver);
     }
 

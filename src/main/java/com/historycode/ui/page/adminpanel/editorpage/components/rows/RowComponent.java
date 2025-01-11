@@ -13,14 +13,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class RowComponent extends BaseComponent {
-    private static final String TITLE_XPATH = ".//td[@class='ant-table-cell'][1]//div";
 
-    @FindBy(xpath = TITLE_XPATH)
+    @FindBy(xpath = ".//td[@class='ant-table-cell'][1]//div")
     private WebElement title;
 
     public RowComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        wait.until(ExpectedConditions.visibilityOf(title));
     }
 
     public String getTitleString() {

@@ -12,18 +12,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class GridComponent extends BaseGridComponent {
-    private static final String ROOT_ROW_XPATH = "//tbody//tr";
-    private static final String HEADER_ITEM_XPATH = "//thead//th";
 
-    @FindBy(xpath = ROOT_ROW_XPATH)
+    @FindBy(xpath = "//tbody//tr")
     public List<WebElement> rowElements;
-    @FindBy(xpath = HEADER_ITEM_XPATH)
+    @FindBy(xpath = "//thead//th")
     private List<WebElement> headerItemsAll;
 
-    private final List<WebElement> headerItems = new ArrayList<>();
+    private List<WebElement> headerItems;
 
     public GridComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
+        headerItems = new ArrayList<>();
         initHeaderItems();
     }
 

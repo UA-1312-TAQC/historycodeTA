@@ -6,18 +6,25 @@ import com.historycode.ui.page.adminpanel.editorpage.components.rows.TagsRowComp
 import com.historycode.ui.page.adminpanel.editorpage.elements.AddButtonElement;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
 public class TagsPage extends EditorBasePage {
-    private final AddButtonElement addTagButton = new AddButtonElement(driver, getRootAddButton());
-    private final TagsGridComponent grid = new TagsGridComponent(driver, getRootGrid());
+
+    @FindBy(xpath = "//div[contains(@class, 'ant-table-wrapper')]")
+    private WebElement rootGrid;
+
+    private AddButtonElement addTagButton;
+    private TagsGridComponent grid;
 
     public TagsPage(WebDriver driver) {
         super(driver);
+        addTagButton = new AddButtonElement(driver, getRootAddButton());
+        grid = new TagsGridComponent(driver, rootGrid);
     }
 
-    public TagsModalComponent addTag() {
+    public TagsModalComponent clickAddTag() {
         addTagButton.clickButton();
         sleep(1000);
         return new TagsModalComponent(driver, getDisplayedModalRoot());

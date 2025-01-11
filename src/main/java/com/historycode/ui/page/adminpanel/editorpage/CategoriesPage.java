@@ -6,18 +6,25 @@ import com.historycode.ui.page.adminpanel.editorpage.components.rows.CategoriesR
 import com.historycode.ui.page.adminpanel.editorpage.elements.AddButtonElement;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
 public class CategoriesPage extends EditorBasePage {
-    private final AddButtonElement addCategoryButton = new AddButtonElement(driver, getRootAddButton());
-    private final CategoriesGridComponent grid = new CategoriesGridComponent(driver, getRootGrid());
+
+    @FindBy(xpath = "//div[contains(@class, 'ant-table-wrapper')]")
+    private WebElement rootGrid;
+
+    private AddButtonElement addCategoryButton;
+    private CategoriesGridComponent grid;
 
     public CategoriesPage(WebDriver driver) {
         super(driver);
+        addCategoryButton = new AddButtonElement(driver, getRootAddButton());
+        grid = new CategoriesGridComponent(driver, rootGrid);
     }
 
-    public CategoriesModalComponent addCategory() {
+    public CategoriesModalComponent clickAddCategory() {
         addCategoryButton.clickButton();
         sleep(1000);
         return new CategoriesModalComponent(driver, getDisplayedModalRoot());

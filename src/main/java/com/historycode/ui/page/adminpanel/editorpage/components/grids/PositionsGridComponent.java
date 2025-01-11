@@ -10,10 +10,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class PositionsGridComponent extends GridComponent {
-    List<PositionsRowComponent> rows = new ArrayList<>();
+    List<PositionsRowComponent> rows;
 
     public PositionsGridComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
+        rows = new ArrayList<>();
         initRows(driver);
     }
 

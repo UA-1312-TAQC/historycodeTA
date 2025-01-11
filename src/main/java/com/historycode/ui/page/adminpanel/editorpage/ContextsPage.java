@@ -6,18 +6,22 @@ import com.historycode.ui.page.adminpanel.editorpage.components.rows.ContextsRow
 import com.historycode.ui.page.adminpanel.editorpage.elements.AddButtonElement;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
 public class ContextsPage extends EditorBasePage {
+
+    @FindBy(xpath = "//div[contains(@class, 'ant-table-wrapper')]")
+    private WebElement rootGrid;
+
     private AddButtonElement addContextButton;
     private ContextsGridComponent grid;
 
     public ContextsPage(WebDriver driver) {
-
         super(driver);
         addContextButton = new AddButtonElement(driver, getRootAddButton());
-        grid = new ContextsGridComponent(driver, getRootGrid());
+        grid = new ContextsGridComponent(driver, rootGrid);
     }
 
     public ContextsModalComponent clickAddContext() {

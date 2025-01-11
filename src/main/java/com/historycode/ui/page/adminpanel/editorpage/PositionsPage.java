@@ -6,18 +6,25 @@ import com.historycode.ui.page.adminpanel.editorpage.components.rows.PositionsRo
 import com.historycode.ui.page.adminpanel.editorpage.elements.AddButtonElement;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
 public class PositionsPage extends EditorBasePage {
-    private final AddButtonElement addPositionButton = new AddButtonElement(driver, getRootAddButton());
-    private final PositionsGridComponent grid = new PositionsGridComponent(driver, getRootGrid());
+
+    @FindBy(xpath = "//div[contains(@class, 'ant-table-wrapper')]")
+    private WebElement rootGrid;
+
+    private AddButtonElement addPositionButton;
+    private PositionsGridComponent grid;
 
     public PositionsPage(WebDriver driver) {
         super(driver);
+        addPositionButton = new AddButtonElement(driver, getRootAddButton());
+        grid = new PositionsGridComponent(driver, rootGrid);
     }
 
-    public PositionsModalComponent addPosition() {
+    public PositionsModalComponent clickAddPosition() {
         addPositionButton.clickButton();
         sleep(1000);
         return new PositionsModalComponent(driver, getDisplayedModalRoot());

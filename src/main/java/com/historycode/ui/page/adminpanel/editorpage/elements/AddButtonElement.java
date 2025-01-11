@@ -18,7 +18,6 @@ public class AddButtonElement extends BaseComponent {
     }
 
     public void clickButton() {
-//        EditorBasePage.moveToElement(driver, button);
         button.click();
     }
 

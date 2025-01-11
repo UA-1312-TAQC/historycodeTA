@@ -12,18 +12,14 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 public abstract class EditorBasePage extends BasePageAdminPanel {
-    private static final String ROOT_SECTIONS_XPATH = "//div[@class='ant-tabs-nav-list']";
-    private static final String ROOT_ADD_BUTTON_XPATH = "//div[@class='ant-tabs-content-holder']//div[@class='container-justify-end']";
-    private static final String ROOT_GRID_XPATH = "//div[contains(@class, 'ant-table-wrapper')]";
 
-    @FindBy(xpath = ROOT_ADD_BUTTON_XPATH)
+    @FindBy(xpath = "//div[@class='ant-tabs-content-holder']//div[@class='container-justify-end']")
     private List<WebElement> rootAddButtonAll;
-    @FindBy(xpath = ROOT_SECTIONS_XPATH)
+    @FindBy(xpath = "//div[@class='ant-tabs-nav-list']")
     private WebElement rootSections;
-    private SectionsComponent sections;
-    @FindBy(xpath = ROOT_GRID_XPATH)
-    private WebElement rootGrid;
+
     private WebElement rootAddButton;
+    private SectionsComponent sections;
 
     public EditorBasePage(WebDriver driver) {
         super(driver);
@@ -42,9 +38,6 @@ public abstract class EditorBasePage extends BasePageAdminPanel {
         return rootAddButton;
     }
 
-    public WebElement getRootGrid() {
-        return rootGrid;
-    }
 
     public CategoriesPage moveToCategories() {
         sections.clickCategories();

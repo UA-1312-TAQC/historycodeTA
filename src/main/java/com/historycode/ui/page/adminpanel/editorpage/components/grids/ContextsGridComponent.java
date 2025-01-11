@@ -10,10 +10,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ContextsGridComponent extends GridComponent {
-    List<ContextsRowComponent> rows = new ArrayList<>();
+    List<ContextsRowComponent> rows;
 
     public ContextsGridComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
+        rows = new ArrayList<>();
         initRows(driver);
     }
 
