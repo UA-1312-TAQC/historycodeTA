@@ -2,6 +2,7 @@ package com.historycode.ui.page.adminpanel.partnerspage;
 
 import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
 
+import com.historycode.ui.page.adminpanel.partnerspage.modal.CreatePartnersModal;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,17 +11,23 @@ public class PartnersPageAdminPanel extends BasePageAdminPanel {
 
     @FindBy(xpath = "//button[span[text()='Створити партнера']]")
     private WebElement addNewPartnersButton;
-    @FindBy(xpath = "//div[@class='partners-page']//div[@class='partners-page-container']")
+
+    @FindBy(xpath = "//div[contains(@class, 'partners-table')]")
     private WebElement rootElement;
-    private PartnersPageGridComponent partnersPageGridComponent;
+
+    @FindBy(xpath = "//div[@class='ant-modal-content']//span[text()='Зберегти']/../../../..")
+    private WebElement createModalRootElement;
+
+    private final PartnersPageGridComponent partnersPageGridComponent;
 
     public PartnersPageAdminPanel(WebDriver driver) {
         super(driver);
         partnersPageGridComponent = new PartnersPageGridComponent(driver, rootElement);
     }
 
-    public void clickAddNewPartnersButton() {
+    public CreatePartnersModal clickAddNewPartnersButton() {
         addNewPartnersButton.click();
+        return new CreatePartnersModal(driver, createModalRootElement);
     }
 
     public PartnersPageGridComponent getPartnersPageGridComponent() {
