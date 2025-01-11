@@ -1,5 +1,6 @@
 package com.historycode.ui.page.adminpanel.editorpage.components.grids;
 
+import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.PositionsRowComponent;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -55,8 +56,8 @@ public class PositionsGridComponent extends GridComponent {
         row.clickEdit();
     }
 
-    public void deleteRow(PositionsRowComponent row) {
-        row.clickDelete();
+    public DeleteItemModal deleteRow(PositionsRowComponent row) {
+        return row.clickDelete();
     }
 
     //TODO Update edit/deleteRow methods to return modals

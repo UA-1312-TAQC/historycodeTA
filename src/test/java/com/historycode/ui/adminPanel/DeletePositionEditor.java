@@ -2,6 +2,7 @@ package com.historycode.ui.adminPanel;
 
 import com.historycode.ui.page.adminpanel.editorpage.CategoriesPage;
 import com.historycode.ui.page.adminpanel.editorpage.PositionsPage;
+import com.historycode.ui.page.adminpanel.editorpage.components.rows.PositionsRowComponent;
 import com.historycode.ui.testrunners.TestRunnerWithAdmin;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -26,10 +27,8 @@ public class DeletePositionEditor extends TestRunnerWithAdmin {
     @Description("Verify that the admin can delete position using the trash bin button")
     public void testDeleteJob() {
         PositionsPage positionsPage = new PositionsPage(driver);
-
-        System.out.println(positionsPage.getTableRowByTitle("Дизайнер").getTitle());
-        // 1) Get the last created position from list
-        // 2) Delete it
-        System.out.println("testDeleteJob");
+        PositionsRowComponent positionToDelete = positionsPage.getTableRowByTitle("Дизайнер");
+        positionsPage.deleteTableRow(positionToDelete)
+                .clickCancelButton();
     }
 }

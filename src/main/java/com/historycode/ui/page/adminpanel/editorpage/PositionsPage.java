@@ -17,7 +17,8 @@ public class PositionsPage extends BasePage {
     @FindBy(xpath = "//button[span[text()='Додати нову позицію']]")
     WebElement addNewPositionButton;
 
-    @FindBy(xpath = "//div[contains(@class, 'ant-table-wrapper')]")
+    //TODO Added another grid root
+    @FindBy(xpath = "//div[@class='positions-page']//div[@class='positions-page-container']\n")
     private WebElement gridRootElement;
 
     @FindBy(xpath = "//div[@role = 'dialog']/div[2]")
@@ -68,6 +69,7 @@ public class PositionsPage extends BasePage {
     }
 
     public PositionsRowComponent getTableRowByTitle(String title) {
+        waitUntilElementVisible(gridRootElement);
         return gridComponent.getRowByTitle(title);
     }
 
@@ -82,8 +84,7 @@ public class PositionsPage extends BasePage {
     }
 
     public DeleteItemModal deleteTableRow(PositionsRowComponent row) {
-        gridComponent.deleteRow(row);
-        return new DeleteItemModal(driver, getDisplayedModalRoot());
-
+        waitUntilElementVisible(gridRootElement);
+        return gridComponent.deleteRow(row);
     }
 }

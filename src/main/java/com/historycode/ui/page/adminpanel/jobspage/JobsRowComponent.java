@@ -21,6 +21,7 @@ public class JobsRowComponent extends BaseComponent {
 
     @Getter
     DropdownComponent dropdownStatus;
+
     @FindBy(xpath = "//td[contains(@class, 'ant-table-cell')][4]//span[contains(@class, 'delete')]")
     WebElement deleteAction;
 
