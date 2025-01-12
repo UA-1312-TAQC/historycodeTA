@@ -12,6 +12,8 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public class MainCardComponent extends BaseComponent {
+    private static final String TEASER_PARAGRAPH_SPLIT_REGEX = "\n";
+
     @FindBy(xpath = ".//img[@class='streetcodeImgGrey']")
     private List<WebElement> photo;
 
@@ -28,7 +30,7 @@ public class MainCardComponent extends BaseComponent {
     private List<WebElement> keywords;
 
     @FindBy(xpath = ".//p[@class='teaserBlock']")
-    private WebElement description;
+    private WebElement teaserBlockNode;
 
     @FindBy(xpath = ".//button[contains(@class, 'audioBtn')]")
     private WebElement audioButton;
@@ -64,13 +66,24 @@ public class MainCardComponent extends BaseComponent {
     }
 
     @Step("Get the text of the 'Teaser' element")
-    public String getDescription() {
-        return description.getText();
+    public String getTeaserText() {
+        return teaserBlockNode.getText();
+    }
+
+    @Step("Get the number of paragraphs in the 'Teaser' element")
+    public int getTeaserParagraphCount() {
+        String[] paragraphs = teaserBlockNode.getText().split(TEASER_PARAGRAPH_SPLIT_REGEX);
+        return paragraphs.length;
+    }
+
+    @Step("Get the number of characters in the 'Teaser' element")
+    public int getTeaserCharacterCount() {
+        return getTeaserText().replace(TEASER_PARAGRAPH_SPLIT_REGEX, "").length();
     }
 
     @Step("Check if the 'Teaser' text has truncation or overflow")
     public boolean isTeaserTextOverflowing() {
-        return isContentOverflowing(description);
+        return isContentTruncatedOrOverflow(teaserBlockNode);
     }
 
     public void clickAudioButton() {

@@ -38,12 +38,19 @@ public abstract class Base {
         sleep(1000);
     }
 
-    protected boolean isContentOverflowing(WebElement element) {
+    protected boolean isContentTruncatedOrOverflow(WebElement element) {
         String script = "var element = arguments[0];" +
-                "return element.scrollWidth > element.clientWidth || " +
-                "element.scrollHeight > element.clientHeight;";
+                "var computedStyle = window.getComputedStyle(element);" +
+                "var isOverflowing = element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;" +
+                "var isTextOverflowing = computedStyle.overflow === 'hidden' || computedStyle.textOverflow === 'ellipsis' || computedStyle.whiteSpace === 'nowrap';" +
+                "return isOverflowing && !isTextOverflowing;";
         Boolean isOverflowing = (Boolean) threadJs.executeScript(script, element);
         return isOverflowing != null && isOverflowing;
+    }
+
+    protected void clickDynamicElement(WebElement element) {
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
+        executor.executeScript("arguments[0].click();", element);
     }
 
     public void sleep(long millisSeconds) {
