@@ -1,5 +1,6 @@
 package com.historycode.ui.page.adminpanel;
 
+import com.historycode.ui.component.BaseModal;
 import com.historycode.ui.component.DropdownBase;
 import com.historycode.ui.component.streetcodeEditor.*;
 import lombok.Getter;
@@ -129,6 +130,7 @@ public class StreetcodeEditPage extends BasePageAdminPanel {
 
 
     public StreetcodeEditPage(WebDriver driver) {super(driver);}
+        private BaseModal baseModal;
 
     /** Dropdowns */
 
@@ -204,7 +206,8 @@ public class StreetcodeEditPage extends BasePageAdminPanel {
     /** Wow-Fact methods */
 
     public WowFactsModal getWowFactsModal() {
-        WebElement wowRootElement = driver.findElement(By.xpath("//div[@role='dialog']/div/div/div/form/div/h2[text()='Wow-Факт']"));
+        WebElement wowRootElement = driver.findElement(By.xpath("//div[@role='dialog' and not(contains(@style, 'display: none'))]"));
+        baseModal.checkTitle("Wow-Факт");
         return new WowFactsModal(driver, wowRootElement);
     }
 
@@ -232,7 +235,8 @@ public class StreetcodeEditPage extends BasePageAdminPanel {
     /** Chronology methods */
 
     public ChronologyModal getChronologyModal() {
-        WebElement chronologyRootElement = driver.findElement(By.xpath("//div[@role='dialog']/div/div/div/form/div/h2[text()='Хронологія']"));
+        WebElement chronologyRootElement = driver.findElement(By.xpath("//div[@role='dialog' and not(contains(@style, 'display: none'))]"));
+        baseModal.checkTitle("Хронологія");
         return new ChronologyModal(driver, chronologyRootElement);
     }
 

@@ -9,12 +9,18 @@ public abstract class BaseModal extends BaseComponent{
         super(driver, rootElement);
     }
 
-    public WebElement getCloseModalButton() {
+    public WebElement getCloseButton() {
         return rootElement.findElement(By.xpath(".//button[@class='ant-modal-close']"));
     }
 
-    public WebElement getSaveModalButton() {
-        return rootElement.findElement(By.xpath(".//button/span[text()='Зберегти']"));
+    public WebElement getSaveButton() {
+        return rootElement.findElement(By.xpath(".//button[@class='ant-btn css-k7429z ant-btn-default streetcode-custom-button']"));
+    }
+
+    public boolean checkTitle(String expectedText) {
+        WebElement title = rootElement.findElement(By.xpath(".//div[@class='center']/h2"));
+        String actualText = title.getText().trim().replaceAll("\\s+", " ");;
+        return actualText.equals(expectedText);
     }
 
 }

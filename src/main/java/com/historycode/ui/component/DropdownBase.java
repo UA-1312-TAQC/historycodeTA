@@ -12,17 +12,16 @@ public class DropdownBase extends BaseComponent {
         super(driver, rootElement);
     }
 
-    public void selectOptionFromDropdown(int currentOptionIndex, int targetOptionIndex) {
-        try {
-            WebElement input = rootElement.findElement(By.tagName("input"));
-            input.click();
+    public void selectOption(int currentOptionIndex, int targetOptionIndex) {
+        WebElement input = rootElement.findElement(By.tagName("input"));
+        input.click();
 
-            // Обчислити кількість кроків
-            int stepsToMove = targetOptionIndex - currentOptionIndex;
+        // Обчислити кількість кроків
+        int stepsToMove = targetOptionIndex - currentOptionIndex;
 
-            if (stepsToMove > 0) {
-                // Переміститися вниз
-                for (int i = 0; i < stepsToMove; i++) {
+        if (stepsToMove > 0) {
+            // Переміститися вниз
+            for (int i = 0; i < stepsToMove; i++) {
                 input.sendKeys(Keys.ARROW_DOWN);
                 }
             } else if (stepsToMove < 0) {
@@ -47,9 +46,6 @@ public class DropdownBase extends BaseComponent {
 
             // Натиснути Enter, щоб вибрати опцію
             input.sendKeys(Keys.ENTER);
-            } catch (Exception e) {
-            System.err.println("Не вдалося вибрати опцію: " + e.getMessage());
-            }
         }
 
         public boolean isChosenOptionCorrect(String expectedText) {
