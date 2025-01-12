@@ -26,6 +26,10 @@ public class StreetCodesPage extends BasePage {
         streetCodesCatalogComponent = new CatalogComponent(driver, containerRootNode);
     }
 
+    public WebElement getStreetCodesTitleElement() {
+        return streetCodesTitleNode;
+    }
+
     public String getStreetCodesTitle() {
         return streetCodesTitleNode.getText();
     }

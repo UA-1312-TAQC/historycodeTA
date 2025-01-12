@@ -12,6 +12,10 @@ public class CatalogItemComponent extends BaseComponent {
     @FindBy(xpath = ".//div[@class='heading']/p[1]")
     private WebElement nameNode;
 
+    @Getter
+    @FindBy(css = ".catalogItemText")
+    private WebElement catalogItemTextArea;
+
     @FindBy(xpath = ".//div[@class='heading']/p[2]")
     private WebElement descriptionNode;
 
@@ -26,4 +30,5 @@ public class CatalogItemComponent extends BaseComponent {
     public String getDescription() {
         return descriptionNode.getText();
     }
+
 }
