@@ -21,9 +21,9 @@ public class PositionsPage extends BasePage {
         super(driver);
     }
 
-    public PositionsModalComponent addPosition() throws InterruptedException {
+    public PositionsModalComponent addPosition() {
         addPositionButton.clickButton();
-        Thread.sleep(1000);
+//        Thread.sleep(1000);
         return new PositionsModalComponent(driver, getDisplayedModalRoot());
     }
 

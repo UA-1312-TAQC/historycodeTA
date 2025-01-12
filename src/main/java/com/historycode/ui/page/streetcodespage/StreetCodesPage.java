@@ -36,6 +36,7 @@ public class StreetCodesPage extends BasePage {
 
     public StreetCodePage clickCatalogItemByName(int index) {
         streetCodesCatalogComponent.getItemComponents().get(index).getNameNode().click();
-        return new StreetCodePage(driver);
+        //TODO: remove test mode
+        return new StreetCodePage(driver, true);
     }
 }
