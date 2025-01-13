@@ -30,15 +30,15 @@ public class TestCase130  extends TestRunnerWithAdmin {
                 driver, driver.findElement(By.xpath("//div[@class='BarContainer']")));
         CreatePartnersModal createModal = menuBar.goToPartnersPage().clickAddNewPartnersButton();
 
-        InputElement name = createModal.getName();
+        InputElement name = createModal.name;
         name.setInputField("Ivan PP");
         createModal.sleep(5000);
 
-        TextAreaElement description = createModal.getDiscription();
+        TextAreaElement description = createModal.description;
         description.setTextArea("Ivan is cool man");
         createModal.sleep(5000);
 
-        LogoElement logo = createModal.getLogo();
+        LogoElement logo = createModal.logo;
         logo.uploadLogo("/home/ivan/Документи/SoftServ/automation_testing_java/historycodeTA/src/test/java/com/historycode/ui/adminPanel/logo.jpeg");
         createModal.sleep(5000);
     }
