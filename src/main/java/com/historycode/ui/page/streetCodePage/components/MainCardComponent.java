@@ -12,8 +12,6 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public class MainCardComponent extends BaseComponent {
-    private static final String TEASER_PARAGRAPH_SPLIT_REGEX = "\n";
-
     @FindBy(xpath = ".//img[@class='streetcodeImgGrey']")
     private List<WebElement> photo;
 
@@ -72,13 +70,13 @@ public class MainCardComponent extends BaseComponent {
 
     @Step("Get the number of paragraphs in the 'Teaser' element")
     public int getTeaserParagraphCount() {
-        String[] paragraphs = teaserBlockNode.getText().split(TEASER_PARAGRAPH_SPLIT_REGEX);
+        String[] paragraphs = teaserBlockNode.getText().split("\n");
         return paragraphs.length;
     }
 
     @Step("Get the number of characters in the 'Teaser' element")
     public int getTeaserCharacterCount() {
-        return getTeaserText().replace(TEASER_PARAGRAPH_SPLIT_REGEX, "").length();
+        return getTeaserText().replace("\n", "").length();
     }
 
     @Step("Check if the 'Teaser' text has truncation or overflow")
