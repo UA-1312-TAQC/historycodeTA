@@ -27,12 +27,9 @@ public class TestRunnerAdminWithUserProfile {
     @BeforeMethod
     public void setup(){
         ChromeOptions options = new ChromeOptions();
-        String userDataDir = "C:\\Users\\Viktor\\AppData\\Local\\Google\\Chrome\\User Data\\";
-        String profileDir = "Profile 3";
         options.addArguments("--disable-extensions");
-        options.addArguments("--user-data-dir=C:/Users/Viktor/AppData/Local/Google/Chrome/User Data/");
-        //options.addArguments("--user-data-dir=" + userDataDir);
-        options.addArguments("--profile-directory=" + profileDir);
+        options.addArguments("--user-data-dir=" + testValueProvider.getUserDataDir());
+        options.addArguments("--profile-directory=" + testValueProvider.getProfileDir());
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(testValueProvider.getImplicitlyWait()));
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(testValueProvider.getImplicitlyWait()));
