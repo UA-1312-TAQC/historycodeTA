@@ -12,24 +12,25 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class AdminMenuBarComponent extends BaseComponent {
-    @FindBy(xpath = "//div[@class='BarContainer']//a[@href='/admin-panel']")
+
+    @FindBy(xpath = "./div[@class='BarContainer']//a[@href='/admin-panel']")
     WebElement streetCodes;
-    @FindBy(xpath = "//div[@class='BarContainer']//a[@href='/admin-panel/job']")
+    @FindBy(xpath = "//div[@class='BarContainer']//a[@href='/admin-panel/partners']")
     WebElement partners;
-    @FindBy(xpath = "//div[@class='BarContainer']//a[@href='/admin-panel/editor']")
+    @FindBy(xpath = "./div[@class='BarContainer']//a[@href='/admin-panel/editor']")
     WebElement editor;
-    @FindBy(xpath = "//div[@class='BarContainer']//a[@href='/admin-panel/team']")
+    @FindBy(xpath = "./div[@class='BarContainer']//a[@href='/admin-panel/team']")
     WebElement team;
-    @FindBy(xpath = "//div[@class='BarContainer']//a[@href='/admin-panel/news']")
+    @FindBy(xpath = "./div[@class='BarContainer']//a[@href='/admin-panel/news']")
     WebElement news;
-    @FindBy(xpath = "//div[@class='BarContainer']//a[@href='/admin-panel/job']")
+    @FindBy(xpath = "./div[@class='BarContainer']//a[@href='/admin-panel/job']")
     WebElement jobs;
 
     public AdminMenuBarComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
 
-/*    StreetCodeCatalogPageAdminPanel goToSreetcodePage() {
+/* StreetCodeCatalogPageAdminPanel goToSreetcodePage() {
         return new StreetCodeCatalogPageAdminPanel(driver);
     }*/
 

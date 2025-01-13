@@ -12,37 +12,38 @@ import org.openqa.selenium.support.FindBy;
 
 public class CreatePartnersModal extends BaseCreateModal {
 
-    @FindBy(xpath = "./label[@for = 'isKeyPartner']/../..")
+    @FindBy(xpath = ".//label[@for = 'isKeyPartner']/../..")
     private WebElement keyPartnerCheckboxContainer;
     @Getter
     private CheckboxElement KeyPartner = new CheckboxElement(driver, keyPartnerCheckboxContainer);
 
-    @FindBy(xpath = "./label[@for = 'isVisibleEverywhere']/../..")
+    @FindBy(xpath = ".//label[@for = 'isVisibleEverywhere']/../..")
     private WebElement visiblePartnerCheckboxContainer;
     @Getter
     private CheckboxElement visiblePartner = new CheckboxElement(driver, visiblePartnerCheckboxContainer);
 
-    @FindBy(xpath = "./label[@for = 'title']/../..")
+    @FindBy(xpath = ".//label[@for = 'title']/../..")
     private WebElement nameContainer;
     @Getter
     private InputElement name = new InputElement(driver, nameContainer);
 
-    @FindBy(xpath = "./label[@for = 'url']/../..")
+    @FindBy(xpath = ".//label[@for = 'url']/../..")
     private WebElement linkContainer;
     @Getter
     private InputElement link = new InputElement(driver, linkContainer);
 
-    @FindBy(xpath = "./label[@for = 'urlTitle']/../..")
+    @FindBy(xpath = ".//label[@for = 'urlTitle']/../..")
     private WebElement linkNameContainer;
     @Getter
     private InputElement linkName = new InputElement(driver, linkNameContainer);
 
-    @FindBy(xpath = "./label[@for = 'description']/../..")
+    //TODO Why do not find this webElement inside rootElement. Work only from general page
+    @FindBy(xpath = ".//label[@for = 'description']/../..")
     private WebElement textAreaContainer;
     @Getter
     private TextAreaElement discription = new TextAreaElement(driver, textAreaContainer);
 
-    @FindBy(xpath = "./label[@for = 'logo']/../..")
+    @FindBy(xpath = ".//label[@for = 'logo']/../..")
     private WebElement logoContainer;
     @Getter
     private LogoElement logo = new LogoElement(driver, logoContainer);

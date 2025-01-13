@@ -15,11 +15,11 @@ public class TextAreaElement extends BaseComponent {
     private WebElement label;
 
     @Getter
-    @FindBy(xpath = "./textarea")
+    @FindBy(xpath = ".//textarea[@id='description']")
     private WebElement textAreaField;
 
     @Getter
-    @FindBy(xpath = "./span[@class='ant-input-suffix']/span")
+    @FindBy(xpath = ".//span[@class='ant-input-suffix']/span")
     private WebElement charCounter;
 
     public TextAreaElement(WebDriver driver, WebElement rootElement) {
@@ -39,4 +39,6 @@ public class TextAreaElement extends BaseComponent {
     public String getCharCount() {
         return charCounter.getText();
     }
+
+    public String getLabel () { return label.getText(); }
 }

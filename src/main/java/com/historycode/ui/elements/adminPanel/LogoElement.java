@@ -13,7 +13,7 @@ public class LogoElement extends BaseComponent {
     private WebElement label;
 
     @Getter
-    @FindBy(xpath = "./input[@id='logo']")
+    @FindBy(xpath = ".//input[@id='logo']")
     private WebElement logoImage;
 
     @Getter
