@@ -41,6 +41,8 @@ public class TestCase130  extends TestRunnerWithAdmin {
         LogoElement logo = createModal.logo;
         logo.uploadLogo("/home/ivan/Документи/SoftServ/automation_testing_java/historycodeTA/src/test/java/com/historycode/ui/adminPanel/logo.jpeg");
         createModal.sleep(5000);
+
+        createModal.clickSaveButton();
     }
 }
 
