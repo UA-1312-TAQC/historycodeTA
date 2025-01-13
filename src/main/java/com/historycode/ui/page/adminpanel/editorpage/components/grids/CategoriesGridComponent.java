@@ -1,6 +1,7 @@
 package com.historycode.ui.page.adminpanel.editorpage.components.grids;
 
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.CategoriesRowComponent;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -15,6 +16,19 @@ public class CategoriesGridComponent extends GridComponent {
         super(driver, rootElement);
         rows = new ArrayList<>();
         initRows(driver);
+    }
+
+    @Step("Check Categories Grid Components Are Displayed Correctly.")
+    public boolean isDisplayed() {
+        return (isHeadersDisplayed() && isRowsDisplayed());
+    }
+
+    @Step("Check Categories Rows Are Displayed Correctly.")
+    public boolean isRowsDisplayed() {
+        for (CategoriesRowComponent row : rows) {
+            if (!row.isExist()) { return false; }
+        }
+        return true;
     }
 
     public void initRows(WebDriver driver) {
@@ -80,6 +94,32 @@ public class CategoriesGridComponent extends GridComponent {
         row.clickDelete();
     }
 
+    public void clickNextPage() {
+        scrollToEndOfPage();
+        pagination.clickNextPage();
+        scrollToTopOfPage();
+    }
+
+    public void clickPrevPage() {
+        scrollToEndOfPage();
+        pagination.clickPrevPage();
+        scrollToTopOfPage();
+    }
+
+    public void clickPrevFivePages() {
+        this.scrollToTopOfPage();
+        pagination.clickPrevFivePages();
+    }
+
+    public void clickNextFivePages() {
+        this.scrollToTopOfPage();
+        pagination.clickNextFivePages();
+    }
+
+    public void clickPaginationItem(int index) {
+        this.scrollToTopOfPage();
+        pagination.clickPaginationItem(index);
+    }
     //TODO Update edit/deleteRow methods to return modals
     //TODO Implement methods to work with row picture
 }

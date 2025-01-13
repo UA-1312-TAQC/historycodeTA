@@ -4,10 +4,12 @@ import com.historycode.ui.page.adminpanel.editorpage.components.grids.Categories
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.CategoriesModalComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.CategoriesRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.elements.AddButtonElement;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import javax.smartcardio.CardTerminal;
 import java.util.List;
 
 public class CategoriesPage extends EditorBasePage {
@@ -24,6 +26,11 @@ public class CategoriesPage extends EditorBasePage {
         grid = new CategoriesGridComponent(driver, rootGrid);
     }
 
+    @Step("Check Categories Grid Is Displayed Correctly.")
+    public boolean isGridDisplayed() {
+        return grid.isDisplayed();
+    }
+
     public CategoriesModalComponent clickAddCategory() {
         addCategoryButton.clickButton();
         sleep(1000);
@@ -34,6 +41,7 @@ public class CategoriesPage extends EditorBasePage {
         return grid.getHeaderItems().size();
     }
 
+    @Step("Get Table Headers.")
     public List<String> getTableHeadersString() {
         return grid.getHeaderItemsString();
     }
@@ -99,5 +107,30 @@ public class CategoriesPage extends EditorBasePage {
 
     public String getTableRowTitleString(CategoriesRowComponent row) {
         return grid.getRowTitleString(row);
+    }
+
+    public void clickNextPage() {
+        grid.clickNextPage();
+        grid = new CategoriesGridComponent(driver, rootGrid);
+    }
+
+    public void clickPrevPage() {
+        grid.clickPrevPage();
+        grid = new CategoriesGridComponent(driver, rootGrid);
+    }
+
+    public void clickPrevFivePages() {
+        grid.clickPrevFivePages();
+        grid = new CategoriesGridComponent(driver, rootGrid);
+    }
+
+    public void clickNextFivePages() {
+        grid.clickNextFivePages();
+        grid = new CategoriesGridComponent(driver, rootGrid);
+    }
+
+    public void clickPaginationItem(int index) {
+        grid.clickPaginationItem(index);
+        grid = new CategoriesGridComponent(driver, rootGrid);
     }
 }

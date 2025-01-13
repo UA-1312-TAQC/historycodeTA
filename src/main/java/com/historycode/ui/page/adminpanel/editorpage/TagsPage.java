@@ -4,6 +4,7 @@ import com.historycode.ui.page.adminpanel.editorpage.components.grids.TagsGridCo
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.TagsModalComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.TagsRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.elements.AddButtonElement;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -24,6 +25,11 @@ public class TagsPage extends EditorBasePage {
         grid = new TagsGridComponent(driver, rootGrid);
     }
 
+    @Step("Check Tags Grid Is Displayed Correctly.")
+    public boolean isGridDisplayed() {
+        return grid.isDisplayed();
+    }
+
     public TagsModalComponent clickAddTag() {
         addTagButton.clickButton();
         sleep(1000);
@@ -34,6 +40,7 @@ public class TagsPage extends EditorBasePage {
         return grid.getHeaderItems().size();
     }
 
+    @Step("Get Table Headers.")
     public List<String> getTableHeadersString() {
         return grid.getHeaderItemsString();
     }
@@ -95,5 +102,30 @@ public class TagsPage extends EditorBasePage {
 
     public String getTableRowTitleString(TagsRowComponent row) {
         return grid.getRowTitleString(row);
+    }
+
+    public TagsPage clickNextPage() {
+        grid.clickNextPage();
+        return new TagsPage(driver);
+    }
+
+    public TagsPage clickPrevPage() {
+        grid.clickPrevPage();
+        return new TagsPage(driver);
+    }
+
+    public TagsPage clickPrevFivePages() {
+        grid.clickPrevFivePages();
+        return new TagsPage(driver);
+    }
+
+    public TagsPage clickNextFivePages() {
+        grid.clickNextFivePages();
+        return new TagsPage(driver);
+    }
+
+    public TagsPage clickPaginationItem(int index) {
+        grid.clickPaginationItem(index);
+        return new TagsPage(driver);
     }
 }

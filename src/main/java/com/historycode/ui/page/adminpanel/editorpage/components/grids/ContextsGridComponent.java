@@ -2,6 +2,7 @@ package com.historycode.ui.page.adminpanel.editorpage.components.grids;
 
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.CategoriesRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.ContextsRowComponent;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -16,6 +17,19 @@ public class ContextsGridComponent extends GridComponent {
         super(driver, rootElement);
         rows = new ArrayList<>();
         initRows(driver);
+    }
+
+    @Step("Check Contexts Grid Components Are Displayed Correctly.")
+    public boolean isDisplayed() {
+        return (isHeadersDisplayed() && isRowsDisplayed());
+    }
+
+    @Step("Check Contexts Rows Are Displayed Correctly.")
+    public boolean isRowsDisplayed() {
+        for (ContextsRowComponent row : rows) {
+            if (!row.isExist()) { return false; }
+        }
+        return true;
     }
 
     public void initRows(WebDriver driver) {
@@ -75,6 +89,31 @@ public class ContextsGridComponent extends GridComponent {
 
     public void deleteRow(ContextsRowComponent row) {
         row.clickDelete();
+    }
+
+    public ContextsGridComponent clickNextPage() {
+        pagination.clickNextPage();
+        return new ContextsGridComponent(driver, rootElement);
+    }
+
+    public ContextsGridComponent clickPrevPage() {
+        pagination.clickPrevPage();
+        return new ContextsGridComponent(driver, rootElement);
+    }
+
+    public ContextsGridComponent clickPrevFivePages() {
+        pagination.clickPrevFivePages();
+        return new ContextsGridComponent(driver, rootElement);
+    }
+
+    public ContextsGridComponent clickNextFivePages() {
+        pagination.clickNextFivePages();
+        return new ContextsGridComponent(driver, rootElement);
+    }
+
+    public ContextsGridComponent clickPaginationItem(int index) {
+        pagination.clickPaginationItem(index);
+        return new ContextsGridComponent(driver, rootElement);
     }
     //TODO Update edit/deleteRow methods to return modals
 }

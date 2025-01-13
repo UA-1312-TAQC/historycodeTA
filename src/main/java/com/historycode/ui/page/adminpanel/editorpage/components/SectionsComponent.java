@@ -1,13 +1,12 @@
 package com.historycode.ui.page.adminpanel.editorpage.components;
 
 import com.historycode.ui.component.BaseComponent;
-import com.historycode.ui.page.adminpanel.editorpage.EditorBasePage;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class SectionsComponent extends BaseComponent {
-
     @FindBy(xpath = ".//div[@data-node-key='1']//div[@role='tab']")
     private WebElement categories;
     @FindBy(xpath = ".//div[@data-node-key='2']//div[@role='tab']")
@@ -37,23 +36,27 @@ public class SectionsComponent extends BaseComponent {
         return positions.getText();
     }
 
+    @Step("Click Categories Section.")
     public void clickCategories() {
-        moveToElement( categories);
+        scrollToElement(categories);
         categories.click();
     }
 
+    @Step("Click Tags Section.")
     public void clickTags() {
-        moveToElement( tags);
+        scrollToElement(tags);
         tags.click();
     }
 
+    @Step("Click Positions Section.")
     public void clickPositions() {
-        moveToElement( positions);
+        scrollToElement(positions);
         positions.click();
     }
 
+    @Step("Click Contexts Section.")
     public void clickContexts() {
-        moveToElement( contexts);
+        scrollToElement(contexts);
         contexts.click();
     }
 }

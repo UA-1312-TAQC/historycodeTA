@@ -3,6 +3,7 @@ package com.historycode.ui.page.adminpanel.editorpage.components.modals;
 import com.historycode.ui.component.BaseComponent;
 import com.historycode.ui.page.adminpanel.editorpage.EditorBasePage;
 import com.historycode.ui.page.adminpanel.editorpage.elements.modalInputElement;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -21,12 +22,9 @@ public class ModalComponent extends BaseComponent {
         inputComponent = new modalInputElement(driver, rootElement);
     }
 
+    @Step("Close Modal With 'X'")
     public void close() {
         closeButton.click();
-    }
-
-    public void save() {
-        saveButton.click();
     }
 
     public WebElement getCloseButton() {

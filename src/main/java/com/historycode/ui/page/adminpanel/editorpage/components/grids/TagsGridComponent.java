@@ -2,6 +2,7 @@ package com.historycode.ui.page.adminpanel.editorpage.components.grids;
 
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.CategoriesRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.TagsRowComponent;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -16,6 +17,19 @@ public class TagsGridComponent extends GridComponent {
         super(driver, rootElement);
         rows = new ArrayList<>();
         initRows(driver);
+    }
+
+    @Step("Check Tags Grid Components Are Displayed Correctly.")
+    public boolean isDisplayed() {
+        return (isHeadersDisplayed() && isRowsDisplayed());
+    }
+
+    @Step("Check Tags Rows Are Displayed Correctly.")
+    public boolean isRowsDisplayed() {
+        for (TagsRowComponent row : rows) {
+            if (!row.isExist()) { return false; }
+        }
+        return true;
     }
 
     public void initRows(WebDriver driver) {
@@ -75,6 +89,31 @@ public class TagsGridComponent extends GridComponent {
 
     public void deleteRow(TagsRowComponent row) {
         row.clickDelete();
+    }
+
+    public TagsGridComponent clickNextPage() {
+        pagination.clickNextPage();
+        return new TagsGridComponent(driver, rootElement);
+    }
+
+    public TagsGridComponent clickPrevPage() {
+        pagination.clickPrevPage();
+        return new TagsGridComponent(driver, rootElement);
+    }
+
+    public TagsGridComponent clickPrevFivePages() {
+        pagination.clickPrevFivePages();
+        return new TagsGridComponent(driver, rootElement);
+    }
+
+    public TagsGridComponent clickNextFivePages() {
+        pagination.clickNextFivePages();
+        return new TagsGridComponent(driver, rootElement);
+    }
+
+    public TagsGridComponent clickPaginationItem(int index) {
+        pagination.clickPaginationItem(index);
+        return new TagsGridComponent(driver, rootElement);
     }
     //TODO Update edit/deleteRow methods to return modals
 }

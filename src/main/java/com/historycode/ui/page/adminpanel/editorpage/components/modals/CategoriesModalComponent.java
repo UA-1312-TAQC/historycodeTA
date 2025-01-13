@@ -1,11 +1,11 @@
 package com.historycode.ui.page.adminpanel.editorpage.components.modals;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class CategoriesModalComponent extends ModalComponent {
-
     @FindBy(xpath = ".//div[@class='ant-modal-title']")
     private WebElement title;
 
@@ -13,10 +13,13 @@ public class CategoriesModalComponent extends ModalComponent {
         super(driver, rootElement);
     }
 
-    public void enterCategory(String name) {
+    @Step("Enter '{name}' Into The Category Name Input.")
+    public CategoriesModalComponent enterCategory(String name) {
         inputComponent.setInput(name);
+        return new CategoriesModalComponent(driver, rootElement);
     }
 
+    @Step("Check Category Modal is Displayed.")
     public boolean isExist() {
         return closeButton.isDisplayed() && title.isDisplayed() && saveButton.isDisplayed();
     }
@@ -27,5 +30,11 @@ public class CategoriesModalComponent extends ModalComponent {
 
     public String getTitleString() {
         return title.getText();
+    }
+
+    @Step("Click Categories Modal Save Button.")
+    public CategoriesModalComponent save() {
+        saveButton.click();
+        return new CategoriesModalComponent(driver, rootElement);
     }
 }

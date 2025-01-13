@@ -4,6 +4,7 @@ import com.historycode.ui.page.adminpanel.editorpage.components.grids.ContextsGr
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.ContextsModalComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.ContextsRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.elements.AddButtonElement;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -24,6 +25,11 @@ public class ContextsPage extends EditorBasePage {
         grid = new ContextsGridComponent(driver, rootGrid);
     }
 
+    @Step("Check Contexts Grid Is Displayed Correctly.")
+    public boolean isGridDisplayed() {
+        return grid.isDisplayed();
+    }
+
     public ContextsModalComponent clickAddContext() {
         addContextButton.clickButton();
         sleep(1000);
@@ -34,6 +40,7 @@ public class ContextsPage extends EditorBasePage {
         return grid.getHeaderItems().size();
     }
 
+    @Step("Get Table Headers.")
     public List<String> getTableHeadersString() {
         return grid.getHeaderItemsString();
     }
@@ -95,5 +102,30 @@ public class ContextsPage extends EditorBasePage {
 
     public String getTableRowTitleString(ContextsRowComponent row) {
         return grid.getRowTitleString(row);
+    }
+
+    public ContextsPage clickNextPage() {
+        grid.clickNextPage();
+        return new ContextsPage(driver);
+    }
+
+    public ContextsPage clickPrevPage() {
+        grid.clickPrevPage();
+        return new ContextsPage(driver);
+    }
+
+    public ContextsPage clickPrevFivePages() {
+        grid.clickPrevFivePages();
+        return new ContextsPage(driver);
+    }
+
+    public ContextsPage clickNextFivePages() {
+        grid.clickNextFivePages();
+        return new ContextsPage(driver);
+    }
+
+    public ContextsPage clickPaginationItem(int index) {
+        grid.clickPaginationItem(index);
+        return new ContextsPage(driver);
     }
 }

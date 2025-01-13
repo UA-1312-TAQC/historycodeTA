@@ -4,6 +4,7 @@ import com.historycode.ui.page.adminpanel.editorpage.components.grids.PositionsG
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.PositionsModalComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.PositionsRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.elements.AddButtonElement;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -24,6 +25,11 @@ public class PositionsPage extends EditorBasePage {
         grid = new PositionsGridComponent(driver, rootGrid);
     }
 
+    @Step("Check Positions Grid Is Displayed Correctly.")
+    public boolean isGridDisplayed() {
+        return grid.isDisplayed();
+    }
+
     public PositionsModalComponent clickAddPosition() {
         addPositionButton.clickButton();
         sleep(1000);
@@ -34,6 +40,7 @@ public class PositionsPage extends EditorBasePage {
         return grid.getHeaderItems().size();
     }
 
+    @Step("Get Table Headers.")
     public List<String> getTableHeadersString() {
         return grid.getHeaderItemsString();
     }
@@ -95,5 +102,30 @@ public class PositionsPage extends EditorBasePage {
 
     public String getTableRowTitleString(PositionsRowComponent row) {
         return grid.getRowTitleString(row);
+    }
+
+    public PositionsPage clickNextPage() {
+        grid.clickNextPage();
+        return new PositionsPage(driver);
+    }
+
+    public PositionsPage clickPrevPage() {
+        grid.clickPrevPage();
+        return new PositionsPage(driver);
+    }
+
+    public PositionsPage clickPrevFivePages() {
+        grid.clickPrevFivePages();
+        return new PositionsPage(driver);
+    }
+
+    public PositionsPage clickNextFivePages() {
+        grid.clickNextFivePages();
+        return new PositionsPage(driver);
+    }
+
+    public PositionsPage clickPaginationItem(int index) {
+        grid.clickPaginationItem(index);
+        return new PositionsPage(driver);
     }
 }

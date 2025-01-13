@@ -1,12 +1,11 @@
 package com.historycode.ui.page.adminpanel.editorpage.components.rows;
 
-import com.historycode.ui.page.adminpanel.editorpage.EditorBasePage;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class PositionsRowComponent extends RowComponent {
-
     @FindBy(xpath = ".//td[@class='ant-table-cell'][2]//span[contains(@class, 'anticon-delete')]//*[name()='svg']")
     private WebElement deleteAction;
     @FindBy(xpath = ".//td[@class='ant-table-cell'][2]//span[contains(@class, 'anticon-edit')]//*[name()='svg']")
@@ -14,6 +13,11 @@ public class PositionsRowComponent extends RowComponent {
 
     public PositionsRowComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
+    }
+
+    @Step("Check Positions Row is Displayed.")
+    public boolean isExist() {
+        return getTitle().isDisplayed() && editAction.isDisplayed() && deleteAction.isDisplayed();
     }
 
     public void clickEdit() {
@@ -26,7 +30,7 @@ public class PositionsRowComponent extends RowComponent {
         deleteAction.click();
     }
 
-    public WebElement getEditAction(){
+    public WebElement getEditAction() {
         return editAction;
     }
 

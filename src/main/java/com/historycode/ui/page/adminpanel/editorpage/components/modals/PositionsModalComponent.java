@@ -1,5 +1,6 @@
 package com.historycode.ui.page.adminpanel.editorpage.components.modals;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,10 +14,13 @@ public class PositionsModalComponent extends ModalComponent {
         super(driver, rootElement);
     }
 
-    public void enterPosition(String name) {
+    @Step("Enter '{name}' Into The Position Name Input.")
+    public PositionsModalComponent enterPosition(String name) {
         inputComponent.setInput(name);
+        return new PositionsModalComponent(driver, rootElement);
     }
 
+    @Step("Check Position Modal is Displayed.")
     public boolean isExist() {
         return closeButton.isDisplayed() && title.isDisplayed() && saveButton.isDisplayed();
     }
@@ -27,5 +31,11 @@ public class PositionsModalComponent extends ModalComponent {
 
     public String getTitleString() {
         return title.getText();
+    }
+
+    @Step("Click Positions Modal Save Button.")
+    public PositionsModalComponent save() {
+        saveButton.click();
+        return new PositionsModalComponent(driver, rootElement);
     }
 }

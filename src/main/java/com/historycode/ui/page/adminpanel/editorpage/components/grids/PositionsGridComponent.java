@@ -2,6 +2,7 @@ package com.historycode.ui.page.adminpanel.editorpage.components.grids;
 
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.CategoriesRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.PositionsRowComponent;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -16,6 +17,19 @@ public class PositionsGridComponent extends GridComponent {
         super(driver, rootElement);
         rows = new ArrayList<>();
         initRows(driver);
+    }
+
+    @Step("Check Positions Grid Components Are Displayed Correctly.")
+    public boolean isDisplayed() {
+        return (isHeadersDisplayed() && isRowsDisplayed());
+    }
+
+    @Step("Check Positions Rows Are Displayed Correctly.")
+    public boolean isRowsDisplayed() {
+        for (PositionsRowComponent row : rows) {
+            if (!row.isExist()) { return false; }
+        }
+        return true;
     }
 
     public void initRows(WebDriver driver) {
@@ -75,6 +89,31 @@ public class PositionsGridComponent extends GridComponent {
 
     public void deleteRow(PositionsRowComponent row) {
         row.clickDelete();
+    }
+
+    public PositionsGridComponent clickNextPage() {
+        pagination.clickNextPage();
+        return new PositionsGridComponent(driver, rootElement);
+    }
+
+    public PositionsGridComponent clickPrevPage() {
+        pagination.clickPrevPage();
+        return new PositionsGridComponent(driver, rootElement);
+    }
+
+    public PositionsGridComponent clickPrevFivePages() {
+        pagination.clickPrevFivePages();
+        return new PositionsGridComponent(driver, rootElement);
+    }
+
+    public PositionsGridComponent clickNextFivePages() {
+        pagination.clickNextFivePages();
+        return new PositionsGridComponent(driver, rootElement);
+    }
+
+    public PositionsGridComponent clickPaginationItem(int index) {
+        pagination.clickPaginationItem(index);
+        return new PositionsGridComponent(driver, rootElement);
     }
     //TODO Update edit/deleteRow methods to return modals
 }
