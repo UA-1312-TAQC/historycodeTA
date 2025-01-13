@@ -4,6 +4,7 @@ import com.historycode.ui.component.adminPanel.adminMenuBar.AdminMenuBarComponen
 import com.historycode.ui.elements.adminPanel.InputElement;
 import com.historycode.ui.elements.adminPanel.LogoElement;
 import com.historycode.ui.elements.adminPanel.TextAreaElement;
+import com.historycode.ui.page.adminpanel.partnerspage.PartnersPageAdminPanel;
 import com.historycode.ui.page.adminpanel.partnerspage.modal.CreatePartnersModal;
 import com.historycode.ui.testrunners.TestRunnerWithAdmin;
 import io.qameta.allure.Description;
@@ -27,7 +28,6 @@ public class TestCase130  extends TestRunnerWithAdmin {
 
         menuBar = new AdminMenuBarComponent(
                 driver, driver.findElement(By.xpath("//div[@class='BarContainer']")));
-
         CreatePartnersModal createModal = menuBar.goToPartnersPage().clickAddNewPartnersButton();
 
         InputElement name = createModal.getName();
@@ -39,13 +39,8 @@ public class TestCase130  extends TestRunnerWithAdmin {
         createModal.sleep(5000);
 
         LogoElement logo = createModal.getLogo();
-        logo.uploadLogo("com/historycode/ui/adminPanel/logo.jpeg");
+        logo.uploadLogo("/home/ivan/Документи/SoftServ/automation_testing_java/historycodeTA/src/test/java/com/historycode/ui/adminPanel/logo.jpeg");
         createModal.sleep(5000);
-
-
-
-
-
     }
 }
 
