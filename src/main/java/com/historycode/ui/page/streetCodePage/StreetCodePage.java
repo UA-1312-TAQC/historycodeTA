@@ -159,4 +159,3 @@ public class StreetCodePage extends BasePage {
         verticalProgress.toggleProgressBar();
     }
 }
-
