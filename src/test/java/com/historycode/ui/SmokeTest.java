@@ -55,23 +55,27 @@ public class SmokeTest extends BaseTestRunner {
 
     @Issue("81")
     @Test(priority = 1)
+    @Description("[Text and Video] Verify that all buttons are clickable")
     public void testStreetCodeClick() {
         HomePage homePage = new HomePage(driver);
         StreetCodePage streetCodePage = homePage.clickPersonCardCarouselItem(0);
 
+        //step 1 : click on button 'Трохи ще'
         Optional<StreetCodeTextBlockComponent> optionalStreetCodeTextBlock = streetCodePage.getTextBlock();
         if (optionalStreetCodeTextBlock.isPresent()) {
-            StreetCodeTextBlockComponent streetCodeTextBlock = optionalStreetCodeTextBlock.get();
+            StreetCodeTextBlockComponent streetCodeTextBlockComponent = optionalStreetCodeTextBlock.get();
+            Assert.assertTrue(streetCodeTextBlockComponent.isReadMoreButtonDisplayed(), "'Трохи ще' button should be displayed.");
 
-            Assert.assertTrue(streetCodeTextBlock.isReadMoreButtonDisplayed(), "'Read More' button should be displayed.");
+            streetCodePage.scrollToElement(streetCodeTextBlockComponent.getReadMoreButton());
+            streetCodeTextBlockComponent.clickReadMoreButton();
 
-            streetCodeTextBlock.clickReadMoreButton();
+            streetCodePage.waitUntilElementVisible(streetCodeTextBlockComponent.getMainTextContent());
+            Assert.assertTrue(streetCodeTextBlockComponent.getMainTextContent().isDisplayed(), "All available text should be visible after clicking 'Трохи ще'.");
 
-            Assert.assertTrue(streetCodeTextBlock.getMainTextContent().isDisplayed(), "All available text should be visible after clicking 'Read More'.");
-
-            Assert.assertTrue(streetCodeTextBlock.isReadLessButtonDisplayed(), "'Read Less' button should be visible after clicking 'Read More'.");
+            streetCodePage.waitUntilElementVisible(streetCodeTextBlockComponent.getReadLessButton());
+            Assert.assertTrue(streetCodeTextBlockComponent.isReadLessButtonDisplayed(), "'Дещо менше' button should be visible after clicking 'Трохи ще'.");
         } else {
-            Assert.fail("StreetCodeTextBlockComponent is not present on the page.");
+            Assert.fail("StreetCodeTextBlockComponents is not present on the page.");
         }
     }
 }
