@@ -8,9 +8,12 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
 import java.util.Optional;
 
 public class SmokeTest extends BaseTestRunner {
@@ -52,22 +55,23 @@ public class SmokeTest extends BaseTestRunner {
 
     @Issue("81")
     @Test(priority = 1)
-    public void testStreetCodeClick(){
+    public void testStreetCodeClick() {
         HomePage homePage = new HomePage(driver);
+        StreetCodePage streetCodePage = homePage.clickPersonCardCarouselItem(0);
 
-        StreetCodePage streetCodePage = homePage.clickPersonCardCarouselItem(1);
+        Optional<StreetCodeTextBlockComponent> optionalStreetCodeTextBlock = streetCodePage.getTextBlock();
+        if (optionalStreetCodeTextBlock.isPresent()) {
+            StreetCodeTextBlockComponent streetCodeTextBlock = optionalStreetCodeTextBlock.get();
 
-        Optional<StreetCodeTextBlockComponent> textBlockOptional = streetCodePage.getTextBlock();
-        Assert.assertTrue(textBlockOptional.isPresent(), "Text block component is not present.");
+            Assert.assertTrue(streetCodeTextBlock.isReadMoreButtonDisplayed(), "'Read More' button should be displayed.");
 
-        StreetCodeTextBlockComponent textBlock = textBlockOptional.get();
+            streetCodeTextBlock.clickReadMoreButton();
 
-        textBlock.clickReadMoreButton();
+            Assert.assertTrue(streetCodeTextBlock.getMainTextContent().isDisplayed(), "All available text should be visible after clicking 'Read More'.");
 
-        WebElement mainTextContent = textBlock.getMainTextContent();
-        Assert.assertTrue(mainTextContent.isDisplayed(), "Main text content is not fully visible.");
-
-        WebElement readLessButton = textBlock.getReadLessButton();
-        Assert.assertTrue(readLessButton.isDisplayed(), "'Дещо менше' button is not displayed.");
+            Assert.assertTrue(streetCodeTextBlock.isReadLessButtonDisplayed(), "'Read Less' button should be visible after clicking 'Read More'.");
+        } else {
+            Assert.fail("StreetCodeTextBlockComponent is not present on the page.");
+        }
     }
 }
