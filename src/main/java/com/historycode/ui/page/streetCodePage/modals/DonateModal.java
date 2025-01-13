@@ -50,6 +50,10 @@ public class DonateModal extends BaseModal {
         return firstTitle.isDisplayed();
     }
 
+    public String getTitle() {
+        return firstTitle.getText();
+    }
+
     public boolean isSecondTitleDisplayed() {
         return secondTitle.isDisplayed();
     }
