@@ -66,7 +66,7 @@ public class DonateModal extends BaseModal {
         return amountInput.isDisplayed();
     }
 
-    public boolean isAmountInputListDisplayed() {
+    public boolean areAmountButtonsDisplayed() {
         if (amountButtons.size() == 3
                 && amountButtons.get(0).isDisplayed()
                 && amountButtons.get(1).isDisplayed()
