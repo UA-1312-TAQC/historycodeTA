@@ -4,6 +4,7 @@ import com.historycode.ui.page.adminpanel.editorpage.CategoriesPage;
 import com.historycode.ui.page.adminpanel.editorpage.ContextsPage;
 import com.historycode.ui.page.adminpanel.editorpage.TagsPage;
 import com.historycode.ui.testrunners.BaseTestRunner;
+import com.historycode.ui.testrunners.TestRunnerWithAdmin;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Issue;
 import jdk.jfr.Description;
@@ -19,22 +20,14 @@ import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 
-public class AdminPanelEditorPageTest extends BaseTestRunner {
+
+public class AdminPanelEditorPageTest extends TestRunnerWithAdmin {
 
     //TODO Add BeforeClass with login to the admin panel
     //TODO Add AfterMethod to move back to the main admin panel page
     public CategoriesPage admin_panel_login(WebDriver driver) {
-        driver.get(testValueProvider.getBaseUIUrl() + "/admin-panel/login");
-        WebElement login = driver.findElement(By.xpath("//input[@id='login']"));
-        WebElement password = driver.findElement(By.xpath("//input[@id='password']"));
-        String oldUrl = driver.getCurrentUrl();
-        sleep(4);
-        login.sendKeys(testValueProvider.getAdminEmail());
-        password.sendKeys(testValueProvider.getAdminPass());
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(100));
-        wait.until(ExpectedConditions.not(ExpectedConditions.urlToBe(oldUrl)));
-        driver.get(testValueProvider.getBaseUIUrl() + "/admin-panel/editor");
-        sleep(2);
+        login();
+        driver.get("https://frontend.historycode.online/admin-panel/editor");
         return new CategoriesPage(driver);
     }
 
