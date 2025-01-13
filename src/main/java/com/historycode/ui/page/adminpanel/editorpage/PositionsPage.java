@@ -6,6 +6,7 @@ import com.historycode.ui.page.adminpanel.editorpage.components.grids.PositionsG
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.PositionsModalComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.PositionsRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.elements.addButtonElement;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -31,6 +32,7 @@ public class PositionsPage extends BasePage {
         this.gridComponent = new PositionsGridComponent(driver, gridRootElement);
     }
 
+    @Step("Add new position")
     public PositionsModalComponent addPosition() {
         addNewPositionButton.click();
         return new PositionsModalComponent(driver, createModalRootElement);

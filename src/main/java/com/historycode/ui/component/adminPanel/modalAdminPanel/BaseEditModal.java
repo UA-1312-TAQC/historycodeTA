@@ -1,22 +1,24 @@
 package com.historycode.ui.component.adminPanel.modalAdminPanel;
 
 import com.historycode.ui.component.BaseModal;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 
 public abstract class BaseEditModal extends BaseModal {
-    @FindBy(xpath = "//button[@class='ant-modal-close']/span")
+    @FindBy(xpath = "./button[@class='ant-modal-close']/span")
     protected WebElement closeButton;
 
-    @FindBy(xpath = "//div[@class='ant-popover-content']//div[@class='ant-popover-inner-content']")
+    @FindBy(xpath = "./div[@class='ant-popover-content']//div[@class='ant-popover-inner-content']")
     protected WebElement tooltip;
 
-    @FindBy(xpath = "//div[@class='center']//h2")
+    @FindBy(xpath = "./div[@class='center']//h2")
     protected WebElement title;
 
-    @FindBy(xpath = "//div[@class='center']//button/span")
+    //TODO why cant find this button
+    @FindBy(xpath = "//div[@class='center']//button")
     protected WebElement saveButton;
 
     public BaseEditModal(WebDriver driver, WebElement rootElement) {
@@ -39,6 +41,7 @@ public abstract class BaseEditModal extends BaseModal {
         waitUntilElementVisible(tooltip);
         return tooltip.getText();
     }
+
 
     public void clickCloseButton() {
         waitUntilElementClickable(closeButton);
