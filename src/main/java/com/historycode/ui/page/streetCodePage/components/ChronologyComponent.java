@@ -1,61 +1,56 @@
 package com.historycode.ui.page.streetCodePage.components;
 
 import com.historycode.ui.component.BaseComponent;
-import com.historycode.ui.page.streetCodePage.components.carousels.ChronologyCarousel;
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class ChronologyComponent extends BaseComponent {
+
+    @Getter
+    private ChronologyYearsBarComponent yearsBar;
+
+    @Getter
+    private ChronologyFilmCardComponent filmCardComponent;
+
     @FindBy(xpath = ".//div[@id='timeline']//h1")
     private WebElement title;
 
-    @FindBy(xpath = ".//div[@class='timeSpanContainer']")
-    private WebElement timelineContainer;
+    @FindBy(xpath = "//div[contains(@class, 'timelineYearTicksContainer')]")
+    private WebElement redTimeline;
 
     @FindBy(xpath = ".//div[@class='timelineContentContainer']")
-    private WebElement cardsContainer;
+    private WebElement filmCardContainer;
 
-    private ChronologyYearsBarComponent yearsBar;
-    private ChronologyCarousel carousel;
 
     public ChronologyComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        this.yearsBar = new ChronologyYearsBarComponent(driver, timelineContainer);
-        this.carousel = new ChronologyCarousel(driver, cardsContainer);
+        this.yearsBar = new ChronologyYearsBarComponent(driver, redTimeline);
+        this.filmCardComponent = new ChronologyFilmCardComponent(driver, filmCardContainer);
+        PageFactory.initElements(driver, this);
+    }
+
+    public ChronologyComponent(WebDriver driver) {
+        super(driver);
+        this.yearsBar = new ChronologyYearsBarComponent(driver, redTimeline);
+        this.filmCardComponent = new ChronologyFilmCardComponent(driver, filmCardContainer);
+        PageFactory.initElements(driver, this);
     }
 
     public String getTitle() {
+        scrollToElement(title);
         return title.getText();
     }
 
-    public void selectYear(String year) {
-        yearsBar.selectYear(year);
+    public WebElement getTitleElement() {
+        return title;
     }
 
-    public String getSelectedYear() {
-        return yearsBar.getSelectedYear();
-    }
-
-    public List<String> getAllYears() {
-        return yearsBar.getAllYears();
-    }
-
-    public void nextEvent() {
-        carousel.scrollToNext();
-    }
-
-    public void previousEvent() {
-        carousel.scrollToPrevious();
-    }
-    public List<ChronologyCardComponent> getVisibleEvents() {
-        return carousel.getVisibleCards();
-    }
-
-    public int getTotalEvents() {
-        return carousel.getTotalCards();
+    public WebElement getRedTimeline() {
+        scrollToElement(redTimeline);
+        return redTimeline;
     }
 }
