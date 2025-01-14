@@ -12,6 +12,7 @@ import org.testng.annotations.BeforeSuite;
 
 import java.time.Duration;
 
+
 public class BaseTestRunner {
     protected WebDriver driver;
     protected static TestValueProvider testValueProvider;
