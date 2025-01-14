@@ -45,12 +45,13 @@ public class DeleteItemModal extends BaseModal {
         return getConfirmationText().contains(expectedText);
     }
 
-    //TODO ask if ok here?
-    public PartnersPageGridComponent clickOkButton() {
-        waitUntilElementClickable(ok);
+    public void clickOkButton() {
         ok.click();
-        return new PartnersPageGridComponent(driver, rootElement);
+        //TODO Додати логіку яка буде чекати закриття модалки waiter
+        sleep(1000);
     }
+
+
 
     public void clickCancelButton() {
         waitUntilElementClickable(cancel);
