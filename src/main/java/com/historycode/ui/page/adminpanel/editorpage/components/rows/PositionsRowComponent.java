@@ -16,6 +16,9 @@ public class PositionsRowComponent extends RowComponent {
     @FindBy(xpath ="//div[@class='ant-modal-content']")
     private WebElement modalContentRoot;
 
+    @FindBy(xpath = "//p[contains(text(),'видалити')]/ancestor::div[@class = 'ant-modal-content']")
+    private WebElement deleteModalRoot;
+
     public PositionsRowComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
@@ -27,6 +30,6 @@ public class PositionsRowComponent extends RowComponent {
 
     public DeleteItemModal clickDelete() {
         deleteAction.click();
-        return new DeleteItemModal(driver, modalContentRoot);
+        return new DeleteItemModal(driver, deleteModalRoot);
     }
 }

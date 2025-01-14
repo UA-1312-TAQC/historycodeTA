@@ -19,7 +19,7 @@ public class PositionsPage extends BasePage {
     WebElement addNewPositionButton;
 
     //TODO Added another grid root
-    @FindBy(xpath = "//div[@class='positions-page']//div[@class='positions-page-container']\n")
+    @FindBy(xpath = "//div[@class='positions-page']//div[@class='positions-page-container']")
     private WebElement gridRootElement;
 
     @FindBy(xpath = "//div[@role = 'dialog']/div[2]")
@@ -34,6 +34,7 @@ public class PositionsPage extends BasePage {
 
     @Step("Add new position")
     public PositionsModalComponent addPosition() {
+        waitUntilElementClickable(addNewPositionButton);
         addNewPositionButton.click();
         return new PositionsModalComponent(driver, createModalRootElement);
     }

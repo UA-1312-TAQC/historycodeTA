@@ -17,7 +17,7 @@ public class DeletePositionEditor extends TestRunnerWithAdmin {
         CategoriesPage categoriesPage = new CategoriesPage(driver);
         categoriesPage.moveToPositions()
                 .addPosition()
-                .inputNewPosition("Дизайнер")
+                .inputNewPosition("Візажист")
                 .saveNewPosition()
                 .closeModal();
     }
@@ -26,9 +26,10 @@ public class DeletePositionEditor extends TestRunnerWithAdmin {
     @Issue("108")
     @Description("Verify that the admin can delete position using the trash bin button")
     public void testDeleteJob() {
-//        PositionsPage positionsPage = new PositionsPage(driver);
-//        PositionsRowComponent positionToDelete = positionsPage.getTableRowByTitle("Дизайнер");
-//        positionsPage.deleteTableRow(positionToDelete)
-//                .clickCancelButton();
+        PositionsPage positionsPage = new PositionsPage(driver);
+        PositionsRowComponent positionToDelete = positionsPage.getTableRowByTitle("Візажист");
+        System.out.println(positionToDelete.getTitle());
+        positionsPage.deleteTableRow(positionToDelete)
+                .clickOkButton();
     }
 }

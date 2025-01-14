@@ -10,7 +10,7 @@ import org.openqa.selenium.support.FindBy;
 
 public class PositionsModalComponent extends BaseEditModal {
     //TODO here also ./ doesnt work
-    @FindBy(xpath = "//label[@for = 'position']/../..")
+    @FindBy(xpath = ".//label[@for = 'position']/../..")
     private WebElement positionContainer;
 
     @Getter
@@ -30,12 +30,13 @@ public class PositionsModalComponent extends BaseEditModal {
     @Step("Save new position")
     public PositionsModalComponent saveNewPosition() throws InterruptedException {
         clickSaveButton();
-        Thread.sleep(4000);
+//        Thread.sleep(4000);
         return this;
     }
 
     @Step("Close position modal")
-    public void closeModal(){
+    public void closeModal() throws InterruptedException {
         clickCloseButton();
+        Thread.sleep(5000);
     }
 }

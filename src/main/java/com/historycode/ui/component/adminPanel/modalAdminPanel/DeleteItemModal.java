@@ -16,7 +16,7 @@ public class DeleteItemModal extends BaseModal {
     @FindBy(xpath = "./div[@class='ant-modal-footer']/button[contains(@class, 'ant-btn-default')]")
     protected WebElement cancel;
 
-    @FindBy(xpath = "./div[@class='ant-modal-footer']/button[contains(@class, 'ant-btn-primary')]")
+    @FindBy(xpath = ".//div[@class='ant-modal-footer']/button[contains(@class, 'ant-btn-primary')]")
     protected WebElement ok;
 
     @FindBy(xpath = "./button[@class='ant-modal-close' and @aria-label='Close']")
