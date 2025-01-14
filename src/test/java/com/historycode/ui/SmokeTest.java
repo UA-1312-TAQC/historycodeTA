@@ -10,7 +10,6 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.Optional;
 
 public class SmokeTest extends BaseTestRunner {
 
@@ -48,5 +47,4 @@ public class SmokeTest extends BaseTestRunner {
         //TODO: criteria overflow/truncated
         Assert.assertFalse(streetCodePage.getMainCard().isTeaserTextOverflowing());
     }
-
 }
