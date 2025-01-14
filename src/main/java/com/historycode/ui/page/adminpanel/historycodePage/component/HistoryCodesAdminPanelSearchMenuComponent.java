@@ -8,10 +8,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class HistoryCodesAdminPanelSearchMenuComponent extends BaseComponent {
+    // змінити xpath contains text 
     @FindBy(xpath = "./div[@class='ant-btn css-k7429z ant-btn-default Button']")
     protected WebElement searchButton;
     protected InputElement searchInput;
     protected DropdownComponent dropdown;
+    @FindBy(xpath = "./div[@class='ant-btn css-k7429z ant-btn-default Button']")
+    protected WebElement newHistoryCodeButton;
 
     @FindBy(xpath = "./div[@class='ant-input css-k7429z']")
     protected WebElement searchInputNode;
