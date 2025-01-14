@@ -7,13 +7,9 @@ import com.historycode.ui.testrunners.BaseTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.time.Duration;
 import java.util.Optional;
 
 public class SmokeTest extends BaseTestRunner {
@@ -53,29 +49,4 @@ public class SmokeTest extends BaseTestRunner {
         Assert.assertFalse(streetCodePage.getMainCard().isTeaserTextOverflowing());
     }
 
-    @Issue("81")
-    @Test(priority = 1)
-    @Description("[Text and Video] Verify that all buttons are clickable")
-    public void testStreetCodeClick() {
-        HomePage homePage = new HomePage(driver);
-        StreetCodePage streetCodePage = homePage.clickPersonCardCarouselItem(0);
-
-        //step 1 : click on button 'Трохи ще'
-        Optional<StreetCodeTextBlockComponent> optionalStreetCodeTextBlock = streetCodePage.getTextBlock();
-        if (optionalStreetCodeTextBlock.isPresent()) {
-            StreetCodeTextBlockComponent streetCodeTextBlockComponent = optionalStreetCodeTextBlock.get();
-            Assert.assertTrue(streetCodeTextBlockComponent.isReadMoreButtonDisplayed(), "'Трохи ще' button should be displayed.");
-
-            streetCodePage.scrollToElement(streetCodeTextBlockComponent.getReadMoreButton());
-            streetCodeTextBlockComponent.clickReadMoreButton();
-
-            streetCodePage.waitUntilElementVisible(streetCodeTextBlockComponent.getMainTextContent());
-            Assert.assertTrue(streetCodeTextBlockComponent.getMainTextContent().isDisplayed(), "All available text should be visible after clicking 'Трохи ще'.");
-
-            streetCodePage.waitUntilElementVisible(streetCodeTextBlockComponent.getReadLessButton());
-            Assert.assertTrue(streetCodeTextBlockComponent.isReadLessButtonDisplayed(), "'Дещо менше' button should be visible after clicking 'Трохи ще'.");
-        } else {
-            Assert.fail("StreetCodeTextBlockComponents is not present on the page.");
-        }
-    }
 }

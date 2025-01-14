@@ -27,6 +27,9 @@ public class StreetCodePage extends BasePage {
     @FindBy(xpath = "//div[@class='donateBtnContainer']")
     private WebElement quickDonateButtonNode;
 
+    @FindBy(xpath = "//div[@id='text']")
+    private WebElement textBlockRoot;
+
 
     @Getter
     private BreadcrumbsElement breadcrumbs;
@@ -53,9 +56,11 @@ public class StreetCodePage extends BasePage {
     @Getter
     private RunningLineComponent runningLine;
     private PageNavigationBarComponent verticalProgress;
+    @Getter
+    private StreetCodeTextBlockComponent textBlockComponent;
 
 
-    public StreetCodePage(WebDriver driver){
+    public StreetCodePage(WebDriver driver) {
         super(driver);
 
         this.breadcrumbs = new BreadcrumbsElement(driver);
@@ -63,14 +68,15 @@ public class StreetCodePage extends BasePage {
         this.quickDonateButton = new QuickDonateButtonElement(driver);
         this.mainCard = new MainCardComponent(driver, mainCardNode);
         this.verticalProgress = new PageNavigationBarComponent(driver, verticalProgressNode);
+        this.textBlockComponent = new StreetCodeTextBlockComponent(driver, textBlockRoot);
         initializeOptionalComponents(driver);
     }
 
-    public StreetCodePage(WebDriver driver, boolean testMode){
+    public StreetCodePage(WebDriver driver, boolean testMode) {
         super(driver);
 
         //TODO: remove testMode
-        if  (testMode) {
+        if (testMode) {
             this.mainCard = new MainCardComponent(driver, mainCardNode);
             return;
         }
@@ -113,9 +119,9 @@ public class StreetCodePage extends BasePage {
                 .ifPresent(element -> runningLine = new RunningLineComponent(driver, element));
     }
 
-    public Optional<StreetCodeTextBlockComponent> getTextBlock() {
-        return Optional.ofNullable(textBlock);
-    }
+//    public Optional<StreetCodeTextBlockComponent> getTextBlock() {
+//        return Optional.ofNullable(textBlock);
+//    }
 
     public Optional<InterestingFactsComponent> getFacts() {
         return Optional.ofNullable(facts);

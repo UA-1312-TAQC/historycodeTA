@@ -6,7 +6,10 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +31,8 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
     @FindBy(xpath = "//div[contains(@class,'additionalText')]//a")
     private List<WebElement> linkInAdditionalText;
 
+    @FindBy(xpath = ".//div[@class='text']//p")
+    private List<WebElement> paragraphs;
 
     //    @FindBy(xpath = ".//div[@class='video-container']")
 //    private WebElement videoContainer;
@@ -51,28 +56,58 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
         return hasVideo;
     }
 
+    public boolean isReadMoreButtonDisplayed() {
+        waitUntilElementVisible(readMoreButton);
+        return readMoreButton.isDisplayed();
+    }
+
+    public boolean isReadLessButtonDisplayed() {
+        waitUntilElementVisible(readLessButton);
+        return readLessButton.isDisplayed();
+    }
+
     public void clickReadMoreButton() {
-        if (readMoreButton != null && isReadMoreButtonDisplayed()) {
+        scrollToElement(readMoreButton);
+        if (isReadMoreButtonDisplayed()) {
             readMoreButton.click();
         }
     }
 
     public void clickReadLessButton() {
-        if (readLessButton != null && isReadLessButtonDisplayed()) {
+        scrollToElement(readLessButton);
+        if (isReadLessButtonDisplayed()) {
             readLessButton.click();
         }
     }
 
-    public boolean isReadMoreButtonDisplayed() {
-        return readMoreButton.isDisplayed();
-    }
-
-    public boolean isReadLessButtonDisplayed() {
-        return readLessButton.isDisplayed();
-    }
-
     public boolean isAdditionalTextDisplayed() {
         return additionalText.isDisplayed();
+    }
+
+    public boolean isMainTextContentVisible() {
+        waitUntilElementVisible(mainTextContent);
+        return mainTextContent.isDisplayed();
+    }
+
+    public int getParagraphCount() {
+        return paragraphs.size();
+    }
+
+    public boolean checkExpanded() {
+        int initialNumberOfParagraph = getParagraphCount();
+        clickReadMoreButton();
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOf(paragraphs.get(paragraphs.size() - 1)));
+        int expandedNumberOfParagraph = getParagraphCount();
+
+        return expandedNumberOfParagraph > initialNumberOfParagraph;
+    }
+
+    public boolean checkCollapsed(int initialCount) {
+        clickReadLessButton();
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOf(paragraphs.get(0)));
+        int collapsedCount = getParagraphCount();
+
+        return collapsedCount == initialCount;
     }
 
     public List<String> getLinksInNewsContent() {
