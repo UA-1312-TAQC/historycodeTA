@@ -86,3 +86,4 @@ public class ContextsPage extends BasePage {
         return gridComponent.deleteRow(row);
     }
 }
+

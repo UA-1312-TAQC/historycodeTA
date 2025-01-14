@@ -30,3 +30,4 @@ public class ContextsRowComponent extends RowComponent {
         return new DeleteItemModal(driver, modalContentRoot);
     }
 }
+
