@@ -1,6 +1,7 @@
 package com.historycode.ui.component.adminPanel.modalAdminPanel;
 
 import com.historycode.ui.component.BaseModal;
+import com.historycode.ui.page.adminpanel.partnerspage.PartnersPageGridComponent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,7 +17,7 @@ public class DeleteItemModal extends BaseModal {
     @FindBy(xpath = "./div[@class='ant-modal-footer']/button[contains(@class, 'ant-btn-default')]")
     protected WebElement cancel;
 
-    @FindBy(xpath = ".//div[@class='ant-modal-footer']/button[contains(@class, 'ant-btn-primary')]")
+    @FindBy(xpath = "./div[@class='ant-modal-footer']/button[contains(@class, 'ant-btn-primary')]")
     protected WebElement ok;
 
     @FindBy(xpath = "./button[@class='ant-modal-close' and @aria-label='Close']")
@@ -44,15 +45,20 @@ public class DeleteItemModal extends BaseModal {
         return getConfirmationText().contains(expectedText);
     }
 
-    public void clickOkButton() {
+    //TODO ask if ok here?
+    public PartnersPageGridComponent clickOkButton() {
+        waitUntilElementClickable(ok);
         ok.click();
+        return new PartnersPageGridComponent(driver, rootElement);
     }
 
     public void clickCancelButton() {
+        waitUntilElementClickable(cancel);
         cancel.click();
     }
 
     public void clickCloseButton() {
+        waitUntilElementClickable(closeButton);
         closeButton.click();
     }
 
