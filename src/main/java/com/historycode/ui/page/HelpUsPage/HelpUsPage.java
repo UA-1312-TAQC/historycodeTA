@@ -1,9 +1,8 @@
 package com.historycode.ui.page.HelpUsPage;
 
-import com.historycode.ui.Base;
 import com.historycode.ui.component.HelpUs.DonatesBlockComponent;
-import com.historycode.ui.component.HelpUs.DonateEndComponent;
 import com.historycode.ui.component.HelpUs.PartnerModalComponent;
+import com.historycode.ui.page.BasePage;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,11 +10,10 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 @Getter
-public class HelpUsPage extends Base {
+public class HelpUsPage extends BasePage {
 
-    private DonatesBlockComponent donatesBlockComponent;
-    private DonateEndComponent donateEndComponent;
-    private PartnerModalComponent partnerModalComponent;
+    private final DonatesBlockComponent donatesBlockComponent;
+    private final PartnerModalComponent partnerModalComponent;
 
 
     @FindBy(xpath = "//div[contains(@class, 'titleBig')]")
@@ -23,6 +21,9 @@ public class HelpUsPage extends Base {
 
     @FindBy(xpath = "(//button[contains(@class, 'supportButton')])[1]")
     private WebElement donateEndButton;
+
+    @FindBy(xpath = "//div[contains(@class, 'donatesBlockContent')]")
+    private WebElement donatesBlockRoot;
 
     @FindBy(xpath = "(//button[contains(@class, 'supportButton')])[2]")
     private WebElement becomePartnerButton;
@@ -34,8 +35,7 @@ public class HelpUsPage extends Base {
         super(driver);
         PageFactory.initElements(driver, this);
 
-        this.donatesBlockComponent = new DonatesBlockComponent(driver);
-        this.donateEndComponent = new DonateEndComponent(driver);
+        this.donatesBlockComponent = new DonatesBlockComponent(driver, donatesBlockRoot);
         this.partnerModalComponent = new PartnerModalComponent(driver);
     }
 
@@ -45,9 +45,9 @@ public class HelpUsPage extends Base {
 
     public boolean isDonateEndButtonDisplayed() {
         try {
-           Thread.sleep(4000);
+            Thread.sleep(4000);
         } catch (InterruptedException e) {
-           throw new RuntimeException(e);
+            throw new RuntimeException(e);
         }
         scrollToEndOfPage();
         return donateEndButton.isDisplayed();
@@ -78,9 +78,6 @@ public class HelpUsPage extends Base {
         return donatesBlockComponent;
     }
 
-    public DonateEndComponent getDonateEndComponent() {
-        return donateEndComponent;
-    }
 
     public PartnerModalComponent getPartnerModalComponent() {
         return partnerModalComponent;
