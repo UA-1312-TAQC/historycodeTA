@@ -10,6 +10,7 @@ import com.historycode.ui.component.adminPanel.gridAdminPanel.BaseGridComponent;
 
 import lombok.Getter;
 
+
 public class PartnersPageGridComponent extends BaseGridComponent {
 
     @Getter
