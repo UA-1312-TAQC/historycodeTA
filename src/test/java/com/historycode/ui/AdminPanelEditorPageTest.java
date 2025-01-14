@@ -3,32 +3,27 @@ package com.historycode.ui;
 import com.historycode.ui.page.adminpanel.editorpage.CategoriesPage;
 import com.historycode.ui.page.adminpanel.editorpage.ContextsPage;
 import com.historycode.ui.page.adminpanel.editorpage.TagsPage;
-import com.historycode.ui.testrunners.BaseTestRunner;
 import com.historycode.ui.testrunners.TestRunnerWithAdmin;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Issue;
 import jdk.jfr.Description;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
-
 
 public class AdminPanelEditorPageTest extends TestRunnerWithAdmin {
 
     //TODO Add BeforeClass with login to the admin panel
     //TODO Add AfterMethod to move back to the main admin panel page
-    public CategoriesPage admin_panel_login(WebDriver driver) {
+    @BeforeMethod
+    public void admin_panel_login() {
         login();
-        driver.get("https://frontend.historycode.online/admin-panel/editor");
-        return new CategoriesPage(driver);
+        sleep(1);
+        driver.get(testValueProvider.getBaseUIUrl() + "/admin-panel/editor");
+        sleep(2);
     }
 
     @Test
@@ -36,7 +31,8 @@ public class AdminPanelEditorPageTest extends TestRunnerWithAdmin {
     @Epic("(Epic#5) Admin/Other pages")
     @Description("Verify that a new context can be created in the admin panel editor")
     public void verifyOpenAddContextModal() {
-        CategoriesPage categoriesPage = admin_panel_login(driver); //TODO Change admiin_panel_login to Click Editor
+
+        CategoriesPage categoriesPage = new CategoriesPage(driver);//TODO Change add Click Editor step
 
         boolean actual = categoriesPage
                 .moveToContexts()
@@ -50,7 +46,7 @@ public class AdminPanelEditorPageTest extends TestRunnerWithAdmin {
     @Epic("(Epic#5) Admin/Other pages")
     @Description("Verify that context list is displayed")
     public void verifyContextGridIsCorrectDisplayed() {
-        CategoriesPage categoriesPage = admin_panel_login(driver); //TODO Change admiin_panel_login to Click Editor
+        CategoriesPage categoriesPage = new CategoriesPage(driver);//TODO Change add Click Editor step
 
         ContextsPage contextsPage = categoriesPage.moveToContexts();
 
@@ -70,7 +66,7 @@ public class AdminPanelEditorPageTest extends TestRunnerWithAdmin {
     @Epic("(Epic#5) Admin/Other pages")
     @Description("Verify that tag list is displayed")
     public void verifyTagGridIsCorrectDisplayed() {
-        CategoriesPage categoriesPage = admin_panel_login(driver); //TODO Change admiin_panel_login to Click Editor
+        CategoriesPage categoriesPage = new CategoriesPage(driver);//TODO Change add Click Editor step
 
         TagsPage tagsPage = categoriesPage.moveToTags();
 
