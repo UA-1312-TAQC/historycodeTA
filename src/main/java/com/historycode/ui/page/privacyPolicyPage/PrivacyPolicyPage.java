@@ -45,7 +45,3 @@ public class PrivacyPolicyPage extends BasePage {
 //    }
 
 }
-
-
-
-
