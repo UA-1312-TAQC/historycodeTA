@@ -54,31 +54,3 @@ public class ChronologyComponent extends BaseComponent {
         return redTimeline;
     }
 }
-
-//    public void selectYear(String year) {
-//        yearsBar.selectYear(year);
-//    }
-//
-//    public String getSelectedYear() {
-//        return yearsBar.getSelectedYear();
-//    }
-
-//    public List<String> getAllYears() {
-//        return yearsBar.getAllYears();
-//    }
-//
-//    public void nextEvent() {
-//        carousel.scrollToNext();
-//    }
-//
-//    public void previousEvent() {
-//        carousel.scrollToPrevious();
-//    }
-//    public List<ChronologyCardComponent> getVisibleEvents() {
-//        return carousel.getVisibleCards();
-//    }
-//
-//    public int getTotalEvents() {
-//        return carousel.getTotalCards();
-//    }
-//}
