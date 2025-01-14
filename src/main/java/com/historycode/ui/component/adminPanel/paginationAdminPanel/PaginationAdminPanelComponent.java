@@ -33,22 +33,34 @@ public class PaginationAdminPanelComponent extends BaseComponent {
     }
 
     public void clickNextPage() {
+        scrollToElement(nextPage);
         nextPage.click();
     }
 
     public void clickPrevPage() {
+        scrollToElement(prevPage);
         prevPage.click();
     }
 
     public void clickPrevFivePages() {
+        scrollToElement(prevFivePages);
         prevFivePages.click();
     }
 
     public void clickNextFivePages() {
+        scrollToElement(nextFivePages);
         nextFivePages.click();
     }
 
     public void clickPaginationItem(int index) {
+        scrollToElement(prevPage);
         paginationItems.get(index).click();
+    }
+
+    public void clickLastPage(){
+        scrollToElement(prevPage);
+        waitUntilElementClickable(paginationItems.getLast());
+        System.out.println("Click performed");
+        paginationItems.getLast().click();
     }
 }

@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 
 
 public abstract class BaseEditModal extends BaseModal {
-    @FindBy(xpath = "//button[@class='ant-modal-close']/span")
+    @FindBy(xpath = ".//button[@class='ant-modal-close']")
     protected WebElement closeButton;
 
     @FindBy(xpath = "//div[@class='ant-popover-content']//div[@class='ant-popover-inner-content']")
