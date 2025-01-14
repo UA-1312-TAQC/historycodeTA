@@ -13,12 +13,6 @@ import java.util.List;
 @Getter
 public class ChronologyYearsBarComponent extends BaseComponent {
 
-//    @FindBy(xpath = ".//div[@class='tickContainer']//span")
-//    private List<WebElement> yearNodes;
-//
-//    @FindBy(xpath = ".//div[@class='tickContainer active']//span")
-//    private WebElement selectedYearNode;
-
     @Getter
     @FindBy(xpath = "//div[contains(@class, 'timelineYearTick')]")
     private List<WebElement> selectedYearBoxContainer;
