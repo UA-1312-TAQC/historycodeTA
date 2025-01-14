@@ -42,7 +42,7 @@ public class HistoryCodesAdminPanelRowComponent extends BaseComponent {
     }
 
     public String getTitleString() {
-        return name.toString();
+        return name.getText();
     }
 
     public void clickEdit() {
