@@ -25,3 +25,4 @@ public class ContextsRowComponent extends RowComponent {
         deleteAction.click();
     }
 }
+

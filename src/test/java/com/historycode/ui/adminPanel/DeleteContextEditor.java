@@ -32,3 +32,4 @@ public class DeleteContextEditor extends TestRunnerWithAdmin {
         assertNull(contextsPage.getTableRowByTitle("Context1"), "Context was not deleted successfully.");
     }
 }
+
