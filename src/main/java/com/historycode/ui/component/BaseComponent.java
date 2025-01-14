@@ -24,17 +24,6 @@ public abstract class BaseComponent extends Base {
         PageFactory.initElements(new DefaultElementLocatorFactory(driver),this);
     }
 
-    public void scrollToElement(WebElement element) {
-        sleep(2000);
-        waitUntilElementVisible(element);
-        threadJs.executeScript("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", element);
-    }
-
-    public void scrollToEndOfPage() {
-        threadJs.executeScript("window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });");
-        sleep(1000);
-    }
-
     public void waitUntilElementVisible(WebElement element) {
         sleep(2000);
         wait.until(ExpectedConditions.visibilityOf(element));
