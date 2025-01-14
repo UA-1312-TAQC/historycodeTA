@@ -2,7 +2,6 @@ package com.historycode.ui.page.streetCodePage.components;
 
 import com.historycode.ui.component.BaseComponent;
 import lombok.Getter;
-import org.checkerframework.framework.qual.DefaultQualifier;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -56,7 +55,7 @@ public class ChronologyFilmCardComponent extends BaseComponent {
     }
 
     public void clickFilmCardByIndex(int index) {
-
+        sleep(2000);
         WebElement card = getFilmCardByIndex(index);
         card.click();
     }
@@ -79,25 +78,3 @@ public class ChronologyFilmCardComponent extends BaseComponent {
         card.click();
     }
 }
-
-
-//    public String getYear() {
-//        return year.getText();
-//    }
-//
-//    public String getHistoricalContext() {
-//        return historicalContext.getText();
-//    }
-//
-//    public String getTitle() {
-//        return title.getText();
-//    }
-//
-//    public String getDescription() {
-//        return description.getText();
-//    }
-//
-//    public boolean isDisplayed() {
-//        return rootElement.isDisplayed();
-//    }
-//}
