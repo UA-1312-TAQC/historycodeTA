@@ -23,4 +23,9 @@ public abstract class BaseModal extends BaseComponent{
         return actualText.equals(expectedText);
     }
 
+    public boolean checkAttribute(WebElement element, String attributeName, String expectedValue) {
+        String attributeValue = element.getAttribute(attributeName);
+        return expectedValue.equals(attributeValue);
+    }
+
 }
