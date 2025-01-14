@@ -10,7 +10,6 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
-
 public class CatalogComponent extends BaseComponent {
 
     @Getter
