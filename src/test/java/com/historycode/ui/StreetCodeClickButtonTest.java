@@ -11,6 +11,7 @@ import org.testng.annotations.Test;
 
 
 public class StreetCodeClickButtonTest extends BaseTestRunner {
+
     @Issue("81")
     @Test(priority = 1)
     @Description("[Text and Video] Verify that all buttons are clickable")

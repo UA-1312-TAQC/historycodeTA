@@ -2,14 +2,12 @@ package com.historycode.ui;
 
 import com.historycode.ui.page.homePage.HomePage;
 import com.historycode.ui.page.streetCodePage.StreetCodePage;
-import com.historycode.ui.page.streetCodePage.components.StreetCodeTextBlockComponent;
 import com.historycode.ui.testrunners.BaseTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
 
 public class SmokeTest extends BaseTestRunner {
 
