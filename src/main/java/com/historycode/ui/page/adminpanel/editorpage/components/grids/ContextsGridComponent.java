@@ -1,6 +1,9 @@
 package com.historycode.ui.page.adminpanel.editorpage.components.grids;
 
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.ContextsRowComponent;
+import com.historycode.ui.page.adminpanel.editorpage.components.modals.ContextsModalComponent;
+import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -24,9 +27,9 @@ public class ContextsGridComponent extends GridComponent {
         }
     }
 
-    public List<String> getRowsTitles(){
+    public List<String> getRowsTitles() {
         List<String> titles = new ArrayList<>();
-        for (ContextsRowComponent row : rows){
+        for (ContextsRowComponent row : rows) {
             titles.add(row.getTitle());
         }
         return titles;
@@ -51,15 +54,17 @@ public class ContextsGridComponent extends GridComponent {
                 .collect(Collectors.toList());
     }
 
-    public void editRow(ContextsRowComponent row) {
+    public ContextsModalComponent editRow(ContextsRowComponent row) {
         row.clickEdit();
+        return new ContextsModalComponent(driver, getDisplayedModalRoot());
     }
 
-    public void deleteRow(ContextsRowComponent row) {
+    public DeleteItemModal deleteRow(ContextsRowComponent row) {
         row.clickDelete();
+        return new DeleteItemModal(driver, getDisplayedModalRoot());
     }
 
-    //TODO Update edit/deleteRow methods to return modals
+    private WebElement getDisplayedModalRoot() {
+        return driver.findElement(By.xpath("//div[@role='dialog']/div[2]"));
+    }
 }
-
-
