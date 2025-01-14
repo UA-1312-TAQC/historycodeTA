@@ -89,16 +89,22 @@ public class HistoryCodesAdminPanelGridComponent extends BaseGridComponent {
 
     public HistoryCodesAdminPanelGridComponent clickNextPage() {
         pagination.clickNextPage();
-        return new HistoryCodesAdminPanelGridComponent(driver, rootElement);
+        initRows(driver);
+        return this;
     }
 
     public HistoryCodesAdminPanelGridComponent clickPrevPage() {
         pagination.clickPrevPage();
-        return new HistoryCodesAdminPanelGridComponent(driver, rootElement);
+        initRows(driver);
+        return this;
     }
 
     public HistoryCodesAdminPanelGridComponent clickPaginationItem(int index) {
+        if (index < 1) {
+            throw new IllegalArgumentException("Pagination index must be positive");
+        }
         pagination.clickPaginationItem(index);
-        return new HistoryCodesAdminPanelGridComponent(driver, rootElement);
+        initRows(driver);
+        return this;
     }
 }

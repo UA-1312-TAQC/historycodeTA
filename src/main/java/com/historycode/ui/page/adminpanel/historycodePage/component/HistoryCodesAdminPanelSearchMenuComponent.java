@@ -5,6 +5,7 @@ import com.historycode.ui.component.adminPanel.dropDownAdminPanel.DropdownCompon
 import com.historycode.ui.elements.adminPanel.InputElement;
 import com.historycode.ui.page.adminpanel.StreetcodeEditPage;
 import com.historycode.ui.page.adminpanel.editorpage.BasePage;
+import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
 import lombok.Getter;
 import lombok.Setter;
 import org.openqa.selenium.WebDriver;
@@ -39,10 +40,10 @@ public class HistoryCodesAdminPanelSearchMenuComponent extends BaseComponent {
         this.dropdown = new DropdownComponent(driver, dropdownNode);
     }
 
-    public StreetcodeEditPage clickSearchButton() {
+    public HistoryCodesAdminPanelPage clickSearchButton() {
         BasePage.moveToElement(driver, searchButton);
         searchButton.click();
-        return new StreetcodeEditPage(driver);
+        return new HistoryCodesAdminPanelPage(driver);
     }
 
     public StreetcodeEditPage clickNewHistoryCodeButton() {
