@@ -144,9 +144,8 @@ public class EditMemberModal extends BaseEditModal {
         fileInput.sendKeys(filePath);
     }
 
-    //TODO Do I need to check uploadedPhoto.isDisplayed(), too?
     public boolean isPhotoUploaded() {
-        return !photoWindowComponent.isPlaceholderClickable(); //&& !uploadedPhoto.isDisplayed();
+        return !photoWindowComponent.isPlaceholderClickable();
     }
 
     public void addSocialMedia(String platform, String link) {
