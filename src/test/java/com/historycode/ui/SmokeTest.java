@@ -11,6 +11,8 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.Objects;
+
 public class SmokeTest extends BaseTestRunner {
 
     @Issue("91")
@@ -28,6 +30,7 @@ public class SmokeTest extends BaseTestRunner {
         StreetCodePage streetCodePage = new StreetCodePage(driver);
         BreadcrumbsElement breadcrumbs = streetCodePage.getBreadcrumbs();
         breadcrumbs.clickCatalog();
+        Assert.assertTrue(Objects.requireNonNull(driver.getCurrentUrl()).contains("/contact-us"), "Navigation to catalog failed");
     }
 
     @Issue("73")

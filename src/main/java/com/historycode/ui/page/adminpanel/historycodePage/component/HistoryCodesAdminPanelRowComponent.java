@@ -2,7 +2,9 @@ package com.historycode.ui.page.adminpanel.historycodePage.component;
 
 import com.historycode.ui.component.BaseComponent;
 import com.historycode.ui.component.adminPanel.dropDownAdminPanel.DropdownComponent;
+import com.historycode.ui.page.adminpanel.StreetcodeEditPage;
 import com.historycode.ui.page.adminpanel.editorpage.BasePage;
+import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelStatisticsPage;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -45,9 +47,10 @@ public class HistoryCodesAdminPanelRowComponent extends BaseComponent {
         return name.getText();
     }
 
-    public void clickEdit() {
+    public StreetcodeEditPage clickEdit() {
         BasePage.moveToElement(driver, editPageButton);
         editPageButton.click();
+        return new StreetcodeEditPage(driver);
     }
 
     public void clickDelete() {
@@ -55,8 +58,9 @@ public class HistoryCodesAdminPanelRowComponent extends BaseComponent {
         deleteButton.click();
     }
 
-    public void clickStatistics() {
+    public HistoryCodesAdminPanelStatisticsPage clickStatistics() {
         BasePage.moveToElement(driver, statisticsPageButton);
         statisticsPageButton.click();
+        return new HistoryCodesAdminPanelStatisticsPage(driver);
     }
 }

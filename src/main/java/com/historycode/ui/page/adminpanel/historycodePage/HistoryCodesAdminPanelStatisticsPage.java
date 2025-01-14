@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HistoryCodesAdminPanelStatisticsPage extends BasePageAdminPanel {
@@ -20,11 +21,11 @@ public class HistoryCodesAdminPanelStatisticsPage extends BasePageAdminPanel {
     @FindBy(xpath = "./img[@class='streetcodeImg no_exif_metadata']")
     private WebElement image;
 
-    @FindBy(xpath = "./div[@class='statisticTableWrapper']//h2[@class='streetcodeName' and text()='Статистика'")
+    @FindBy(xpath = "./div[@class='statisticTableWrapper']//h2[@class='streetcodeName' and text()='Статистика']")
     private WebElement statisticHeader;
 
     @Getter
-    private List<WebElement> statisticTitles;
+    private List<WebElement> statisticTitles = new ArrayList<>();
     @FindBy(xpath = "./thead[@class='ant-table-thead']//th[@class='ant-table-cell']")
     private List<WebElement> statisticTitlesNode;
 
@@ -44,7 +45,7 @@ public class HistoryCodesAdminPanelStatisticsPage extends BasePageAdminPanel {
 
     public NoDataComponent getNoDataComponent() {
         if (noDataComponent == null) {
-            WebElement root = driver.findElement((By) noData);
+            WebElement root = noData;
             noDataComponent = new NoDataComponent(driver, root);
         }
         return noDataComponent;

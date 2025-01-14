@@ -3,6 +3,7 @@ package com.historycode.ui.page.adminpanel.historycodePage.component;
 import com.historycode.ui.component.BaseComponent;
 import com.historycode.ui.component.adminPanel.dropDownAdminPanel.DropdownComponent;
 import com.historycode.ui.elements.adminPanel.InputElement;
+import com.historycode.ui.page.adminpanel.StreetcodeEditPage;
 import com.historycode.ui.page.adminpanel.editorpage.BasePage;
 import lombok.Getter;
 import lombok.Setter;
@@ -38,14 +39,15 @@ public class HistoryCodesAdminPanelSearchMenuComponent extends BaseComponent {
         this.dropdown = new DropdownComponent(driver, dropdownNode);
     }
 
-    //todo: Should these methods return a new window (new StreetcodeEditPage)?
-    public void clickSearchButton() {
+    public StreetcodeEditPage clickSearchButton() {
         BasePage.moveToElement(driver, searchButton);
         searchButton.click();
+        return new StreetcodeEditPage(driver);
     }
 
-    public void clickNewHistoryCodeButton() {
+    public StreetcodeEditPage clickNewHistoryCodeButton() {
         BasePage.moveToElement(driver, newHistoryCodeButton);
         newHistoryCodeButton.click();
+        return new StreetcodeEditPage(driver);
     }
 }
