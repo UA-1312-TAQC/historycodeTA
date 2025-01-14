@@ -42,7 +42,6 @@ public abstract class BaseEditModal extends BaseModal {
         return tooltip.getText();
     }
 
-
     public void clickCloseButton() {
         waitUntilElementClickable(closeButton);
         closeButton.click();
