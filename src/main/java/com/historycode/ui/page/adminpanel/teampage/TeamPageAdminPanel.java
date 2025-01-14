@@ -9,7 +9,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-
 public class TeamPageAdminPanel extends BasePageAdminPanel {
 
     protected TeamPageGridComponent teamPageGridComponent;
