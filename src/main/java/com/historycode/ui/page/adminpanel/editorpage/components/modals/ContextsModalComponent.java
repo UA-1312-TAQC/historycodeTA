@@ -33,5 +33,3 @@ public class ContextsModalComponent extends BaseEditModal {
         clickCloseButton();
     }
 }
-
-
