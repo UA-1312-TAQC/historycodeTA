@@ -2,31 +2,61 @@ package com.historycode.ui.page.adminpanel.historycodePage.component;
 
 import com.historycode.ui.component.BaseComponent;
 import com.historycode.ui.component.adminPanel.dropDownAdminPanel.DropdownComponent;
-import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelStatisticsPage;
+import com.historycode.ui.page.adminpanel.editorpage.BasePage;
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class HistoryCodesAdminPanelRowComponent extends BaseComponent {
 
-    @FindBy(xpath = "./td[@class='ant-table-cell']")
+    @Getter
+    @FindBy(xpath = "./td[@class='ant-table-cell'][1]")
     private WebElement name;
-    @FindBy(xpath = "./td[@class='ant-table-cell']")
+
+    @Getter
+    @FindBy(xpath = "./td[@class='ant-table-cell'][2]")
     private WebElement id;
+
+    @Getter
     private DropdownComponent dropDown;
-    @FindBy(xpath = "./button[@class='ant-btn css-k7429z ant-btn-default ant-dropdown-trigger']")
+    @FindBy(xpath = "./td[@class='ant-table-cell'][3]//button[@class='ant-btn css-k7429z ant-btn-default ant-dropdown-trigger']")
     private WebElement dropDownNode;
-    @FindBy(xpath = "./td[@class='ant-table-cell']")
+
+    @Getter
+    @FindBy(xpath = "./td[@class='ant-table-cell'][4]")
     private WebElement Data;
-    @FindBy(xpath = "./span[@class='anticon anticon-edit actionButton']")
+
+    @FindBy(xpath = ".//td[@class='ant-table-cell'][5]//span[contains(@class, 'anticon-edit')]//*[name()='svg']")
     private WebElement editPageButton;
-    @FindBy(xpath = "./span[@class='anticon anticon-delete actionButton']")
+
+    @FindBy(xpath = "./td[@class='ant-table-cell'][5]//span[contains(@class, 'anticon-delete')]//*[name()='svg']")
     private WebElement deleteButton;
-    @FindBy(xpath = "./span[@class='anticon anticon-bar-chart actionButton']")
+
+    @FindBy(xpath = "./td[@class='ant-table-cell'][5]//span[contains(@class, 'anticon-bar-chart')]//*[name()='svg']")
     private WebElement statisticsPageButton;
 
     public HistoryCodesAdminPanelRowComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
         this.dropDown = new DropdownComponent(driver, dropDownNode);
+    }
+
+    public String getTitleString() {
+        return name.toString();
+    }
+
+    public void clickEdit() {
+        BasePage.moveToElement(driver, editPageButton);
+        editPageButton.click();
+    }
+
+    public void clickDelete() {
+        BasePage.moveToElement(driver, deleteButton);
+        deleteButton.click();
+    }
+
+    public void clickStatistics() {
+        BasePage.moveToElement(driver, statisticsPageButton);
+        statisticsPageButton.click();
     }
 }

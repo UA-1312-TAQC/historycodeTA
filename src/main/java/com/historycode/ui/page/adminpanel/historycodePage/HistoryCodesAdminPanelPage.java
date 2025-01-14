@@ -9,17 +9,21 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class HistoryCodesAdminPanelPage extends BasePageAdminPanel {
-    protected HistoryCodesAdminPanelSearchMenuComponent historyCodesAdminPanelSearchMenuComponent;
-    protected HistoryCodesAdminPanelGridComponent historyCodesAdminPanelGridComponent;
 
-    @Getter @FindBy(xpath = "//div[@class='searchMenu']")
+    @Getter
+    protected HistoryCodesAdminPanelSearchMenuComponent historyCodesAdminPanelSearchMenuComponent;
+    @FindBy(xpath = "//div[@class='searchMenu']")
     protected WebElement historyCodesAdminPanelSearchMenuComponentNode;
-    @Getter @FindBy(xpath = "//div[@class='StreetcodeTableWrapper']")
+
+
+    @Getter
+    protected HistoryCodesAdminPanelGridComponent historyCodesAdminPanelGridComponent;
+    @FindBy(xpath = "//div[@class='StreetcodeTableWrapper']")
     protected WebElement historyCodesAdminPanelGridComponentNode;
 
     public HistoryCodesAdminPanelPage(WebDriver driver) {
         super(driver);
         this.historyCodesAdminPanelSearchMenuComponent = new HistoryCodesAdminPanelSearchMenuComponent(driver, historyCodesAdminPanelSearchMenuComponentNode);
-        this.historyCodesAdminPanelGridComponent = new HistoryCodesAdminPanelGridComponent(driver,historyCodesAdminPanelGridComponentNode);
+        this.historyCodesAdminPanelGridComponent = new HistoryCodesAdminPanelGridComponent(driver, historyCodesAdminPanelGridComponentNode);
     }
 }
