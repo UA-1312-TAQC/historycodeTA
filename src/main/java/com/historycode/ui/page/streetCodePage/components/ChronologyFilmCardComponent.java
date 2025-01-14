@@ -18,7 +18,7 @@ public class ChronologyFilmCardComponent extends BaseComponent {
     private List<WebElement> filmCards;
 
     @Getter
-    @FindBy(xpath = ".//div[@class='timelineItem']//p[@class='timelineItemMetadata']/text()[1]")
+    @FindBy(xpath = ".//div[@class='timelineItem']//p[@class='timelineItemMetadata']")
     private List<WebElement> year;
 
     @Getter
@@ -55,7 +55,7 @@ public class ChronologyFilmCardComponent extends BaseComponent {
     }
 
     public void clickFilmCardByIndex(int index) {
-        sleep(2000);
+        sleep(5000);
         WebElement card = getFilmCardByIndex(index);
         card.click();
     }
