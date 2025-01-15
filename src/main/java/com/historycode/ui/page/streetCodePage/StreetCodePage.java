@@ -37,7 +37,6 @@ public class StreetCodePage extends BasePage {
     private ScrollTopButtonElement scrollTopButton;
     @Getter
     private QuickDonateButtonElement quickDonateButton;
-
     @Getter
     private MainCardComponent mainCard;
     @Getter
@@ -63,30 +62,34 @@ public class StreetCodePage extends BasePage {
     public StreetCodePage(WebDriver driver) {
         super(driver);
 
+        createPageComponents();
+    }
+
+    public StreetCodePage(WebDriver driver, boolean staticMode) {
+        super(driver);
+
+        if (staticMode) {
+            createPageComponents();
+        }
+    }
+
+    private void createPageComponents() {
         this.breadcrumbs = new BreadcrumbsElement(driver);
         this.scrollTopButton = new ScrollTopButtonElement(driver);
-        this.quickDonateButton = new QuickDonateButtonElement(driver);
+        this.quickDonateButton = new QuickDonateButtonElement(driver, quickDonateButtonNode);
         this.mainCard = new MainCardComponent(driver, mainCardNode);
         this.verticalProgress = new PageNavigationBarComponent(driver, verticalProgressNode);
-        this.textBlockComponent = new StreetCodeTextBlockComponent(driver, textBlockRoot);
         initializeOptionalComponents(driver);
     }
 
-    public StreetCodePage(WebDriver driver, boolean testMode) {
-        super(driver);
-
-        //TODO: remove testMode
-        if (testMode) {
-            this.mainCard = new MainCardComponent(driver, mainCardNode);
-            return;
-        }
-
-        this.breadcrumbs = new BreadcrumbsElement(driver);
-        this.scrollTopButton = new ScrollTopButtonElement(driver);
-        this.quickDonateButton = new QuickDonateButtonElement(driver);
+    public StreetCodePage setMainCard() {
         this.mainCard = new MainCardComponent(driver, mainCardNode);
-        this.verticalProgress = new PageNavigationBarComponent(driver, verticalProgressNode);
-        initializeOptionalComponents(driver);
+        return this;
+    }
+
+    public StreetCodePage setQuickDonateButton() {
+        this.quickDonateButton = new QuickDonateButtonElement(driver, quickDonateButtonNode);
+        return this;
     }
 
     private WebElement findElement(String xpath) {
@@ -163,4 +166,3 @@ public class StreetCodePage extends BasePage {
         verticalProgress.toggleProgressBar();
     }
 }
-
