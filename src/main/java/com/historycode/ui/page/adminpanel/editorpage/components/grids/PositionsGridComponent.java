@@ -24,9 +24,9 @@ public class PositionsGridComponent extends GridComponent {
         }
     }
 
-    public List<String> getRowsTitles(){
+    public List<String> getRowsTitles() {
         List<String> titles = new ArrayList<>();
-        for (PositionsRowComponent row : rows){
+        for (PositionsRowComponent row : rows) {
             titles.add(row.getTitle());
         }
         return titles;

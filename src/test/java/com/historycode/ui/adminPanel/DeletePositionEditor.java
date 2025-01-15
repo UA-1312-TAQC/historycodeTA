@@ -11,7 +11,7 @@ public class DeletePositionEditor extends TestRunnerWithAdmin {
     @BeforeMethod
     public void setupForDeleteJob() {
         login();
-        driver.get(testValueProvider.getBaseUIUrl() + "admin-panel/editor");
+        driver.get(testValueProvider.getBaseUIUrl() + "/admin-panel/editor");
         CategoriesPage categoriesPage = new CategoriesPage(driver);
         categoriesPage.moveToPositions()
                 .addPosition()

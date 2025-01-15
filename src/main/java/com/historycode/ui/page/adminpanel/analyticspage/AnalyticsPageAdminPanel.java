@@ -22,23 +22,28 @@ public class AnalyticsPageAdminPanel extends BasePageAdminPanel {
         super(driver);
     }
 
-    public String getStreetcodeName(){return streetcodeName.getText().trim();}
+    public String getStreetcodeName() {
+        return streetcodeName.getText().trim();
+    }
 
-    public AnalyticsPageGridComponent getGridComponent(){
-        if(analyticsPageGridComponent == null){
+    public AnalyticsPageGridComponent getGridComponent() {
+        if (analyticsPageGridComponent == null) {
             analyticsPageGridComponent = new AnalyticsPageGridComponent(driver, analyticsPageGridComponentRoot);
         }
         return analyticsPageGridComponent;
     }
-    public AnalyticsPageAdminPanel clickNextPagePaginationItem(){
+
+    public AnalyticsPageAdminPanel clickNextPagePaginationItem() {
         analyticsPageGridComponent.clickNextPage();
         return new AnalyticsPageAdminPanel(driver);
     }
-    public AnalyticsPageAdminPanel clickPreviousPagePaginationItem(){
+
+    public AnalyticsPageAdminPanel clickPreviousPagePaginationItem() {
         analyticsPageGridComponent.clickPrevPage();
         return new AnalyticsPageAdminPanel(driver);
     }
-    public AnalyticsPageAdminPanel clickPagePaginationItemByPageNumber(int pageNumber){
+
+    public AnalyticsPageAdminPanel clickPagePaginationItemByPageNumber(int pageNumber) {
         analyticsPageGridComponent.clickPaginationItem(pageNumber);
         return new AnalyticsPageAdminPanel(driver);
     }

@@ -1,7 +1,6 @@
 package com.historycode.ui.page.adminpanel.editorpage.elements;
 
 import com.historycode.ui.component.BaseComponent;
-import com.historycode.ui.page.adminpanel.editorpage.BasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
