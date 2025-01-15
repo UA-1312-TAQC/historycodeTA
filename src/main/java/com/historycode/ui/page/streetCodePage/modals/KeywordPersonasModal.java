@@ -19,7 +19,7 @@ public class KeywordPersonasModal extends BaseModal {
     private List<WebElement> personCards;
 
     @Getter
-    private List<RelatedPersonasCardComponent> persons;
+    private final List<RelatedPersonasCardComponent> persons;
 
     public KeywordPersonasModal(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);

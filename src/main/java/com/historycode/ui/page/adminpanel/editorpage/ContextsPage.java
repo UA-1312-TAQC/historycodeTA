@@ -2,14 +2,10 @@ package com.historycode.ui.page.adminpanel.editorpage;
 
 import com.historycode.ui.page.adminpanel.editorpage.components.grids.ContextsGridComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.ContextsModalComponent;
-import com.historycode.ui.page.adminpanel.editorpage.components.modals.ModalComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.ContextsRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.elements.addButtonElement;
-import com.sun.source.tree.Tree;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
@@ -27,7 +23,7 @@ public class ContextsPage extends BasePage {
         return new ContextsModalComponent(driver, getDisplayedModalRoot());
     }
 
-    public int getTableHeadersCount(){
+    public int getTableHeadersCount() {
         return grid.getHeaderItems().size();
     }
 
@@ -35,7 +31,7 @@ public class ContextsPage extends BasePage {
         return grid.getHeaderItemsString();
     }
 
-    public List<WebElement> getTableHeaders(){
+    public List<WebElement> getTableHeaders() {
         return grid.getHeaderItems();
     }
 
@@ -43,7 +39,7 @@ public class ContextsPage extends BasePage {
         return grid.getRows().size();
     }
 
-    public List<String> getTableRowsTitles(){
+    public List<String> getTableRowsTitles() {
         return grid.getRowsTitles();
     }
 
@@ -63,7 +59,7 @@ public class ContextsPage extends BasePage {
         return grid.getRowByTitle(title);
     }
 
-    public String getAddButtonText(){
+    public String getAddButtonText() {
         return addContextButton.getButtonText();
     }
 

@@ -21,6 +21,7 @@ class PartnersComponent extends BaseComponent {
     public String getLogoSrc() {
         return partnerLogo.getAttribute("src");
     }
+
     public void hoverOnPartnerLogo() {
         new Actions(driver).moveToElement(partnerLogo).perform();
     }

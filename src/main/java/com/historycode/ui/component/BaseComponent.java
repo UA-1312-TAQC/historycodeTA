@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public abstract class BaseComponent extends Base {
 
@@ -12,7 +13,16 @@ public abstract class BaseComponent extends Base {
 
     public BaseComponent(WebDriver driver, WebElement rootElement) {
         super(driver);
-        this.rootElement = rootElement;
         PageFactory.initElements(new DefaultElementLocatorFactory(rootElement), this);
+        this.rootElement = rootElement;
+    }
+
+    public BaseComponent(WebDriver driver) {
+        super(driver);
+    }
+
+    public void waitUntilElementVisible(WebElement element) {
+        sleep(2000);
+        wait.until(ExpectedConditions.visibilityOf(element));
     }
 }

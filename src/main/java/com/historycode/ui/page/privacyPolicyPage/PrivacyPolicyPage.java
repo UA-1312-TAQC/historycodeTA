@@ -14,9 +14,9 @@ public class PrivacyPolicyPage extends BasePage {
     private WebElement titleRootElement;
 
     @Getter
-    private SectionListComponent sectionComponent;
+    private final SectionListComponent sectionComponent;
     @Getter
-    private TitleContainerComponent titleComponent;
+    private final TitleContainerComponent titleComponent;
 
     public PrivacyPolicyPage(WebDriver driver) {
         super(driver);

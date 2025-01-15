@@ -1,7 +1,9 @@
 package com.historycode.ui.component.HelpUs;
 
-import com.historycode.ui.Base;
+
+import com.historycode.ui.component.BaseComponent;
 import lombok.Getter;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,10 +11,8 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
-import org.openqa.selenium.NoSuchElementException;
-
 @Getter
-public class DonatesBlockComponent extends Base {
+public class DonatesBlockComponent extends BaseComponent {
 
     @FindBy(css = "h1")
     private WebElement donatesLabel;
@@ -29,8 +29,8 @@ public class DonatesBlockComponent extends Base {
     @FindBy(xpath = "//button[contains(@class, 'donatesDonateBtn')]")
     private WebElement donateButton;
 
-    public DonatesBlockComponent(WebDriver driver) {
-        super(driver);
+    public DonatesBlockComponent(WebDriver driver, WebElement root) {
+        super(driver, root);
         PageFactory.initElements(driver, this);
     }
 
@@ -77,9 +77,9 @@ public class DonatesBlockComponent extends Base {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
-       }
-            scrollToElement(donateButton);
-            donateButton.click();
         }
-
+        scrollToElement(donateButton);
+        donateButton.click();
     }
+
+}
