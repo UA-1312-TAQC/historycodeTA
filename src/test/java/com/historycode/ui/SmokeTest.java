@@ -46,7 +46,7 @@ public class SmokeTest extends BaseTestRunner {
         HomePage homePage = new HomePage(driver);
         StreetCodePage streetCodePage = homePage.clickPersonCardCarouselItem(1);
 
-        String teaserText = streetCodePage.getMainCard().getDescription();
+        String teaserText = streetCodePage.getMainCard().getTeaserText();
 
         //TODO: criteria paragraphs
         String[] paragraphs = teaserText.split("\n");
