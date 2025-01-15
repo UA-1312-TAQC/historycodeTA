@@ -9,6 +9,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.time.Duration;
+
 public class TeamPageAdminPanel extends BasePageAdminPanel {
 
     protected TeamPageGridComponent teamPageGridComponent;
@@ -32,7 +34,7 @@ public class TeamPageAdminPanel extends BasePageAdminPanel {
 
     public EditMemberModal editMemberByIndex(int index) {
         if (index < 0 || index >= teamPageGridComponent.getRowsCount()){
-            throw new IllegalArgumentException("Member with index" + index + " is out of bounds");
+            throw new IllegalArgumentException("Member with index" + index + " is not available or invalid");
         }
         TeamRowComponent teamMemberToEdit = teamPageGridComponent.getRowById(index);
         return teamMemberToEdit.clickEdit();
@@ -40,32 +42,23 @@ public class TeamPageAdminPanel extends BasePageAdminPanel {
 
     public DeleteItemModal deleteMemberByIndex(int index) {
         if (index < 0 || index >= teamPageGridComponent.getRowsCount()){
-            throw new IllegalArgumentException("Member with index" + index + " is out of bounds");
+            throw new IllegalArgumentException("Member with index" + index + " is not available or invalid");
         }
         TeamRowComponent teamMemberToDelete = teamPageGridComponent.getRowById(index);
         return teamMemberToDelete.clickDelete();
     }
 
     public TeamPageAdminPanel clickNextPage() {
-        if (!teamPageGridComponent.hasNextPage()) {
-            throw new IllegalStateException("No next page available");
-        }
         teamPageGridComponent.clickNextPage();
         return this;
     }
 
     public TeamPageAdminPanel clickPrevPage() {
-        if (!teamPageGridComponent.hasPrevPage()) {
-            throw new IllegalStateException("No next page available");
-        }
         teamPageGridComponent.clickPrevPage();
         return this;
     }
 
     public TeamPageAdminPanel clickPaginationItem(int index) {
-        if (!teamPageGridComponent.isValidPageIndex(index)) {
-            throw new IllegalArgumentException("Invalid page index: " + index);
-        }
         teamPageGridComponent.clickPaginationItem(index);
         return this;
     }
