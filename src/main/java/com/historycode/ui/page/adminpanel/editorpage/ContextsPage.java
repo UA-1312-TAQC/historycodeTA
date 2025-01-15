@@ -1,76 +1,87 @@
 package com.historycode.ui.page.adminpanel.editorpage;
 
+import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
 import com.historycode.ui.page.adminpanel.editorpage.components.grids.ContextsGridComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.ContextsModalComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.ContextsRowComponent;
-import com.historycode.ui.page.adminpanel.editorpage.elements.addButtonElement;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
 public class ContextsPage extends BasePage {
-    private final addButtonElement addContextButton = new addButtonElement(driver, getRootAddButton());
-    private final ContextsGridComponent grid = new ContextsGridComponent(driver, getRootGrid());
+    @FindBy(xpath = "//button[span[text()='Додати новий контекст']]")
+    WebElement addNewContextButton;
+
+    @FindBy(xpath = "//div[@class='contexts-page']//div[@class='contexts-page-container']")
+    private WebElement gridRootElement;
+
+    @FindBy(xpath = "//div[@role = 'dialog']/div[2]")
+    private WebElement createModalRootElement;
+
+    private ContextsGridComponent gridComponent;
 
     public ContextsPage(WebDriver driver) {
         super(driver);
+        this.gridComponent = new ContextsGridComponent(driver, gridRootElement);
     }
 
-    public ContextsModalComponent addContext() throws InterruptedException {
-        addContextButton.clickButton();
-        Thread.sleep(1000);
-        return new ContextsModalComponent(driver, getDisplayedModalRoot());
+    @Step("Add new context")
+    public ContextsModalComponent addContext() {
+        addNewContextButton.click();
+        waitUntilElementVisible(createModalRootElement);
+        return new ContextsModalComponent(driver, createModalRootElement);
     }
 
     public int getTableHeadersCount() {
-        return grid.getHeaderItems().size();
+        return gridComponent.getHeaderItems().size();
     }
 
     public List<String> getTableHeadersString() {
-        return grid.getHeaderItemsString();
+        return gridComponent.getHeaderItemsString();
     }
 
     public List<WebElement> getTableHeaders() {
-        return grid.getHeaderItems();
+        return gridComponent.getHeaderItems();
     }
 
     public int getTableRowsCount() {
-        return grid.getRows().size();
+        return gridComponent.getRows().size();
     }
 
     public List<String> getTableRowsTitles() {
-        return grid.getRowsTitles();
+        return gridComponent.getRowsTitles();
     }
 
     public List<ContextsRowComponent> getTableRows() {
-        return grid.getRows();
+        return gridComponent.getRows();
     }
 
     public List<ContextsRowComponent> getTableRowsByTitlePart(String part) {
-        return grid.getRowsByTitlePart(part);
+        return gridComponent.getRowsByTitlePart(part);
     }
 
     public ContextsRowComponent getTableRowByNumber(int num) {
-        return grid.getRowByNum(num);
+        return gridComponent.getRowByNum(num);
     }
 
     public ContextsRowComponent getTableRowByTitle(String title) {
-        return grid.getRowByTitle(title);
+        waitUntilElementVisible(gridRootElement);
+        return gridComponent.getRowByTitle(title);
     }
 
     public String getAddButtonText() {
-        return addContextButton.getButtonText();
+        return addNewContextButton.getText();
     }
 
     public ContextsModalComponent editTableRow(ContextsRowComponent row) throws InterruptedException {
-        grid.editRow(row);
-        Thread.sleep(500);
-        return new ContextsModalComponent(driver, getDisplayedModalRoot());
+        return gridComponent.editRow(row);
     }
 
-    public void deleteTableRow(ContextsRowComponent row) {
-        //TODO Implement return of modal
-        grid.deleteRow(row);
+    public DeleteItemModal deleteTableRow(ContextsRowComponent row) {
+        waitUntilElementVisible(gridRootElement);
+        return gridComponent.deleteRow(row);
     }
 }

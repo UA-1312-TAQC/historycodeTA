@@ -12,18 +12,15 @@ import org.openqa.selenium.support.FindBy;
 @Getter
 public abstract class BasePage extends Base {
 
-    @FindBy(xpath = "//div[@class='HeaderBlock']")
-    private WebElement headerNode;
-
-    @FindBy(xpath = "//div[@class='footerWrapper']")
-    private WebElement footerNode;
-
-    @FindBy(xpath = "//div[contains(@class, 'rightPartContainer')]//div[contains(@class, 'drawerContainer')]//div")
-    private WebElement burgerMenu;
-
     protected HeaderComponent header;
     protected FooterComponent footer;
     protected BurgerMenuComponent burgerMenuComponent;
+    @FindBy(xpath = "//div[@class='HeaderBlock']")
+    private WebElement headerNode;
+    @FindBy(xpath = "//div[@class='footerWrapper']")
+    private WebElement footerNode;
+    @FindBy(xpath = "//div[contains(@class, 'rightPartContainer')]//div[contains(@class, 'drawerContainer')]//div")
+    private WebElement burgerMenu;
 
     public BasePage(WebDriver driver) {
         super(driver);
