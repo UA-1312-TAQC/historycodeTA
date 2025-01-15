@@ -10,15 +10,20 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
-public class DeleteContextEditor extends TestRunnerWithAdmin {
+import java.util.Random;
 
+public class DeleteContextEditor extends TestRunnerWithAdmin {
+    String contextName;
     @BeforeMethod
     public void setupForDeleteContext() throws InterruptedException {
         login();
+        Random rand = new Random();
+        int n = rand.nextInt(50);
+        contextName = "Context_" + n;
         driver.get(testValueProvider.getBaseUIUrl() + "admin-panel/editor");
         ContextsPage contextsPage = new ContextsPage(driver);
         contextsPage.addContext()
-                .inputNewContext("Context1")
+                .inputNewContext(contextName)
                 .saveNewContext()
                 .closeModal();
     }
@@ -27,9 +32,9 @@ public class DeleteContextEditor extends TestRunnerWithAdmin {
     @Issue("105")
     public void testDeleteContext() {
         ContextsPage contextsPage = new ContextsPage(driver);
-        ContextsRowComponent contextToDelete = contextsPage.getTableRowByTitle("Context1");
+        ContextsRowComponent contextToDelete = contextsPage.getTableRowByTitle(contextName);
         contextsPage.deleteTableRow(contextToDelete).clickOkButton();
-        assertNull(contextsPage.getTableRowByTitle("Context1"), "Context was not deleted successfully.");
+        assertNull(contextsPage.getTableRowByTitle(contextName), "Context was not deleted successfully.");
     }
 }
 

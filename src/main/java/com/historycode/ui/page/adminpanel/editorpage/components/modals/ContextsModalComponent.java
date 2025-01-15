@@ -2,9 +2,14 @@ package com.historycode.ui.page.adminpanel.editorpage.components.modals;
 
 import com.historycode.ui.component.adminPanel.modalAdminPanel.BaseEditModal;
 import com.historycode.ui.elements.adminPanel.InputElement;
+
+import java.time.Duration;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ContextsModalComponent extends BaseEditModal {
 
@@ -23,9 +28,10 @@ public class ContextsModalComponent extends BaseEditModal {
         return this;
     }
 
-    public ContextsModalComponent saveNewContext() throws InterruptedException {
+    public ContextsModalComponent saveNewContext() {
         clickSaveButton();
-        Thread.sleep(4000);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.invisibilityOf(rootElement));
         return this;
     }
 

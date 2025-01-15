@@ -31,6 +31,7 @@ public class ContextsPage extends BasePage {
     @Step("Add new context")
     public ContextsModalComponent addContext() {
         addNewContextButton.click();
+        waitUntilElementVisible(createModalRootElement);
         return new ContextsModalComponent(driver, createModalRootElement);
     }
 
@@ -76,9 +77,7 @@ public class ContextsPage extends BasePage {
     }
 
     public ContextsModalComponent editTableRow(ContextsRowComponent row) throws InterruptedException {
-        gridComponent.editRow(row);
-        Thread.sleep(500);
-        return new ContextsModalComponent(driver, getDisplayedModalRoot());
+        return gridComponent.editRow(row);
     }
 
     public DeleteItemModal deleteTableRow(ContextsRowComponent row) {
