@@ -122,9 +122,9 @@ public class StreetCodePage extends BasePage {
                 .ifPresent(element -> runningLine = new RunningLineComponent(driver, element));
     }
 
-//    public Optional<StreetCodeTextBlockComponent> getTextBlock() {
-//        return Optional.ofNullable(textBlock);
-//    }
+    public Optional<StreetCodeTextBlockComponent> getTextBlock() {
+        return Optional.ofNullable(textBlock);
+    }
 
     public Optional<InterestingFactsComponent> getFacts() {
         return Optional.ofNullable(facts);

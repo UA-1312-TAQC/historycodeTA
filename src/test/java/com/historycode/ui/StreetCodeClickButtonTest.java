@@ -18,7 +18,7 @@ public class StreetCodeClickButtonTest extends BaseTestRunner {
     public void testStreetCodeClick() {
         HomePage homePage = new HomePage(driver);
         StreetCodePage streetCodePage = homePage.clickPersonCardCarouselItem(0);
-        StreetCodeTextBlockComponent textBlock = streetCodePage.getTextBlock();
+        StreetCodeTextBlockComponent textBlock = streetCodePage.getTextBlockComponent();
         int initialCount = textBlock.getParagraphCount();
 
         //step 2 : click on button 'Трохи ще'
