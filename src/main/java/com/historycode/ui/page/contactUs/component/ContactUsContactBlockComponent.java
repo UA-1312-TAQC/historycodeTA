@@ -10,13 +10,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ContactUsContactBlockComponent extends BaseComponent {
-    @Getter @FindBy(xpath = "//div[@class='socials']")
+    @Getter @FindBy(xpath = "./div[contains(@class, 'socials')]")
     private List<WebElement> socialNetworks;
-    @Getter @FindBy(xpath = "//div[@class='email']")
+    @Getter @FindBy(xpath = "./div[contains(@class, 'email')]")
     private WebElement emailText;
-    @Getter @FindBy(xpath = "//div[@class='emailLink']")
+    @FindBy(xpath = "./div[contains(@class, 'emailLink')]")
     private WebElement emailLink;
-
     public ContactUsContactBlockComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
@@ -25,10 +24,6 @@ public class ContactUsContactBlockComponent extends BaseComponent {
         return socialNetworks.stream()
                 .map(WebElement::getText)
                 .collect(Collectors.toList());
-    }
-
-    public String getEmailText() {
-        return emailText.getText();
     }
 
     public String getEmailLink() {
@@ -50,7 +45,7 @@ public class ContactUsContactBlockComponent extends BaseComponent {
     public boolean areSocialNetworksNotEmpty() {
         return socialNetworks.stream()
                 .map(WebElement::getText)
-                .allMatch(text -> text != null && !text.isEmpty());
+                .noneMatch(String::isEmpty);
     }
 
     public void clickOnEmailLink() {

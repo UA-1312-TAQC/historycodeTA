@@ -12,16 +12,20 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class ContactUsPage extends BasePage {
-    @Getter @FindBy(xpath = "//div[@class='formWrapper [object Object]']")
+
+    @FindBy(xpath = "//div[contains(@class, 'formWrapper')]")
     private WebElement contactUsFormNode;
-    @Getter @FindBy(xpath = "//div[@class='contactBlock']")
+    @FindBy(xpath = "//div[contains(@class, 'contactBlock')]")
     private WebElement contactUsContactBlockNode;
-    @Getter @FindBy(xpath = "//div[@class='contactUsContent']")
+    @FindBy(xpath = "//div[contains(@class, 'contactUsContent')]")
     private WebElement contactUsContentNode;
 
-    @Getter private ContactUsFormComponent contactUsFormComponent;
-    @Getter private ContactUsContactBlockComponent contactUsContactBlockComponent;
-    @Getter private ContactUsContentComponent contactUsContentComponent;
+    @Getter
+    private ContactUsFormComponent contactUsFormComponent;
+    @Getter
+    private ContactUsContactBlockComponent contactUsContactBlockComponent;
+    @Getter
+    private ContactUsContentComponent contactUsContentComponent;
 
     public ContactUsPage(WebDriver driver) {
         super(driver);
