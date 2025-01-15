@@ -56,11 +56,13 @@ public class ContextsGridComponent extends GridComponent {
 
     public ContextsModalComponent editRow(ContextsRowComponent row) {
         row.clickEdit();
+        waitUntilElementVisible(getDisplayedModalRoot());
         return new ContextsModalComponent(driver, getDisplayedModalRoot());
     }
 
     public DeleteItemModal deleteRow(ContextsRowComponent row) {
         row.clickDelete();
+        waitUntilElementVisible(getDisplayedModalRoot());
         return new DeleteItemModal(driver, getDisplayedModalRoot());
     }
 
