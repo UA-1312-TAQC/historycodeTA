@@ -49,10 +49,22 @@ public abstract class Base {
         return isOverflowing != null && isOverflowing;
     }
 
+    /**
+     * Clicks a dynamic web element using JavaScript execution.
+     *
+     * @param element The WebElement to be clicked
+     * @throws WebDriverException if the element cannot be clicked via JavaScript
+     */
     protected void clickDynamicElement(WebElement element) {
         threadJs.executeScript("arguments[0].click();", element);
     }
 
+    /**
+     * Pauses the current thread execution for a specified duration.
+     *
+     * @param millisSeconds the number of milliseconds to pause the thread
+     * @throws InterruptedException if the thread is interrupted during sleep (caught and handled internally)
+     */
     public void sleep(long millisSeconds) {
         try {
             Thread.sleep(millisSeconds);

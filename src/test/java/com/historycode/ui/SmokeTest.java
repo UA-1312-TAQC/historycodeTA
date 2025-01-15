@@ -22,6 +22,12 @@ public class SmokeTest extends BaseTestRunner {
         Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[3]/div[1]/div[1]/div[1]")).isDisplayed());
     }
 
+    /**
+     * Verifies navigation to the catalog page by clicking a carousel item and using breadcrumbs.
+     *
+     * @throws Exception if any navigation or interaction errors occur during the test
+     * @issue 78 Tracks the specific issue associated with this test scenario
+     */
     @SneakyThrows
     @Issue("78")
     @Test

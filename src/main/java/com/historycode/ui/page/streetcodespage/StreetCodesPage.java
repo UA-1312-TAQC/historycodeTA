@@ -34,6 +34,13 @@ public class StreetCodesPage extends BasePage {
         return streetsCodesCaptionNode.getText();
     }
 
+    /**
+     * Clicks on a catalog item at the specified index and navigates to its corresponding street code page.
+     *
+     * @param index The zero-based index of the catalog item to select
+     * @return A new StreetCodePage representing the page of the selected street code
+     * @throws IndexOutOfBoundsException if the index is outside the range of available catalog items
+     */
     public StreetCodePage clickCatalogItemByName(int index) {
         streetCodesCatalogComponent.getItemComponents().get(index).getNameNode().click();
         return new StreetCodePage(driver);

@@ -57,6 +57,19 @@ public class StreetCodeTests extends BaseTestRunner {
                 ("The 'Teaser' text is displayed with truncation or overflow"));
     }
 
+    /**
+     * Tests the functionality of the 'Donate' button on the StreetCode page.
+     *
+     * This test method verifies that clicking the 'Donate' button opens a modal window
+     * with various donation-related elements. It checks the visibility of key components
+     * in the donation modal, including the title, amount input, amount buttons, and donate button.
+     *
+     * @param addPath The URL path to navigate to the StreetCode page
+     * @throws AssertionError If any of the modal elements are not displayed as expected
+     *
+     * @see DonateModal
+     * @see StreetCodePage
+     */
     @Issue("79")
     @Test(dataProvider = "urlProvider", dataProviderClass = StreetCodeDP.class, priority = 1)
     @Description("Verification that clicking the 'Donate' button displays a modal window with donation options.")
