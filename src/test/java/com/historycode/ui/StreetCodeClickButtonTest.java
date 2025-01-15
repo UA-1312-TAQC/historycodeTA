@@ -29,6 +29,13 @@ public class StreetCodeClickButtonTest extends BaseTestRunner {
         Assert.assertTrue(textBlock.checkExpanded(), "Text should expand after clicking 'Трохи ще'.");
         Assert.assertTrue(textBlock.isReadLessButtonDisplayed(), "'Дещо менше' button should be visible after clicking 'Трохи ще'.");
 
+        //step 3 : is video playing/pause
+        Assert.assertTrue(textBlock.isVideoVisible(), "Video player should be visible.");
+        textBlock.clickPlayButton();
+        Assert.assertTrue(textBlock.isVideoPlaying(), "Video is expected to be playing.");
+        textBlock.clickPauseButton();
+        Assert.assertTrue(textBlock.isVideoPaused(), "Video is expected to be paused.");
+
         //step 4 : click on button 'Дещо менше'
         Assert.assertTrue(textBlock.checkCollapsed(initialCount), "Text should collapse to initial state after clicking 'Дещо менше'.");
         Assert.assertTrue(textBlock.isReadMoreButtonDisplayed(), "'Трохи ще' button should be visible after clicking 'Дещо менше'.");

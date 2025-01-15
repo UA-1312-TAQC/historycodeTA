@@ -17,10 +17,10 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
     @FindBy(xpath = ".//div[@id='text']//div[@class='text']//p")
     private WebElement mainTextContent;
 
-    @FindBy(xpath = "./span[@class='readMore false']")
+    @FindBy(xpath = ".//span[@class='readMore false']")
     private WebElement readMoreButton;
 
-    @FindBy(xpath = "./span[@class='readMore readLess']")
+    @FindBy(xpath = ".//span[@class='readMore readLess']")
     private WebElement readLessButton;
 
 
@@ -32,6 +32,15 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
 
     @FindBy(xpath = ".//div[@class='text']//p")
     private List<WebElement> paragraphs;
+
+    @FindBy(xpath = ".//div[(@id='player')]")
+    private WebElement videoPlayer;
+
+    @FindBy(xpath = ".//div[(@class='ytp-bezel' and @aria-label='Відтворити')]")
+    private WebElement playButton;
+
+    @FindBy(xpath = ".//div[(@class='ytp-bezel' and @aria-label='Призупинити')]")
+    private WebElement pauseButton;
 
     //    @FindBy(xpath = ".//div[@class='video-container']")
 //    private WebElement videoContainer;
@@ -95,7 +104,7 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
     public boolean checkExpanded() {
         int initialNumberOfParagraph = getParagraphCount();
         clickReadMoreButton();
-        new WebDriverWait(driver, Duration.ofSeconds(10)).until(driver -> getParagraphCount() > initialNumberOfParagraph);
+        waitUntilElementVisible(paragraphs.get(paragraphs.size() - 1));
         int expandedNumberOfParagraph = getParagraphCount();
 
         return expandedNumberOfParagraph > initialNumberOfParagraph;
@@ -103,7 +112,7 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
 
     public boolean checkCollapsed(int initialCount) {
         clickReadLessButton();
-        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOf(paragraphs.get(0)));
+        waitUntilElementVisible(paragraphs.get(0));
         int collapsedCount = getParagraphCount();
 
         return collapsedCount == initialCount;
@@ -119,6 +128,35 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
             }
         }
         return links;
+    }
+
+    public boolean isVideoVisible() {
+        waitUntilElementVisible(videoPlayer);
+        return videoPlayer.isDisplayed();
+    }
+
+    public void clickPlayButton() {
+        scrollToElement(playButton);
+        if (playButton.isDisplayed()) {
+            playButton.click();
+        }
+    }
+
+    public boolean isVideoPlaying() {
+        waitUntilElementVisible(playButton);
+        return !playButton.isDisplayed() && pauseButton.isDisplayed();
+    }
+
+    public void clickPauseButton() {
+        scrollToElement(pauseButton);
+        if (pauseButton.isDisplayed()) {
+            pauseButton.click();
+        }
+    }
+
+    public boolean isVideoPaused() {
+        waitUntilElementVisible(pauseButton);
+        return !pauseButton.isDisplayed() && playButton.isDisplayed();
     }
 }
 
