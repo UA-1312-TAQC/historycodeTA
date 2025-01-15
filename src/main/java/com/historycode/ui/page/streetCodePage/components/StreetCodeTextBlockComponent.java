@@ -2,7 +2,6 @@ package com.historycode.ui.page.streetCodePage.components;
 
 import com.historycode.ui.component.BaseComponent;
 import lombok.Getter;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -96,7 +95,7 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
     public boolean checkExpanded() {
         int initialNumberOfParagraph = getParagraphCount();
         clickReadMoreButton();
-        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOf(paragraphs.get(paragraphs.size() - 1)));
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(driver -> getParagraphCount() > initialNumberOfParagraph);
         int expandedNumberOfParagraph = getParagraphCount();
 
         return expandedNumberOfParagraph > initialNumberOfParagraph;
@@ -112,15 +111,12 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
 
     public List<String> getLinksInNewsContent() {
         List<String> links = new ArrayList<>();
-        try {
-            for (WebElement link : linkInAdditionalText) {
-                String url = link.getDomAttribute("href");
-                if (url != null && !url.isEmpty()) {
-                    links.add(url);
-                }
+
+        for (WebElement link : linkInAdditionalText) {
+            String url = link.getDomAttribute("href");
+            if (url != null && !url.isEmpty()) {
+                links.add(url);
             }
-        } catch (NoSuchElementException e) {
-            System.out.println("No links found");
         }
         return links;
     }

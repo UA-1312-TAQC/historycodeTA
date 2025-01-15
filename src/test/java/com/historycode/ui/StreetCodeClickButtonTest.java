@@ -6,8 +6,11 @@ import com.historycode.ui.page.streetCodePage.components.StreetCodeTextBlockComp
 import com.historycode.ui.testrunners.BaseTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import io.qameta.allure.Step;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 
 public class StreetCodeClickButtonTest extends BaseTestRunner {
@@ -18,7 +21,7 @@ public class StreetCodeClickButtonTest extends BaseTestRunner {
     public void testStreetCodeClick() {
         HomePage homePage = new HomePage(driver);
         StreetCodePage streetCodePage = homePage.clickPersonCardCarouselItem(0);
-        StreetCodeTextBlockComponent textBlock = streetCodePage.getTextBlockComponent();
+        StreetCodeTextBlockComponent textBlock = streetCodePage.getTextBlock();
         int initialCount = textBlock.getParagraphCount();
 
         //step 2 : click on button 'Трохи ще'

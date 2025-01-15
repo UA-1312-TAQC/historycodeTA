@@ -55,8 +55,6 @@ public class StreetCodePage extends BasePage {
     @Getter
     private RunningLineComponent runningLine;
     private PageNavigationBarComponent verticalProgress;
-    @Getter
-    private StreetCodeTextBlockComponent textBlockComponent;
 
 
     public StreetCodePage(WebDriver driver) {
@@ -79,6 +77,7 @@ public class StreetCodePage extends BasePage {
         this.quickDonateButton = new QuickDonateButtonElement(driver, quickDonateButtonNode);
         this.mainCard = new MainCardComponent(driver, mainCardNode);
         this.verticalProgress = new PageNavigationBarComponent(driver, verticalProgressNode);
+        this.textBlock = new StreetCodeTextBlockComponent(driver, textBlockRoot);
         initializeOptionalComponents(driver);
     }
 
@@ -122,9 +121,9 @@ public class StreetCodePage extends BasePage {
                 .ifPresent(element -> runningLine = new RunningLineComponent(driver, element));
     }
 
-    public Optional<StreetCodeTextBlockComponent> getTextBlock() {
-        return Optional.ofNullable(textBlock);
-    }
+//    public Optional<StreetCodeTextBlockComponent> getTextBlock() {
+//        return Optional.ofNullable(textBlock);
+//    }
 
     public Optional<InterestingFactsComponent> getFacts() {
         return Optional.ofNullable(facts);
@@ -166,3 +165,4 @@ public class StreetCodePage extends BasePage {
         verticalProgress.toggleProgressBar();
     }
 }
+
