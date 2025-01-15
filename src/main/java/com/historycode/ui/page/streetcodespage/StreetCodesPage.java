@@ -1,13 +1,13 @@
 package com.historycode.ui.page.streetcodespage;
 
-import com.historycode.ui.page.BasePage;
+import com.historycode.ui.component.BaseComponent;
 import com.historycode.ui.page.streetCodePage.StreetCodePage;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class StreetCodesPage extends BasePage {
+public class StreetCodesPage extends BaseComponent {
 
     @FindBy(xpath = "//h1[@class='streetcodeCatalogHeading']")
     private WebElement streetCodesTitleNode;
@@ -38,5 +38,11 @@ public class StreetCodesPage extends BasePage {
         streetCodesCatalogComponent.getItemComponents().get(index).getNameNode().click();
         //TODO: remove test mode
         return new StreetCodePage(driver, true);
+    }
+
+    public void clickOnCatalogComponent(int index) {
+        sleep(10000);
+        CatalogComponent catalogComponent = getStreetCodesCatalogComponent();
+        catalogComponent.clickCatalogElement(index);
     }
 }
