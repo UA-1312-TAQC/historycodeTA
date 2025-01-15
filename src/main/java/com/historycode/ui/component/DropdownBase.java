@@ -23,35 +23,35 @@ public class DropdownBase extends BaseComponent {
             // Переміститися вниз
             for (int i = 0; i < stepsToMove; i++) {
                 input.sendKeys(Keys.ARROW_DOWN);
-                }
-            } else if (stepsToMove < 0) {
-                // Переміститися вгору
-                for (int i = 0; i < Math.abs(stepsToMove); i++) {
-                input.sendKeys(Keys.ARROW_UP);
-                }
             }
+        } else if (stepsToMove < 0) {
+            // Переміститися вгору
+            for (int i = 0; i < Math.abs(stepsToMove); i++) {
+                input.sendKeys(Keys.ARROW_UP);
+            }
+        }
 
-            String expectedOptionId = "rc_select_0_list_" + targetOptionIndex;
+        String expectedOptionId = "rc_select_0_list_" + targetOptionIndex;
 
-            // Чекати, поки `aria-activedescendant` оновиться
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-            wait.until((ExpectedCondition<Boolean>) d -> {
-                JavascriptExecutor jsExecutor = (JavascriptExecutor) d;
-                String activeDescendant = (String) jsExecutor.executeScript(
+        // Чекати, поки `aria-activedescendant` оновиться
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until((ExpectedCondition<Boolean>) d -> {
+            JavascriptExecutor jsExecutor = (JavascriptExecutor) d;
+            String activeDescendant = (String) jsExecutor.executeScript(
                     "return arguments[0].getAttribute('aria-activedescendant');",
                     input
-                );
-                return expectedOptionId.equals(activeDescendant);
-            });
+            );
+            return expectedOptionId.equals(activeDescendant);
+        });
 
-            // Натиснути Enter, щоб вибрати опцію
-            input.sendKeys(Keys.ENTER);
-        }
-
-        public boolean isChosenOptionCorrect(String expectedText) {
-            WebElement chosenOption = rootElement.findElement(By.xpath("./span[@class='ant-select-selection-item']"));
-            String actualText = chosenOption.getText().trim();
-            return expectedText.equals(actualText);
-        }
-
+        // Натиснути Enter, щоб вибрати опцію
+        input.sendKeys(Keys.ENTER);
     }
+
+    public boolean isChosenOptionCorrect(String expectedText) {
+        WebElement chosenOption = rootElement.findElement(By.xpath("./span[@class='ant-select-selection-item']"));
+        String actualText = chosenOption.getText().trim();
+        return expectedText.equals(actualText);
+    }
+
+}

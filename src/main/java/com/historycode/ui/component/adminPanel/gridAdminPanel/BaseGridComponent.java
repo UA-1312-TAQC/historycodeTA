@@ -4,6 +4,7 @@ package com.historycode.ui.component.adminPanel.gridAdminPanel;
 import com.historycode.ui.component.BaseComponent;
 import com.historycode.ui.component.adminPanel.paginationAdminPanel.PaginationAdminPanelComponent;
 import lombok.Getter;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -50,7 +51,7 @@ public abstract class BaseGridComponent extends BaseComponent {
         pagination.clickNextFivePages();
     }
 
-    /* 
+    /*
     public NoDataComponent getNoDataComponent(){
         if(noDataComponent == null){
             WebElement root = driver.findElement(By.cssSelector(NO_DATA_COMPONENT_ROOT_ELEMENT_CSS));
@@ -58,7 +59,7 @@ public abstract class BaseGridComponent extends BaseComponent {
         }
         return noDataComponent;
     }
-    */
+     */
 
     //TODO запитати де реалізувати методи пагінацій( на сторінці чи тут )
 }

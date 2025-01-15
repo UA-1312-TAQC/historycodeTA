@@ -42,6 +42,6 @@ public class TopCarousel extends BaseComponent {
         new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(driver -> dots.stream()
                         .anyMatch(dot -> Objects.requireNonNull(dot.getAttribute("class")).contains("slick-active") &&
-                                         dots.indexOf(dot) != previousActiveIndex));
+                                dots.indexOf(dot) != previousActiveIndex));
     }
 }

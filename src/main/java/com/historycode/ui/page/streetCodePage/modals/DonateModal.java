@@ -67,14 +67,10 @@ public class DonateModal extends BaseModal {
     }
 
     public boolean areAmountButtonsDisplayed() {
-        if (amountButtons.size() == 3
+        return amountButtons.size() == 3
                 && amountButtons.get(0).isDisplayed()
                 && amountButtons.get(1).isDisplayed()
-                && amountButtons.get(2).isDisplayed()) {
-            return true;
-        } else {
-            return false;
-        }
+                && amountButtons.get(2).isDisplayed();
     }
 
     public boolean isAmountInputCurrencyDisplayed() {

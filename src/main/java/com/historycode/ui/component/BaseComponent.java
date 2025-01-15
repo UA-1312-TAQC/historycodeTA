@@ -10,7 +10,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 public abstract class BaseComponent extends Base {
 
     protected WebElement rootElement;
-    protected WebDriver driver;
 
     public BaseComponent(WebDriver driver, WebElement rootElement) {
         super(driver);
@@ -20,8 +19,6 @@ public abstract class BaseComponent extends Base {
 
     public BaseComponent(WebDriver driver) {
         super(driver);
-        this.driver = driver;
-        PageFactory.initElements(new DefaultElementLocatorFactory(driver),this);
     }
 
     public void waitUntilElementVisible(WebElement element) {

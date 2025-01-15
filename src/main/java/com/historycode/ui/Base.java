@@ -23,7 +23,7 @@ public abstract class Base {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         this.threadJs = (JavascriptExecutor) driver;
         this.actions = new Actions(driver);
-        PageFactory.initElements(driver, this);
+        PageFactory.initElements(this.driver, this);
     }
 
     @Step("Scroll to the element")

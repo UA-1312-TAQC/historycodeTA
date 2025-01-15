@@ -31,10 +31,10 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//div[contains(@class, 'mainPageBlockStaticBanner')]")
     private List<WebElement> staticBannerElements;
 
-    private TopCarousel topCarousel;
-    private TeamCardCarousel teamCarousel;
-    private NewsCardCarousel newsCarousel;
-    private PersonCardCarousel personsCarousel;
+    private final TopCarousel topCarousel;
+    private final TeamCardCarousel teamCarousel;
+    private final NewsCardCarousel newsCarousel;
+    private final PersonCardCarousel personsCarousel;
 
     public HomePage(WebDriver driver) {
         super(driver);

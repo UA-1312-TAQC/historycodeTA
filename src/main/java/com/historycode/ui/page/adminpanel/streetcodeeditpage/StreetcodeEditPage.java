@@ -68,7 +68,7 @@ public class StreetcodeEditPage extends BasePageAdminPanel {
     @FindBy(xpath = "//input[@id='pictureBlackWhite']")
     private WebElement addPictureBwButton;
 
-    @FindBy (xpath = "//div[div/label[@title='Чорнобіле']]/div/div/div/span/div/div[@class='ant-upload-list-item-container']")
+    @FindBy(xpath = "//div[div/label[@title='Чорнобіле']]/div/div/div/span/div/div[@class='ant-upload-list-item-container']")
     private WebElement pictureBW;
 
     @FindBy(xpath = "//input[@id='pictureRelations']")
@@ -129,10 +129,15 @@ public class StreetcodeEditPage extends BasePageAdminPanel {
     private WebElement publishButton;
 
 
-    public StreetcodeEditPage(WebDriver driver) {super(driver);}
-        private BaseModal baseModal;
+    public StreetcodeEditPage(WebDriver driver) {
+        super(driver);
+    }
 
-    /** Dropdowns */
+    private BaseModal baseModal;
+
+    /**
+     * Dropdowns
+     */
 
     public DropdownBase getFirstFormatdateDropdow() {
         WebElement firstDropdownRoot = driver.findElement(By.xpath("(//div[@class='ant-select-selector'])[1]"));
@@ -168,7 +173,9 @@ public class StreetcodeEditPage extends BasePageAdminPanel {
         return new DropdownBase(driver, partnersRootElement);
     }
 
-    /** Datepickers */
+    /**
+     * Datepickers
+     */
 
     public DatePicker getFirstDatePicker() {
         WebElement firstDatepicker = driver.findElement(By.xpath("(//div[@class='ant-picker-input'])[1]"));
@@ -180,7 +187,9 @@ public class StreetcodeEditPage extends BasePageAdminPanel {
         return new DatePicker(driver, secondDatepicker);
     }
 
-    /** Datepickers */
+    /**
+     * Datepickers
+     */
 
     public ResolutionPopover getResolutionPopover360() {
         WebElement resol360 = driver.findElement(By.xpath("//p[@class='device-size' and text()='360']"));
@@ -203,7 +212,9 @@ public class StreetcodeEditPage extends BasePageAdminPanel {
         return new ResolutionPopover(driver, popover);
     }
 
-    /** Wow-Fact methods */
+    /**
+     * Wow-Fact methods
+     */
 
     public WowFactsModal getWowFactsModal() {
         WebElement wowRootElement = driver.findElement(By.xpath("//div[@role='dialog' and not(contains(@style, 'display: none'))]"));
@@ -232,7 +243,9 @@ public class StreetcodeEditPage extends BasePageAdminPanel {
         return element;
     }
 
-    /** Chronology methods */
+    /**
+     * Chronology methods
+     */
 
     public ChronologyModal getChronologyModal() {
         WebElement chronologyRootElement = driver.findElement(By.xpath("//div[@role='dialog' and not(contains(@style, 'display: none'))]"));
@@ -261,7 +274,9 @@ public class StreetcodeEditPage extends BasePageAdminPanel {
         return element;
     }
 
-    /** Templates methods */
+    /**
+     * Templates methods
+     */
 
     public TemplateModal getTemplateModal() {
         WebElement templatesRootElement = driver.findElement(By.xpath("//div[@class='ArtGalleryImgContainer']"));
@@ -269,7 +284,9 @@ public class StreetcodeEditPage extends BasePageAdminPanel {
     }
 
 
-    /** ForFans methods */
+    /**
+     * ForFans methods
+     */
 
     public WebElement clickFansEditButton(int index) {
         WebElement element = driver.findElement(By.xpath("((//div[h2[text()='Для фанатів']]/div/div/div/div/span[@aria-label='edit'])[" + index + "]"));
