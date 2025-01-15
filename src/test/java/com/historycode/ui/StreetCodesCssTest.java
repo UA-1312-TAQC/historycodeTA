@@ -5,7 +5,6 @@ import com.historycode.ui.page.streetcodespage.StreetCodesPage;
 import com.historycode.ui.testrunners.BaseTestRunner;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Step;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -65,6 +64,8 @@ public class StreetCodesCssTest extends BaseTestRunner {
     @Test(description = "Verify that each catalog item has correct font-size, color, and background color.")
     public void testCatalogItems() {
         SoftAssert softAssert = new SoftAssert();
+
+        streetCodesPage.waitForElementThenScrollUntilLoaderDisappears(streetCodesPage.getContainerRootNode());
 
         List<CatalogItemComponent> items = streetCodesPage
                 .getStreetCodesCatalogComponent()

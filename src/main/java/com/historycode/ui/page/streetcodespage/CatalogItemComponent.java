@@ -13,7 +13,7 @@ public class CatalogItemComponent extends BaseComponent {
     private WebElement nameNode;
 
     @Getter
-    @FindBy(css = ".catalogItemText")
+    @FindBy(xpath = "//div[@class='catalogItemText']")
     private WebElement catalogItemTextArea;
 
     @FindBy(xpath = ".//div[@class='heading']/p[2]")
