@@ -3,7 +3,6 @@ package com.historycode.ui.page.adminpanel.historycodePage;
 import com.historycode.ui.component.adminPanel.gridAdminPanel.NoDataComponent;
 import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
 import lombok.Getter;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -25,7 +24,7 @@ public class HistoryCodesAdminPanelStatisticsPage extends BasePageAdminPanel {
     private WebElement statisticHeader;
 
     @Getter
-    private List<WebElement> statisticTitles = new ArrayList<>();
+    private final List<WebElement> statisticTitles = new ArrayList<>();
     @FindBy(xpath = "./thead[@class='ant-table-thead']//th[@class='ant-table-cell']")
     private List<WebElement> statisticTitlesNode;
 

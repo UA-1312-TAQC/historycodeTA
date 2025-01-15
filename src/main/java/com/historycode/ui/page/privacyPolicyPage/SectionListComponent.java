@@ -1,15 +1,11 @@
 package com.historycode.ui.page.privacyPolicyPage;
 
 import com.historycode.ui.component.BaseComponent;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class SectionListComponent extends BaseComponent {
 
@@ -20,8 +16,7 @@ public class SectionListComponent extends BaseComponent {
 //    private List<WebElement> sectionComponentTitles;
 
 
-
-//    @FindBy(xpath = "./div[@class='content']")
+    //    @FindBy(xpath = "./div[@class='content']")
 //    private List<WebElement> contentComponent;
     private List<SectionListItem> sectionListItems;
 
@@ -33,8 +28,8 @@ public class SectionListComponent extends BaseComponent {
         }
     }
 
-    public SectionListItem getSectionByTitle(String title){
-        for (SectionListItem item: sectionListItems){
+    public SectionListItem getSectionByTitle(String title) {
+        for (SectionListItem item : sectionListItems) {
             if (item.getTitle().equals(title)) {
                 return item;
             }

@@ -21,7 +21,7 @@ public class TeamPageGridComponent extends BaseGridComponent {
         super(driver, rootElement);
 
         teamRowComponents = new ArrayList<>();
-        for(WebElement element: teamRowNodes){
+        for (WebElement element : teamRowNodes) {
             teamRowComponents.add(new TeamRowComponent(driver, element));
         }
     }
@@ -30,7 +30,9 @@ public class TeamPageGridComponent extends BaseGridComponent {
         return teamRowComponents;
     }
 
-    public List<WebElement> getRowNodes() { return teamRowNodes; }
+    public List<WebElement> getRowNodes() {
+        return teamRowNodes;
+    }
 
     public TeamRowComponent getRowById(int id) {
         return teamRowComponents.get(id);

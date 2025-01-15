@@ -24,9 +24,9 @@ public class ContextsGridComponent extends GridComponent {
         }
     }
 
-    public List<String> getRowsTitles(){
+    public List<String> getRowsTitles() {
         List<String> titles = new ArrayList<>();
-        for (ContextsRowComponent row : rows){
+        for (ContextsRowComponent row : rows) {
             titles.add(row.getTitle());
         }
         return titles;

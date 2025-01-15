@@ -15,12 +15,12 @@ public class EditJobModal extends BaseEditModal {
     private WebElement titleContainer;
 
     @Getter
-    private InputElement title;
+    private final InputElement title;
 
     @FindBy(xpath = "//label[@for = 'status']/../..")
     private WebElement statusContainer;
 
-    private DropdownComponent jobStatusDropdown;
+    private final DropdownComponent jobStatusDropdown;
 
     @Getter
     @FindBy(xpath = "//div[contains(@class, 'ant-form-item-label')]")
@@ -40,7 +40,7 @@ public class EditJobModal extends BaseEditModal {
     private WebElement salaryContainer;
 
     @Getter
-    private InputElement salary;
+    private final InputElement salary;
 
     public EditJobModal(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);

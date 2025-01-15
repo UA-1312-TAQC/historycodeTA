@@ -24,9 +24,9 @@ public class TagsGridComponent extends GridComponent {
         }
     }
 
-    public List<String> getRowsTitles(){
+    public List<String> getRowsTitles() {
         List<String> titles = new ArrayList<>();
-        for (TagsRowComponent row : rows){
+        for (TagsRowComponent row : rows) {
             titles.add(row.getTitle());
         }
         return titles;

@@ -14,5 +14,5 @@ public class TemplateModal extends BaseModal {
     public WebElement getTemplateByInt(int index) {
         return rootElement.findElement(By.xpath("(//img[@class='template-image'])[" + index + "]"));
     }
-    
+
 }

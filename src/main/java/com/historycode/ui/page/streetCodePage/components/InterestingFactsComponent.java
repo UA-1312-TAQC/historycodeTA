@@ -18,9 +18,9 @@ public class InterestingFactsComponent extends BaseComponent {
     private WebElement carouselRoot;
 
     @Getter
-    private InterestingFactsModal interestingFactsModal;
+    private final InterestingFactsModal interestingFactsModal;
     @Getter
-    private InterestingFactsCarousel carousel;
+    private final InterestingFactsCarousel carousel;
 
     public InterestingFactsComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);

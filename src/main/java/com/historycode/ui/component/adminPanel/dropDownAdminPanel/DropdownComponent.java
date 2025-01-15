@@ -8,7 +8,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -61,6 +60,7 @@ public class DropdownComponent extends BaseComponent {
 
     /**
      * Selects multiple options in the dropdown by their visible texts.
+     *
      * @param optionTexts a list of option texts to select.
      */
     public void selectMultipleOptions(List<String> optionTexts) {
@@ -74,6 +74,7 @@ public class DropdownComponent extends BaseComponent {
 
     /**
      * Fetches all selected options as a list of strings by dynamically querying the DOM.
+     *
      * @return a list of texts of the selected options.
      */
     public List<String> getSelectedMultipleOptions() {

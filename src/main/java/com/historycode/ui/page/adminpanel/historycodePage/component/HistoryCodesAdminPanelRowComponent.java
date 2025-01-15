@@ -21,7 +21,7 @@ public class HistoryCodesAdminPanelRowComponent extends BaseComponent {
     private WebElement id;
 
     @Getter
-    private DropdownComponent dropDown;
+    private final DropdownComponent dropDown;
     @FindBy(xpath = "./td[@class='ant-table-cell'][3]//button[@class='ant-btn css-k7429z ant-btn-default ant-dropdown-trigger']")
     private WebElement dropDownNode;
 

@@ -36,8 +36,8 @@ public class MainCardComponent extends BaseComponent {
     @FindBy(xpath = ".//div[@class='leftSider']//ul[@class='slick-dots']")
     private WebElement paginationNode;
 
-    private KeywordPersonasModal keywordPersonsModal;
-    private PaginationComponent pagination;
+    private final KeywordPersonasModal keywordPersonsModal;
+    private final PaginationComponent pagination;
 
     public MainCardComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);

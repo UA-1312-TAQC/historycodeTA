@@ -2,7 +2,6 @@ package com.historycode.ui.page.adminpanel.historycodePage.component;
 
 
 import com.historycode.ui.component.adminPanel.gridAdminPanel.BaseGridComponent;
-import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

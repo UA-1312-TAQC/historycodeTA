@@ -1,7 +1,6 @@
 package com.historycode.ui.page.adminpanel.partnerspage;
 
 import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -12,7 +11,7 @@ public class PartnersPageAdminPanel extends BasePageAdminPanel {
     private WebElement addNewPartnersButton;
     @FindBy(xpath = "//div[@class='partners-page']//div[@class='partners-page-container']")
     private WebElement rootElement;
-    private PartnersPageGridComponent partnersPageGridComponent;
+    private final PartnersPageGridComponent partnersPageGridComponent;
 
     public PartnersPageAdminPanel(WebDriver driver) {
         super(driver);
@@ -32,7 +31,7 @@ public class PartnersPageAdminPanel extends BasePageAdminPanel {
         return this;
     }
 
-    public PartnersPageAdminPanel  clickPrevPage() {
+    public PartnersPageAdminPanel clickPrevPage() {
         partnersPageGridComponent.clickPrevPage();
         return this;
     }
@@ -40,7 +39,7 @@ public class PartnersPageAdminPanel extends BasePageAdminPanel {
     public PartnersPageAdminPanel clickPaginationItem(int index) {
         if (index < 0) {
             throw new IllegalArgumentException("Pagination index cannot be negative");
-            }
+        }
         partnersPageGridComponent.clickPaginationItem(index);
         return this;
     }

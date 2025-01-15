@@ -1,11 +1,9 @@
 package com.historycode.ui.page.contactUs;
 
-import com.historycode.ui.component.footer.FooterComponent;
-import com.historycode.ui.component.header.HeaderComponent;
+import com.historycode.ui.page.BasePage;
 import com.historycode.ui.page.contactUs.component.ContactUsContactBlockComponent;
 import com.historycode.ui.page.contactUs.component.ContactUsContentComponent;
 import com.historycode.ui.page.contactUs.component.ContactUsFormComponent;
-import com.historycode.ui.page.BasePage;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,11 +19,11 @@ public class ContactUsPage extends BasePage {
     private WebElement contactUsContentNode;
 
     @Getter
-    private ContactUsFormComponent contactUsFormComponent;
+    private final ContactUsFormComponent contactUsFormComponent;
     @Getter
-    private ContactUsContactBlockComponent contactUsContactBlockComponent;
+    private final ContactUsContactBlockComponent contactUsContactBlockComponent;
     @Getter
-    private ContactUsContentComponent contactUsContentComponent;
+    private final ContactUsContentComponent contactUsContentComponent;
 
     public ContactUsPage(WebDriver driver) {
         super(driver);

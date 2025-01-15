@@ -1,7 +1,6 @@
 package com.historycode.ui.component.BurgerMenu;
 
 import com.historycode.ui.component.BaseComponent;
-import com.historycode.ui.page.BasePage;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

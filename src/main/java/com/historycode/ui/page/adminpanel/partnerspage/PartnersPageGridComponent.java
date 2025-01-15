@@ -1,20 +1,18 @@
 package com.historycode.ui.page.adminpanel.partnerspage;
 
-import java.util.List;
-
+import com.historycode.ui.component.adminPanel.gridAdminPanel.BaseGridComponent;
+import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import com.historycode.ui.component.adminPanel.gridAdminPanel.BaseGridComponent;
-
-import lombok.Getter;
+import java.util.List;
 
 
 public class PartnersPageGridComponent extends BaseGridComponent {
 
     @Getter
-    private List<PartnersRowComponent> partnersRowComponents;
+    private final List<PartnersRowComponent> partnersRowComponents;
 
     public PartnersPageGridComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);

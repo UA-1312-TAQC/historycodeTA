@@ -1,11 +1,10 @@
 package com.historycode.ui.elements.adminPanel;
 
 import com.historycode.ui.component.BaseComponent;
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-
-import lombok.Getter;
 
 //TODO N1 what about rootElement for input, do we need it and is it ok extend BaseComponent for it?
 public class InputElement extends BaseComponent {

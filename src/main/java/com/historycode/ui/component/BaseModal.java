@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public abstract class BaseModal extends BaseComponent{
+public abstract class BaseModal extends BaseComponent {
     public BaseModal(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
@@ -19,7 +19,7 @@ public abstract class BaseModal extends BaseComponent{
 
     public boolean checkTitle(String expectedText) {
         WebElement title = rootElement.findElement(By.xpath(".//div[@class='center']/h2"));
-        String actualText = title.getText().trim().replaceAll("\\s+", " ");;
+        String actualText = title.getText().trim().replaceAll("\\s+", " ");
         return actualText.equals(expectedText);
     }
 
