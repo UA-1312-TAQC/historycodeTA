@@ -26,4 +26,22 @@ public class PartnersPageAdminPanel extends BasePageAdminPanel {
     public PartnersPageGridComponent getPartnersPageGridComponent() {
         return partnersPageGridComponent;
     }
+
+    public PartnersPageAdminPanel clickNextPage() {
+        partnersPageGridComponent.clickNextPage();
+        return this;
+    }
+
+    public PartnersPageAdminPanel  clickPrevPage() {
+        partnersPageGridComponent.clickPrevPage();
+        return this;
+    }
+
+    public PartnersPageAdminPanel clickPaginationItem(int index) {
+        if (index < 0) {
+            throw new IllegalArgumentException("Pagination index cannot be negative");
+            }
+        partnersPageGridComponent.clickPaginationItem(index);
+        return this;
+    }
 }
