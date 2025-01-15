@@ -21,8 +21,8 @@ public class RelatedPersonasComponent extends BaseComponent {
     private WebElement viewAllButton;
 
     @Getter
-    private RelatedPersonasModal modal;
-    private PersonasCarousel carousel;
+    private final RelatedPersonasModal modal;
+    private final PersonasCarousel carousel;
 
     public RelatedPersonasComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);

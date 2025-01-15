@@ -14,8 +14,8 @@ public class SourcesComponent extends BaseComponent {
     @FindBy(xpath = ".//div[@class='sourcesSliderItem']")
     private List<WebElement> categoryCardsNode;
 
-    private List<SourcesCardComponent> categoryCards;
-    private SourcesModal sourceModal;
+    private final List<SourcesCardComponent> categoryCards;
+    private final SourcesModal sourceModal;
 
     public SourcesComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);

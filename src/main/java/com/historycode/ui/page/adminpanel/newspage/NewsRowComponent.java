@@ -3,9 +3,7 @@ package com.historycode.ui.page.adminpanel.newspage;
 import com.historycode.ui.component.BaseComponent;
 import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
 import com.historycode.ui.page.adminpanel.newspage.modal.EditNewsModal;
-
 import lombok.Getter;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
