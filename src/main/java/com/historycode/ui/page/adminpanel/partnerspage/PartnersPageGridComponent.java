@@ -10,6 +10,7 @@ import com.historycode.ui.component.adminPanel.gridAdminPanel.BaseGridComponent;
 
 import lombok.Getter;
 
+
 public class PartnersPageGridComponent extends BaseGridComponent {
 
     @Getter
@@ -48,8 +49,8 @@ public class PartnersPageGridComponent extends BaseGridComponent {
         return new PartnersPageGridComponent(driver, rootElement);
     }
 
-    public void clickPaginationItem(int index) {
+    public PartnersPageGridComponent clickPaginationItem(int index) {
         pagination.clickPaginationItem(index);
-        this.partnersRowComponents = getPartnersRows(driver);
+        return new PartnersPageGridComponent(driver, rootElement);
     }
 }

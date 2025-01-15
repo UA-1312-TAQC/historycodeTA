@@ -61,7 +61,6 @@ public class HomePage extends BasePage {
         scrollToElement(personCarouselElement);
         sleep(3000);
         personsCarousel.getCarouselItems().get(index).clickMore();
-        //TODO: remove test mode
-        return new StreetCodePage(driver, true);
+        return new StreetCodePage(driver);
     }
 }
