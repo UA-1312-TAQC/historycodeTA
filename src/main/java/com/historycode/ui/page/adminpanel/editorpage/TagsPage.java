@@ -5,6 +5,7 @@ import com.historycode.ui.page.adminpanel.editorpage.components.modals.TagsModal
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.TagsRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.elements.AddButtonElement;
 import io.qameta.allure.Step;
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -17,6 +18,7 @@ public class TagsPage extends BaseEditorPage {
     private WebElement rootGrid;
 
     private AddButtonElement addTagButton;
+    @Getter
     private TagsGridComponent grid;
 
     public TagsPage(WebDriver driver) {
