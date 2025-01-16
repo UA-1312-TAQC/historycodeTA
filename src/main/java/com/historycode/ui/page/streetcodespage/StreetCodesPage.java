@@ -42,4 +42,7 @@ public class StreetCodesPage extends BasePage {
         streetCodesCatalogComponent.getItemComponents().get(index).getNameNode().click();
         return new StreetCodePage(driver);
     }
+    public void ScrollDownStreetCodes() {
+        waitForElementThenScrollUntilLoaderDisappears(getContainerRootNode());
+    }
 }

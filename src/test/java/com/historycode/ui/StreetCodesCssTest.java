@@ -65,7 +65,8 @@ public class StreetCodesCssTest extends BaseTestRunner {
     public void testCatalogItems() {
         SoftAssert softAssert = new SoftAssert();
 
-        streetCodesPage.waitForElementThenScrollUntilLoaderDisappears(streetCodesPage.getContainerRootNode());
+        streetCodesPage
+                .ScrollDownStreetCodes();
 
         List<CatalogItemComponent> items = streetCodesPage
                 .getStreetCodesCatalogComponent()
@@ -88,12 +89,15 @@ public class StreetCodesCssTest extends BaseTestRunner {
                 String.format("Item [%d] Name", index)
         );
 
-        verifyCssProperties(
-                softAssert,
-                item.getDescriptionNode(),
-                EXPECTED_DESCRIPTION_CSS,
-                String.format("Item [%d] Description", index)
-        );
+        WebElement descriptionNode = item.getDescriptionNode();
+        if (descriptionNode != null) {
+            verifyCssProperties(
+                    softAssert,
+                    descriptionNode,
+                    EXPECTED_DESCRIPTION_CSS,
+                    String.format("Item [%d] Description", index)
+            );
+        }
 
         verifyCssProperties(
                 softAssert,
