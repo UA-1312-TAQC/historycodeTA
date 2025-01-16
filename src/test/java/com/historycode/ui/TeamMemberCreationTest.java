@@ -4,7 +4,6 @@ import com.historycode.ui.page.adminpanel.historycodepage.HistoryCodePage;
 import com.historycode.ui.page.adminpanel.teampage.TeamPageAdminPanel;
 import com.historycode.ui.page.adminpanel.teampage.TeamRowComponent;
 import com.historycode.ui.testrunners.TestRunnerWithAdmin;
-import com.historycode.utils.StringGenerator;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Story;
