@@ -44,7 +44,6 @@ public class PositionsGridComponent extends GridComponent {
     }
 
     public PositionsRowComponent getRowByTitle(String title) {
-        List<PositionsRowComponent> currentRows= getRows();
         for (PositionsRowComponent row : getRows()) {
             if (row.getTitle().equals(title)) {
                 return row;
