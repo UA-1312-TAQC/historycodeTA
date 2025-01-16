@@ -8,6 +8,7 @@ import org.openqa.selenium.support.FindBy;
 public class SurveyModal extends BaseModal {
     @FindBy(xpath = ".//div[@class='ant-modal css-k7429z surveyModal']//button[@class='ant-modal-close']")
     private WebElement closeButton;
+
     public SurveyModal(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }

@@ -11,10 +11,10 @@ import org.openqa.selenium.support.PageFactory;
 public class ChronologyComponent extends BaseComponent {
 
     @Getter
-    private ChronologyYearsBarComponent yearsBar;
+    private final ChronologyYearsBarComponent yearsBar;
 
     @Getter
-    private ChronologyFilmCardComponent filmCardComponent;
+    private final ChronologyFilmCardComponent filmCardComponent;
 
     @FindBy(xpath = ".//div[@id='timeline']//h1")
     private WebElement title;

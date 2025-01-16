@@ -1,27 +1,41 @@
 package com.historycode.ui.page.adminpanel.editorpage.components.rows;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class PositionsRowComponent extends RowComponent {
-    private static final String DELETE_ACTION_XPATH = ".//td[@class='ant-table-cell'][2]//span[contains(@class, 'anticon-delete')]//*[name()='svg']";  // Relative to rootElement
-    private static final String EDIT_ACTION_XPATH = ".//td[@class='ant-table-cell'][2]//span[contains(@class, 'anticon-edit')]//*[name()='svg']";  // Relative to rootElement
 
-    @FindBy(xpath = DELETE_ACTION_XPATH)
+    @FindBy(xpath = ".//td[@class='ant-table-cell'][2]//span[contains(@class, 'anticon-delete')]//*[name()='svg']")
     private WebElement deleteAction;
-    @FindBy(xpath = EDIT_ACTION_XPATH)
+    @FindBy(xpath = ".//td[@class='ant-table-cell'][2]//span[contains(@class, 'anticon-edit')]//*[name()='svg']")
     private WebElement editAction;
 
     public PositionsRowComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
 
+    @Step("Check Positions Row is Displayed.")
+    public boolean isExist() {
+        return getTitle().isDisplayed() && editAction.isDisplayed() && deleteAction.isDisplayed();
+    }
+
     public void clickEdit() {
+        scrollToElement(editAction);
         editAction.click();
     }
 
     public void clickDelete() {
+        scrollToElement(editAction);
         deleteAction.click();
+    }
+
+    public WebElement getEditAction() {
+        return editAction;
+    }
+
+    public WebElement getDeleteAction() {
+        return deleteAction;
     }
 }

@@ -1,12 +1,9 @@
 package com.historycode.ui.page.streetCodePage.components;
 
 import com.historycode.ui.component.BaseComponent;
-import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-
-import java.util.NoSuchElementException;
 
 public class StreetCodeTextBlockComponent extends BaseComponent {
     @FindBy(xpath = ".//div[@id='text']//div[@class='text']//p")

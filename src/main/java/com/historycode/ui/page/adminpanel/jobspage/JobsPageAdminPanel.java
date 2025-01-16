@@ -7,13 +7,17 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-//TODO N3 is it ok to pass root for Edit Modal and other root for grid component?
+
+//TODO here i should use //? Like it is my main root
 public class JobsPageAdminPanel extends BasePageAdminPanel {
     @FindBy(xpath = "//button[span[text()='Додати нову вакансію']]")
     WebElement addNewJobButton;
 
-    @FindBy(xpath = "//div[@role = 'dialog']//div")
+    @FindBy(xpath = "(//div[@class='ant-modal-content'])[2]")
     private WebElement editModalRootElement;
+
+    @FindBy(xpath = "(//div[@class='ant-modal-content'])[1]")
+    private WebElement deleteModalRootElement;
 
     @FindBy(xpath = "//div[@class='partners-page']//div[@class='partners-page-container']")
     private WebElement gridRootElement;
@@ -34,9 +38,7 @@ public class JobsPageAdminPanel extends BasePageAdminPanel {
     public DeleteItemModal clickDeleteJobById(int id) {
         JobsRowComponent jobToDelete = jobsPageGridComponent.getRowById(id);
         jobToDelete.clickDelete();
-        return null;
-        //TODO N4 what rootElement should I pass here?
-//        return new DeleteItemModal(driver);
+        return new DeleteItemModal(driver, deleteModalRootElement);
     }
 
     public EditJobModal clickAddNewJobButton() {
@@ -44,31 +46,28 @@ public class JobsPageAdminPanel extends BasePageAdminPanel {
         return new EditJobModal(driver, editModalRootElement);
     }
 
-
-    //TODO N5 Does this logic ok for managing Pagination?
-    // In jobsPageGridComponent pagination methods i return new JobsPageGridComponent(driver, rootElement);
     public JobsPageAdminPanel clickNextPage() {
-        jobsPageGridComponent.clickNextPage();
+        jobsPageGridComponent = jobsPageGridComponent.clickNextPage();
         return this;
     }
 
     public JobsPageAdminPanel clickPrevPage() {
-        jobsPageGridComponent.clickPrevPage();
+        jobsPageGridComponent = jobsPageGridComponent.clickPrevPage();
         return this;
     }
 
     public JobsPageAdminPanel clickPaginationItem(int index) {
-        jobsPageGridComponent.clickPaginationItem(index);
+        jobsPageGridComponent = jobsPageGridComponent.clickPaginationItem(index);
         return this;
     }
 
     public JobsPageAdminPanel clickNextFivePages() {
-        jobsPageGridComponent.clickNextFivePages();
+        jobsPageGridComponent = jobsPageGridComponent.clickNextFivePages();
         return this;
     }
 
     public JobsPageAdminPanel clickPrevFivePages() {
-        jobsPageGridComponent.clickPrevFivePages();
+        jobsPageGridComponent = jobsPageGridComponent.clickPrevFivePages();
         return this;
     }
 }

@@ -15,7 +15,7 @@ public class ArtGalleryComponent extends BaseComponent {
     @FindBy(xpath = ".//div[@class='artGallerySliderContainer']")
     private WebElement carouselRoot;
 
-    private ArtGalleryCarousel carousel;
+    private final ArtGalleryCarousel carousel;
 
     public ArtGalleryComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
