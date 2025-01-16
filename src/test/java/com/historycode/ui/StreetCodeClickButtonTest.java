@@ -6,9 +6,6 @@ import com.historycode.ui.page.streetCodePage.components.StreetCodeTextBlockComp
 import com.historycode.ui.testrunners.BaseTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
-import io.qameta.allure.Step;
-import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -19,26 +16,28 @@ public class StreetCodeClickButtonTest extends BaseTestRunner {
     @Test(priority = 1)
     @Description("[Text and Video] Verify that all buttons are clickable")
     public void testStreetCodeClick() {
-        HomePage homePage = new HomePage(driver);
-        StreetCodePage streetCodePage = homePage.clickPersonCardCarouselItem(0);
-        StreetCodeTextBlockComponent textBlock = streetCodePage.getTextBlock();
-        int initialCount = textBlock.getParagraphCount();
 
+        StreetCodeTextBlockComponent textBlock = new HomePage(driver)
+                .clickPersonCardCarouselItem(0)
+                .getTextBlock();
+        int initialCount = textBlock.getParagraphCount();
+        SoftAssert softAssert = new SoftAssert();
         //step 2 : click on button 'Трохи ще'
-        Assert.assertTrue(textBlock.isReadMoreButtonDisplayed(), "'Трохи ще' button should be displayed.");
-        Assert.assertTrue(textBlock.checkExpanded(), "Text should expand after clicking 'Трохи ще'.");
-        Assert.assertTrue(textBlock.isReadLessButtonDisplayed(), "'Дещо менше' button should be visible after clicking 'Трохи ще'.");
+        softAssert.assertTrue(textBlock.isReadMoreButtonDisplayed(), "'Трохи ще' button should be displayed.");
+        softAssert.assertTrue(textBlock.checkExpanded(), "Text should expand after clicking 'Трохи ще'.");
+        softAssert.assertTrue(textBlock.isReadLessButtonDisplayed(), "'Дещо менше' button should be visible after clicking 'Трохи ще'.");
 
         //step 3 : is video playing/pause
-        Assert.assertTrue(textBlock.isVideoVisible(), "Video player should be visible.");
+        softAssert.assertTrue(textBlock.isVideoVisible(), "Video player should be visible.");
         textBlock.clickPlayButton();
-        Assert.assertTrue(textBlock.isVideoPlaying(), "Video is expected to be playing.");
+        softAssert.assertTrue(textBlock.isVideoPlaying(), "Video is expected to be playing.");
         textBlock.clickPauseButton();
-        Assert.assertTrue(textBlock.isVideoPaused(), "Video is expected to be paused.");
+        softAssert.assertTrue(textBlock.isVideoPaused(), "Video is expected to be paused.");
 
         //step 4 : click on button 'Дещо менше'
-        Assert.assertTrue(textBlock.checkCollapsed(initialCount), "Text should collapse to initial state after clicking 'Дещо менше'.");
-        Assert.assertTrue(textBlock.isReadMoreButtonDisplayed(), "'Трохи ще' button should be visible after clicking 'Дещо менше'.");
+        softAssert.assertTrue(textBlock.checkCollapsed(initialCount), "Text should collapse to initial state after clicking 'Дещо менше'.");
+        softAssert.assertTrue(textBlock.isReadMoreButtonDisplayed(), "'Трохи ще' button should be visible after clicking 'Дещо менше'.");
+        softAssert.assertAll();
     }
 }
 
