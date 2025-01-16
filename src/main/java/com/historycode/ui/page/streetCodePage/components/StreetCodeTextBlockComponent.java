@@ -2,6 +2,7 @@ package com.historycode.ui.page.streetCodePage.components;
 
 import com.historycode.ui.component.BaseComponent;
 import lombok.Getter;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -17,10 +18,10 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
     @FindBy(xpath = ".//div[@id='text']//div[@class='text']//p")
     private WebElement mainTextContent;
 
-    @FindBy(xpath = ".//span[@class='readMore false']")
+    @FindBy(xpath = ".//div[@class='readMoreContainer false']")
     private WebElement readMoreButton;
 
-    @FindBy(xpath = ".//span[@class='readMore readLess']")
+    @FindBy(xpath = ".//div[@class='readMoreContainer readLessContainer']")
     private WebElement readLessButton;
 
 
@@ -88,9 +89,6 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
         }
     }
 
-    public boolean isAdditionalTextDisplayed() {
-        return additionalText.isDisplayed();
-    }
 
     public boolean isMainTextContentVisible() {
         waitUntilElementVisible(mainTextContent);
@@ -118,17 +116,6 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
         return collapsedCount == initialCount;
     }
 
-    public List<String> getLinksInNewsContent() {
-        List<String> links = new ArrayList<>();
-
-        for (WebElement link : linkInAdditionalText) {
-            String url = link.getDomAttribute("href");
-            if (url != null && !url.isEmpty()) {
-                links.add(url);
-            }
-        }
-        return links;
-    }
 
     public boolean isVideoVisible() {
         waitUntilElementVisible(videoPlayer);
@@ -139,6 +126,7 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
         scrollToElement(playButton);
         if (playButton.isDisplayed()) {
             playButton.click();
+
         }
     }
 
@@ -158,5 +146,23 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
         waitUntilElementVisible(pauseButton);
         return !pauseButton.isDisplayed() && playButton.isDisplayed();
     }
+
+    public boolean isAdditionalTextDisplayed() {
+        return additionalText.isDisplayed();
+    }
+
+    public List<String> getLinksInNewsContent() {
+        List<String> links = new ArrayList<>();
+
+        for (WebElement link : linkInAdditionalText) {
+            String url = link.getDomAttribute("href");
+            if (url != null && !url.isEmpty()) {
+                links.add(url);
+            }
+        }
+        return links;
+    }
+
+
 }
 

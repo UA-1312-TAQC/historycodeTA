@@ -19,4 +19,12 @@ public class StreetCodeDP {
                 {"/sichovi-striltsi"}
         };
     }
+
+    @DataProvider(name = "urlProviderForTextBlock")
+    public Object[][] urlProviderForTextBlock(){
+        return new Object[][]{
+                {"/roman-ratushnyi-seneka"},
+                {"/vasyl-stus"}
+        };
+    }
 }

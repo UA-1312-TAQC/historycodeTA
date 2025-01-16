@@ -1,27 +1,43 @@
 package com.historycode.ui;
 
+import com.historycode.ui.data_provider.StreetCodeDP;
 import com.historycode.ui.page.homePage.HomePage;
 import com.historycode.ui.page.streetCodePage.StreetCodePage;
 import com.historycode.ui.page.streetCodePage.components.StreetCodeTextBlockComponent;
 import com.historycode.ui.testrunners.BaseTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import io.qameta.allure.Step;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.util.List;
+
+import static org.testng.Assert.assertFalse;
+import static org.testng.AssertJUnit.assertEquals;
+
 
 public class StreetCodeClickButtonTest extends BaseTestRunner {
+    private StreetCodePage streetCodePage;
+
+    @Step("Navigate to the 'StreetCode' page")
+    private void navigateToStreetCodePage(String addUIUrl) {
+        driver.navigate().to(testValueProvider.getBaseUIUrl() + addUIUrl);
+        streetCodePage = new StreetCodePage(driver, false);
+    }
 
     @Issue("81")
-    @Test(priority = 1)
+    @Test(dataProvider = "urlProviderForTextBlock", dataProviderClass = StreetCodeDP.class, priority = 1)
     @Description("[Text and Video] Verify that all buttons are clickable")
-    public void testStreetCodeClick() {
+    public void testStreetCodeClick(String addUIUrl) {
+        navigateToStreetCodePage(addUIUrl);
 
-        StreetCodeTextBlockComponent textBlock = new HomePage(driver)
-                .clickPersonCardCarouselItem(0)
-                .getTextBlock();
+        StreetCodeTextBlockComponent textBlock = streetCodePage.getTextBlock();
         int initialCount = textBlock.getParagraphCount();
+        List<String> links = textBlock.getLinksInNewsContent();
         SoftAssert softAssert = new SoftAssert();
+
         //step 2 : click on button 'Трохи ще'
         softAssert.assertTrue(textBlock.isReadMoreButtonDisplayed(), "'Трохи ще' button should be displayed.");
         softAssert.assertTrue(textBlock.checkExpanded(), "Text should expand after clicking 'Трохи ще'.");
@@ -38,6 +54,17 @@ public class StreetCodeClickButtonTest extends BaseTestRunner {
         softAssert.assertTrue(textBlock.checkCollapsed(initialCount), "Text should collapse to initial state after clicking 'Дещо менше'.");
         softAssert.assertTrue(textBlock.isReadMoreButtonDisplayed(), "'Трохи ще' button should be visible after clicking 'Дещо менше'.");
         softAssert.assertAll();
+
+        //step 5 : click on the source link under text
+        softAssert.assertTrue(textBlock.isAdditionalTextDisplayed(), "Additional text should be display");
+        softAssert.assertTrue(!links.isEmpty(), "No links found in the text block!");
+        for (String link : links) {
+            driver.get(link);
+            String currentUrl = driver.getCurrentUrl();
+
+            softAssert.assertTrue(currentUrl.equals(link),
+                    "Redirection failed or URL mismatch for link: " + link);
+        }
     }
 }
 
