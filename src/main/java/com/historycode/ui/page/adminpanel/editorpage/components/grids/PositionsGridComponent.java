@@ -18,6 +18,7 @@ public class PositionsGridComponent extends GridComponent {
     }
 
     public void initRows(WebDriver driver) {
+        rows.clear();
         for (WebElement rowElement : rowElements) {
             if (rowElement.isDisplayed()) {
                 rows.add(new PositionsRowComponent(driver, rowElement));
@@ -25,15 +26,16 @@ public class PositionsGridComponent extends GridComponent {
         }
     }
 
-    public List<String> getRowsTitles(){
+    public List<String> getRowsTitles() {
         List<String> titles = new ArrayList<>();
-        for (PositionsRowComponent row : rows){
+        for (PositionsRowComponent row : rows) {
             titles.add(row.getTitle());
         }
         return titles;
     }
 
     public List<PositionsRowComponent> getRows() {
+        initRows(driver);
         return rows;
     }
 
@@ -42,8 +44,13 @@ public class PositionsGridComponent extends GridComponent {
     }
 
     public PositionsRowComponent getRowByTitle(String title) {
-        return rows.stream().filter(row -> row.getTitle().equals(title))
-                .findFirst().orElse(null);
+        List<PositionsRowComponent> currentRows= getRows();
+        for (PositionsRowComponent row : getRows()) {
+            if (row.getTitle().equals(title)) {
+                return row;
+            }
+        }
+        return null;
     }
 
     public List<PositionsRowComponent> getRowsByTitlePart(String part) {

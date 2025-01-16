@@ -9,7 +9,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class PositionsModalComponent extends BaseEditModal {
-    //TODO here also ./ doesnt work
     @FindBy(xpath = ".//label[@for = 'position']/../..")
     private WebElement positionContainer;
 
@@ -28,15 +27,13 @@ public class PositionsModalComponent extends BaseEditModal {
     }
 
     @Step("Save new position")
-    public PositionsModalComponent saveNewPosition() throws InterruptedException {
+    public PositionsModalComponent saveNewPosition() {
         clickSaveButton();
-//        Thread.sleep(4000);
         return this;
     }
 
     @Step("Close position modal")
-    public void closeModal() throws InterruptedException {
+    public void closeModal() {
         clickCloseButton();
-        Thread.sleep(5000);
     }
 }

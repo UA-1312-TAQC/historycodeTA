@@ -6,6 +6,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class DeleteItemModal extends BaseModal {
     @FindBy(xpath = "./div[@class='ant-modal-header']//div[@class='ant-modal-title']")
@@ -46,11 +50,13 @@ public class DeleteItemModal extends BaseModal {
     }
 
     public void clickOkButton() {
+        sleep(1000);
         ok.click();
         //TODO Додати логіку яка буде чекати закриття модалки waiter
-        sleep(1000);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.invisibilityOf(rootElement));
+//        sleep(1000);
     }
-
 
 
     public void clickCancelButton() {

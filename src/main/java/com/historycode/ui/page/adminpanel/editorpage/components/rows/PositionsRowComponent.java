@@ -8,10 +8,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class PositionsRowComponent extends RowComponent {
-    @FindBy(xpath = "./td[@class='ant-table-cell'][2]//span[contains(@class, 'anticon-delete')]//*[name()='svg']")
+    @FindBy(xpath = ".//td[@class='ant-table-cell'][2]//span[contains(@class, 'anticon-delete')]//*[name()='svg']")
     private WebElement deleteAction;
 
-    @FindBy(xpath = "./td[@class='ant-table-cell'][2]//span[contains(@class, 'anticon-edit')]//*[name()='svg']")
+    @FindBy(xpath = ".//td[@class='ant-table-cell'][2]//span[contains(@class, 'anticon-edit')]//*[name()='svg']")
     private WebElement editAction;
 
     @FindBy(xpath = "//div[@class='ant-modal-content']")
@@ -25,11 +25,13 @@ public class PositionsRowComponent extends RowComponent {
     }
 
     public PositionsModalComponent clickEdit() {
+        waitUntilElementClickable(editAction);
         editAction.click();
         return new PositionsModalComponent(driver, modalContentRoot);
     }
 
     public DeleteItemModal clickDelete() {
+        waitUntilElementClickable(deleteAction);
         deleteAction.click();
         return new DeleteItemModal(driver, deleteModalRoot);
     }

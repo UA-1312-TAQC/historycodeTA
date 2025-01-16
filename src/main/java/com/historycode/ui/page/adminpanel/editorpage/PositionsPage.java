@@ -80,9 +80,8 @@ public class PositionsPage extends BasePage {
         return addNewPositionButton.getText();
     }
 
-    public PositionsModalComponent editTableRow(PositionsRowComponent row) throws InterruptedException {
+    public PositionsModalComponent editTableRow(PositionsRowComponent row) {
         gridComponent.editRow(row);
-        Thread.sleep(500);
         return new PositionsModalComponent(driver, getDisplayedModalRoot());
     }
 
