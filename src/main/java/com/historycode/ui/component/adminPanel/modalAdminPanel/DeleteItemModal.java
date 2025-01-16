@@ -52,10 +52,8 @@ public class DeleteItemModal extends BaseModal {
     public void clickOkButton() {
         sleep(1000);
         ok.click();
-        //TODO Додати логіку яка буде чекати закриття модалки waiter
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
         wait.until(ExpectedConditions.invisibilityOf(rootElement));
-//        sleep(1000);
     }
 
 
