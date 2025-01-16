@@ -14,10 +14,10 @@ public class HistoryCodesAdminPanelGridComponent extends BaseGridComponent {
 
     protected List<HistoryCodesAdminPanelRowComponent> rowElements = new ArrayList<>();
     @FindBy(xpath = "./tbody//tr")
-    protected List<WebElement> rowElementsNode;
+    private List<WebElement> rowElementsNode;
 
     @FindBy(xpath = "./thead//th")
-    protected List<WebElement> headerElementsNode;
+    private List<WebElement> headerElementsNode;
 
     public HistoryCodesAdminPanelGridComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
