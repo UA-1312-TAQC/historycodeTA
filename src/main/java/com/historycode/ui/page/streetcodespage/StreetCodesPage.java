@@ -15,6 +15,7 @@ public class StreetCodesPage extends BasePage {
     @FindBy(xpath = "//p[@class='streetcodeCatalogCaption']")
     private WebElement streetsCodesCaptionNode;
 
+    @Getter
     @FindBy(xpath = "//div[@class='steetcodeCatalogContainer']")
     private WebElement containerRootNode;
 

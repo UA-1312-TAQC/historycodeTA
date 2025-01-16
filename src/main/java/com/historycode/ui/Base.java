@@ -33,6 +33,12 @@ public abstract class Base {
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
+    @Step("Scroll to the middle of the page")
+    public void scrollToMiddlePage() {
+        threadJs.executeScript("window.scrollTo(0, document.body.scrollHeight/2)");
+        sleep(1000);
+    }
+
     @Step("Scroll to the end of the page")
     public void scrollToEndOfPage() {
         threadJs.executeScript("window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });");
