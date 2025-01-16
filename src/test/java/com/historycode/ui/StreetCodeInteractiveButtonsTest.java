@@ -27,7 +27,6 @@ public class StreetCodeInteractiveButtonsTest extends BaseTestRunner {
         homePage.getBurgerMenuComponent().clickMenuItem("History-коди");
 
         StreetCodesPage catalogPage = new StreetCodesPage(driver);
-        catalogPage.waitUntilElementVisible(catalogPage.getContainerRootNode());
         streetCodePage = catalogPage.clickCatalogItemByName(0);
     }
 
@@ -61,8 +60,8 @@ public class StreetCodeInteractiveButtonsTest extends BaseTestRunner {
 
         softAssert.assertTrue(streetCodePage.getQuickDonateButton().isDonateButtonDisplayed(),
                 "Donate button should be visible after scrolling to middle");
-        softAssert.assertTrue(streetCodePage.getQuickDonateButton().isInViewport(),
-                "Donate button should be in viewport after scrolling to middle");
+        softAssert.assertTrue(streetCodePage.getQuickDonateButton().isClickable(),
+                "Donate button should be clickable after scrolling to middle");
         softAssert.assertEquals(initialPosition.getX(), middlePosition.getX(),
                 "X-coordinate of Donate button should remain the same after scrolling to middle");
         softAssert.assertTrue(middlePosition.getY() > initialPosition.getY(),
@@ -73,8 +72,8 @@ public class StreetCodeInteractiveButtonsTest extends BaseTestRunner {
 
         softAssert.assertTrue(streetCodePage.getQuickDonateButton().isDonateButtonDisplayed(),
                 "Donate button should be visible after scrolling to bottom");
-        softAssert.assertTrue(streetCodePage.getQuickDonateButton().isInViewport(),
-                "Donate button should be in viewport after scrolling to bottom");
+        softAssert.assertTrue(streetCodePage.getQuickDonateButton().isClickable(),
+                "Donate button should be clickable after scrolling to bottom");
         softAssert.assertEquals(initialPosition.getX(), endPosition.getX(),
                 "X-coordinate of Donate button should remain the same after scrolling to bottom");
         softAssert.assertTrue(endPosition.getY() > middlePosition.getY(),
