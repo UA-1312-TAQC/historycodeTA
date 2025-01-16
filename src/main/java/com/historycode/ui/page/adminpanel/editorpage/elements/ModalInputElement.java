@@ -5,13 +5,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class modalInputElement extends BaseComponent {
+public class ModalInputElement extends BaseComponent {
+
     @FindBy(xpath = ".//label[@class='ant-form-item-required']")
     private WebElement label;
     @FindBy(xpath = ".//input[contains(@class, 'ant-input')]")
     private WebElement input;
 
-    public modalInputElement(WebDriver driver, WebElement rootElement) {
+    public ModalInputElement(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
 
@@ -24,7 +25,6 @@ public class modalInputElement extends BaseComponent {
     }
 
     public void setInput(String text) {
-//        BasePage.moveToElement(driver, input);
         input.sendKeys(text);
     }
 

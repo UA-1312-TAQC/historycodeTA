@@ -50,8 +50,7 @@ public abstract class Base {
     }
 
     protected void clickDynamicElement(WebElement element) {
-        JavascriptExecutor executor = (JavascriptExecutor) driver;
-        executor.executeScript("arguments[0].click();", element);
+        threadJs.executeScript("arguments[0].click();", element);
     }
 
     public void sleep(long millisSeconds) {

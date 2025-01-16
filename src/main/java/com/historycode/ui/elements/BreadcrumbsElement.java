@@ -1,6 +1,6 @@
 package com.historycode.ui.elements;
 
-import com.historycode.ui.page.adminpanel.editorpage.BasePage;
+//import com.historycode.ui.page.adminpanel.editorpage.BaseEditorPage;
 import com.historycode.ui.page.streetcodespage.StreetCodesPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -25,7 +25,7 @@ public class BreadcrumbsElement extends BaseElement {
     }
 
     public StreetCodesPage clickCatalog() {
-        BasePage.moveToElement(driver, catalogLink);
+        //BaseEditorPage.moveToElement(driver, catalogLink);
         catalogLink.click();
         return new StreetCodesPage(driver);
     }

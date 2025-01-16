@@ -3,23 +3,36 @@ package com.historycode.ui.page.adminpanel.editorpage;
 import com.historycode.ui.page.adminpanel.editorpage.components.grids.TagsGridComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.TagsModalComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.TagsRowComponent;
-import com.historycode.ui.page.adminpanel.editorpage.elements.addButtonElement;
+import com.historycode.ui.page.adminpanel.editorpage.elements.AddButtonElement;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
-public class TagsPage extends BasePage {
-    private final addButtonElement addTagButton = new addButtonElement(driver, getRootAddButton());
-    private final TagsGridComponent grid = new TagsGridComponent(driver, getRootGrid());
+public class TagsPage extends BaseEditorPage {
+
+    @FindBy(xpath = "//div[contains(@class, 'ant-table-wrapper')]")
+    private WebElement rootGrid;
+
+    private AddButtonElement addTagButton;
+    private TagsGridComponent grid;
 
     public TagsPage(WebDriver driver) {
         super(driver);
+        addTagButton = new AddButtonElement(driver, getRootAddButton());
+        grid = new TagsGridComponent(driver, rootGrid);
     }
 
-    public TagsModalComponent addTag() throws InterruptedException {
+    @Step("Check Tags Grid Is Displayed Correctly.")
+    public boolean isGridDisplayed() {
+        return grid.isDisplayed();
+    }
+
+    public TagsModalComponent clickAddTag() {
         addTagButton.clickButton();
-        Thread.sleep(1000);
+        sleep(1000);
         return new TagsModalComponent(driver, getDisplayedModalRoot());
     }
 
@@ -27,6 +40,7 @@ public class TagsPage extends BasePage {
         return grid.getHeaderItems().size();
     }
 
+    @Step("Get Table Headers.")
     public List<String> getTableHeadersString() {
         return grid.getHeaderItemsString();
     }
@@ -59,7 +73,7 @@ public class TagsPage extends BasePage {
         return grid.getRowByTitle(title);
     }
 
-    public String getAddButtonText() {
+    public String getAddButtonTitleString() {
         return addTagButton.getButtonText();
     }
 
@@ -72,5 +86,46 @@ public class TagsPage extends BasePage {
     public void deleteTableRow(TagsRowComponent row) {
         //TODO Implement return of modal
         grid.deleteRow(row);
+    }
+
+    public WebElement getTableRowEditAction(TagsRowComponent row) {
+        return grid.getRowEditAction(row);
+    }
+
+    public WebElement getTableRowDeleteAction(TagsRowComponent row) {
+        return grid.getRowDeleteAction(row);
+    }
+
+    public WebElement getTableRowTitle(TagsRowComponent row) {
+        return grid.getRowTitle(row);
+    }
+
+    public String getTableRowTitleString(TagsRowComponent row) {
+        return grid.getRowTitleString(row);
+    }
+
+    public TagsPage clickNextPage() {
+        grid.clickNextPage();
+        return new TagsPage(driver);
+    }
+
+    public TagsPage clickPrevPage() {
+        grid.clickPrevPage();
+        return new TagsPage(driver);
+    }
+
+    public TagsPage clickPrevFivePages() {
+        grid.clickPrevFivePages();
+        return new TagsPage(driver);
+    }
+
+    public TagsPage clickNextFivePages() {
+        grid.clickNextFivePages();
+        return new TagsPage(driver);
+    }
+
+    public TagsPage clickPaginationItem(int index) {
+        grid.clickPaginationItem(index);
+        return new TagsPage(driver);
     }
 }

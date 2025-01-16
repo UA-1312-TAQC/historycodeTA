@@ -73,7 +73,7 @@ public class StreetCodeTests extends BaseTestRunner {
 
         softAssert.assertTrue(donateModal.isFirstTitleDisplayed(), "The title of the modal window is not displayed.'");
         softAssert.assertTrue(donateModal.isAmountInputDisplayed(), "The manual amount input is not displayed.");
-        softAssert.assertTrue(donateModal.areAmountButtonsDisplayed(), "The manual amount buttons are not displayed.");
+        softAssert.assertTrue(donateModal.areAmountButtonsDisplayed(), "The amount buttons are not displayed.");
         softAssert.assertTrue(donateModal.isDonateButtonDisplayed(), "The 'Donate' button is not displayed.");
 
         softAssert.assertAll();

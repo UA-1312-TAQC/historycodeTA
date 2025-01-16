@@ -1,34 +1,54 @@
 package com.historycode.ui.page.adminpanel.editorpage.components.rows;
 
-import com.historycode.ui.page.adminpanel.editorpage.components.modals.ContextsModalComponent;
-import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
-
-import org.openqa.selenium.By;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class ContextsRowComponent extends RowComponent {
-    @FindBy(xpath = "./td[@class='ant-table-cell'][2]//span[contains(@class, 'anticon-delete')]//*[name()='svg']")
-    private WebElement deleteAction;
 
-    @FindBy(xpath = "./td[@class='ant-table-cell'][2]//span[contains(@class, 'anticon-edit')]//*[name()='svg']")
+    @FindBy(xpath = ".//td[@class='ant-table-cell'][2]//span[contains(@class, 'anticon-delete')]//*[name()='svg']")
+    private WebElement deleteAction;
+    @FindBy(xpath = ".//td[@class='ant-table-cell'][2]//span[contains(@class, 'anticon-edit')]//*[name()='svg']")
     private WebElement editAction;
 
     public ContextsRowComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
 
-    public ContextsModalComponent clickEdit() {
-        editAction.click();
-        WebElement modalContentRoot = driver.findElement(By.xpath("//div[@class='ant-modal-content']"));
-        return new ContextsModalComponent(driver, modalContentRoot);
+    @Step("Check Contexts Row is Displayed.")
+    public boolean isExist() {
+        return getTitle().isDisplayed() && editAction.isDisplayed() &&  deleteAction.isDisplayed();
     }
 
-    public DeleteItemModal clickDelete() {
+    public void clickEdit() {
+        scrollToElement(editAction);
+        editAction.click();
+    }
+
+    public void clickDelete() {
+        scrollToElement(editAction);
         deleteAction.click();
-        WebElement modalContentRoot = driver.findElement(By.xpath("//div[@class='ant-modal-content']"));
-        return new DeleteItemModal(driver, modalContentRoot);
+    }
+
+    public WebElement getEditAction(){
+        return editAction;
+    }
+
+    public WebElement getDeleteAction() {
+        return deleteAction;
     }
 }
+
+//    public ContextsModalComponent clickEdit() {
+//        editAction.click();
+//        WebElement modalContentRoot = driver.findElement(By.xpath("//div[@class='ant-modal-content']"));
+//        return new ContextsModalComponent(driver, modalContentRoot);
+//    }
+//
+//    public DeleteItemModal clickDelete() {
+//        deleteAction.click();
+//        WebElement modalContentRoot = driver.findElement(By.xpath("//div[@class='ant-modal-content']"));
+//        return new DeleteItemModal(driver, modalContentRoot);
+//    }
 
