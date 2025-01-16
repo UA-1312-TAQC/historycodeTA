@@ -1,5 +1,6 @@
 package com.historycode.ui.page.adminpanel.editorpage.components.rows;
 
+import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -26,9 +27,10 @@ public class TagsRowComponent extends RowComponent {
         editAction.click();
     }
 
-    public void clickDelete() {
+    public DeleteItemModal clickDelete() {
         scrollToElement(deleteAction);
         deleteAction.click();
+        return new DeleteItemModal(driver, rootElement);
     }
 
     public WebElement getEditAction(){

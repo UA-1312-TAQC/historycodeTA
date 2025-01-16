@@ -1,5 +1,6 @@
 package com.historycode.ui.page.adminpanel.editorpage.components.grids;
 
+import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.CategoriesRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.TagsRowComponent;
 import io.qameta.allure.Step;
@@ -87,8 +88,8 @@ public class TagsGridComponent extends GridComponent {
         row.clickEdit();
     }
 
-    public void deleteRow(TagsRowComponent row) {
-        row.clickDelete();
+    public DeleteItemModal deleteRow(TagsRowComponent row) {
+        return row.clickDelete();
     }
 
     public TagsGridComponent clickNextPage() {

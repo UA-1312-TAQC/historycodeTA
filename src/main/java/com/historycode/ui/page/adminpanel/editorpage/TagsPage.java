@@ -1,5 +1,6 @@
 package com.historycode.ui.page.adminpanel.editorpage;
 
+import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
 import com.historycode.ui.page.adminpanel.editorpage.components.grids.TagsGridComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.TagsModalComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.TagsRowComponent;
@@ -85,9 +86,8 @@ public class TagsPage extends BaseEditorPage {
         return new TagsModalComponent(driver, getDisplayedModalRoot());
     }
 
-    public void deleteTableRow(TagsRowComponent row) {
-        //TODO Implement return of modal
-        grid.deleteRow(row);
+    public DeleteItemModal deleteTableRow(TagsRowComponent row) {
+        return grid.deleteRow(row);
     }
 
     public WebElement getTableRowEditAction(TagsRowComponent row) {
