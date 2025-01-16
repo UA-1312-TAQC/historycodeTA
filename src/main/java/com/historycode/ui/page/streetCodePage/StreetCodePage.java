@@ -31,10 +31,10 @@ public class StreetCodePage extends BasePage {
     private BreadcrumbsElement breadcrumbs;
     @Getter
     private ScrollTopButtonElement scrollTopButton;
-    @Getter
+
     private QuickDonateButtonElement quickDonateButton;
-    @Getter
     private MainCardComponent mainCard;
+
     @Getter
     private StreetCodeTextBlockComponent textBlock;
     @Getter
@@ -75,14 +75,17 @@ public class StreetCodePage extends BasePage {
         initializeOptionalComponents(driver);
     }
 
-    public StreetCodePage setMainCard() {
-        this.mainCard = new MainCardComponent(driver, mainCardNode);
-        return this;
+    public MainCardComponent getMainCard() {
+        if (mainCard == null) {
+            mainCard = new MainCardComponent(driver, mainCardNode);}
+        return mainCard;
     }
 
-    public StreetCodePage setQuickDonateButton() {
-        this.quickDonateButton = new QuickDonateButtonElement(driver, quickDonateButtonNode);
-        return this;
+    public QuickDonateButtonElement getQuickDonateButton() {
+        if (quickDonateButton == null) {
+            quickDonateButton = new QuickDonateButtonElement(driver, quickDonateButtonNode);
+        }
+        return quickDonateButton;
     }
 
     private WebElement findElement(String xpath) {
