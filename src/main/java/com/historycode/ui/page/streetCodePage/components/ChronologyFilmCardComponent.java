@@ -8,7 +8,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 public class ChronologyFilmCardComponent extends BaseComponent {
@@ -77,4 +80,62 @@ public class ChronologyFilmCardComponent extends BaseComponent {
         WebElement card = getFilmCardByName(name);
         card.click();
     }
+    public boolean areAllFilmCardsVisible() {
+        return filmCards.stream().allMatch(WebElement::isDisplayed);
+    }
+
+    public int getFilmCardCount() {
+        return filmCards.size();
+    }
+
+    public boolean areFilmCardsUnique() {
+        Set<WebElement> uniqueCards = new HashSet<>(filmCards);
+        return uniqueCards.size() == filmCards.size();
+    }
+
+    public boolean areAllEventsComplete() {
+        for (int i = 0; i < filmCards.size(); i++) {
+            boolean hasYear = year.get(i).isDisplayed() && !year.get(i).getText().isEmpty();
+            boolean hasHistoricalContext = historicalContext.get(i).isDisplayed() && !historicalContext.get(i).getText().isEmpty();
+            boolean hasTitle = filmTitles.get(i).isDisplayed() && !filmTitles.get(i).getText().isEmpty();
+            boolean hasDescription = description.get(i).isDisplayed() && !description.get(i).getText().isEmpty();
+
+            if (!(hasYear && hasHistoricalContext && hasTitle && hasDescription)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public String getEventDetails(int index) {
+        if (index < 0 || index >= filmCards.size()) {
+            throw new IndexOutOfBoundsException("Invalid event index: " + index);
+        }
+
+        String yearText = year.get(index).getText();
+        String contextText = historicalContext.get(index).getText();
+        String titleText = filmTitles.get(index).getText();
+        String descriptionText = description.get(index).getText();
+
+        return String.format("Year: %s, Context: %s, Title: %s, Description: %s",
+                yearText, contextText, titleText, descriptionText);
+    }
+
+    public boolean areDescriptionsWithinLimit(int maxLength) {
+        for (WebElement description : description) {
+            String text = description.getText();
+            if (text.length() > maxLength) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public List<Integer> getDescriptionLengths() {
+        return description.stream()
+                .map(description -> description.getText().length())
+                .collect(Collectors.toList());
+    }
 }
+
+
