@@ -71,7 +71,7 @@ public class EditMemberModal extends BaseEditModal {
 
     public EditMemberModal(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        PageFactory.initElements(driver, this);
+//        PageFactory.initElements(driver, rootElement);
 
         this.keyMemberCheckbox = new CheckboxElement(driver, keyMemberCheckboxRoot);
         this.nameInput = new InputElement(driver, nameInputRoot);
