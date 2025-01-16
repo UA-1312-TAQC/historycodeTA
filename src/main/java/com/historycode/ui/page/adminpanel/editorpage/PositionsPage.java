@@ -18,7 +18,6 @@ public class PositionsPage extends BasePage {
     @FindBy(xpath = "//button[span[text()='Додати нову позицію']]")
     WebElement addNewPositionButton;
 
-    //TODO Added another grid root
     @FindBy(xpath = "//div[@class='positions-page']//div[@class='positions-page-container']")
     private WebElement gridRootElement;
 
