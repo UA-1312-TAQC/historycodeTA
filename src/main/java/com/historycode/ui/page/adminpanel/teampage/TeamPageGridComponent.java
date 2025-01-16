@@ -1,12 +1,14 @@
 package com.historycode.ui.page.adminpanel.teampage;
 
 import com.historycode.ui.component.adminPanel.gridAdminPanel.BaseGridComponent;
+import com.historycode.ui.utils.customExpectedConditions.customExpectedConditions;
 import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.http.Routable;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.List;
 @Getter
 public class TeamPageGridComponent extends BaseGridComponent {
 
+    @Getter
     protected List<TeamRowComponent> teamRowComponents;
 
     @FindBy(xpath = "//tbody//tr")
@@ -22,23 +25,36 @@ public class TeamPageGridComponent extends BaseGridComponent {
     public TeamPageGridComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
         teamRowComponents = new ArrayList<>();
-        List<WebElement> tempRowNodes = driver.findElements(By.xpath("//tbody//tr")); //element for debugging
+        /*while(true){
+            System.out.println(driver.findElement(By.cssSelector("#loadingGif")).isDisplayed());
+            sleep(100);
+            if(false){
+                break;
+            }
+        }*/
+        wait.until(customExpectedConditions.StalenessOfElementLocatedBy(By.cssSelector("#loadingGif")));
+        /*wait.until(ExpectedConditions.not(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#loadingGif"))));
+                    /*    loca
+                invisibilityOfElementLocated());*/
+       // wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("#loadingGif")));
+        //List<WebElement> tempRowNodes = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//tbody//tr"))); //element for debugging
+       // System.out.println("Table row nodes count " + tempRowNodes.size());
         //System.out.println("List size " + tempRowNodes.size());
-        for(WebElement element: tempRowNodes){
+        for(WebElement element: teamRowNodes){
             teamRowComponents.add(new TeamRowComponent(driver, element));
         }
-    }
-
-    public List<TeamRowComponent> getTeamRowComponents() {
-        return teamRowComponents;
+        /*for(TeamRowComponent element: teamRowComponents){
+            System.out.println("Element found:  " + element.toString());
+        }*/
+        System.out.println("Table row count " + teamRowComponents.size());
     }
 
 
     public TeamRowComponent findUserByName(String name){
-        List<TeamRowComponent> temp = getTeamRowComponents();
+        System.out.println("Searching users");
         for(TeamRowComponent item: getTeamRowComponents()){
             //TODO remove this
-            System.out.println(item.getLastFirstName());
+            System.out.println(item.toString());
             if(item.getLastFirstName().equals(name))
                 return item;
         }

@@ -2,6 +2,7 @@ package com.historycode.ui.page.adminpanel.teampage;
 
 import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
 import com.historycode.ui.page.adminpanel.teampage.editModal.EditMemberModal;
+import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,6 +14,7 @@ public class TeamPageAdminPanel extends BasePageAdminPanel {
 
     @FindBy(xpath = "//button[span[text()='Створити нового члена команди']]")
     protected WebElement addNewMemberButton;
+    @Getter
     protected TeamPageGridComponent teamPageGridComponent;
 
     @FindBy(xpath="//h2[starts-with(text(),'Додати')]/ancestor::div[@class = 'ant-modal-content']")
@@ -30,12 +32,7 @@ public class TeamPageAdminPanel extends BasePageAdminPanel {
 
     public TeamPageAdminPanel clickLastPaginationItem(){
         this.getTeamPageGridComponent().clickLastPage();
-        //wait.until(ExpectedConditions.not(Expe stalenessOf(getTeamPageGridComponent().teamRowComponents.get(0).lastFirstName));
         return new TeamPageAdminPanel(driver);
-    }
-
-    public TeamPageGridComponent getTeamPageGridComponent() {
-        return teamPageGridComponent;
     }
 
     //TODO What wrapper methods to implement here?

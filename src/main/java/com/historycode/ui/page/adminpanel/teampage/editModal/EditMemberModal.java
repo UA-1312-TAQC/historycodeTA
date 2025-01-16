@@ -220,6 +220,7 @@ public class EditMemberModal extends BaseEditModal {
         actions.moveToElement(closeButton).perform();
         waitUntilElementClickable(closeButton);
         clickCloseButton();
+        wait.until(ExpectedConditions.invisibilityOf(closeButton));
         return new TeamPageAdminPanel(driver);
     }
 
