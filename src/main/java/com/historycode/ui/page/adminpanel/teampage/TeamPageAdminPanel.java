@@ -3,7 +3,6 @@ package com.historycode.ui.page.adminpanel.teampage;
 import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
 import com.historycode.ui.page.adminpanel.teampage.editModal.EditMemberModal;
 import lombok.Getter;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -16,12 +15,16 @@ public class TeamPageAdminPanel extends BasePageAdminPanel {
     @Getter
     protected TeamPageGridComponent teamPageGridComponent;
 
+    @FindBy(css = ".team-page-container")
+    protected WebElement gridRootElement;
+
     @FindBy(xpath="//h2[starts-with(text(),'Додати')]/ancestor::div[@class = 'ant-modal-content']")
     private WebElement modalRootElement;
     public TeamPageAdminPanel(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
-        teamPageGridComponent = new TeamPageGridComponent(driver, driver.findElement(By.className("team-page-container")));
+        //TODO add lazy initialization
+        teamPageGridComponent = new TeamPageGridComponent(driver, gridRootElement);
     }
 
     public EditMemberModal clickAddNewMemberButton() {

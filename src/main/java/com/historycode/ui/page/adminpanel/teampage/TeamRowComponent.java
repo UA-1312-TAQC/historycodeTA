@@ -6,7 +6,6 @@ import com.historycode.ui.page.adminpanel.teampage.editModal.EditMemberModal;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +33,6 @@ public class TeamRowComponent extends BaseComponent {
 
     public TeamRowComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        //PageFactory.initElements(driver, this);
     }
 
     public String getLastFirstName() {
@@ -70,7 +68,6 @@ public class TeamRowComponent extends BaseComponent {
     }
 
     public DeleteItemModal clickDelete() {
-        System.out.println(getLastFirstName() + " " + getDescription());
         actions.scrollToElement(lastFirstName).perform();
         deleteAction.click();
         return new DeleteItemModal(driver, deleteModalRoot);

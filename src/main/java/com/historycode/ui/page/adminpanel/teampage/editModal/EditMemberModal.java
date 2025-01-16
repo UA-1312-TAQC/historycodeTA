@@ -168,7 +168,6 @@ public class EditMemberModal extends BaseEditModal {
         openSocialMediaDropdown();
         socialMediaDropdown.clickOptionByText(platform);
         //selectDropdownOption(socialMediaDropdown, platform);
-        //socialMediaInput.setInputField(link);
         //TODO Do we really need to click this button here? We need to click on it if we want to add more than 1 social media
         //addSocialMediaButton.click();
         return this;

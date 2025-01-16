@@ -26,20 +26,14 @@ public class TeamPageGridComponent extends BaseGridComponent {
         super(driver, rootElement);
         teamRowComponents = new ArrayList<>();
         wait.until(customExpectedConditions.StalenessOfElementLocatedBy(By.cssSelector("#loadingGif")));
-        //wait.until(ExpectedConditions.stalenessOf(driver.findElement(By.cssSelector("#loadingGif"))));
-       // wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("#loadingGif")));
         for(WebElement element: teamRowNodes){
             teamRowComponents.add(new TeamRowComponent(driver, element));
         }
-        System.out.println("Table row count " + teamRowComponents.size());
     }
 
 
     public TeamRowComponent findUserByName(String name){
-        System.out.println("Searching users");
         for(TeamRowComponent item: getTeamRowComponents()){
-            //TODO remove this
-            System.out.println(item.toString());
             if(item.getLastFirstName().equals(name))
                 return item;
         }
@@ -83,6 +77,5 @@ public class TeamPageGridComponent extends BaseGridComponent {
 
     public void clickLastPage(){
         pagination.clickLastPage();
-        //return new TeamPageGridComponent(driver, rootElement);
     }
 }
