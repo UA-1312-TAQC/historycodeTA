@@ -5,34 +5,25 @@ import com.historycode.ui.page.adminpanel.editorpage.components.SectionsComponen
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public abstract class BasePage extends BasePageAdminPanel {
-    private static final String ROOT_SECTIONS_XPATH = "//div[@class='ant-tabs-nav-list']";
-    private static final String ROOT_ADD_BUTTON_XPATH = "//div[@class='ant-tabs-content-holder']//div[@class='container-justify-end']";
-    private static final String ROOT_GRID_XPATH = "//div[contains(@class, 'ant-table-wrapper')]";
+public abstract class BaseEditorPage extends BasePageAdminPanel {
 
-    @FindBy(xpath = ROOT_ADD_BUTTON_XPATH)
+    @FindBy(xpath = "//div[@class='ant-tabs-content-holder']//div[@class='container-justify-end']")
     private List<WebElement> rootAddButtonAll;
-    @FindBy(xpath = ROOT_SECTIONS_XPATH)
+    @FindBy(xpath = "//div[@class='ant-tabs-nav-list']")
     private WebElement rootSections;
-    private final SectionsComponent sections = new SectionsComponent(driver, rootSections);
-    @FindBy(xpath = ROOT_GRID_XPATH)
-    private WebElement rootGrid;
-    private WebElement rootAddButton;
 
-    public BasePage(WebDriver driver) {
+    private WebElement rootAddButton;
+    private SectionsComponent sections;
+
+    public BaseEditorPage(WebDriver driver) {
         super(driver);
         setRootAddButton();
-    }
-
-    public static void moveToElement(WebDriver driver, WebElement element) {
-        Actions actions = new Actions(driver);
-        actions.moveToElement(element).perform();
+        sections = new SectionsComponent(driver, rootSections);
     }
 
     public void setRootAddButton() {
@@ -46,31 +37,28 @@ public abstract class BasePage extends BasePageAdminPanel {
         return rootAddButton;
     }
 
-    public WebElement getRootGrid() {
-        return rootGrid;
-    }
 
-    public CategoriesPage moveToCategories() throws InterruptedException {
+    public CategoriesPage moveToCategories() {
         sections.clickCategories();
-        //TODO Maybe add waiting
+        sleep(1000);
         return new CategoriesPage(driver);
     }
 
-    public TagsPage moveToTags() throws InterruptedException {
+    public TagsPage moveToTags() {
         sections.clickTags();
-        Thread.sleep(2000);
+        sleep(1000);
         return new TagsPage(driver);
     }
 
     public PositionsPage moveToPositions() {
         sections.clickPositions();
-//        Thread.sleep(2000);
+        sleep(1000);
         return new PositionsPage(driver);
     }
 
-    public ContextsPage moveToContexts() throws InterruptedException {
+    public ContextsPage moveToContexts() {
         sections.clickContexts();
-        Thread.sleep(2000);
+        sleep(1000);
         return new ContextsPage(driver);
     }
 
