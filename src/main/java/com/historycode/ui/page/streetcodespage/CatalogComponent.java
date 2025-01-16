@@ -10,7 +10,7 @@ import org.openqa.selenium.support.FindBy;
 import java.util.List;
 import java.util.Optional;
 
-@Getter
+
 public class CatalogComponent extends BaseComponent {
     @FindBy(xpath = ".//a[@class='catalogItem']")
     private List<WebElement> catalogElements;

@@ -44,21 +44,49 @@ public abstract class BasePage extends Base {
         burgerMenu.click();
     }
 
+//    public void waitForElementThenScrollUntilLoaderDisappears(WebElement elementToWaitFor) {
+//        waitUntilElementVisible(elementToWaitFor);
+//        while (true) {
+//            threadJs.executeScript("window.scrollTo(0, document.body.scrollHeight);");
+//            if (isLoaderPresent()) {
+//                waitUntilElementInvisible(loaderIcon);
+//            } else {
+//                break;
+//            }
+//        }
+//    }
+
+
     public void waitForElementThenScrollUntilLoaderDisappears(WebElement elementToWaitFor) {
         waitUntilElementVisible(elementToWaitFor);
+        long startTime = System.currentTimeMillis();
+        long timeout = 10 * 1000L;
         while (true) {
-            threadJs.executeScript("window.scrollTo(0, document.body.scrollHeight);");
+
+            try {
+                threadJs.executeScript("window.scrollTo(0, document.body.scrollHeight);");
+            } catch (Exception e) {
+//                logger.error("Failed to scroll: " + e.getMessage());
+                break;
+            }
             if (isLoaderPresent()) {
                 waitUntilElementInvisible(loaderIcon);
             } else {
+                break;
+            }
+            if (System.currentTimeMillis() - startTime > timeout) {
+//                logger.warn("Timeout waiting for loader to disappear");
                 break;
             }
         }
     }
 
     private boolean isLoaderPresent() {
-        WebElement loader = driver.findElement(By.xpath("//*[@id='loadingGif']"));
-        return true;
+        try {
+            return loaderIcon.isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public void waitUntilElementInvisible(WebElement element) {
