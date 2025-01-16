@@ -107,20 +107,6 @@ public class ChronologyFilmCardComponent extends BaseComponent {
         return true;
     }
 
-    public String getEventDetails(int index) {
-        if (index < 0 || index >= filmCards.size()) {
-            throw new IndexOutOfBoundsException("Invalid event index: " + index);
-        }
-
-        String yearText = year.get(index).getText();
-        String contextText = historicalContext.get(index).getText();
-        String titleText = filmTitles.get(index).getText();
-        String descriptionText = description.get(index).getText();
-
-        return String.format("Year: %s, Context: %s, Title: %s, Description: %s",
-                yearText, contextText, titleText, descriptionText);
-    }
-
     public boolean areDescriptionsWithinLimit(int maxLength) {
         for (WebElement description : description) {
             String text = description.getText();
