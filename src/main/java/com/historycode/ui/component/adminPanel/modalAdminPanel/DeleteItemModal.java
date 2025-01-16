@@ -1,7 +1,6 @@
 package com.historycode.ui.component.adminPanel.modalAdminPanel;
 
 import com.historycode.ui.component.BaseModal;
-import com.historycode.ui.page.adminpanel.partnerspage.PartnersPageGridComponent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

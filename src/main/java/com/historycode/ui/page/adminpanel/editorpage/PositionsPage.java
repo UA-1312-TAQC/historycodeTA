@@ -1,11 +1,11 @@
 package com.historycode.ui.page.adminpanel.editorpage;
 
 import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
+import com.historycode.ui.page.BasePage;
 import com.historycode.ui.page.adminpanel.editorpage.components.grids.PositionsGridComponent;
 
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.PositionsModalComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.PositionsRowComponent;
-import com.historycode.ui.page.adminpanel.editorpage.elements.addButtonElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,8 +21,11 @@ public class PositionsPage extends BasePage {
     @FindBy(xpath = "//div[@class='positions-page']//div[@class='positions-page-container']")
     private WebElement gridRootElement;
 
-    @FindBy(xpath = "//div[@role = 'dialog']/div[2]")
+    @FindBy(xpath = "//div[@class='ant-modal-content' and .//h2[text()='Додати нову позицію']]\n")
     private WebElement createModalRootElement;
+
+    @FindBy(xpath = "//div[@class='ant-modal-content' and .//h2[text()='Редагувати позицію']]")
+    private WebElement editModalRootElement;
 
     private PositionsGridComponent grid;
 
@@ -36,7 +39,7 @@ public class PositionsPage extends BasePage {
         return grid.isDisplayed();
     }
 
-    public PositionsModalComponent clickAddPosition() {
+    public PositionsModalComponent addPosition() {
         addNewPositionButton.click();
         return new PositionsModalComponent(driver, createModalRootElement);
     }
@@ -46,10 +49,6 @@ public class PositionsPage extends BasePage {
         return grid.getHeaderItemsString();
     }
 
-    @Step("Get Table Headers.")
-    public List<String> getTableHeadersString() {
-        return grid.getHeaderItemsString();
-    }
     public int getTableRowsCount() {
         return grid.getRows().size();
     }
@@ -80,7 +79,7 @@ public class PositionsPage extends BasePage {
 
     public PositionsModalComponent editTableRow(PositionsRowComponent row) {
         grid.editRow(row);
-        return new PositionsModalComponent(driver, getDisplayedModalRoot());
+        return new PositionsModalComponent(driver, editModalRootElement);
     }
 
     public DeleteItemModal deleteTableRow(PositionsRowComponent row) {
