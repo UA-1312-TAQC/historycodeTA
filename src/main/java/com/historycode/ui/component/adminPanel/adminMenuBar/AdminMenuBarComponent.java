@@ -2,6 +2,7 @@ package com.historycode.ui.component.adminPanel.adminMenuBar;
 
 import com.historycode.ui.component.BaseComponent;
 import com.historycode.ui.page.adminpanel.editorpage.CategoriesPage;
+import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
 import com.historycode.ui.page.adminpanel.jobspage.JobsPageAdminPanel;
 import com.historycode.ui.page.adminpanel.newspage.NewsPageAdminPanel;
 import com.historycode.ui.page.adminpanel.partnerspage.PartnersPageAdminPanel;
@@ -12,7 +13,7 @@ import org.openqa.selenium.support.FindBy;
 
 public class AdminMenuBarComponent extends BaseComponent {
     @FindBy(xpath = "./div[@class='BarContainer']//a[@href='/admin-panel']")
-    WebElement streetCodes;
+    WebElement historyCodes;
     @FindBy(xpath = "./div[@class='BarContainer']//a[@href='/admin-panel/job']")
     WebElement partners;
     @FindBy(xpath = "./div[@class='BarContainer']//a[@href='/admin-panel/editor']")
@@ -28,9 +29,10 @@ public class AdminMenuBarComponent extends BaseComponent {
         super(driver, rootElement);
     }
 
-/*    StreetCodeCatalogPageAdminPanel goToSreetcodePage() {
-        return new StreetCodeCatalogPageAdminPanel(driver);
-    }*/
+    public HistoryCodesAdminPanelPage goToHistoryCodesPage() {
+        historyCodes.click();
+        return new HistoryCodesAdminPanelPage(driver);
+    }
 
     public PartnersPageAdminPanel goToPartnersPage() {
         partners.click();
@@ -38,6 +40,7 @@ public class AdminMenuBarComponent extends BaseComponent {
     }
 
     public CategoriesPage goToEditorPage() {
+        editor.click();
         return new CategoriesPage(driver);
     }
 
