@@ -12,12 +12,14 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.asserts.SoftAssert;
 
 import java.util.List;
 
 
 public class ChronologyTestCase extends BaseTestRunner {
 
+    SoftAssert softAssert = new SoftAssert();
     private static final Logger logger = LoggerFactory.getLogger(ChronologyTestCase.class);
 
     @Issue("91")
@@ -35,7 +37,9 @@ public class ChronologyTestCase extends BaseTestRunner {
         chronologyComponent.getTitle();
 
         WebElement titleElement = chronologyComponent.getTitleElement();
-        Assert.assertTrue(titleElement.isDisplayed(), "Title element is not visible!");
+        softAssert.assertTrue(titleElement.isDisplayed(), "Title element is not visible!");
+
+        softAssert.assertAll();
     }
 
     @Issue("91")
@@ -54,10 +58,12 @@ public class ChronologyTestCase extends BaseTestRunner {
         ChronologyComponent chronologyComponent = new ChronologyComponent(driver);
 
         WebElement titleElement = chronologyComponent.getTitleElement();
-        Assert.assertTrue(titleElement.isDisplayed(), "Title element is not visible!");
+        softAssert.assertTrue(titleElement.isDisplayed(), "Title element is not visible!");
 
         String actualTitle = chronologyComponent.getTitle();
-        Assert.assertEquals(actualTitle, "Хронологія", "The title text is incorrect!");
+        softAssert.assertEquals(actualTitle, "Хронологія", "The title text is incorrect!");
+
+        softAssert.assertAll();
     }
 
     @Issue("91")
@@ -73,15 +79,16 @@ public class ChronologyTestCase extends BaseTestRunner {
 
         int targetIndex = 3;
 
-        Assert.assertFalse(yearsBar.isYearBoxLarger(targetIndex),
+        softAssert.assertFalse(yearsBar.isYearBoxLarger(targetIndex),
                 "The selected year box is not larger than the others!");
+
+        softAssert.assertAll();
     }
 
     @Issue("91")
     @Test
     @Step("Verify that clicking on another square leads to a scroll of a camera film to another event in the selected timeline.")
     public void testNavigateToCameraFilm() {
-
         String baseUrl = testValueProvider.getBaseUIUrl();
         String fullUrl = baseUrl + "roman-ratushnyi-seneka";
         driver.get(fullUrl);
@@ -90,13 +97,17 @@ public class ChronologyTestCase extends BaseTestRunner {
 
         int targetIndex = 6;
         WebElement filmCardByIndex = filmCardComponent.getFilmCardByIndex(targetIndex);
-        Assert.assertTrue(filmCardByIndex.isDisplayed(), "Film card at index " + targetIndex + " is not visible!");
+        softAssert.assertTrue(filmCardByIndex.isDisplayed(),
+                "Film card at index " + targetIndex + " is not visible!");
         filmCardComponent.clickFilmCardByIndex(targetIndex);
 
         String filmTitle = "Перемога в суді";
         WebElement filmCardByName = filmCardComponent.getFilmCardByName(filmTitle);
-        Assert.assertTrue(filmCardByName.isDisplayed(), "Film card with title '" + filmTitle + "' is not visible!");
+        softAssert.assertTrue(filmCardByName.isDisplayed(),
+                "Film card with title '" + filmTitle + "' is not visible!");
         filmCardComponent.clickFilmCardByName(filmTitle);
+
+        softAssert.assertAll();
     }
 
     @Issue("91")
@@ -110,13 +121,15 @@ public class ChronologyTestCase extends BaseTestRunner {
         ChronologyFilmCardComponent filmCardComponent = new ChronologyFilmCardComponent(driver);
 
         int filmCardCount = filmCardComponent.getFilmCardCount();
-        Assert.assertTrue(filmCardCount > 0, "No film cards found on the timeline!");
+        softAssert.assertTrue(filmCardCount > 0, "No film cards found on the timeline!");
 
-        Assert.assertFalse(filmCardComponent.areAllFilmCardsVisible(),
+        softAssert.assertFalse(filmCardComponent.areAllFilmCardsVisible(),
                 "Not all film cards are visible!");
 
-        Assert.assertTrue(filmCardComponent.areFilmCardsUnique(),
+        softAssert.assertTrue(filmCardComponent.areFilmCardsUnique(),
                 "Some film cards are not unique!");
+
+        softAssert.assertAll();
     }
 
     @Issue("91")
@@ -129,31 +142,12 @@ public class ChronologyTestCase extends BaseTestRunner {
 
         ChronologyFilmCardComponent filmCardComponent = new ChronologyFilmCardComponent(driver);
 
-        Assert.assertTrue(filmCardComponent.getFilmCards().size() > 0, "No film cards found on the timeline!");
+        softAssert.assertTrue(filmCardComponent.getFilmCards().size() > 0, "No film cards found on the timeline!");
 
-        Assert.assertFalse(filmCardComponent.areAllEventsComplete(),
+        softAssert.assertFalse(filmCardComponent.areAllEventsComplete(),
                 "Some film cards do not contain all required fields (Year, Historical Context, Title, or Description)!");
-    }
 
-    @Issue("91")
-    @Test
-    @Step("Log event details for each film card.")
-    public void testLogEventDetails() {
-        String baseUrl = testValueProvider.getBaseUIUrl();
-        String fullUrl = baseUrl + "roman-ratushnyi-seneka";
-        driver.get(fullUrl);
-
-        ChronologyFilmCardComponent filmCardComponent = new ChronologyFilmCardComponent(driver);
-
-        int numberOfEvents = filmCardComponent.getFilmCards().size();
-//        System.out.println("Total Events Found: " + numberOfEvents);
-        logger.info("Total Events Found: {}", numberOfEvents);
-
-        for (int i = 0; i < numberOfEvents; i++) {
-//            System.out.println("Event " + (i + 1) + ": " + filmCardComponent.getEventDetails(i));
-            String eventDetails = filmCardComponent.getEventDetails(i);
-            logger.info("Event {}: {}", (i + 1), eventDetails);
-        }
+        softAssert.assertAll();
     }
 
     @Issue("91")
@@ -170,7 +164,6 @@ public class ChronologyTestCase extends BaseTestRunner {
         Assert.assertTrue(areDescriptionsValid, "Some film card descriptions exceed 400 characters!");
 
         List<Integer> descriptionLengths = filmCardComponent.getDescriptionLengths();
-//        System.out.println("Description lengths: " + descriptionLengths);
         logger.info("Description lengths {}: ", descriptionLengths);
 
         for (int i = 0; i < descriptionLengths.size(); i++) {
