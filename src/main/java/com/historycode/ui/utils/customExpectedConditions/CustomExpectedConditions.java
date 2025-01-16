@@ -2,11 +2,13 @@ package com.historycode.ui.utils.customExpectedConditions;
 
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 
 
-public class customExpectedConditions {
+public class CustomExpectedConditions {
 
     public static ExpectedCondition<Boolean> StalenessOfElementLocatedBy(By locator) {
         return new ExpectedCondition<Boolean>(){
@@ -14,7 +16,7 @@ public class customExpectedConditions {
             public Boolean apply(WebDriver driver) {
                 try{
                     driver.findElement(locator);
-                }catch(Exception ex){
+                }catch(StaleElementReferenceException | NoSuchElementException ex){
                     return true;
                 }
                 return false;

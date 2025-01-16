@@ -109,7 +109,6 @@ public class PaginationAdminPanelComponent extends BaseComponent {
     public void clickLastPage(){
         scrollToElement(prevPage);
         waitUntilElementClickable(paginationItems.getLast());
-        System.out.println("Click performed");
         paginationItems.getLast().click();
     }
 }

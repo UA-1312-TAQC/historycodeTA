@@ -1,7 +1,7 @@
 package com.historycode.ui.page.adminpanel.teampage;
 
 import com.historycode.ui.component.adminPanel.gridAdminPanel.BaseGridComponent;
-import com.historycode.ui.utils.customExpectedConditions.customExpectedConditions;
+import com.historycode.ui.utils.customExpectedConditions.CustomExpectedConditions;
 import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -30,7 +30,7 @@ public class TeamPageGridComponent extends BaseGridComponent {
     public TeamPageGridComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
         teamRowComponents = new ArrayList<>();
-        wait.until(customExpectedConditions.StalenessOfElementLocatedBy(By.cssSelector("#loadingGif")));
+        wait.until(CustomExpectedConditions.StalenessOfElementLocatedBy(By.cssSelector("#loadingGif")));
         for(WebElement element: teamRowNodes){
             teamRowComponents.add(new TeamRowComponent(driver, element));
         }

@@ -12,6 +12,9 @@ public class ImageLoader {
     }
 
     public void loadImageUsingAbsolutePath(String imagePath, WebElement fileInputField){
+         if (!Paths.get(imagePath).toFile().exists()) {
+             throw new IllegalArgumentException("Image file does not exist: " + imagePath);
+         }
         fileInputField.sendKeys(imagePath);
     }
 }
