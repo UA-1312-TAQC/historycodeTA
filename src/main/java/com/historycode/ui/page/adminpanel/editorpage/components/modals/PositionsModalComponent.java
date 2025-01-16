@@ -8,7 +8,8 @@ public class PositionsModalComponent extends ModalComponent {
         super(driver, rootElement);
     }
 
-    public void enterPosition(String name) {
+    public PositionsModalComponent enterPosition(String name) {
         inputComponent.setInput(name);
+        return this;
     }
 }

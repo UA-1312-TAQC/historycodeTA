@@ -13,20 +13,17 @@ import org.testng.annotations.BeforeMethod;
 
 import java.time.Duration;
 
-public class TestRunnerWithAdmin extends BaseTestRunner{
+public class TestRunnerWithAdmin extends BaseTestRunner {
 
     @BeforeMethod
-    public void login(){
-
-
-
+    public void login() {
         WebStorage webStorage = (WebStorage) new Augmenter().augment(driver);
         // using local storage
         LocalStorage localStorage = webStorage.getLocalStorage();
         localStorage.setItem("AccessToken", testValueProvider.getAccessToken());
         localStorage.setItem("RefreshToken", testValueProvider.getRefreshToken());
 
-        driver.get(testValueProvider.getBaseUIUrl()+"/admin-panel");
+        driver.get(testValueProvider.getBaseUIUrl() + "/admin-panel");
 //        LoginPageAdminPanel pageAdminPanel = new LoginPageAdminPanel(driver);
 //        pageAdminPanel.enterLogin(testValueProvider.getAdminEmail())
 //                .enterPassword(testValueProvider.getAdminPass())

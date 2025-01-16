@@ -18,7 +18,7 @@ public class PersonCardComponent extends BaseComponent {
     @FindBy(xpath = "//div[contains(@class, 'streetcodeSliderContainer')]//p[contains(@class, 'cardTextContainerText')]")
     private WebElement description;
 
-    @FindBy(xpath = "//div[contains(@class, 'streetcodeSliderContainer')]//a[contains(@class, 'cardTextContainerButton')]")
+    @FindBy(xpath = ".//a[@class = 'cardTextContainerButton']")
     private WebElement moreLink;
 
     @FindBy(xpath = "//div[contains(@class, 'streetcodeSliderContainer')]//img")

@@ -12,19 +12,20 @@ import org.testng.annotations.BeforeSuite;
 
 import java.time.Duration;
 
+
 public class BaseTestRunner {
     protected WebDriver driver;
     protected static TestValueProvider testValueProvider;
 
     @BeforeSuite
-    public void beforeSuite(){
+    public void beforeSuite() {
         WebDriverManager.chromedriver().setup();
         testValueProvider = new TestValueProvider();
     }
 
     @Step("init ChromeDriver")
     @BeforeMethod
-    public void beforeMethod(){
+    public void beforeMethod() {
         ChromeOptions options = new ChromeOptions();
 
         driver = new ChromeDriver(options);
@@ -34,7 +35,7 @@ public class BaseTestRunner {
     }
 
     @AfterMethod
-    public void afterMethod(){
+    public void afterMethod() {
         if (driver != null) {
             driver.quit();
         }

@@ -1,13 +1,12 @@
 package com.historycode.ui.page.homePage;
 
 import com.historycode.ui.page.BasePage;
+import com.historycode.ui.page.streetCodePage.StreetCodePage;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,7 +19,7 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//div[contains(@class, 'newsSliderContainer')]//div[contains(@class, 'slider-item-container')]")
     private WebElement newsCarouselElement;
 
-    @FindBy(xpath = "//div[@class='streetcodeSliderContainer']//div[@class='slick-slider slick-initialized']")
+    @FindBy(xpath = "//div[@class='streetcodeSliderContainer']")
     private WebElement personCarouselElement;
 
     @FindBy(xpath = "//div[@class='teamComponent']//div[@class='sliderClass']")
@@ -32,14 +31,13 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//div[contains(@class, 'mainPageBlockStaticBanner')]")
     private List<WebElement> staticBannerElements;
 
-    private TopCarousel topCarousel;
-    private TeamCardCarousel teamCarousel;
-    private NewsCardCarousel newsCarousel;
-    private PersonCardCarousel personsCarousel;
+    private final TopCarousel topCarousel;
+    private final TeamCardCarousel teamCarousel;
+    private final NewsCardCarousel newsCarousel;
+    private final PersonCardCarousel personsCarousel;
 
     public HomePage(WebDriver driver) {
         super(driver);
-//        PageFactory.initElements(driver, this);
 
         topCarousel = new TopCarousel(driver, topCarouselElement);
         teamCarousel = new TeamCardCarousel(driver, teamCarouselElement);
@@ -57,5 +55,12 @@ public class HomePage extends BasePage {
         return staticBannerElements.stream()
                 .map(e -> new StaticBannerComponent(driver, e))
                 .collect(Collectors.toList());
+    }
+
+    public StreetCodePage clickPersonCardCarouselItem(int index) {
+        scrollToElement(personCarouselElement);
+        sleep(3000);
+        personsCarousel.getCarouselItems().get(index).clickMore();
+        return new StreetCodePage(driver);
     }
 }

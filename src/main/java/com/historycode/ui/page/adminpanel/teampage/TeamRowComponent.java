@@ -1,7 +1,8 @@
 package com.historycode.ui.page.adminpanel.teampage;
 
 import com.historycode.ui.component.BaseComponent;
-import com.historycode.ui.page.adminpanel.teampage.modal.EditMemberModal;
+import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
+import com.historycode.ui.page.adminpanel.teampage.editModal.EditMemberModal;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,7 +15,7 @@ public class TeamRowComponent extends BaseComponent {
     @FindBy(xpath = "//td[1]//div[@class='team-table-item-name']//p")
     protected WebElement lastFirstName;
     @FindBy(xpath = "//td[2]//div[@class='team-table-item-name']//p")
-    protected WebElement position;
+    protected List<WebElement> positions;
     @FindBy(xpath = "//td[3]//div[@class='team-table-item-name']//p")
     protected WebElement description;
     @FindBy(xpath = "//td[4]//img")
@@ -27,6 +28,7 @@ public class TeamRowComponent extends BaseComponent {
     protected WebElement editAction;
 
     private List<TeamSocialMediaComponent> socialMediaLinks;
+    private List<String> positionTexts;
 
     public TeamRowComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
@@ -37,8 +39,14 @@ public class TeamRowComponent extends BaseComponent {
         return lastFirstName.getText();
     }
 
-    public String getPosition() {
-        return position.getText();
+    public List<String> getPositions() {
+        if (positionTexts == null) {
+            positionTexts = new ArrayList<>();
+            for (WebElement positionElement : positions) {
+                positionTexts.add(positionElement.getText());
+            }
+        }
+        return positionTexts;
     }
 
     public String getDescription() {
@@ -59,10 +67,10 @@ public class TeamRowComponent extends BaseComponent {
         return socialMediaLinks;
     }
 
-//    public DeleteItemModal clickDelete() {
-//        deleteAction.click();
-//        return new DeleteItemModal(driver, rootElement);
-//    }
+    public DeleteItemModal clickDelete() {
+        deleteAction.click();
+        return new DeleteItemModal(driver, rootElement);
+    }
 
     public EditMemberModal clickEdit() {
         editAction.click();

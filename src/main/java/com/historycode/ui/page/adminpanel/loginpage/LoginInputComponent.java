@@ -15,16 +15,22 @@ public class LoginInputComponent extends BaseComponent {
     private WebElement inputField;
 
 
-    @FindBy(css= "div.ant-form-item-explain-error")
+    @FindBy(css = "div.ant-form-item-explain-error")
     private WebElement errorMessage;
 
     public LoginInputComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
 
-    public String getLabel () {return label.getText().trim();}
+    public String getLabel() {
+        return label.getText().trim();
+    }
 
-    public void fillInput(String inputString){inputField.sendKeys(inputString);}
+    public void fillInput(String inputString) {
+        inputField.sendKeys(inputString);
+    }
 
-    public String getErrorMessage () {return errorMessage.getText().trim();}
+    public String getErrorMessage() {
+        return errorMessage.getText().trim();
+    }
 }

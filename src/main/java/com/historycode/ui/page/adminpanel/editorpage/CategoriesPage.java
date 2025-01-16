@@ -2,13 +2,10 @@ package com.historycode.ui.page.adminpanel.editorpage;
 
 import com.historycode.ui.page.adminpanel.editorpage.components.grids.CategoriesGridComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.CategoriesModalComponent;
-import com.historycode.ui.page.adminpanel.editorpage.components.modals.ModalComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.CategoriesRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.elements.addButtonElement;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
@@ -26,7 +23,7 @@ public class CategoriesPage extends BasePage {
         return new CategoriesModalComponent(driver, getDisplayedModalRoot());
     }
 
-    public int getTableHeadersCount(){
+    public int getTableHeadersCount() {
         return grid.getHeaderItems().size();
     }
 
@@ -34,7 +31,7 @@ public class CategoriesPage extends BasePage {
         return grid.getHeaderItemsString();
     }
 
-    public List<WebElement> getTableHeaders(){
+    public List<WebElement> getTableHeaders() {
         return grid.getHeaderItems();
     }
 
@@ -42,7 +39,7 @@ public class CategoriesPage extends BasePage {
         return grid.getRows().size();
     }
 
-    public List<String> getTableRowsTitles(){
+    public List<String> getTableRowsTitles() {
         return grid.getRowsTitles();
     }
 
@@ -62,7 +59,7 @@ public class CategoriesPage extends BasePage {
         return grid.getRowByTitle(title);
     }
 
-    public String getAddButtonText(){
+    public String getAddButtonText() {
         return addCategoryButton.getButtonText();
     }
 

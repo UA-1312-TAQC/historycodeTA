@@ -5,14 +5,13 @@ import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 
 import java.util.List;
-import java.util.Map;
 
 @Getter
 public class NewsPage extends BasePage {
-    private NewsArticleComponent newsArticleComponent;
+    private final NewsArticleComponent newsArticleComponent;
 
-    private RelatedNewsComponent relatedNewsComponent;
-    private NavigationComponent navigationComponent;
+    private final RelatedNewsComponent relatedNewsComponent;
+    private final NavigationComponent navigationComponent;
 
     public NewsPage(WebDriver driver, NewsArticleComponent newsArticleComponent, RelatedNewsComponent relatedNewsComponent, NavigationComponent navigationComponent) {
         super(driver);
