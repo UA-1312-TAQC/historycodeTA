@@ -18,6 +18,8 @@ public class TeamPageAdminPanel extends BasePageAdminPanel {
     protected WebElement gridRootElement;
     @FindBy(xpath = "//button[span[text()='Створити нового члена команди']]")
     protected WebElement addNewMemberButton;
+    @FindBy(xpath = "//h2[starts-with(text(),'Додати')]/ancestor::div[@class = 'ant-modal-content']")
+    protected WebElement createEditModalNode;
 
     public TeamPageAdminPanel(WebDriver driver) {
         super(driver);
@@ -28,8 +30,10 @@ public class TeamPageAdminPanel extends BasePageAdminPanel {
         return teamPageGridComponent;
     }
 
-    public void clickAddNewMemberButton() {
+    public EditMemberModal clickAddNewMemberButton() {
         addNewMemberButton.click();
+        waitUntilElementVisible(createEditModalNode);
+        return new EditMemberModal(driver, createEditModalNode);
     }
 
     public EditMemberModal editMemberByIndex(int index) {
