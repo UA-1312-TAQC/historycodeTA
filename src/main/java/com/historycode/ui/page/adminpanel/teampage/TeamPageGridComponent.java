@@ -1,13 +1,12 @@
 package com.historycode.ui.page.adminpanel.teampage;
 
 import com.historycode.ui.component.adminPanel.gridAdminPanel.BaseGridComponent;
+import com.historycode.ui.utils.customExpectedConditions.customExpectedConditions;
 import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -16,6 +15,7 @@ import java.util.List;
 @Getter
 public class TeamPageGridComponent extends BaseGridComponent {
 
+    @Getter
     protected List<TeamRowComponent> teamRowComponents;
 
     @FindBy(xpath = "//tbody//tr")
@@ -29,15 +29,20 @@ public class TeamPageGridComponent extends BaseGridComponent {
 
     public TeamPageGridComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-
         teamRowComponents = new ArrayList<>();
-        for (WebElement element : teamRowNodes) {
+        wait.until(customExpectedConditions.StalenessOfElementLocatedBy(By.cssSelector("#loadingGif")));
+        for(WebElement element: teamRowNodes){
             teamRowComponents.add(new TeamRowComponent(driver, element));
         }
     }
 
-    public List<TeamRowComponent> getTeamRowComponents() {
-        return teamRowComponents;
+
+    public TeamRowComponent findUserByName(String name){
+        for(TeamRowComponent item: getTeamRowComponents()){
+            if(item.getLastFirstName().equals(name))
+                return item;
+        }
+        return null;
     }
 
     public List<WebElement> getRowNodes() {
@@ -77,4 +82,7 @@ public class TeamPageGridComponent extends BaseGridComponent {
         return new TeamPageGridComponent(driver, rootElement);
     }
 
+    public void clickLastPage(){
+        pagination.clickLastPage();
+    }
 }

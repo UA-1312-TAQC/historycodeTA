@@ -5,10 +5,7 @@ import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
 import java.util.List;
 
 public class PaginationAdminPanelComponent extends BaseComponent {
@@ -39,6 +36,7 @@ public class PaginationAdminPanelComponent extends BaseComponent {
         if (!hasNextPage()) {
             throw new IllegalStateException("Next page is not available");
         }
+        scrollToElement(nextPage);
         nextPage.click();
     }
 
@@ -46,6 +44,7 @@ public class PaginationAdminPanelComponent extends BaseComponent {
         if (!hasPrevPage()) {
             throw new IllegalStateException("Previous page is not available");
         }
+        scrollToElement(prevPage);
         prevPage.click();
     }
 
@@ -53,6 +52,7 @@ public class PaginationAdminPanelComponent extends BaseComponent {
         if (!hasPrevFivePages()) {
             throw new IllegalStateException("Previous pages are not available");
         }
+        scrollToElement(prevFivePages);
         prevFivePages.click();
     }
 
@@ -60,6 +60,7 @@ public class PaginationAdminPanelComponent extends BaseComponent {
         if (!hasNextFivePages()) {
             throw new IllegalStateException("Next pages are not available");
         }
+        scrollToElement(nextFivePages);
         nextFivePages.click();
     }
 
@@ -67,6 +68,7 @@ public class PaginationAdminPanelComponent extends BaseComponent {
         if (!isValidPaginationItem(index)) {
             throw new IllegalArgumentException("Pagination item with index " + index + " is not available or invalid");
         }
+        scrollToElement(prevPage);
         paginationItems.get(index).click();
     }
 
@@ -103,4 +105,11 @@ public class PaginationAdminPanelComponent extends BaseComponent {
         return item.isDisplayed() && item.isEnabled();
     }
 
+
+    public void clickLastPage(){
+        scrollToElement(prevPage);
+        waitUntilElementClickable(paginationItems.getLast());
+        System.out.println("Click performed");
+        paginationItems.getLast().click();
+    }
 }
