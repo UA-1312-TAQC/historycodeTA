@@ -1,13 +1,14 @@
 package com.historycode.ui.page.streetcodespage;
 
 import com.historycode.ui.component.BaseComponent;
+import com.historycode.ui.page.BasePage;
 import com.historycode.ui.page.streetCodePage.StreetCodePage;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class StreetCodesPage extends BaseComponent {
+public class StreetCodesPage extends BasePage {
 
     @FindBy(xpath = "//h1[@class='streetcodeCatalogHeading']")
     private WebElement streetCodesTitleNode;
