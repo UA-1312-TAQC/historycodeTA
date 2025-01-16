@@ -72,13 +72,13 @@ public class StreetCodePage extends BasePage {
     }
 
     private void createPageComponents() {
-        this.breadcrumbs = new BreadcrumbsElement(driver);
-        this.scrollTopButton = new ScrollTopButtonElement(driver);
-        this.quickDonateButton = new QuickDonateButtonElement(driver, quickDonateButtonNode);
-        this.mainCard = new MainCardComponent(driver, mainCardNode);
-        this.verticalProgress = new PageNavigationBarComponent(driver, verticalProgressNode);
-        this.textBlock = new StreetCodeTextBlockComponent(driver, textBlockRoot);
-        initializeOptionalComponents(driver);
+//        this.breadcrumbs = new BreadcrumbsElement(driver);
+//        this.scrollTopButton = new ScrollTopButtonElement(driver);
+//        this.quickDonateButton = new QuickDonateButtonElement(driver, quickDonateButtonNode);
+//        this.mainCard = new MainCardComponent(driver, mainCardNode);
+//        this.verticalProgress = new PageNavigationBarComponent(driver, verticalProgressNode);
+//        this.textBlock = new StreetCodeTextBlockComponent(driver, textBlockRoot);
+//        initializeOptionalComponents(driver);
     }
 
     public StreetCodePage setMainCard() {
@@ -95,9 +95,16 @@ public class StreetCodePage extends BasePage {
         return driver.findElements(By.xpath(xpath)).stream().findFirst().orElse(null);
     }
 
+    public StreetCodeTextBlockComponent getTextBlock(){
+        if (textBlock == null) {
+            textBlock = new StreetCodeTextBlockComponent(driver, textBlockRoot);
+        }
+        return textBlock;
+    }
+
     private void initializeOptionalComponents(WebDriver driver) {
-        Optional.ofNullable(findElement("//div[@id='text']"))
-                .ifPresent(element -> textBlock = new StreetCodeTextBlockComponent(driver, element));
+//        Optional.ofNullable(findElement("//div[@id='text']"))
+//                .ifPresent(element -> textBlock = new StreetCodeTextBlockComponent(driver, element));
 
         Optional.ofNullable(findElement("//div[@id='wow-facts']"))
                 .ifPresent(element -> facts = new InterestingFactsComponent(driver, element));
@@ -121,48 +128,5 @@ public class StreetCodePage extends BasePage {
                 .ifPresent(element -> runningLine = new RunningLineComponent(driver, element));
     }
 
-//    public Optional<StreetCodeTextBlockComponent> getTextBlock() {
-//        return Optional.ofNullable(textBlock);
-//    }
-
-    public Optional<InterestingFactsComponent> getFacts() {
-        return Optional.ofNullable(facts);
-    }
-
-    public Optional<ChronologyComponent> getTimeline() {
-        return Optional.ofNullable(timeline);
-    }
-
-    public Optional<RelatedPersonasComponent> getRelatedFigures() {
-        return Optional.ofNullable(relatedFigures);
-    }
-
-    public Optional<SourcesComponent> getSources() {
-        return Optional.ofNullable(sources);
-    }
-
-    public Optional<ArtGalleryComponent> getArtGallery() {
-        return Optional.ofNullable(artGallery);
-    }
-
-    public Optional<PartnerComponent> getPartners() {
-        return Optional.ofNullable(partners);
-    }
-
-    public Optional<RunningLineComponent> getRunningLine() {
-        return Optional.ofNullable(runningLine);
-    }
-
-    public void openDonateModal() {
-        quickDonateButton.clickDonateButton();
-    }
-
-    public void scrollToTop() {
-        scrollTopButton.clickScrollTop();
-    }
-
-    public void toggleProgressBar() {
-        verticalProgress.toggleProgressBar();
-    }
 }
 
