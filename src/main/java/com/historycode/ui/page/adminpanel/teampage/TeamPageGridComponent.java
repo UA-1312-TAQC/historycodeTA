@@ -25,27 +25,12 @@ public class TeamPageGridComponent extends BaseGridComponent {
     public TeamPageGridComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
         teamRowComponents = new ArrayList<>();
-        /*while(true){
-            System.out.println(driver.findElement(By.cssSelector("#loadingGif")).isDisplayed());
-            sleep(100);
-            if(false){
-                break;
-            }
-        }*/
         wait.until(customExpectedConditions.StalenessOfElementLocatedBy(By.cssSelector("#loadingGif")));
-        /*wait.until(ExpectedConditions.not(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#loadingGif"))));
-                    /*    loca
-                invisibilityOfElementLocated());*/
+        //wait.until(ExpectedConditions.stalenessOf(driver.findElement(By.cssSelector("#loadingGif"))));
        // wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("#loadingGif")));
-        //List<WebElement> tempRowNodes = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//tbody//tr"))); //element for debugging
-       // System.out.println("Table row nodes count " + tempRowNodes.size());
-        //System.out.println("List size " + tempRowNodes.size());
         for(WebElement element: teamRowNodes){
             teamRowComponents.add(new TeamRowComponent(driver, element));
         }
-        /*for(TeamRowComponent element: teamRowComponents){
-            System.out.println("Element found:  " + element.toString());
-        }*/
         System.out.println("Table row count " + teamRowComponents.size());
     }
 
