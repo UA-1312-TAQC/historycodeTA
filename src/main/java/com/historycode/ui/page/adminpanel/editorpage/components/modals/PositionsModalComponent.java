@@ -8,7 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class PositionsModalComponent extends BaseEditModal {
+public class PositionsModalComponent extends ModalComponent {
     @FindBy(xpath = ".//label[@for = 'position']/../..")
     private WebElement positionContainer;
 
@@ -20,9 +20,14 @@ public class PositionsModalComponent extends BaseEditModal {
         this.positionInput = new InputElement(driver, positionContainer);
     }
 
-    @Step("Input new position value")
-    public PositionsModalComponent inputNewPosition(String name) {
-        positionInput.setInputField(name);
+    @Step("Check Position Modal is Displayed.")
+    public boolean isExist() {
+        return closeButton.isDisplayed() && title.isDisplayed() && saveButton.isDisplayed();
+    }
+
+    @Step("Enter '{name}' Into The Position Name Input.")
+    public PositionsModalComponent enterPosition(String name) {
+        inputComponent.setInput(name);
         return this;
     }
 

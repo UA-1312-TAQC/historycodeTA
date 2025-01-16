@@ -19,7 +19,7 @@ public class RelatedPersonasModal extends BaseModal {
     @FindBy(xpath = ".//div[@class='ant-modal css-k7429z relatedFiguresModal']//button")
     private WebElement closeButton;
 
-    private List<RelatedPersonasCardComponent> personCards;
+    private final List<RelatedPersonasCardComponent> personCards;
 
     public RelatedPersonasModal(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);

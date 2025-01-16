@@ -24,55 +24,54 @@ public class PositionsPage extends BasePage {
     @FindBy(xpath = "//div[@role = 'dialog']/div[2]")
     private WebElement createModalRootElement;
 
-    private PositionsGridComponent gridComponent;
+    private PositionsGridComponent grid;
 
     public PositionsPage(WebDriver driver) {
         super(driver);
-        this.gridComponent = new PositionsGridComponent(driver, gridRootElement);
+        this.grid = new PositionsGridComponent(driver, gridRootElement);
     }
 
-    @Step("Add new position")
-    public PositionsModalComponent addPosition() {
-        waitUntilElementClickable(addNewPositionButton);
+    @Step("Check Positions Grid Is Displayed Correctly.")
+    public boolean isGridDisplayed() {
+        return grid.isDisplayed();
+    }
+
+    public PositionsModalComponent clickAddPosition() {
         addNewPositionButton.click();
         return new PositionsModalComponent(driver, createModalRootElement);
     }
 
-    public int getTableHeadersCount() {
-        return gridComponent.getHeaderItems().size();
-    }
-
+    @Step("Get Table Headers.")
     public List<String> getTableHeadersString() {
-        return gridComponent.getHeaderItemsString();
+        return grid.getHeaderItemsString();
     }
 
-    public List<WebElement> getTableHeaders() {
-        return gridComponent.getHeaderItems();
+    @Step("Get Table Headers.")
+    public List<String> getTableHeadersString() {
+        return grid.getHeaderItemsString();
     }
-
     public int getTableRowsCount() {
-        return gridComponent.getRows().size();
+        return grid.getRows().size();
     }
 
     public List<String> getTableRowsTitles() {
-        return gridComponent.getRowsTitles();
+        return grid.getRowsTitles();
     }
 
     public List<PositionsRowComponent> getTableRows() {
-        return gridComponent.getRows();
+        return grid.getRows();
     }
 
     public List<PositionsRowComponent> getTableRowsByTitlePart(String part) {
-        return gridComponent.getRowsByTitlePart(part);
+        return grid.getRowsByTitlePart(part);
     }
 
     public PositionsRowComponent getTableRowByNumber(int num) {
-        return gridComponent.getRowByNum(num);
+        return grid.getRowByNum(num);
     }
 
     public PositionsRowComponent getTableRowByTitle(String title) {
-        waitUntilElementVisible(gridRootElement);
-        return gridComponent.getRowByTitle(title);
+        return grid.getRowByTitle(title);
     }
 
     public String getAddButtonText() {
@@ -80,12 +79,12 @@ public class PositionsPage extends BasePage {
     }
 
     public PositionsModalComponent editTableRow(PositionsRowComponent row) {
-        gridComponent.editRow(row);
+        grid.editRow(row);
         return new PositionsModalComponent(driver, getDisplayedModalRoot());
     }
 
     public DeleteItemModal deleteTableRow(PositionsRowComponent row) {
         waitUntilElementVisible(gridRootElement);
-        return gridComponent.deleteRow(row);
+        return grid.deleteRow(row);
     }
 }

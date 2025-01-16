@@ -1,13 +1,12 @@
 package com.historycode.ui.page.adminpanel.newspage;
 
-import java.util.List;
-
+import com.historycode.ui.component.adminPanel.gridAdminPanel.BaseGridComponent;
+import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import com.historycode.ui.component.adminPanel.gridAdminPanel.BaseGridComponent;
 
-import lombok.Getter;
+import java.util.List;
 
 @Getter
 public class NewsPageGridComponent extends BaseGridComponent {
@@ -35,7 +34,7 @@ public class NewsPageGridComponent extends BaseGridComponent {
     public int getRowCount() {
         return newsRowComponents.size();
     }
-    
+
     public void clickNextPage() {
         pagination.clickNextPage();
         this.newsRowComponents = updateNewsRows(driver);

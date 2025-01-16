@@ -10,10 +10,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ContactUsContentComponent extends BaseComponent {
-    @Getter @FindBy(xpath = "//div[@class='contactUsContent']")
+
+    @Getter
+    @FindBy(xpath = "./div[contains(@class, 'contactUsContent')]")
     private List<WebElement> text;
-    @Getter @FindBy(xpath = "//div[@class='contactUsBtnContainer']")
+
+    @Getter
+    @FindBy(xpath = "./div[contains(@class, 'contactUsBtnContainer')]")
     private WebElement button;
+
 
     public ContactUsContentComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);

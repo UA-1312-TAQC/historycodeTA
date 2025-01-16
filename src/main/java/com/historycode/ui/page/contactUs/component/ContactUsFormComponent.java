@@ -8,15 +8,24 @@ import org.openqa.selenium.support.FindBy;
 
 
 public class ContactUsFormComponent extends BaseComponent {
-    @Getter @FindBy(xpath = "//div[@class='formTitle']")
+    @Getter
+    @FindBy(xpath = "./div[contains(@class, 'formTitle')]")
     private WebElement formTitle;
-    @Getter @FindBy(xpath = "//div[@class='formSubTitle']")
+
+    @Getter
+    @FindBy(xpath = "./div[contains(@class, 'formSubTitle')]")
     private WebElement formSubTitle;
-    @Getter @FindBy(xpath = "//div[@class='ant-input css-k7429z']")
+
+    @Getter
+    @FindBy(xpath = "./textarea[contains(@class, 'ant-input') and contains(@class, 'css-k7429z')]")
     private WebElement message;
-    @Getter @FindBy(xpath = "//div[@class='ant-input css-k7429z input']")
+
+    @Getter
+    @FindBy(xpath = "./input[contains(@class, 'ant-input') and contains(@class, 'input')]")
     private WebElement email;
-    @Getter@FindBy(xpath = "//div[@class='ant-btn css-k7429z ant-btn-primary']")
+
+    @Getter
+    @FindBy(xpath = "./button[contains(@class, 'ant-btn') and contains(@class, 'ant-btn-primary')]")
     private WebElement button;
 
     public ContactUsFormComponent(WebDriver driver, WebElement rootElement) {
@@ -39,13 +48,5 @@ public class ContactUsFormComponent extends BaseComponent {
 
     public boolean isButtonEnabled() {
         return button.isEnabled();
-    }
-
-    public String getFormTitle() {
-        return formTitle.getText();
-    }
-
-    public String getFormSubTitle() {
-        return formSubTitle.getText();
     }
 }

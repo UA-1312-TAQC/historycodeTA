@@ -8,31 +8,23 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class DropdownComponent extends BaseComponent {
     @Getter
-    @FindBy(xpath = "//td[contains(@class, 'ant-table-cell')]//button[contains(@class, 'ant-btn')]")
-    private WebElement dropdownButton;
-
-    @Getter
-    @FindBy(xpath = "//ul[contains(@class, 'ant-dropdown-menu')]")
+    @FindBy(xpath = "./ul[contains(@class, 'ant-dropdown-menu')]")
     private WebElement dropdownMenuContainer;
 
     @Getter
-    @FindBy(xpath = "//ul[contains(@class, 'ant-dropdown-menu')]/li")
+    @FindBy(xpath = "./ul[contains(@class, 'ant-dropdown-menu')]/li")
     private List<WebElement> options;
 
     @Getter
-    @FindBy(xpath = "//div[@class='ant-space-item'][1]")
+    @FindBy(xpath = "./div[@class='ant-space-item'][1]")
     private WebElement selectedOption;
 
-    @FindBy(xpath = "//div[@class='ant-select-selection-overflow-item']")
-    private List<WebElement> selectedOptions;
-
-    private final String OPTION_BY_TEXT_TEMPLATE = "//ul[contains(@class, 'ant-dropdown-menu')]/li[span[contains(text(), '%s')]]";
+    private final String OPTION_BY_TEXT_TEMPLATE = "./ul[contains(@class, 'ant-dropdown-menu')]/li[span[contains(text(), '%s')]]";
 
     public DropdownComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
@@ -40,13 +32,13 @@ public class DropdownComponent extends BaseComponent {
     }
 
     public void openDropdown() {
-        dropdownButton.click();
+        rootElement.click();
         waitUntilElementVisible(dropdownMenuContainer);
     }
 
     public void clickOptionByText(String optionText) {
         String dynamicXpath = String.format(OPTION_BY_TEXT_TEMPLATE, optionText);
-        WebElement option = dropdownButton.findElement(By.xpath(dynamicXpath));
+        WebElement option = rootElement.findElement(By.xpath(dynamicXpath));
         option.click();
     }
 
@@ -61,6 +53,7 @@ public class DropdownComponent extends BaseComponent {
 
     /**
      * Selects multiple options in the dropdown by their visible texts.
+     *
      * @param optionTexts a list of option texts to select.
      */
     public void selectMultipleOptions(List<String> optionTexts) {
@@ -74,6 +67,7 @@ public class DropdownComponent extends BaseComponent {
 
     /**
      * Fetches all selected options as a list of strings by dynamically querying the DOM.
+     *
      * @return a list of texts of the selected options.
      */
     public List<String> getSelectedMultipleOptions() {

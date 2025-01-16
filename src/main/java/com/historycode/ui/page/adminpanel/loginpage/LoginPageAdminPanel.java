@@ -56,6 +56,7 @@ public class LoginPageAdminPanel extends BasePage {
         sighInButton.click();
         return this;
     }
+
     public LoginPageAdminPanel clickCaptcha() {
         WebElement passwordLabel = driver.findElement(By.xpath("//*[@id='root']/div/div[4]/div[2]/form/div[2]/div/div[1]/label"));
         sleep(3000);

@@ -12,24 +12,29 @@ import org.openqa.selenium.support.FindBy;
 @Getter
 public class JobsRowComponent extends BaseComponent {
     @Getter
-    @FindBy(xpath = "//td[@class='ant-table-cell'][1]")
+    @FindBy(xpath = "./td[@class='ant-table-cell'][1]")
     WebElement title;
 
     @Getter
-    @FindBy(xpath = "//td[@class='ant-table-cell'][2]")
+    @FindBy(xpath = "./td[@class='ant-table-cell'][2]")
     WebElement salary;
+
+    @Getter
+    @FindBy(xpath = "./td[contains(@class, 'ant-table-cell')]//button[contains(@class, 'ant-btn')]")
+    private WebElement dropdownButtonContainer;
 
     @Getter
     DropdownComponent dropdownStatus;
 
-    @FindBy(xpath = "//td[contains(@class, 'ant-table-cell')][4]//span[contains(@class, 'delete')]")
+    @FindBy(xpath = "./td[contains(@class, 'ant-table-cell')][4]//span[contains(@class, 'delete')]")
     WebElement deleteAction;
 
-    @FindBy(xpath = "//td[contains(@class, 'ant-table-cell')][4]//span[contains(@class, 'edit')]")
+    @FindBy(xpath = "./td[contains(@class, 'ant-table-cell')][4]//span[contains(@class, 'edit')]")
     WebElement editAction;
 
     public JobsRowComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
+        this.dropdownStatus = new DropdownComponent(driver, dropdownButtonContainer);
     }
 
     public void getJobStatus() {

@@ -1,17 +1,14 @@
 package com.historycode.ui.page.adminpanel.partnerspage;
 
-import java.util.List;
-
 import com.historycode.ui.component.BaseComponent;
 import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
-
 import com.historycode.ui.page.adminpanel.partnerspage.modal.EditPartnersModal;
-
 import lombok.Getter;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
+import java.util.List;
 
 public class PartnersRowComponent extends BaseComponent {
 

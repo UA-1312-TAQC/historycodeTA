@@ -17,7 +17,7 @@ public class DeletePositionEditor extends TestRunnerWithAdmin {
     String positionName;
 
     @BeforeMethod
-    public void setupForDeleteJob() throws InterruptedException {
+    public void setupForDeleteJob() {
         login();
         positionName = "Бухгалтер_" + UUID.randomUUID().toString().substring(0, 2);
         driver.get(testValueProvider.getBaseUIUrl() + "admin-panel/editor");

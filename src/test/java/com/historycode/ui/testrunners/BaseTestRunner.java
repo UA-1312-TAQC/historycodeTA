@@ -19,25 +19,24 @@ public class BaseTestRunner {
     protected static TestValueProvider testValueProvider;
 
     @BeforeSuite
-    public void beforeSuite(){
+    public void beforeSuite() {
         WebDriverManager.chromedriver().setup();
         testValueProvider = new TestValueProvider();
     }
 
     @Step("init ChromeDriver")
     @BeforeMethod
-    public void beforeMethod(){
+    public void beforeMethod() {
         ChromeOptions options = new ChromeOptions();
 
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(testValueProvider.getImplicitlyWait()));
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(testValueProvider.getImplicitlyWait()));
         driver.get(testValueProvider.getBaseUIUrl());
     }
 
     @AfterMethod
-    public void afterMethod(){
+    public void afterMethod() {
         if (driver != null) {
             driver.quit();
         }

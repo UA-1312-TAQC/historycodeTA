@@ -28,7 +28,7 @@ public class MainCardComponent extends BaseComponent {
     private List<WebElement> keywords;
 
     @FindBy(xpath = ".//p[@class='teaserBlock']")
-    private WebElement description;
+    private WebElement teaserBlockNode;
 
     @FindBy(xpath = ".//button[contains(@class, 'audioBtn')]")
     private WebElement audioButton;
@@ -36,8 +36,8 @@ public class MainCardComponent extends BaseComponent {
     @FindBy(xpath = ".//div[@class='leftSider']//ul[@class='slick-dots']")
     private WebElement paginationNode;
 
-    private KeywordPersonasModal keywordPersonsModal;
-    private PaginationComponent pagination;
+    private final KeywordPersonasModal keywordPersonsModal;
+    private final PaginationComponent pagination;
 
     public MainCardComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
@@ -64,13 +64,24 @@ public class MainCardComponent extends BaseComponent {
     }
 
     @Step("Get the text of the 'Teaser' element")
-    public String getDescription() {
-        return description.getText();
+    public String getTeaserText() {
+        return teaserBlockNode.getText();
+    }
+
+    @Step("Get the number of paragraphs in the 'Teaser' element")
+    public int getTeaserParagraphCount() {
+        String[] paragraphs = teaserBlockNode.getText().split("\n");
+        return paragraphs.length;
+    }
+
+    @Step("Get the number of characters in the 'Teaser' element")
+    public int getTeaserCharacterCount() {
+        return getTeaserText().replace("\n", "").length();
     }
 
     @Step("Check if the 'Teaser' text has truncation or overflow")
     public boolean isTeaserTextOverflowing() {
-        return isContentOverflowing(description);
+        return isContentTruncatedOrOverflow(teaserBlockNode);
     }
 
     public void clickAudioButton() {

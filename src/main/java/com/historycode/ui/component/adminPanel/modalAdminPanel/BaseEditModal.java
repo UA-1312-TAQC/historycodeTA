@@ -1,7 +1,6 @@
 package com.historycode.ui.component.adminPanel.modalAdminPanel;
 
 import com.historycode.ui.component.BaseModal;
-import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -17,8 +16,7 @@ public abstract class BaseEditModal extends BaseModal {
     @FindBy(xpath = "./div[@class='center']//h2")
     protected WebElement title;
 
-    //TODO why cant find this button
-    @FindBy(xpath = "//div[@class='center']//button")
+    @FindBy(xpath = "./div[@class='center']//button")
     protected WebElement saveButton;
 
     public BaseEditModal(WebDriver driver, WebElement rootElement) {

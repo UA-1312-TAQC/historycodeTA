@@ -1,20 +1,18 @@
 package com.historycode.ui.page.streetCodePage.components.carousels;
 
 import com.historycode.ui.page.streetCodePage.components.ArtGalleryCardComponent;
-import com.historycode.ui.page.streetCodePage.components.PaginationComponent;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
-public class ArtGalleryCarousel extends BaseCarousel{
+public class ArtGalleryCarousel extends BaseCarousel {
     @FindBy(xpath = ".//div[@class='slider-item-container']/div/div")
     private List<WebElement> artGalleryCardNodes;
 
-    private List<ArtGalleryCardComponent> artGalleryCards;
+    private final List<ArtGalleryCardComponent> artGalleryCards;
 
     public ArtGalleryCarousel(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
