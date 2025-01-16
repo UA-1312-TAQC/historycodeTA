@@ -50,7 +50,6 @@ public class DeleteItemModal extends BaseModal {
     }
 
     public void clickOkButton() {
-        sleep(1000);
         ok.click();
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
         wait.until(ExpectedConditions.invisibilityOf(rootElement));
