@@ -104,7 +104,7 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
     public boolean checkExpanded() {
         int initialNumberOfParagraph = getParagraphCount();
         clickReadMoreButton();
-        waitUntilElementVisible(paragraphs.get(paragraphs.size() - 1));
+        waitUntilElementVisible(paragraphs.getLast());
         int expandedNumberOfParagraph = getParagraphCount();
 
         return expandedNumberOfParagraph > initialNumberOfParagraph;
@@ -112,7 +112,7 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
 
     public boolean checkCollapsed(int initialCount) {
         clickReadLessButton();
-        waitUntilElementVisible(paragraphs.get(0));
+        waitUntilElementVisible(paragraphs.getFirst());
         int collapsedCount = getParagraphCount();
 
         return collapsedCount == initialCount;
