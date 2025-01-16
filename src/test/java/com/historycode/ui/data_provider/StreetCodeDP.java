@@ -7,16 +7,16 @@ public class StreetCodeDP {
     @DataProvider(name = "urlSetProvider")
     public Object[][] urlSetProvider() {
         return new Object[][]{
-                {"sichovi-striltsi"},
-                {"khrystyna-skachkivska-sushko"},
-                {"braty-chyzhevski"}
+                {"/sichovi-striltsi"},
+                {"/khrystyna-skachkivska-sushko"},
+                {"/braty-chyzhevski"}
         };
     }
 
     @DataProvider(name = "urlProvider")
     public Object[][] urlProvider() {
         return new Object[][]{
-                {"sichovi-striltsi"}
+                {"/sichovi-striltsi"}
         };
     }
 }
