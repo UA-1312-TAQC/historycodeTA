@@ -1,5 +1,6 @@
 package com.historycode.ui.adminPanel;
 
+import com.historycode.ui.page.adminpanel.editorpage.CategoriesPage;
 import com.historycode.ui.page.adminpanel.editorpage.ContextsPage;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.ContextsRowComponent;
 import com.historycode.ui.testrunners.TestRunnerWithAdmin;
@@ -21,12 +22,12 @@ public class DeleteContextEditor extends TestRunnerWithAdmin {
         Random rand = new Random();
         int n = rand.nextInt(50);
         contextName = "Context_" + n;
-        driver.get(testValueProvider.getBaseUIUrl() + "admin-panel/editor");
-        ContextsPage contextsPage = new ContextsPage(driver);
-        contextsPage.addContext()
-                .inputNewContext(contextName)
-                .saveNewContext()
-                .closeModal();
+        driver.get(testValueProvider.getBaseUIUrl() + "/admin-panel/editor");
+        ContextsPage contextsPage = new CategoriesPage(driver).moveToContexts();
+        contextsPage.clickAddContext()
+                .enterContext(contextName)
+                .save()
+                .close();
     }
 
     @Test

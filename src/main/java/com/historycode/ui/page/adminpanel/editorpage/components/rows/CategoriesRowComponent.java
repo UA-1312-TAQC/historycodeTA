@@ -1,35 +1,45 @@
 package com.historycode.ui.page.adminpanel.editorpage.components.rows;
 
-import com.historycode.ui.page.adminpanel.editorpage.BasePage;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class CategoriesRowComponent extends RowComponent {
-    private static final String PICTURE_XPATH = ".//td[@class='ant-table-cell'][2]//img";
-    private static final String DELETE_ACTION_XPATH = "./td[@class='ant-table-cell'][3]//span[contains(@class, 'anticon-delete')]//*[name()='svg']";  // Relative to rootElement
-    private static final String EDIT_ACTION_XPATH = ".//td[@class='ant-table-cell'][3]//span[contains(@class, 'anticon-edit')]//*[name()='svg']";  // Relative to rootElement
 
-    @FindBy(xpath = DELETE_ACTION_XPATH)
+    @FindBy(xpath = "./td[@class='ant-table-cell'][3]//span[contains(@class, 'anticon-delete')]//*[name()='svg']")
     private WebElement deleteAction;
-    @FindBy(xpath = EDIT_ACTION_XPATH)
+    @FindBy(xpath = ".//td[@class='ant-table-cell'][3]//span[contains(@class, 'anticon-edit')]//*[name()='svg']")
     private WebElement editAction;
-    @FindBy(xpath = PICTURE_XPATH)
+    @FindBy(xpath = ".//td[@class='ant-table-cell'][2]//img")
     private WebElement picture;
 
     public CategoriesRowComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
 
+    @Step("Check Categories Row is Displayed.")
+    public boolean isExist() {
+        return getTitle().isDisplayed() && picture.isDisplayed() && editAction.isDisplayed() &&  deleteAction.isDisplayed();
+    }
+
     public void clickEdit() {
-        BasePage.moveToElement(driver, editAction);
         editAction.click();
     }
 
     public void clickDelete() {
-        BasePage.moveToElement(driver, editAction);
         deleteAction.click();
     }
-    //TODO Create method to get row picture
-    //TODO Create method to click picture
+
+    public WebElement getPicture() {
+        return picture;
+    }
+
+    public WebElement getEditAction(){
+        return editAction;
+    }
+
+    public WebElement getDeleteAction() {
+        return deleteAction;
+    }
 }
