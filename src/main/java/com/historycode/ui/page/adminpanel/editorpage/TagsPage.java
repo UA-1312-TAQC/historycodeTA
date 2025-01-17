@@ -80,9 +80,9 @@ public class TagsPage extends BaseEditorPage {
         return addTagButton.getButtonText();
     }
 
-    public TagsModalComponent editTableRow(TagsRowComponent row) throws InterruptedException {
+    public TagsModalComponent editTableRow(TagsRowComponent row) {
         grid.editRow(row);
-        Thread.sleep(500);
+        sleep(500);
         return new TagsModalComponent(driver, getDisplayedModalRoot());
     }
 
