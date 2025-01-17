@@ -22,7 +22,7 @@ public class StreetCodeTests extends BaseTestRunner {
     @Step("Navigate to the 'StreetCode' page")
     private void navigateToStreetCodePage(String addUIUrl) {
         driver.navigate().to(testValueProvider.getBaseUIUrl() + addUIUrl);
-        streetCodePage = new StreetCodePage(driver, false);
+        streetCodePage = new StreetCodePage(driver);
     }
 
     @Issue("73")

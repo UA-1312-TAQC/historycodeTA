@@ -27,53 +27,58 @@ public class StreetCodePage extends BasePage {
     @FindBy(xpath = "//div[@class='donateBtnContainer']")
     private WebElement quickDonateButtonNode;
 
-    @Getter
+    @FindBy(xpath = "//div[@id='text']")
+    private WebElement textBlockRoot;
+
+    @FindBy(xpath = "//div[@id='wow-facts']")
+    private WebElement factsNode;
+
+    @FindBy(xpath = "//div[@id='timeline']")
+    private WebElement timelineNode;
+
+    @FindBy(xpath = "//div[@class='relatedFiguresContainer']")
+    private WebElement relatedFiguresNode;
+
+    @FindBy(xpath = "//div[@class='sourcesContainer']")
+    private WebElement sourcesNode;
+
+    @FindBy(xpath = "//div[@class='art-gallery']")
+    private WebElement artGalleryNode;
+
+    @FindBy(xpath = "//div[@class='partnerContainer']")
+    private WebElement partnersNode;
+
+    @FindBy(xpath = "//div[@class='tickerContainer']")
+    private WebElement runningLineNode;
+
+
     private BreadcrumbsElement breadcrumbs;
-    @Getter
     private ScrollTopButtonElement scrollTopButton;
-    @Getter
     private QuickDonateButtonElement quickDonateButton;
-    @Getter
     private MainCardComponent mainCard;
-    @Getter
     private StreetCodeTextBlockComponent textBlock;
-    @Getter
     private InterestingFactsComponent facts;
-    @Getter
     private ChronologyComponent timeline;
-    @Getter
     private RelatedPersonasComponent relatedFigures;
-    @Getter
     private SourcesComponent sources;
     private ArtGalleryComponent artGallery;
-    @Getter
     private PartnerComponent partners;
-    @Getter
     private RunningLineComponent runningLine;
     private PageNavigationBarComponent verticalProgress;
 
 
     public StreetCodePage(WebDriver driver) {
         super(driver);
-        createPageComponents();
     }
 
-    public StreetCodePage(WebDriver driver, boolean staticMode) {
-        super(driver);
+//    public StreetCodePage(WebDriver driver, boolean staticMode) {
+//        super(driver);
+//
+//        if (staticMode) {
+//            createPageComponents();
+//        }
+//    }
 
-        if (staticMode) {
-            createPageComponents();
-        }
-    }
-
-    private void createPageComponents() {
-        this.breadcrumbs = new BreadcrumbsElement(driver);
-        this.scrollTopButton = new ScrollTopButtonElement(driver);
-        this.quickDonateButton = new QuickDonateButtonElement(driver, quickDonateButtonNode);
-        this.mainCard = new MainCardComponent(driver, mainCardNode);
-        this.verticalProgress = new PageNavigationBarComponent(driver, verticalProgressNode);
-        initializeOptionalComponents(driver);
-    }
 
     public StreetCodePage setMainCard() {
         this.mainCard = new MainCardComponent(driver, mainCardNode);
@@ -85,70 +90,95 @@ public class StreetCodePage extends BasePage {
         return this;
     }
 
-    private WebElement findElement(String xpath) {
-        return driver.findElements(By.xpath(xpath)).stream().findFirst().orElse(null);
+    public BreadcrumbsElement getBreadcrumbs() {
+        if (breadcrumbs == null) {
+            breadcrumbs = new BreadcrumbsElement(driver);
+        }
+        return breadcrumbs;
     }
 
-    private void initializeOptionalComponents(WebDriver driver) {
-        Optional.ofNullable(findElement("//div[@id='text']"))
-                .ifPresent(element -> textBlock = new StreetCodeTextBlockComponent(driver, element));
-
-        Optional.ofNullable(findElement("//div[@id='wow-facts']"))
-                .ifPresent(element -> facts = new InterestingFactsComponent(driver, element));
-
-        Optional.ofNullable(findElement("//div[@id='timeline']"))
-                .ifPresent(element -> timeline = new ChronologyComponent(driver, element));
-
-        Optional.ofNullable(findElement("//div[@class='relatedFiguresContainer']"))
-                .ifPresent(element -> relatedFigures = new RelatedPersonasComponent(driver, element));
-
-        Optional.ofNullable(findElement("//div[@class='sourcesContainer']"))
-                .ifPresent(element -> sources = new SourcesComponent(driver, element));
-
-        Optional.ofNullable(findElement("//div[@class='art-gallery']"))
-                .ifPresent(element -> artGallery = new ArtGalleryComponent(driver, element));
-
-        Optional.ofNullable(findElement("//div[@class='partnerContainer']"))
-                .ifPresent(element -> partners = new PartnerComponent(driver, element));
-
-        Optional.ofNullable(findElement("//div[@class='tickerContainer']"))
-                .ifPresent(element -> runningLine = new RunningLineComponent(driver, element));
+    public ScrollTopButtonElement getScrollTopButton() {
+        if (scrollTopButton == null) {
+            scrollTopButton = new ScrollTopButtonElement(driver);
+        }
+        return scrollTopButton;
     }
 
-    public Optional<StreetCodeTextBlockComponent> getTextBlock() {
-        return Optional.ofNullable(textBlock);
+    public QuickDonateButtonElement getQuickDonateButton() {
+        if (quickDonateButton == null) {
+            quickDonateButton = new QuickDonateButtonElement(driver, quickDonateButtonNode);
+        }
+        return quickDonateButton;
     }
 
-    public Optional<InterestingFactsComponent> getFacts() {
-        return Optional.ofNullable(facts);
+    public MainCardComponent getMainCard() {
+        if (mainCard == null) {
+            mainCard = new MainCardComponent(driver, mainCardNode);
+        }
+        return mainCard;
     }
 
-    public Optional<ChronologyComponent> getTimeline() {
-        return Optional.ofNullable(timeline);
+    public StreetCodeTextBlockComponent getTextBlock() {
+        if (textBlock == null) {
+            textBlock = new StreetCodeTextBlockComponent(driver, textBlockRoot);
+        }
+        return textBlock;
     }
 
-    public Optional<RelatedPersonasComponent> getRelatedFigures() {
-        return Optional.ofNullable(relatedFigures);
+    public InterestingFactsComponent getFacts() {
+        if (facts == null) {
+            facts = new InterestingFactsComponent(driver, factsNode);
+        }
+        return facts;
     }
 
-    public Optional<SourcesComponent> getSources() {
-        return Optional.ofNullable(sources);
+    public ChronologyComponent getTimeline() {
+        if (timeline == null && timelineNode != null) {
+            timeline = new ChronologyComponent(driver, timelineNode);
+        }
+        return timeline;
     }
 
-    public Optional<ArtGalleryComponent> getArtGallery() {
-        return Optional.ofNullable(artGallery);
+    public RelatedPersonasComponent getRelatedFigures() {
+        if (relatedFigures == null) {
+            relatedFigures = new RelatedPersonasComponent(driver, relatedFiguresNode);
+        }
+        return relatedFigures;
     }
 
-    public Optional<PartnerComponent> getPartners() {
-        return Optional.ofNullable(partners);
+    public SourcesComponent getSources() {
+        if (sources == null) {
+            sources = new SourcesComponent(driver, sourcesNode);
+        }
+        return sources;
     }
 
-    public Optional<RunningLineComponent> getRunningLine() {
-        return Optional.ofNullable(runningLine);
+    public ArtGalleryComponent getArtGallery() {
+        if (artGallery == null) {
+            artGallery = new ArtGalleryComponent(driver, artGalleryNode);
+        }
+        return artGallery;
     }
 
-    public void openDonateModal() {
-        quickDonateButton.clickDonateButton();
+    public PartnerComponent getPartners() {
+        if (partners == null) {
+            partners = new PartnerComponent(driver, partnersNode);
+        }
+        return partners;
+    }
+
+    public RunningLineComponent getRunningLine() {
+        if (runningLine == null) {
+            runningLine = new RunningLineComponent(driver, runningLineNode);
+        }
+        return runningLine;
+    }
+
+    public PageNavigationBarComponent getVerticalProgress() {
+        if (verticalProgress == null) {
+            verticalProgress = new PageNavigationBarComponent(driver, verticalProgressNode);
+        }
+        return verticalProgress;
     }
 
     public void scrollToTop() {
