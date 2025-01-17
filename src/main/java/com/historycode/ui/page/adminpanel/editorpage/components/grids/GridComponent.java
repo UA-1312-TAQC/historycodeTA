@@ -30,13 +30,14 @@ public class GridComponent extends BaseGridComponent {
         headerItems = new ArrayList<>();
         pagination = new PaginationAdminPanelComponent(driver, rootPagination);
         initHeaderItems();
-        System.out.println("Grid was created");
     }
 
     @Step("Check Grid Headers Are Displayed.")
     public boolean isHeadersDisplayed() {
         for (WebElement header : getHeaderItems()) {
-            if (!header.isDisplayed()) { return false; }
+            if (!header.isDisplayed()) {
+                return false;
+            }
         }
         return true;
     }

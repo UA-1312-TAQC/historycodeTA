@@ -49,7 +49,6 @@ public class PositionsGridComponent extends GridComponent {
                 .findFirst().orElse(null);
     }
 
-
     public List<String> getRowsTitles() {
         List<String> titles = new ArrayList<>();
         for (PositionsRowComponent row : rows) {

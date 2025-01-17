@@ -27,6 +27,10 @@ public class PositionsRowComponent extends RowComponent {
         super(driver, rootElement);
     }
 
+    public WebElement getElement() {
+        return rootElement;
+    }
+
     @Step("Check Positions Row is Displayed.")
     public boolean isExist() {
         return getTitle().isDisplayed() && editAction.isDisplayed() && deleteAction.isDisplayed();
@@ -40,7 +44,6 @@ public class PositionsRowComponent extends RowComponent {
     }
 
     public DeleteItemModal clickDelete() {
-//        scrollToElement(deleteAction);
         waitUntilElementClickable(deleteAction);
         deleteAction.click();
         return new DeleteItemModal(driver, deleteModalRoot);
