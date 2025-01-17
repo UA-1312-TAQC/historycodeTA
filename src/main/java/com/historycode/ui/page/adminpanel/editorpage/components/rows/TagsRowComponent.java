@@ -12,6 +12,8 @@ public class TagsRowComponent extends RowComponent {
     private WebElement deleteAction;
     @FindBy(xpath = ".//td[@class='ant-table-cell'][2]//span[contains(@class, 'anticon-edit')]//*[name()='svg']")
     private WebElement editAction;
+    @FindBy(xpath = "(//div[contains(@class, 'ant-modal-content')])[2]")
+    private WebElement deleteModal;
 
     public TagsRowComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
@@ -30,7 +32,7 @@ public class TagsRowComponent extends RowComponent {
     public DeleteItemModal clickDelete() {
         scrollToElement(deleteAction);
         deleteAction.click();
-        return new DeleteItemModal(driver, rootElement);
+        return new DeleteItemModal(driver, deleteModal);
     }
 
     public WebElement getEditAction(){
