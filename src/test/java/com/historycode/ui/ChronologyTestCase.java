@@ -14,8 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.asserts.SoftAssert;
 
+import java.time.LocalDate;
 import java.util.List;
-
 
 public class ChronologyTestCase extends BaseTestRunner {
 
@@ -123,10 +123,10 @@ public class ChronologyTestCase extends BaseTestRunner {
         int filmCardCount = filmCardComponent.getFilmCardCount();
         softAssert.assertTrue(filmCardCount > 0, "No film cards found on the timeline!");
 
-        softAssert.assertFalse(filmCardComponent.areAllFilmCardsVisible(),
+        softAssert.assertFalse(filmCardComponent.allFilmCardsVisible(),
                 "Not all film cards are visible!");
 
-        softAssert.assertTrue(filmCardComponent.areFilmCardsUnique(),
+        softAssert.assertTrue(filmCardComponent.filmCardsUnique(),
                 "Some film cards are not unique!");
 
         softAssert.assertAll();
@@ -142,9 +142,9 @@ public class ChronologyTestCase extends BaseTestRunner {
 
         ChronologyFilmCardComponent filmCardComponent = new ChronologyFilmCardComponent(driver);
 
-        softAssert.assertTrue(filmCardComponent.getFilmCards().size() > 0, "No film cards found on the timeline!");
+        softAssert.assertTrue(!filmCardComponent.getFilmCards().isEmpty(), "No film cards found on the timeline!");
 
-        softAssert.assertFalse(filmCardComponent.areAllEventsComplete(),
+        softAssert.assertFalse(filmCardComponent.allEventsComplete(),
                 "Some film cards do not contain all required fields (Year, Historical Context, Title, or Description)!");
 
         softAssert.assertAll();
@@ -160,18 +160,55 @@ public class ChronologyTestCase extends BaseTestRunner {
 
         ChronologyFilmCardComponent filmCardComponent = new ChronologyFilmCardComponent(driver);
 
-        boolean areDescriptionsValid = filmCardComponent.areDescriptionsWithinLimit(400);
-        Assert.assertTrue(areDescriptionsValid, "Some film card descriptions exceed 400 characters!");
+        boolean areDescriptionsValid = filmCardComponent.descriptionsWithinLimit(400);
+        softAssert.assertTrue(areDescriptionsValid, "Some film card descriptions exceed 400 characters!");
 
         List<Integer> descriptionLengths = filmCardComponent.getDescriptionLengths();
         logger.info("Description lengths {}: ", descriptionLengths);
 
         for (int i = 0; i < descriptionLengths.size(); i++) {
-            Assert.assertTrue(descriptionLengths.get(i) <= 400,
+            softAssert.assertTrue(descriptionLengths.get(i) <= 400,
                     "Description on card " + i + " exceeds 400 characters!");
+
+            softAssert.assertAll();
         }
     }
+
+    @Issue("91")
+    @Test
+    @Step("Verify images for the background are a set of 3 default images.")
+    public void testDefaultBackgroundImages() {
+        String baseUrl = testValueProvider.getBaseUIUrl();
+        String fullUrl = baseUrl + "roman-ratushnyi-seneka";
+        driver.get(fullUrl);
+
+        ChronologyFilmCardComponent filmCardComponent = new ChronologyFilmCardComponent(driver);
+
+        softAssert.assertFalse(filmCardComponent.backgroundImagesDefault(),
+                "Some background images are not part of the default set!");
+
+        softAssert.assertAll();
+    }
+
+
+    @Issue("91")
+    @Test
+    @Step("Verify events are displayed from oldest to newest, from left to right without converting to Integer.")
+    public void testEventsChronologicallySortedWithoutConversion() {
+        String baseUrl = testValueProvider.getBaseUIUrl();
+        String fullUrl = baseUrl + "roman-ratushnyi-seneka";
+        driver.get(fullUrl);
+
+        ChronologyFilmCardComponent filmCardComponent = new ChronologyFilmCardComponent(driver);
+
+        boolean isSorted = filmCardComponent.eventsChronologicallySorted();
+        softAssert.assertFalse(isSorted, "Events are not displayed from oldest to newest!");
+
+        softAssert.assertAll();
+
+    }
 }
+
 
 
 
