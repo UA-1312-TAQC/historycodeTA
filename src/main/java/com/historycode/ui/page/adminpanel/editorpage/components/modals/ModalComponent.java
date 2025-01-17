@@ -24,6 +24,7 @@ public class ModalComponent extends BaseComponent {
     @Step("Close Modal With 'X'")
     public void close() {
         closeButton.click();
+        waitUntilElementInvisible(closeButton);
     }
 
     public WebElement getCloseButton() {
