@@ -9,7 +9,7 @@ import org.openqa.selenium.support.FindBy;
 public class LogoElement extends BaseComponent {
 
     @Getter
-    @FindBy(xpath = "./div[contains(@class, 'ant-form-item-label')]/label")
+    @FindBy(xpath = ".//div[contains(@class, 'ant-form-item-label')]/label")
     private WebElement label;
 
     @Getter
@@ -17,15 +17,15 @@ public class LogoElement extends BaseComponent {
     private WebElement logoImage;
 
     @Getter
-    @FindBy(xpath = "./span[@class='ant-upload']/p")
+    @FindBy(xpath = ".//span[@class='ant-upload']/p")
     private WebElement logoInsideHint;
 
     @Getter
-    @FindBy(xpath = "./span[@role='img' and @aria-label='eye']")
+    @FindBy(xpath = ".//span[@role='img' and @aria-label='eye']")
     private WebElement previewButton;
 
     @Getter
-    @FindBy(xpath = "./button[contains(@class, 'ant-btn-icon-only') and @title='Remove file']")
+    @FindBy(xpath = ".//button[contains(@class, 'ant-btn-icon-only') and @title='Remove file']")
     private WebElement deleteButton;
 
 

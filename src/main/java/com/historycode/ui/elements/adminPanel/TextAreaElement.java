@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 public class TextAreaElement extends BaseComponent {
 
     @Getter
-    @FindBy(xpath = "./div[contains(@class, 'ant-form-item-label')]/label")
+    @FindBy(xpath = ".//div[contains(@class, 'ant-form-item-label')]/label")
     private WebElement label;
 
     @Getter

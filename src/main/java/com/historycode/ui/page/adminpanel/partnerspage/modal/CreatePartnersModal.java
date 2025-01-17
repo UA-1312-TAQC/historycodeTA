@@ -31,7 +31,6 @@ public class CreatePartnersModal extends BaseCreateModal {
     private WebElement linkNameContainer;
     public InputElement linkName;
 
-    //TODO Why do not find this webElement inside rootElement. Work only from general page
     @FindBy(xpath = ".//label[@for = 'description']/../..")
     private WebElement textAreaContainer;
     public TextAreaElement description;
