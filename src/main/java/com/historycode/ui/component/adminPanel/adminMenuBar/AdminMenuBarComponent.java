@@ -14,7 +14,7 @@ import org.openqa.selenium.support.FindBy;
 public class AdminMenuBarComponent extends BaseComponent {
     @FindBy(xpath = "./div[@class='BarContainer']//a[@href='/admin-panel']")
     WebElement historyCodes;
-    @FindBy(xpath = "./div[@class='BarContainer']//a[@href='/admin-panel/job']")
+    @FindBy(xpath = "./div[@class='BarContainer']//a[@href='/admin-panel/partners']")
     WebElement partners;
     @FindBy(xpath = "./div[@class='BarContainer']//a[@href='/admin-panel/editor']")
     WebElement editor;
