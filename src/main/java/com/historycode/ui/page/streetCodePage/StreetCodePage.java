@@ -14,7 +14,6 @@ import org.openqa.selenium.support.FindBy;
 import java.util.Optional;
 
 public class StreetCodePage extends BasePage {
-
     @FindBy(xpath = "//div[@class='card']")
     private WebElement mainCardNode;
 
@@ -66,19 +65,9 @@ public class StreetCodePage extends BasePage {
     private RunningLineComponent runningLine;
     private PageNavigationBarComponent verticalProgress;
 
-
     public StreetCodePage(WebDriver driver) {
         super(driver);
     }
-
-//    public StreetCodePage(WebDriver driver, boolean staticMode) {
-//        super(driver);
-//
-//        if (staticMode) {
-//            createPageComponents();
-//        }
-//    }
-
 
     public StreetCodePage setMainCard() {
         this.mainCard = new MainCardComponent(driver, mainCardNode);
