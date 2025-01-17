@@ -1,6 +1,7 @@
 package com.historycode.ui.adminPanel;
 
 import com.historycode.ui.page.adminpanel.editorpage.TagsPage;
+import com.historycode.ui.page.adminpanel.editorpage.components.rows.TagsRowComponent;
 import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
 import com.historycode.ui.testrunners.TestRunnerWithAdmin;
 import io.qameta.allure.Description;
@@ -19,16 +20,16 @@ public class AdminAddTagsTest extends TestRunnerWithAdmin {
     @BeforeMethod
     @Step("Adding new Tag")
     public void createNewTag() {
-        this.newTag = "newTag_" + RandomStringUtils.randomAlphanumeric(10);
+        this.newTag = "Я_newTag_" + RandomStringUtils.randomAlphanumeric(10);
 
         new HistoryCodesAdminPanelPage(driver)
                 .getAdminMenuBar()
                 .goToEditorPage()
-                .moveToTags();
-//                .clickAddTag()
-//                .enterTag(newTag)
-//                .save()
-//                .close();
+                .moveToTags()
+                .clickAddTag()
+                .enterTag(newTag)
+                .save()
+                .close();
     }
 
     @Test
@@ -36,23 +37,16 @@ public class AdminAddTagsTest extends TestRunnerWithAdmin {
     @Description("Verify that admin can edit existing tag")
     public void addTagsTest() {
         TagsPage tagsPage = new TagsPage(driver);
-        tagsPage.scrollToEndOfPage();
-
-        //todo: Fix the problem with page switching
-        //Go to the last page to check if a new tag has been created and then delete it
-        while (tagsPage.getGrid().getPagination().hasNextPage()) {
-            tagsPage = tagsPage.clickNextPage();
-        }
-
+        tagsPage.sleep(2000);
         Assert.assertNotNull(tagsPage.getTableRowByTitle(newTag));
     }
 
     @AfterMethod
     @Step("Deleting new Tag")
     public void deleteNewTag() {
-//        TagsRowComponent leftoverContext = new TagsPage(driver).getTableRowByTitle(newTag);
-//        if (leftoverContext != null) {
-//            new TagsPage(driver).deleteTableRow(leftoverContext).clickOkButton();
-//        }
+        TagsRowComponent leftoverContext = new TagsPage(driver).getTableRowByTitle(newTag);
+        if (leftoverContext != null) {
+            new TagsPage(driver).deleteTableRow(leftoverContext).clickOkButton();
+        }
     }
 }
