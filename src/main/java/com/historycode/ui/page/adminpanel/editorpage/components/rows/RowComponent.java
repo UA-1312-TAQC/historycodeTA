@@ -21,4 +21,5 @@ public class RowComponent extends BaseComponent {
     public WebElement getTitle() {
         return title;
     }
+
 }

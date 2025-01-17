@@ -40,6 +40,7 @@ public class PositionsPage extends BasePage {
     }
 
     public PositionsModalComponent addPosition() {
+        waitUntilElementClickable(addNewPositionButton);
         addNewPositionButton.click();
         return new PositionsModalComponent(driver, createModalRootElement);
     }

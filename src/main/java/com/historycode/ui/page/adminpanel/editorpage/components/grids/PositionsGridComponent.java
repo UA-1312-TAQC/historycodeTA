@@ -15,6 +15,7 @@ public class PositionsGridComponent extends GridComponent {
 
     public PositionsGridComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
+        this.rows = new ArrayList<>();
         initRows(driver);
     }
 
@@ -26,7 +27,9 @@ public class PositionsGridComponent extends GridComponent {
     @Step("Check Positions Rows Are Displayed Correctly.")
     public boolean isRowsDisplayed() {
         for (PositionsRowComponent row : rows) {
-            if (!row.isExist()) { return false; }
+            if (!row.isExist()) {
+                return false;
+            }
         }
         return true;
     }
@@ -40,9 +43,16 @@ public class PositionsGridComponent extends GridComponent {
         }
     }
 
-    public List<String> getRowsTitles(){
+    public PositionsRowComponent getRowByTitle(String title) {
+        initRows(driver);
+        return rows.stream().filter(row -> row.getTitleString().equals(title))
+                .findFirst().orElse(null);
+    }
+
+
+    public List<String> getRowsTitles() {
         List<String> titles = new ArrayList<>();
-        for (PositionsRowComponent row : rows){
+        for (PositionsRowComponent row : rows) {
             titles.add(row.getTitleString());
         }
         return titles;
@@ -54,15 +64,6 @@ public class PositionsGridComponent extends GridComponent {
 
     public PositionsRowComponent getRowByNum(int num) {
         return rows.get(num);
-    }
-
-    public PositionsRowComponent getRowByTitle(String title) {
-        for (PositionsRowComponent row : getRows()) {
-            if (row.getTitle().equals(title)) {
-                return row;
-            }
-        }
-        return null;
     }
 
     public List<PositionsRowComponent> getRowsByTitlePart(String part) {
@@ -79,11 +80,11 @@ public class PositionsGridComponent extends GridComponent {
         return row.getDeleteAction();
     }
 
-    public String getRowTitleString(PositionsRowComponent row){
+    public String getRowTitleString(PositionsRowComponent row) {
         return row.getTitleString();
     }
 
-    public WebElement getRowTitle(PositionsRowComponent row){
+    public WebElement getRowTitle(PositionsRowComponent row) {
         return row.getTitle();
     }
 

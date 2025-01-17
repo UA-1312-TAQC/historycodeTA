@@ -14,16 +14,16 @@ public class DeleteItemModal extends BaseModal {
     @FindBy(xpath = "./div[@class='ant-modal-header']//div[@class='ant-modal-title']")
     protected WebElement title;
 
-    @FindBy(xpath = "./div[@class='ant-modal-body']/p")
+    @FindBy(xpath = ".//div[@class='ant-modal-body']/p")
     protected WebElement confirmationText;
 
-    @FindBy(xpath = "./div[@class='ant-modal-footer']/button[contains(@class, 'ant-btn-default')]")
+    @FindBy(xpath = ".//div[@class='ant-modal-footer']/button[contains(@class, 'ant-btn-default')]")
     protected WebElement cancel;
 
-    @FindBy(xpath = "./div[@class='ant-modal-footer']/button[contains(@class, 'ant-btn-primary')]")
+    @FindBy(xpath = ".//div[@class='ant-modal-footer']/button[contains(@class, 'ant-btn-primary')]")
     protected WebElement ok;
 
-    @FindBy(xpath = "./button[@class='ant-modal-close' and @aria-label='Close']")
+    @FindBy(xpath = ".//button[@class='ant-modal-close' and @aria-label='Close']")
     protected WebElement closeButton;
 
     private static final String BUTTON_XPATH_TEMPLATE = "//div[@class='ant-modal-footer']/button[span[text()='%s']]";
@@ -49,6 +49,7 @@ public class DeleteItemModal extends BaseModal {
     }
 
     public void clickOkButton() {
+        waitUntilElementClickable(ok);
         ok.click();
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
         wait.until(ExpectedConditions.invisibilityOf(rootElement));

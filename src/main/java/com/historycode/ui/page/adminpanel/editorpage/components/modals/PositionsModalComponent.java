@@ -40,5 +40,6 @@ public class PositionsModalComponent extends BaseEditModal {
     @Step("Close position modal")
     public void closeModal() {
         clickCloseButton();
+        sleep(2000);
     }
 }
