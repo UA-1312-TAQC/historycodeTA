@@ -7,18 +7,26 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-
 public class ChronologyFilmCardComponent extends BaseComponent {
+
+    @Getter
+    @FindBy(xpath = "//div[contains(@class, 'timelineYearTick')]//span")
+    private List<WebElement> yearsNode;
 
     @Getter
     @FindBy(xpath = ".//div[@class='timelineItem']")
     private List<WebElement> filmCards;
+
+    private static final List<String> DEFAULT_IMAGE_URLS = List.of(
+            "https://frontend.historycode.online/assets/6e65d6e008ddb4e343bd.webp",
+            "https://frontend.historycode.online/assets/3a1f24a900dfca1fed4e.webp",
+            "https://frontend.historycode.online/assets/6e65d6e008ddb4e343bd.webp"
+    );
 
     @Getter
     @FindBy(xpath = ".//div[@class='timelineItem']//p[@class='timelineItemMetadata']")
@@ -35,6 +43,10 @@ public class ChronologyFilmCardComponent extends BaseComponent {
     @Getter
     @FindBy(xpath = ".//div[@class='timelineItem']//p[@class='timelineItemDescription']")
     private List<WebElement> description;
+
+    @Getter
+    @FindBy(xpath = "//div[contains(@class, 'slick-track')]")
+    private List<WebElement> backgroundImages;
 
     public ChronologyFilmCardComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
@@ -80,7 +92,8 @@ public class ChronologyFilmCardComponent extends BaseComponent {
         WebElement card = getFilmCardByName(name);
         card.click();
     }
-    public boolean areAllFilmCardsVisible() {
+
+    public boolean allFilmCardsVisible() {
         return filmCards.stream().allMatch(WebElement::isDisplayed);
     }
 
@@ -88,12 +101,12 @@ public class ChronologyFilmCardComponent extends BaseComponent {
         return filmCards.size();
     }
 
-    public boolean areFilmCardsUnique() {
+    public boolean filmCardsUnique() {
         Set<WebElement> uniqueCards = new HashSet<>(filmCards);
         return uniqueCards.size() == filmCards.size();
     }
 
-    public boolean areAllEventsComplete() {
+    public boolean allEventsComplete() {
         for (int i = 0; i < filmCards.size(); i++) {
             boolean hasYear = year.get(i).isDisplayed() && !year.get(i).getText().isEmpty();
             boolean hasHistoricalContext = historicalContext.get(i).isDisplayed() && !historicalContext.get(i).getText().isEmpty();
@@ -107,7 +120,7 @@ public class ChronologyFilmCardComponent extends BaseComponent {
         return true;
     }
 
-    public boolean areDescriptionsWithinLimit(int maxLength) {
+    public boolean descriptionsWithinLimit(int maxLength) {
         for (WebElement description : description) {
             String text = description.getText();
             if (text.length() > maxLength) {
@@ -121,6 +134,34 @@ public class ChronologyFilmCardComponent extends BaseComponent {
         return description.stream()
                 .map(description -> description.getText().length())
                 .collect(Collectors.toList());
+
+    }
+
+    public boolean eventsChronologicallySorted() {
+        for (int i = 0; i < yearsNode.size() - 1; i++) {
+            String currentYear = yearsNode.get(i).getText().trim();
+            String nextYear = yearsNode.get(i + 1).getText().trim();
+
+            if (currentYear.compareTo(nextYear) > 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean backgroundImagesDefault() {
+        for (WebElement card : filmCards) {
+            String backgroundImage = card.getCssValue("background-image");
+            String extractedUrl = extractUrlFromCssValue(backgroundImage);
+            if (!DEFAULT_IMAGE_URLS.contains(extractedUrl)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private String extractUrlFromCssValue(String cssValue) {
+        return cssValue.replace("url(\"", "").replace("\")", "").trim();
     }
 }
 
