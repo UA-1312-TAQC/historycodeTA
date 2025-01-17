@@ -15,18 +15,8 @@ import java.util.stream.Collectors;
 public class ChronologyFilmCardComponent extends BaseComponent {
 
     @Getter
-    @FindBy(xpath = "//div[contains(@class, 'timelineYearTick')]//span")
-    private List<WebElement> yearsNode;
-
-    @Getter
     @FindBy(xpath = ".//div[@class='timelineItem']")
-    private List<WebElement> filmCards;
-
-    private static final List<String> DEFAULT_IMAGE_URLS = List.of(
-            "https://frontend.historycode.online/assets/6e65d6e008ddb4e343bd.webp",
-            "https://frontend.historycode.online/assets/3a1f24a900dfca1fed4e.webp",
-            "https://frontend.historycode.online/assets/6e65d6e008ddb4e343bd.webp"
-    );
+    private List<WebElement> filmCard;
 
     @Getter
     @FindBy(xpath = ".//div[@class='timelineItem']//p[@class='timelineItemMetadata']")
@@ -59,8 +49,8 @@ public class ChronologyFilmCardComponent extends BaseComponent {
     }
 
     public WebElement getFilmCardByIndex(int index) {
-        if (index >= 0 && index < filmCards.size()) {
-            WebElement filmCard = filmCards.get(index);
+        if (index >= 0 && index < filmCard.size()) {
+            WebElement filmCard = this.filmCard.get(index);
 
             scrollToElement(filmCard);
 
@@ -78,7 +68,7 @@ public class ChronologyFilmCardComponent extends BaseComponent {
     public WebElement getFilmCardByName(String name) {
         for (int i = 0; i < filmTitles.size(); i++) {
             if (filmTitles.get(i).getText().equalsIgnoreCase(name)) {
-                WebElement filmCard = filmCards.get(i);
+                WebElement filmCard = this.filmCard.get(i);
 
                 scrollToElement(filmCard);
 
@@ -94,20 +84,20 @@ public class ChronologyFilmCardComponent extends BaseComponent {
     }
 
     public boolean allFilmCardsVisible() {
-        return filmCards.stream().allMatch(WebElement::isDisplayed);
+        return filmCard.stream().allMatch(WebElement::isDisplayed);
     }
 
     public int getFilmCardCount() {
-        return filmCards.size();
+        return filmCard.size();
     }
 
     public boolean filmCardsUnique() {
-        Set<WebElement> uniqueCards = new HashSet<>(filmCards);
-        return uniqueCards.size() == filmCards.size();
+        Set<WebElement> uniqueCards = new HashSet<>(filmCard);
+        return uniqueCards.size() == filmCard.size();
     }
 
     public boolean allEventsComplete() {
-        for (int i = 0; i < filmCards.size(); i++) {
+        for (int i = 0; i < filmCard.size(); i++) {
             boolean hasYear = year.get(i).isDisplayed() && !year.get(i).getText().isEmpty();
             boolean hasHistoricalContext = historicalContext.get(i).isDisplayed() && !historicalContext.get(i).getText().isEmpty();
             boolean hasTitle = filmTitles.get(i).isDisplayed() && !filmTitles.get(i).getText().isEmpty();
@@ -137,27 +127,10 @@ public class ChronologyFilmCardComponent extends BaseComponent {
 
     }
 
-    public boolean eventsChronologicallySorted() {
-        for (int i = 0; i < yearsNode.size() - 1; i++) {
-            String currentYear = yearsNode.get(i).getText().trim();
-            String nextYear = yearsNode.get(i + 1).getText().trim();
-
-            if (currentYear.compareTo(nextYear) > 0) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public boolean backgroundImagesDefault() {
-        for (WebElement card : filmCards) {
-            String backgroundImage = card.getCssValue("background-image");
-            String extractedUrl = extractUrlFromCssValue(backgroundImage);
-            if (!DEFAULT_IMAGE_URLS.contains(extractedUrl)) {
-                return false;
-            }
-        }
-        return true;
+    public List<String> getBackgroundImageUrls() {
+        return filmCard.stream()
+                .map(card -> extractUrlFromCssValue(card.getCssValue("background-image")))
+                .collect(Collectors.toList());
     }
 
     private String extractUrlFromCssValue(String cssValue) {

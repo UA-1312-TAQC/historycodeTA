@@ -8,13 +8,11 @@ import com.historycode.ui.testrunners.BaseTestRunner;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.asserts.SoftAssert;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public class ChronologyTestCase extends BaseTestRunner {
@@ -142,7 +140,7 @@ public class ChronologyTestCase extends BaseTestRunner {
 
         ChronologyFilmCardComponent filmCardComponent = new ChronologyFilmCardComponent(driver);
 
-        softAssert.assertTrue(!filmCardComponent.getFilmCards().isEmpty(), "No film cards found on the timeline!");
+        softAssert.assertTrue(!filmCardComponent.getFilmCard().isEmpty(), "No film cards found on the timeline!");
 
         softAssert.assertFalse(filmCardComponent.allEventsComplete(),
                 "Some film cards do not contain all required fields (Year, Historical Context, Title, or Description)!");
@@ -184,8 +182,18 @@ public class ChronologyTestCase extends BaseTestRunner {
 
         ChronologyFilmCardComponent filmCardComponent = new ChronologyFilmCardComponent(driver);
 
-        softAssert.assertFalse(filmCardComponent.backgroundImagesDefault(),
-                "Some background images are not part of the default set!");
+        List<String> actualImageUrls = filmCardComponent.getBackgroundImageUrls();
+
+        List<String> defaultImageUrls = List.of(
+                "https://frontend.historycode.online/assets/6e65d6e008ddb4e343bd.webp",
+                "https://frontend.historycode.online/assets/3a1f24a900dfca1fed4e.webp",
+                "https://frontend.historycode.online/assets/6e65d6e008ddb4e343bd.webp"
+        );
+
+        for (String actualUrl : actualImageUrls) {
+            softAssert.assertFalse(defaultImageUrls.contains(actualUrl),
+                    "Background image URL not part of the default set: " + actualUrl);
+        }
 
         softAssert.assertAll();
     }
@@ -199,9 +207,9 @@ public class ChronologyTestCase extends BaseTestRunner {
         String fullUrl = baseUrl + "roman-ratushnyi-seneka";
         driver.get(fullUrl);
 
-        ChronologyFilmCardComponent filmCardComponent = new ChronologyFilmCardComponent(driver);
+        ChronologyYearsBarComponent chronologyYearsBarComponent = new ChronologyYearsBarComponent(driver);
 
-        boolean isSorted = filmCardComponent.eventsChronologicallySorted();
+        boolean isSorted = chronologyYearsBarComponent.eventsChronologicallySorted();
         softAssert.assertFalse(isSorted, "Events are not displayed from oldest to newest!");
 
         softAssert.assertAll();

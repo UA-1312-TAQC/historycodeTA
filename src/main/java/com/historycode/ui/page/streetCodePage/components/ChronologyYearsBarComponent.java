@@ -14,6 +14,10 @@ import java.util.List;
 public class ChronologyYearsBarComponent extends BaseComponent {
 
     @Getter
+    @FindBy(xpath = "//div[contains(@class, 'timelineYearTick')]//span")
+    private List<WebElement> yearsNode;
+
+    @Getter
     @FindBy(xpath = "//div[contains(@class, 'timelineYearTick')]")
     private List<WebElement> selectedYearBoxContainer;
 
@@ -67,22 +71,16 @@ public class ChronologyYearsBarComponent extends BaseComponent {
         sleep(2000);
         return activeYearBox != null && activeYearBox.isDisplayed();
     }
+
+    public boolean eventsChronologicallySorted() {
+        for (int i = 0; i < yearsNode.size() - 1; i++) {
+            String currentYear = yearsNode.get(i).getText().trim();
+            String nextYear = yearsNode.get(i + 1).getText().trim();
+
+            if (currentYear.compareTo(nextYear) > 0) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
-
-
-//    public void selectYear(String year) {
-//        yearNodes.stream()
-//                .filter(node -> node.getText().equals(year))
-//                .findFirst()
-//                .ifPresent(WebElement::click);
-//    }
-//
-//    public List<String> getAllYears() {
-//        return yearNodes.stream()
-//                .map(WebElement::getText)
-//                .collect(Collectors.toList());
-//    }
-//
-//    public boolean isYearSelected(String year) {
-//        return year.equals(getSelectedYear());
-//    }
