@@ -38,6 +38,8 @@ public class AdminMenuBarComponent extends BaseComponent {
     }
 
     public CategoriesPage goToEditorPage() {
+        waitUntilElementClickable(editor);
+        editor.click();
         return new CategoriesPage(driver);
     }
 

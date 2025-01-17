@@ -3,6 +3,7 @@ package com.historycode.ui.adminPanel;
 import com.historycode.ui.page.adminpanel.editorpage.CategoriesPage;
 import com.historycode.ui.page.adminpanel.editorpage.PositionsPage;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.PositionsRowComponent;
+import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
 import com.historycode.ui.testrunners.TestRunnerWithAdmin;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -20,9 +21,10 @@ public class DeletePositionEditor extends TestRunnerWithAdmin {
     public void setupForDeleteJob() {
         login();
         positionName = "Бухгалтер_" + UUID.randomUUID().toString().substring(0, 2);
-        driver.get(testValueProvider.getBaseUIUrl() + "/admin-panel/editor");
-        CategoriesPage categoriesPage = new CategoriesPage(driver);
-        categoriesPage.moveToPositions()
+        HistoryCodesAdminPanelPage baseHistoryCode = new HistoryCodesAdminPanelPage(driver);
+        baseHistoryCode.getAdminMenuBar()
+                .goToEditorPage()
+                .moveToPositions()
                 .addPosition()
                 .inputNewPosition(positionName)
                 .saveNewPosition()
