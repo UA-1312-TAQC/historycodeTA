@@ -30,7 +30,7 @@ public class AdminMenuBarComponent extends BaseComponent {
         super(driver, rootElement);
     }
 
-/* StreetCodeCatalogPageAdminPanel goToSreetcodePage() {
+/*    StreetCodeCatalogPageAdminPanel goToSreetcodePage() {
         return new StreetCodeCatalogPageAdminPanel(driver);
     }*/
 

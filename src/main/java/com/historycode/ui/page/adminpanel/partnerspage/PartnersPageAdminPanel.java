@@ -2,7 +2,6 @@ package com.historycode.ui.page.adminpanel.partnerspage;
 
 import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
 
-import com.historycode.ui.page.adminpanel.partnerspage.modal.CreatePartnersModal;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -39,12 +38,15 @@ public class PartnersPageAdminPanel extends BasePageAdminPanel {
         return this;
     }
 
-    public PartnersPageAdminPanel  clickPrevPage() {
+    public PartnersPageAdminPanel clickPrevPage() {
         partnersPageGridComponent.clickPrevPage();
         return this;
     }
 
-    public PartnersPageAdminPanel  clickPaginationItem(int index) {
+    public PartnersPageAdminPanel clickPaginationItem(int index) {
+        if (index < 0) {
+            throw new IllegalArgumentException("Pagination index cannot be negative");
+        }
         partnersPageGridComponent.clickPaginationItem(index);
         return this;
     }

@@ -23,7 +23,7 @@ public class TestRunnerWithAdmin extends BaseTestRunner {
         localStorage.setItem("AccessToken", testValueProvider.getAccessToken());
         localStorage.setItem("RefreshToken", testValueProvider.getRefreshToken());
 
-        driver.get(testValueProvider.getBaseUIUrl() + "admin-panel");
+        driver.get(testValueProvider.getBaseUIUrl() + "/admin-panel");
 //        LoginPageAdminPanel pageAdminPanel = new LoginPageAdminPanel(driver);
 //        pageAdminPanel.enterLogin(testValueProvider.getAdminEmail())
 //                .enterPassword(testValueProvider.getAdminPass())

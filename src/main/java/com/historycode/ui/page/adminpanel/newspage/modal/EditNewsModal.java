@@ -4,23 +4,22 @@ import com.historycode.ui.component.adminPanel.modalAdminPanel.BaseEditModal;
 import com.historycode.ui.elements.adminPanel.InputElement;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.sql.Date;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
+import java.sql.Date;
 
 public class EditNewsModal extends BaseEditModal {
     @FindBy(xpath = "//label[@for = 'title']/../..")
     private WebElement newsTitleContainer;
     @Getter
-    private InputElement newsTitle;
+    private final InputElement newsTitle;
 
     @FindBy(xpath = "//label[@for = 'url']/../..")
     private WebElement newsLinkTranslitContainer;
     @Getter
-    private InputElement newsLinkTranslit;
+    private final InputElement newsLinkTranslit;
 
     @FindBy(xpath = "//label[@for = 'editor']/../..")
     @Getter
@@ -42,7 +41,7 @@ public class EditNewsModal extends BaseEditModal {
     @FindBy(xpath = "//label[@for = 'creationDate']/../..")
     private WebElement newsCreationDateContainer;
     @Getter
-    private InputElement newsCreationDate;
+    private final InputElement newsCreationDate;
 
     public EditNewsModal(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);

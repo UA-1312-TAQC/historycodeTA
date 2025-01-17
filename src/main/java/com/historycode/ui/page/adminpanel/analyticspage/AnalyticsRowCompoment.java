@@ -12,7 +12,7 @@ public class AnalyticsRowCompoment extends BaseComponent {
 
     private WebElement QRCodeTransitionsNumber;
 
-    private WebElement  QRCodeNumber;
+    private WebElement QRCodeNumber;
 
     private WebElement coordinates;
 
@@ -20,12 +20,20 @@ public class AnalyticsRowCompoment extends BaseComponent {
         super(driver, rootElement);
     }
 
-    public String getAddressText(){return address.getText().trim();}
+    public String getAddressText() {
+        return address.getText().trim();
+    }
 
-    public String getQRCodeTransitionsNumber(){return QRCodeTransitionsNumber.getText().trim();}
+    public String getQRCodeTransitionsNumber() {
+        return QRCodeTransitionsNumber.getText().trim();
+    }
 
-    public String getQRCodeNumber(){return QRCodeNumber.getText().trim();}
+    public String getQRCodeNumber() {
+        return QRCodeNumber.getText().trim();
+    }
 
-    public String getCoordinates(){return coordinates.getText().trim();}
+    public String getCoordinates() {
+        return coordinates.getText().trim();
+    }
 
 }

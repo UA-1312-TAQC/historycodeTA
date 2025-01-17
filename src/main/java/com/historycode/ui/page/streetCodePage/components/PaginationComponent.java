@@ -33,6 +33,7 @@ public class PaginationComponent extends BaseComponent {
         }
         return 0;
     }
+
     public int getTotalDots() {
         return paginationDots.size();
     }
