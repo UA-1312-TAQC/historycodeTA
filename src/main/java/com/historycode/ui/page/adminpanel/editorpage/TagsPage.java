@@ -87,7 +87,7 @@ public class TagsPage extends BaseEditorPage {
     }
 
     public DeleteItemModal deleteTableRow(TagsRowComponent row) {
-        return grid.deleteRow(row);
+        return grid.openDeleteModal(row);
     }
 
     public WebElement getTableRowEditAction(TagsRowComponent row) {
