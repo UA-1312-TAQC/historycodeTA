@@ -12,7 +12,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -21,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class EditMemberModal extends BaseEditModal {
+public class CreateEditMemberModal extends BaseEditModal {
 
     @FindBy(xpath = "//label[contains(@class, 'ant-checkbox-wrapper ant-checkbox-wrapper-checked ant-checkbox-wrapper-in-form-item css-k7429z')]/../..")
     protected WebElement keyMemberCheckboxRoot;
@@ -69,7 +68,7 @@ public class EditMemberModal extends BaseEditModal {
     protected PhotoModalComponent photoModalComponent;
     protected PhotoWindowComponent photoWindowComponent;
 
-    public EditMemberModal(WebDriver driver, WebElement rootElement) {
+    public CreateEditMemberModal(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
 //        PageFactory.initElements(driver, rootElement);
 
@@ -185,7 +184,7 @@ public class EditMemberModal extends BaseEditModal {
         dropdown.clickOptionByText(optionText);
     }
 
-    public EditMemberModal saveEditedMember() {
+    public CreateEditMemberModal saveEditedMember() {
         clickSaveButton();
         return this;
     }

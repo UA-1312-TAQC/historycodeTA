@@ -2,7 +2,7 @@ package com.historycode.ui.page.adminpanel.teampage;
 
 import com.historycode.ui.component.BaseComponent;
 import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
-import com.historycode.ui.page.adminpanel.teampage.editModal.EditMemberModal;
+import com.historycode.ui.page.adminpanel.teampage.editModal.CreateEditMemberModal;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -72,8 +72,8 @@ public class TeamRowComponent extends BaseComponent {
         return new DeleteItemModal(driver, rootElement);
     }
 
-    public EditMemberModal clickEdit() {
+    public CreateEditMemberModal clickEdit() {
         editAction.click();
-        return new EditMemberModal(driver, rootElement);
+        return new CreateEditMemberModal(driver, rootElement);
     }
 }

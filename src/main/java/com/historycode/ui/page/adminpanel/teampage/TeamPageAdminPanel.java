@@ -2,14 +2,10 @@ package com.historycode.ui.page.adminpanel.teampage;
 
 import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
 import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
-import com.historycode.ui.page.adminpanel.teampage.editModal.EditMemberModal;
-import org.openqa.selenium.By;
+import com.historycode.ui.page.adminpanel.teampage.editModal.CreateEditMemberModal;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-
-import java.time.Duration;
 
 public class TeamPageAdminPanel extends BasePageAdminPanel {
 
@@ -30,13 +26,13 @@ public class TeamPageAdminPanel extends BasePageAdminPanel {
         return teamPageGridComponent;
     }
 
-    public EditMemberModal clickAddNewMemberButton() {
+    public CreateEditMemberModal clickAddNewMemberButton() {
         addNewMemberButton.click();
         waitUntilElementVisible(createEditModalNode);
-        return new EditMemberModal(driver, createEditModalNode);
+        return new CreateEditMemberModal(driver, createEditModalNode);
     }
 
-    public EditMemberModal editMemberByIndex(int index) {
+    public CreateEditMemberModal editMemberByIndex(int index) {
         if (index < 0 || index >= teamPageGridComponent.getRowsCount()){
             throw new IllegalArgumentException("Member with index" + index + " is not available or invalid");
         }
