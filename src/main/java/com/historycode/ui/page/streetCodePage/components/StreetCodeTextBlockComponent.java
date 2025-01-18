@@ -34,35 +34,17 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
     @FindBy(xpath = ".//div[@class='text']//p")
     private List<WebElement> paragraphs;
 
-    @FindBy(xpath = ".//div[(@id='player')]")
+    @FindBy(xpath = ".//iframe[(@id='widget2')]")
     private WebElement videoPlayer;
 
-    @FindBy(xpath = ".//div[(@class='ytp-bezel' and @aria-label='Відтворити')]")
-    private WebElement playButton;
+    @FindBy(xpath = ".//button[(@class = 'ytp-play-button ytp-button' and @title='Відтворити (k)')]")
+    private WebElement videoPlayButton;
 
-    @FindBy(xpath = ".//div[(@class='ytp-bezel' and @aria-label='Призупинити')]")
-    private WebElement pauseButton;
-
-    //    @FindBy(xpath = ".//div[@class='video-container']")
-//    private WebElement videoContainer;
-
-    private boolean hasVideo;
+    @FindBy(xpath = ".//button[(@class = 'ytp-play-button ytp-button' and @title='Призупинити (k)')]")
+    private WebElement videoPauseButton;
 
     public StreetCodeTextBlockComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-//        checkVideoPresence();
-    }
-
-//    private void checkVideoPresence() {
-//        try {
-//            hasVideo = videoContainer.isDisplayed();
-//        } catch (NoSuchElementException e) {
-//            hasVideo = false;
-//        }
-//    }
-
-    public boolean hasVideo() {
-        return hasVideo;
     }
 
     public boolean isReadMoreButtonDisplayed() {
@@ -78,14 +60,14 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
     public void clickReadMoreButton() {
         scrollToElement(readMoreButton);
         if (isReadMoreButtonDisplayed()) {
-            readMoreButton.click();
+            clickDynamicElement(readMoreButton);
         }
     }
 
     public void clickReadLessButton() {
         scrollToElement(readLessButton);
         if (isReadLessButtonDisplayed()) {
-            readLessButton.click();
+            clickDynamicElement(readLessButton);
         }
     }
 
@@ -119,32 +101,28 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
 
     public boolean isVideoVisible() {
         waitUntilElementVisible(videoPlayer);
+        scrollToElement(videoPlayer);
         return videoPlayer.isDisplayed();
     }
 
     public void clickPlayButton() {
-        scrollToElement(playButton);
-        if (playButton.isDisplayed()) {
-            playButton.click();
-
+        if (isVideoVisible()) {
+            clickDynamicElement(videoPlayButton);
         }
     }
 
     public boolean isVideoPlaying() {
-        waitUntilElementVisible(playButton);
-        return !playButton.isDisplayed() && pauseButton.isDisplayed();
+        return !videoPlayButton.isDisplayed() && videoPauseButton.isDisplayed();
     }
 
     public void clickPauseButton() {
-        scrollToElement(pauseButton);
-        if (pauseButton.isDisplayed()) {
-            pauseButton.click();
+        if (isVideoVisible()) {
+            clickDynamicElement(videoPauseButton);
         }
     }
 
     public boolean isVideoPaused() {
-        waitUntilElementVisible(pauseButton);
-        return !pauseButton.isDisplayed() && playButton.isDisplayed();
+        return !videoPauseButton.isDisplayed() && videoPlayButton.isDisplayed();
     }
 
     public boolean isAdditionalTextDisplayed() {

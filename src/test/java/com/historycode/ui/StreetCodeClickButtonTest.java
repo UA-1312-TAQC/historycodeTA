@@ -29,33 +29,50 @@ public class StreetCodeClickButtonTest extends BaseTestRunner {
 
     @Issue("81")
     @Test(dataProvider = "urlProviderForTextBlock", dataProviderClass = StreetCodeDP.class, priority = 1)
-    @Description("[Text and Video] Verify that all buttons are clickable")
+    @Description("Verify that buttons are clickable and text expand/collapse")
     public void testStreetCodeClick(String addUIUrl) {
         navigateToStreetCodePage(addUIUrl);
 
         StreetCodeTextBlockComponent textBlock = streetCodePage.getTextBlock();
         int initialCount = textBlock.getParagraphCount();
-        List<String> links = textBlock.getLinksInNewsContent();
         SoftAssert softAssert = new SoftAssert();
 
-        //step 2 : click on button 'Трохи ще'
+        //step : click on button 'Трохи ще'
         softAssert.assertTrue(textBlock.isReadMoreButtonDisplayed(), "'Трохи ще' button should be displayed.");
         softAssert.assertTrue(textBlock.checkExpanded(), "Text should expand after clicking 'Трохи ще'.");
         softAssert.assertTrue(textBlock.isReadLessButtonDisplayed(), "'Дещо менше' button should be visible after clicking 'Трохи ще'.");
 
-        //step 3 : is video playing/pause
+        //step : click on button 'Дещо менше'
+        softAssert.assertTrue(textBlock.checkCollapsed(initialCount), "Text should collapse to initial state after clicking 'Дещо менше'.");
+        softAssert.assertTrue(textBlock.isReadMoreButtonDisplayed(), "'Трохи ще' button should be visible after clicking 'Дещо менше'.");
+        softAssert.assertAll();
+    }
+
+    @Issue("81")
+    @Test(dataProvider = "urlProviderForTextBlock", dataProviderClass = StreetCodeDP.class, priority = 1)
+    @Description("Verify that video play/pause")
+    public void testStreetCodeVideoClick(String addUIUrl) {
+        navigateToStreetCodePage(addUIUrl);
+        StreetCodeTextBlockComponent textBlock = streetCodePage.getTextBlock();
+        SoftAssert softAssert = new SoftAssert();
+
         softAssert.assertTrue(textBlock.isVideoVisible(), "Video player should be visible.");
         textBlock.clickPlayButton();
         softAssert.assertTrue(textBlock.isVideoPlaying(), "Video is expected to be playing.");
         textBlock.clickPauseButton();
         softAssert.assertTrue(textBlock.isVideoPaused(), "Video is expected to be paused.");
 
-        //step 4 : click on button 'Дещо менше'
-        softAssert.assertTrue(textBlock.checkCollapsed(initialCount), "Text should collapse to initial state after clicking 'Дещо менше'.");
-        softAssert.assertTrue(textBlock.isReadMoreButtonDisplayed(), "'Трохи ще' button should be visible after clicking 'Дещо менше'.");
-        softAssert.assertAll();
+    }
 
-        //step 5 : click on the source link under text
+    @Issue("81")
+    @Test(dataProvider = "urlProviderForTextBlock", dataProviderClass = StreetCodeDP.class, priority = 1)
+    @Description("Verify that all links in additional text are clickable")
+    public void testStreetCodeClickLinksInAdditionalText(String addUIUrl) {
+        navigateToStreetCodePage(addUIUrl);
+        StreetCodeTextBlockComponent textBlock = streetCodePage.getTextBlock();
+        List<String> links = textBlock.getLinksInNewsContent();
+        SoftAssert softAssert = new SoftAssert();
+
         softAssert.assertTrue(textBlock.isAdditionalTextDisplayed(), "Additional text should be display");
         softAssert.assertTrue(!links.isEmpty(), "No links found in the text block!");
         for (String link : links) {
@@ -64,6 +81,7 @@ public class StreetCodeClickButtonTest extends BaseTestRunner {
 
             softAssert.assertTrue(currentUrl.equals(link),
                     "Redirection failed or URL mismatch for link: " + link);
+
         }
     }
 }
