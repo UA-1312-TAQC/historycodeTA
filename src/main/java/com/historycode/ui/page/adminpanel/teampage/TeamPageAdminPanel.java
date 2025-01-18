@@ -3,6 +3,7 @@ package com.historycode.ui.page.adminpanel.teampage;
 import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
 import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
 import com.historycode.ui.page.adminpanel.teampage.editModal.EditMemberModal;
+import io.qameta.allure.Step;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -24,11 +25,13 @@ public class TeamPageAdminPanel extends BasePageAdminPanel {
         teamPageGridComponent = new TeamPageGridComponent(driver, gridRootElement);
     }
 
+    @Step("Click on the last page of the pagination")
     public TeamPageAdminPanel clickLastPaginationItem(){
         this.getTeamPageGridComponent().clickLastPage();
         return new TeamPageAdminPanel(driver);
     }
 
+    @Step("Click the 'Створити нового члена команди' button")
     public EditMemberModal clickAddNewMemberButton() {
         addNewMemberButton.click();
         waitUntilElementVisible(createEditModalNode);

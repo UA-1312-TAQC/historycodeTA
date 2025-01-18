@@ -9,12 +9,12 @@ import com.historycode.ui.page.adminpanel.teampage.editModal.photoElement.PhotoM
 import com.historycode.ui.page.adminpanel.teampage.editModal.photoElement.PhotoWindowComponent;
 import com.historycode.ui.page.adminpanel.teampage.editModal.socialMediaElement.SocialMediaExistedComponent;
 import com.historycode.ui.utils.ImageLoader;
+import io.qameta.allure.Step;
 import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -25,8 +25,6 @@ import java.util.List;
 
 @Getter
 public class EditMemberModal extends BaseEditModal {
-
-    ImageLoader imageLoader;
 
     @FindBy(xpath = "//label[contains(@class, 'ant-checkbox-wrapper ant-checkbox-wrapper-checked ant-checkbox-wrapper-in-form-item css-k7429z')]/../..")
     protected WebElement keyMemberCheckboxRoot;
@@ -107,6 +105,7 @@ public class EditMemberModal extends BaseEditModal {
         return nameInput.getInputValue();
     }
 
+    @Step("Enter name {name} into Name input field")
     public EditMemberModal setName(String name) {
         nameInput.setInputField(name);
         return this;
@@ -152,10 +151,9 @@ public class EditMemberModal extends BaseEditModal {
         fileInput.sendKeys(filePath);
     }
 
-
-    public EditMemberModal loadPhoto(String imagePath){
-        imageLoader = new ImageLoader();
-        imageLoader.loadImageUsingRelativePath(imagePath, photoInputField);
+    @Step("Loading image {imageName} as a team member photo")
+    public EditMemberModal loadPhoto(String imageName){
+        ImageLoader.loadImageUsingRelativePath(imageName, photoInputField);
         return this;
     }
     //TODO Do I need to check uploadedPhoto.isDisplayed(), too?
@@ -163,6 +161,8 @@ public class EditMemberModal extends BaseEditModal {
         return !photoWindowComponent.isPlaceholderClickable();
     }
 
+
+    @Step("Choose social media {platform} from the social media dropdown")
     public EditMemberModal addSocialMedia(String platform) {
         openSocialMediaDropdown();
         socialMediaDropdown.clickOptionByText(platform);
@@ -172,6 +172,7 @@ public class EditMemberModal extends BaseEditModal {
         return this;
     }
 
+    @Step("Add social media link {link}")
     public EditMemberModal addSocialMediaLink(String link) {
         socialMediaInput.setInputField(link);
         //TODO Do we really need to click this button here? We need to click on it if we want to add more than 1 social media
@@ -209,11 +210,13 @@ public class EditMemberModal extends BaseEditModal {
         dropdown.clickOptionByText(optionText);
     }
 
+    @Step("Click the 'Зберегти' button")
     public EditMemberModal saveEditedMember() {
         clickSaveButton();
         return this;
     }
 
+    @Step("Close the modal window")
     public TeamPageAdminPanel closeEditMemberModal() {
         actions.moveToElement(closeButton).perform();
         waitUntilElementClickable(closeButton);

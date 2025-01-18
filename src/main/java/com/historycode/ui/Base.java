@@ -73,9 +73,4 @@ public abstract class Base {
         wait.until(ExpectedConditions.invisibilityOf(element));
     }
 
-    public void clickWithJS(WebElement element){
-        JavascriptExecutor executor = (JavascriptExecutor)driver;
-        executor.executeScript("arguments[0].click();", element);
-    }
-
 }

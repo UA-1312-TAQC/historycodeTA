@@ -6,12 +6,14 @@ import java.nio.file.Paths;
 
 public class ImageLoader {
 
-    public void loadImageUsingRelativePath(String imagePath, WebElement fileInputField){
-        String absolutePath = Paths.get(imagePath).toAbsolutePath().toString();
+    static final String BASE_PATH = "src/test/resources/";
+
+    public static void loadImageUsingRelativePath(String imageFileName, WebElement fileInputField){
+        String absolutePath = Paths.get(BASE_PATH + imageFileName).toAbsolutePath().toString();
         loadImageUsingAbsolutePath(absolutePath, fileInputField);
     }
 
-    public void loadImageUsingAbsolutePath(String imagePath, WebElement fileInputField){
+    public static void loadImageUsingAbsolutePath(String imagePath, WebElement fileInputField){
          if (!Paths.get(imagePath).toFile().exists()) {
              throw new IllegalArgumentException("Image file does not exist: " + imagePath);
          }

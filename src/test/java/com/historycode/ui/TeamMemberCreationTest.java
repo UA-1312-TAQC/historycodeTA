@@ -1,6 +1,6 @@
 package com.historycode.ui;
 
-import com.historycode.ui.page.adminpanel.historycodepage.HistoryCodePage;
+import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
 import com.historycode.ui.page.adminpanel.teampage.TeamPageAdminPanel;
 import com.historycode.ui.page.adminpanel.teampage.TeamRowComponent;
 import com.historycode.ui.testrunners.TestRunnerWithAdmin;
@@ -22,7 +22,7 @@ public class TeamMemberCreationTest extends TestRunnerWithAdmin {
     public void testTeamMemberPresentAfterCreation(){
         login();
         String teamMember = RandomStringUtils.randomAlphabetic(7) + " " + RandomStringUtils.randomAlphabetic(10);
-        TeamPageAdminPanel res= new HistoryCodePage(driver)
+        TeamPageAdminPanel res= new HistoryCodesAdminPanelPage(driver)
                 .getAdminMenuBar()
                 .goToTeamPage()
                 .clickAddNewMemberButton()
