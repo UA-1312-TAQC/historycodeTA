@@ -7,7 +7,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Step;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -37,7 +36,7 @@ public class AdminAddTagsTest extends TestRunnerWithAdmin {
     public void addTagsTest() {
         TagsPage tagsPage = new TagsPage(driver);
         SoftAssert softAssert = new SoftAssert();
-        String editTagName = newTag + RandomStringUtils.randomAlphanumeric(10);
+        String editTagName = "_edited";
 
         softAssert.assertNotNull(tagsPage.getTableRowByTitle(newTag), "The tag was successfully created");
 
@@ -46,8 +45,7 @@ public class AdminAddTagsTest extends TestRunnerWithAdmin {
                 .save()
                 .close();
 
-        tagsPage = new TagsPage(driver);
-        newTag = editTagName;
+        newTag += editTagName;
 
         softAssert.assertNotNull(tagsPage.getTableRowByTitle(newTag), "The tag was successfully edited");
         softAssert.assertAll();
@@ -59,7 +57,7 @@ public class AdminAddTagsTest extends TestRunnerWithAdmin {
         new TagsPage(driver)
                 .deleteTableRow(
                         new TagsPage(driver)
-                        .getTableRowByTitle(newTag))
+                                .getTableRowByTitle(newTag))
                 .clickOkButton();
     }
 }
