@@ -41,6 +41,7 @@ public class AdminMenuBarComponent extends BaseComponent {
 
     @Step("Click on the 'Едітор' button in the left navigation panel")
     public CategoriesPage goToEditorPage() {
+        editor.click();
         return new CategoriesPage(driver);
     }
 

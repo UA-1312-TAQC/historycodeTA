@@ -27,7 +27,7 @@ public class TeamMemberCreationTest extends TestRunnerWithAdmin {
                 .goToTeamPage()
                 .clickAddNewMemberButton()
                 .setName(teamMember)
-                .loadPhoto("src/test/resources/TeamMemberImage.png")
+                .loadPhoto("TeamMemberImage.png")
                 .addSocialMedia("LinkedIn")
                 .addSocialMediaLink("https://ua.linkedin.com/")
                 .saveEditedMember()
