@@ -33,7 +33,7 @@ public class AdminAddTagsTest extends TestRunnerWithAdmin {
     @Test
     @Issue("102")
     @Description("Verify that admin can edit existing tag")
-    public void addTagsTest() {
+    public void editTagsTest() {
         TagsPage tagsPage = new TagsPage(driver);
         softAssert = new SoftAssert();
         String editTagName = "_edited";
