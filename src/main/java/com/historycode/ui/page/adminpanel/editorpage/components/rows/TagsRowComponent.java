@@ -9,7 +9,6 @@ import org.openqa.selenium.support.FindBy;
 
 public class TagsRowComponent extends RowComponent {
 
-    @Getter
     @FindBy(xpath = ".//td[@class='ant-table-cell'][2]//span[contains(@class, 'anticon-delete')]//*[name()='svg']")
     private WebElement deleteAction;
     @FindBy(xpath = ".//td[@class='ant-table-cell'][2]//span[contains(@class, 'anticon-edit')]//*[name()='svg']")
