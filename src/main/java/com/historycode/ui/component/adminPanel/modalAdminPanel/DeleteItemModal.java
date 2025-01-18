@@ -16,7 +16,7 @@ public class DeleteItemModal extends BaseModal {
     @FindBy(xpath = "./div[@class='ant-modal-footer']/button[contains(@class, 'ant-btn-default')]")
     protected WebElement cancel;
 
-    @FindBy(xpath = "./div[@class='ant-modal-footer']/button[contains(@class, 'ant-btn-primary')]")
+    @FindBy(xpath = ".//button[span[text()='OK']]")
     protected WebElement ok;
 
     @FindBy(xpath = "./button[@class='ant-modal-close' and @aria-label='Close']")
@@ -45,7 +45,6 @@ public class DeleteItemModal extends BaseModal {
     }
 
     public void clickOkButton() {
-        waitUntilElementClickable(ok);
         ok.click();
         waitUntilElementInvisible(ok);
     }
