@@ -87,8 +87,8 @@ public class TagsGridComponent extends GridComponent {
         row.clickEdit();
     }
 
-    public DeleteItemModal openDeleteModal(TagsRowComponent row) {
-        return row.clickDelete();
+    public void deleteRow(TagsRowComponent row) {
+        row.clickDelete();
     }
 
     public TagsGridComponent clickNextPage() {
