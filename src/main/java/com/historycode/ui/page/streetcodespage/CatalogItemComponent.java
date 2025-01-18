@@ -2,6 +2,7 @@ package com.historycode.ui.page.streetcodespage;
 
 import com.historycode.ui.component.BaseComponent;
 import lombok.Getter;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -31,4 +32,19 @@ public class CatalogItemComponent extends BaseComponent {
         return descriptionNode.getText();
     }
 
+    public WebElement findDescriptionNodeOrNull() {
+        try {
+            if (descriptionNode.isDisplayed()) {
+                return descriptionNode;
+            }
+        } catch (NoSuchElementException e) {
+
+        }
+        return null;
+    }
+
+    public boolean hasDescriptionNode() {
+        return findDescriptionNodeOrNull() != null;
+    }
 }
+
