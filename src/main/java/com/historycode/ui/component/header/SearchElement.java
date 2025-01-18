@@ -13,7 +13,7 @@ public class SearchElement extends BaseElement {
     @FindBy(xpath = "//span[contains(@class, 'ant-input-prefix')]")
     private BaseElement searchIcon;
 
-    public  SearchElement(WebDriver driver, WebElement rootElement) {
-        super(driver, rootElement);;
+    public SearchElement(WebDriver driver, WebElement rootElement) {
+        super(driver, rootElement);
     }
 }
