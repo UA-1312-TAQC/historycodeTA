@@ -231,14 +231,14 @@ public class ChronologyFilmCardComponent extends BaseComponent {
         };
     }
 
-    public boolean eventsChronologicallySorted() {
+    public boolean eventsChronologySorted() {
         List<LocalDate> dates = getEventDates(wait);
 
         if (dates.isEmpty()) {
             throw new IllegalStateException("No valid dates found for events.");
         }
 
-        IntStream.range(0, dates.size() - 1)
+        return IntStream.range(0, dates.size() - 1)
                 .noneMatch(i -> {
                     boolean isAfter = dates.get(i).isAfter(dates.get(i + 1));
                     if (isAfter) {
@@ -246,7 +246,6 @@ public class ChronologyFilmCardComponent extends BaseComponent {
                     }
                     return isAfter;
                 });
-        return false;
     }
 
     private void elementIsVisible(WebElement element) {
