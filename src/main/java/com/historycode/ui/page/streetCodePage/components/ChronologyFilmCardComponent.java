@@ -8,7 +8,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
@@ -54,52 +53,6 @@ public class ChronologyFilmCardComponent extends BaseComponent {
         super(driver);
         PageFactory.initElements(driver, this);
     }
-
-    public WebElement getFilmCardByIndex(int index) {
-        sleep(10000);
-        if (index >= 0 && index < filmCard.size()) {
-            WebElement filmCard = this.filmCard.get(index);
-            scrollToElement(filmCard);
-            return filmCard;
-        }
-        throw new IndexOutOfBoundsException("Invalid index: " + index);
-    }
-
-    public void clickFilmCardByIndex(int index) {
-        sleep(10000);
-        try {
-            WebElement card = getFilmCardByIndex(index);
-            new WebDriverWait(driver, Duration.ofSeconds(10))
-                    .until(ExpectedConditions.elementToBeClickable(card));
-            card.click();
-        } catch (TimeoutException e) {
-            throw new IllegalStateException("Card at index " + index + " is not clickable after waiting.", e);
-        }
-    }
-
-    public WebElement getFilmCardByName(String name) {
-        for (int i = 0; i < filmTitles.size(); i++) {
-            if (filmTitles.get(i).getText().equalsIgnoreCase(name)) {
-                WebElement filmCard = this.filmCard.get(i);
-
-                scrollToElement(filmCard);
-
-                return filmCard;
-            }
-        }
-        throw new NoSuchElementException("Film card with name '" + name + "' not found!");
-    }
-
-    public void clickFilmCardByName(String name) {
-        WebElement card = getFilmCardByName(name);
-        card.click();
-    }
-
-    public boolean allFilmCardsVisible() {
-        sleep(10000);
-        return filmCard.stream().allMatch(WebElement::isDisplayed);
-    }
-
     public int getFilmCardCount() {
         return filmCard.size();
     }
@@ -119,6 +72,11 @@ public class ChronologyFilmCardComponent extends BaseComponent {
         WebElement titleElement = filmTitles.get(index);
         WebElement descriptionElement = description.get(index);
 
+        wait.until(ExpectedConditions.visibilityOf(yearElement));
+        wait.until(ExpectedConditions.visibilityOf(contextElement));
+        wait.until(ExpectedConditions.visibilityOf(titleElement));
+        wait.until(ExpectedConditions.visibilityOf(descriptionElement));
+
         boolean hasYear = yearElement.isDisplayed() && !yearElement.getText().isEmpty();
         boolean hasHistoricalContext = contextElement.isDisplayed() && !contextElement.getText().isEmpty();
         boolean hasTitle = titleElement.isDisplayed() && !titleElement.getText().isEmpty();
@@ -127,9 +85,61 @@ public class ChronologyFilmCardComponent extends BaseComponent {
         return hasYear && hasHistoricalContext && hasTitle && hasDescription;
     }
 
+    public boolean allFilmCardsVisible() {
+        return filmCard.stream().allMatch(card -> {
+            wait.until(ExpectedConditions.visibilityOf(card));
+            return card.isDisplayed();
+        });
+    }
+
+    public WebElement getFilmCardByIndex(int index) {
+        if (index >= 0 && index < filmCard.size()) {
+            WebElement filmCardElement = filmCard.get(index);
+            scrollToElement(filmCardElement);
+            wait.until(ExpectedConditions.visibilityOf(filmCardElement));
+            return filmCardElement;
+        }
+        throw new IndexOutOfBoundsException("Invalid index: " + index);
+    }
+
+    public void clickFilmCardByIndex(int index) {
+        try {
+            WebElement card = getFilmCardByIndex(index);
+            wait.until(ExpectedConditions.elementToBeClickable(card));
+            card.click();
+        } catch (TimeoutException e) {
+            throw new IllegalStateException("Card at index " + index + " is not clickable after waiting.", e);
+        }
+    }
+
+    public WebElement getFilmCardByName(String name) {
+        for (int i = 0; i < filmTitles.size(); i++) {
+            WebElement titleElement = filmTitles.get(i);
+            wait.until(ExpectedConditions.visibilityOf(titleElement)); // Очікуємо, що заголовок буде видимим
+            if (titleElement.getText().equalsIgnoreCase(name)) {
+                WebElement filmCard = this.filmCard.get(i);
+                scrollToElement(filmCard);
+                wait.until(ExpectedConditions.visibilityOf(filmCard)); // Очікуємо, що картка буде видимою
+                return filmCard;
+            }
+        }
+        throw new NoSuchElementException("Film card with name '" + name + "' not found!");
+    }
+
+    public void clickFilmCardByName(String name) {
+        try {
+            WebElement card = getFilmCardByName(name);
+            wait.until(ExpectedConditions.elementToBeClickable(card));
+            card.click();
+        } catch (TimeoutException e) {
+            throw new IllegalStateException("Film card with name '" + name + "' is not clickable.", e);
+        }
+    }
+
     public boolean descriptionsWithinLimit(int maxLength) {
-        for (WebElement description : description) {
-            String text = description.getText();
+        for (WebElement descriptionElement : description) {
+            wait.until(ExpectedConditions.visibilityOf(descriptionElement));
+            String text = descriptionElement.getText();
             if (text.length() > maxLength) {
                 return false;
             }
@@ -139,14 +149,19 @@ public class ChronologyFilmCardComponent extends BaseComponent {
 
     public List<Integer> getDescriptionLengths() {
         return description.stream()
-                .map(description -> description.getText().length())
+                .map(descriptionElement -> {
+                    wait.until(ExpectedConditions.visibilityOf(descriptionElement));
+                    return descriptionElement.getText().length();
+                })
                 .collect(Collectors.toList());
-
     }
 
     public List<String> getBackgroundImageUrls() {
         return filmCard.stream()
-                .map(card -> urlFromCssValue(card.getCssValue("background-image")))
+                .map(card -> {
+                    wait.until(ExpectedConditions.visibilityOf(card));
+                    return urlFromCssValue(card.getCssValue("background-image"));
+                })
                 .collect(Collectors.toList());
     }
 
@@ -217,8 +232,6 @@ public class ChronologyFilmCardComponent extends BaseComponent {
     }
 
     public boolean eventsChronologicallySorted() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
         List<LocalDate> dates = getEventDates(wait);
 
         if (dates.isEmpty()) {
@@ -238,7 +251,6 @@ public class ChronologyFilmCardComponent extends BaseComponent {
 
     private void elementIsVisible(WebElement element) {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", element);
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
