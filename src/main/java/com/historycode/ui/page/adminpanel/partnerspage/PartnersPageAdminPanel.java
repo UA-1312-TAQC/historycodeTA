@@ -29,6 +29,7 @@ public class PartnersPageAdminPanel extends BasePageAdminPanel {
 
     public CreatePartnersModal clickAddNewPartnersButton() {
         addNewPartnersButton.click();
+        waitUntilElementVisible(createModalRootElement);
         return new CreatePartnersModal(driver, createModalRootElement);
     }
 

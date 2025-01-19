@@ -15,7 +15,7 @@ public class PartnerPage extends BasePage {
     private static final String LOGO_XPATH = ".//img";
     private static final String DESCRIPTION_XPATH = ".//div[@class='description']/p";
 
-    @FindBy(xpath = "//div[@Class='otherPartnersBlock']/div[@class='partnersItem']")
+    @FindBy(xpath = "//div[@class='otherPartnersBlock']/div[@class='partnersItem']")
     protected List<WebElement> notKeyPartners;
 
     @FindBy(xpath = "//div[@class='ant-popover-content']")
@@ -44,8 +44,8 @@ public class PartnerPage extends BasePage {
         actions.moveToElement(imageElement).perform();
     }
 
-    protected WebElement findLogo (List<WebElement> ListOfLogo, String alt) {
-        for (WebElement logoContainer : ListOfLogo) {
+    protected WebElement findLogo (List<WebElement> listOfLogo, String alt) {
+        for (WebElement logoContainer : listOfLogo) {
             WebElement logo = logoContainer.findElement(By.xpath(LOGO_XPATH));
             String logoAltText = logo.getAttribute("alt");
             if (logoAltText.contains(alt)) {
