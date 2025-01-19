@@ -6,9 +6,6 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
 import java.util.List;
 
 @Getter
@@ -37,11 +34,9 @@ public class ChronologyYearsBarComponent extends BaseComponent {
     }
 
     public WebElement getRedTimeLine() {
-        sleep(20000);
         try {
             scrollToElement(redTimeline);
-            new WebDriverWait(driver, Duration.ofSeconds(20))
-                    .until(ExpectedConditions.visibilityOf(redTimeline));
+                    wait.until(ExpectedConditions.visibilityOf(redTimeline));
             return redTimeline;
         } catch (TimeoutException e) {
             throw new IllegalStateException("Red timeline is not visible after scrolling.", e);
@@ -49,10 +44,9 @@ public class ChronologyYearsBarComponent extends BaseComponent {
     }
 
     public boolean isYearBoxLarger(int index) {
-        sleep(40000);
 
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", redTimeline);
-        new WebDriverWait(driver, Duration.ofSeconds(20)).until(ExpectedConditions.visibilityOf(redTimeline));
+        wait.until(ExpectedConditions.visibilityOf(redTimeline));
 
         WebElement selectedBox = selectedYearBoxContainer.get(index);
 
