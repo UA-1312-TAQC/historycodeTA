@@ -13,7 +13,7 @@ import java.util.List;
 public class PartnerPage extends BasePage {
 
     private static final String LOGO_XPATH = ".//img";
-    private static final String DESCRIPTION_XPATH = ".//div[@class='description']";
+    private static final String DESCRIPTION_XPATH = ".//div[@class='description']/p";
 
     @FindBy(xpath = "//div[@Class='otherPartnersBlock']/div[@class='partnersItem']")
     protected List<WebElement> notKeyPartners;
@@ -35,8 +35,8 @@ public class PartnerPage extends BasePage {
 
     public String getPopoverDescription() {
         waitUntilElementVisible(popoverContainer);
-        WebElement description1 = popoverContainer.findElement(By.xpath(DESCRIPTION_XPATH));
-        return description1.getText();
+        WebElement description = popoverContainer.findElement(By.xpath(DESCRIPTION_XPATH));
+        return description.getText();
     }
 
     protected void hoverOverLogo (WebElement imageElement) {

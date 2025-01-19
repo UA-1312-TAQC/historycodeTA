@@ -1,6 +1,5 @@
 package com.historycode.ui.adminPanel;
 
-import com.historycode.ui.component.adminPanel.adminMenuBar.AdminMenuBarComponent;
 import com.historycode.ui.elements.adminPanel.InputElement;
 import com.historycode.ui.elements.adminPanel.LogoElement;
 import com.historycode.ui.elements.adminPanel.TextAreaElement;
@@ -12,7 +11,7 @@ import com.historycode.ui.testrunners.TestRunnerWithAdmin;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
+
 import org.testng.annotations.Test;
 
 
@@ -21,11 +20,6 @@ public class TestCase130  extends TestRunnerWithAdmin {
     String testName = "SpongeBob";
     String testDescription = "Our optimistic and energetic sponge";
     String testLogo = "logo.jpeg";
-
-    @BeforeMethod
-    public void setupForTest() {
-        login();
-    }
 
     @Test
     @Issue("130")
@@ -48,6 +42,7 @@ public class TestCase130  extends TestRunnerWithAdmin {
         createModal.clickSaveButton();
         createModal.clickCloseButton();
 
+        //TODO Make a transition to a new page using header
         String baseUrl = testValueProvider.getBaseUIUrl();
         driver.get(baseUrl + "/partners-page");
         PartnerPage basePage = new PartnerPage(driver);
@@ -58,4 +53,3 @@ public class TestCase130  extends TestRunnerWithAdmin {
         Assert.assertEquals(basePage.getPopoverDescription(), testDescription);
     }
 }
-

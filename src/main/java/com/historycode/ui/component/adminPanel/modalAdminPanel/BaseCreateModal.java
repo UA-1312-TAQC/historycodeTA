@@ -19,6 +19,12 @@ public abstract class BaseCreateModal extends BaseModal {
     @FindBy(xpath = ".//div[@class='center']//button/span")
     protected WebElement saveButton;
 
+    @FindBy(xpath = ".//span[@class='ant-upload']")
+    protected WebElement uploadLogo;
+
+    @FindBy(xpath = "//div[contains(@class, 'ant-message-success')]")
+    protected WebElement saveConfirmation;
+
     public BaseCreateModal(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
@@ -51,6 +57,7 @@ public abstract class BaseCreateModal extends BaseModal {
     public void clickCloseButton() {
         if (isCloseButtonEnabled()) {
             waitUntilElementClickable(closeButton);
+            waitUntilElementVisible(saveConfirmation);
             closeButton.click();
         }
     }
@@ -58,9 +65,8 @@ public abstract class BaseCreateModal extends BaseModal {
     public void clickSaveButton() {
         if (isSaveButtonEnabled()) {
             waitUntilElementClickable(saveButton);
-            sleep(2000);
+            waitUntilElementVisible(uploadLogo);
             saveButton.click();
-            sleep(2000);
         }
     }
 }

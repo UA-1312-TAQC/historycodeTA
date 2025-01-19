@@ -37,7 +37,6 @@ public abstract class Base {
     public void scrollToEndOfPage() {
         sleep(1000);
         threadJs.executeScript("window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });");
-        sleep(1000);
     }
 
     protected boolean isContentTruncatedOrOverflow(WebElement element) {
