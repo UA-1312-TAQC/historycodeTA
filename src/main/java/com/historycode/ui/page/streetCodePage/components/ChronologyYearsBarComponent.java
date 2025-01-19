@@ -2,28 +2,29 @@ package com.historycode.ui.page.streetCodePage.components;
 
 import com.historycode.ui.component.BaseComponent;
 import lombok.Getter;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
 
 @Getter
 public class ChronologyYearsBarComponent extends BaseComponent {
+
+
+    @FindBy(xpath = "//div[contains(@class, 'timeline-swiper')]")
+    private WebElement redTimeline;
 
     @Getter
     @FindBy(xpath = "//div[contains(@class, 'timelineYearTick')]//span")
     private List<WebElement> yearsNode;
 
     @Getter
-    @FindBy(xpath = "//div[contains(@class, 'timelineYearTick')]")
+    @FindBy(xpath = "//div[contains(@class, 'tickContainer')]")
     private List<WebElement> selectedYearBoxContainer;
-
-    @Getter
-    @FindBy(xpath = "//div[contains(@class, 'active')]")
-    private WebElement activeYearBox;
 
     public ChronologyYearsBarComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
@@ -35,20 +36,26 @@ public class ChronologyYearsBarComponent extends BaseComponent {
         PageFactory.initElements(driver, this);
     }
 
-    public WebElement getIdYearBox(int index) {
-        if (index >= 0 && index < selectedYearBoxContainer.size()) {
-            return selectedYearBoxContainer.get(index);
+    public WebElement getRedTimeLine() {
+        sleep(20000);
+        try {
+            scrollToElement(redTimeline);
+            new WebDriverWait(driver, Duration.ofSeconds(20))
+                    .until(ExpectedConditions.visibilityOf(redTimeline));
+            return redTimeline;
+        } catch (TimeoutException e) {
+            throw new IllegalStateException("Red timeline is not visible after scrolling.", e);
         }
-        throw new IndexOutOfBoundsException("Invalid index: " + index);
-    }
-
-    public boolean isYearBoxVisible(int index) {
-        WebElement yearBox = getIdYearBox(index);
-        return yearBox.isDisplayed();
     }
 
     public boolean isYearBoxLarger(int index) {
-        WebElement selectedBox = getIdYearBox(index);
+        sleep(40000);
+
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", redTimeline);
+        new WebDriverWait(driver, Duration.ofSeconds(20)).until(ExpectedConditions.visibilityOf(redTimeline));
+
+        WebElement selectedBox = selectedYearBoxContainer.get(index);
+
         Dimension selectedBoxSize = selectedBox.getSize();
 
         return selectedYearBoxContainer.stream()
@@ -57,19 +64,6 @@ public class ChronologyYearsBarComponent extends BaseComponent {
                     return selectedBoxSize.getHeight() > otherBoxSize.getHeight() &&
                             selectedBoxSize.getWidth() > otherBoxSize.getWidth();
                 });
-    }
-
-    public boolean isYearBoxActive(int index) {
-        if (index >= 0 && index < selectedYearBoxContainer.size()) {
-            WebElement yearBox = selectedYearBoxContainer.get(index);
-            return yearBox.getAttribute("class").contains("active");
-        }
-        throw new IndexOutOfBoundsException("Invalid index: " + index);
-    }
-
-    public boolean isActiveYearBoxVisible() {
-        sleep(2000);
-        return activeYearBox != null && activeYearBox.isDisplayed();
     }
 
     public boolean eventsChronologicallySorted() {
