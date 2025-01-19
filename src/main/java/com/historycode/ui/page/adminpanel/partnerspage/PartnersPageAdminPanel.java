@@ -18,6 +18,7 @@ public class PartnersPageAdminPanel extends BasePageAdminPanel {
     @FindBy(xpath = "//div[@class='ant-modal-content']//span[text()='Зберегти']/../../../..")
     private WebElement createModalRootElement;
 
+    @lombok.Getter
     private final PartnersPageGridComponent partnersPageGridComponent;
 
     public PartnersPageAdminPanel(WebDriver driver) {
@@ -28,10 +29,6 @@ public class PartnersPageAdminPanel extends BasePageAdminPanel {
     public CreatePartnersModal clickAddNewPartnersButton() {
         addNewPartnersButton.click();
         return new CreatePartnersModal(driver, createModalRootElement);
-    }
-
-    public PartnersPageGridComponent getPartnersPageGridComponent() {
-        return partnersPageGridComponent;
     }
 
     public PartnersPageAdminPanel clickNextPage() {

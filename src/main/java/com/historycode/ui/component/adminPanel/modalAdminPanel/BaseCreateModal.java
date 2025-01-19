@@ -27,12 +27,20 @@ public abstract class BaseCreateModal extends BaseModal {
         return rootElement.isDisplayed();
     }
 
-    public void hoverOverCloseButton() {
-        actions.moveToElement(closeButton).perform();
-    }
-
     public boolean isTooltipVisible() {
         return tooltip.isDisplayed();
+    }
+
+    public boolean isSaveButtonEnabled() {
+        return saveButton.isEnabled();
+    }
+
+    public boolean isCloseButtonEnabled() {
+        return closeButton.isEnabled();
+    }
+
+    public void hoverOverCloseButton() {
+        actions.moveToElement(closeButton).perform();
     }
 
     public String getTooltipText() {
@@ -41,18 +49,18 @@ public abstract class BaseCreateModal extends BaseModal {
     }
 
     public void clickCloseButton() {
-        waitUntilElementClickable(closeButton);
-        closeButton.click();
-    }
-
-    public boolean isSaveButtonEnabled() {
-        return saveButton.isEnabled();
+        if (isCloseButtonEnabled()) {
+            waitUntilElementClickable(closeButton);
+            closeButton.click();
+        }
     }
 
     public void clickSaveButton() {
         if (isSaveButtonEnabled()) {
             waitUntilElementClickable(saveButton);
+            sleep(2000);
             saveButton.click();
+            sleep(2000);
         }
     }
 }

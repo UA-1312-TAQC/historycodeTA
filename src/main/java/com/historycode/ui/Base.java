@@ -35,6 +35,7 @@ public abstract class Base {
 
     @Step("Scroll to the end of the page")
     public void scrollToEndOfPage() {
+        sleep(1000);
         threadJs.executeScript("window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });");
         sleep(1000);
     }

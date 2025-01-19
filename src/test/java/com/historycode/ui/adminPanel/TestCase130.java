@@ -15,16 +15,12 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class TestCase130  extends TestRunnerWithAdmin {
 
-    String projectRoot = System.getProperty("user.dir");
-    Path SpongeLogo = Paths.get(projectRoot, "src", "test", "java", "com", "historycode", "resources", "logo.jpeg");
-
     String testName = "SpongeBob";
-    String testDescription = "Our guru and cooker";
+    String testDescription = "Our optimistic and energetic sponge";
+    String testLogo = "logo.jpeg";
 
     @BeforeMethod
     public void setupForTest() {
@@ -34,24 +30,22 @@ public class TestCase130  extends TestRunnerWithAdmin {
     @Test
     @Issue("130")
     @Description("Verify that the admin can add a description to a partner's card")
-    public void test130 () throws InterruptedException {
-        PartnersPageAdminPanel adminPage = new PartnersPageAdminPanel(driver);
-
-        AdminMenuBarComponent menuBar = adminPage.getAdminMenuBar();
-        CreatePartnersModal createModal = menuBar.goToPartnersPage().clickAddNewPartnersButton();
+    public void test130 () {
+        CreatePartnersModal createModal = new PartnersPageAdminPanel(driver)
+                .getAdminMenuBar()
+                .goToPartnersPage()
+                .clickAddNewPartnersButton();
 
         InputElement name = createModal.name;
-        name.setInputField("SpongeBob");
+        name.setInputField(testName);
 
         TextAreaElement description = createModal.description;
-        description.setTextArea("Our guru and cooker");
+        description.setTextArea(testDescription);
 
         LogoElement logo = createModal.logo;
-        logo.uploadLogo(SpongeLogo.toString());
+        logo.uploadLogo(testLogo);
 
         createModal.clickSaveButton();
-        adminPage.sleep(5000);
-
         createModal.clickCloseButton();
 
         String baseUrl = testValueProvider.getBaseUIUrl();
@@ -59,8 +53,6 @@ public class TestCase130  extends TestRunnerWithAdmin {
         PartnerPage basePage = new PartnerPage(driver);
 
         basePage.scrollToEndOfPage();
-        basePage.sleep(5000);
-
         basePage.hoverOverNotKeyPartner(testName);
 
         Assert.assertEquals(basePage.getPopoverDescription(), testDescription);
