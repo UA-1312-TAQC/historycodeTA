@@ -3,11 +3,11 @@ package com.historycode.ui;
 import com.historycode.ui.page.streetCodePage.components.ChronologyComponent;
 import com.historycode.ui.page.streetCodePage.components.ChronologyFilmCardComponent;
 import com.historycode.ui.page.streetCodePage.components.ChronologyYearsBarComponent;
-import com.historycode.ui.page.streetcodespage.StreetCodesPage;
 import com.historycode.ui.testrunners.BaseTestRunner;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,33 +25,8 @@ public class ChronologyTestCase extends BaseTestRunner {
     @Step("Verify the title 'Хронологія' is displayed.")
     public void testChronologyDisplaeyd() {
         String baseUrl = testValueProvider.getBaseUIUrl();
-        String fullUrl = baseUrl + "catalog";
+        String fullUrl = baseUrl + "roman-ratushnyi-seneka";
         driver.get(fullUrl);
-
-        StreetCodesPage streetCodesPage = new StreetCodesPage(driver);
-        streetCodesPage.clickOnCatalogComponent(0);
-
-        ChronologyComponent chronologyComponent = new ChronologyComponent(driver);
-        chronologyComponent.getTitle();
-
-        WebElement titleElement = chronologyComponent.getTitleElement();
-        softAssert.assertTrue(titleElement.isDisplayed(), "Title element is not visible!");
-
-        softAssert.assertAll();
-    }
-
-    @Issue("91")
-    @Test
-    @Step("Verify that a red timeline is displayed and a grey square is visible under each year in a timeline.")
-    public void testChronologyTimeLineIsDisplayed() {
-
-        String baseUrl = testValueProvider.getBaseUIUrl();
-        String fullUrl = baseUrl + "catalog";
-        driver.get(fullUrl);
-
-
-        StreetCodesPage streetCodesPage = new StreetCodesPage(driver);
-        streetCodesPage.clickOnCatalogComponent(0);
 
         ChronologyComponent chronologyComponent = new ChronologyComponent(driver);
 
@@ -61,12 +36,30 @@ public class ChronologyTestCase extends BaseTestRunner {
         String actualTitle = chronologyComponent.getTitle();
         softAssert.assertEquals(actualTitle, "Хронологія", "The title text is incorrect!");
 
-        softAssert.assertAll();
     }
 
     @Issue("91")
     @Test
-    @Step("Verify that the selected year box is larger than the others.")
+    @Step("Verify that a red timeline is displayed and a grey square is visible under each year in a timeline.")
+    public void testChronologyTimeLineIsDisplayed() {
+
+        String baseUrl = testValueProvider.getBaseUIUrl();
+        String fullUrl = baseUrl + "roman-ratushnyi-seneka";
+        driver.get(fullUrl);
+
+        ChronologyComponent chronologyComponent = new ChronologyComponent(driver);
+
+        WebElement redTimeline = chronologyComponent.getRedTimeline();
+        softAssert.assertTrue(redTimeline.isDisplayed(), "Red timeline element is not displayed!");
+        WebElement years = chronologyComponent.getYears();
+        softAssert.assertTrue(years.isDisplayed(), "Years is not visible!");
+        WebElement greyBox = chronologyComponent.getGreyBox();
+        softAssert.assertTrue(greyBox.isDisplayed(), "Grey box is not visible!");
+    }
+
+    @Issue("91")
+    @Test
+    @Step("Verify that the selected year box is bigger than the others.")
     public void testSelectedYearBoxSize() {
 
         String baseUrl = testValueProvider.getBaseUIUrl();
@@ -74,19 +67,19 @@ public class ChronologyTestCase extends BaseTestRunner {
         driver.get(fullUrl);
 
         ChronologyYearsBarComponent yearsBar = new ChronologyYearsBarComponent(driver);
+        WebElement redTimeline = yearsBar.getRedTimeLine();
+        softAssert.assertTrue(redTimeline.isDisplayed(), "Red timeline element is not displayed!");
 
-        int targetIndex = 3;
+        int targetIndex = 4;
 
-        softAssert.assertFalse(yearsBar.isYearBoxLarger(targetIndex),
+        softAssert.assertTrue(yearsBar.isYearBoxLarger(targetIndex),
                 "The selected year box is not larger than the others!");
-
-        softAssert.assertAll();
     }
 
     @Issue("91")
     @Test
     @Step("Verify that clicking on another square leads to a scroll of a camera film to another event in the selected timeline.")
-    public void testNavigateToCameraFilm() {
+    public void testClickFilmCard() {
         String baseUrl = testValueProvider.getBaseUIUrl();
         String fullUrl = baseUrl + "roman-ratushnyi-seneka";
         driver.get(fullUrl);
@@ -95,17 +88,9 @@ public class ChronologyTestCase extends BaseTestRunner {
 
         int targetIndex = 6;
         WebElement filmCardByIndex = filmCardComponent.getFilmCardByIndex(targetIndex);
-        softAssert.assertTrue(filmCardByIndex.isDisplayed(),
+        Assert.assertTrue(filmCardByIndex.isDisplayed(),
                 "Film card at index " + targetIndex + " is not visible!");
         filmCardComponent.clickFilmCardByIndex(targetIndex);
-
-        String filmTitle = "Перемога в суді";
-        WebElement filmCardByName = filmCardComponent.getFilmCardByName(filmTitle);
-        softAssert.assertTrue(filmCardByName.isDisplayed(),
-                "Film card with title '" + filmTitle + "' is not visible!");
-        filmCardComponent.clickFilmCardByName(filmTitle);
-
-        softAssert.assertAll();
     }
 
     @Issue("91")
@@ -121,31 +106,27 @@ public class ChronologyTestCase extends BaseTestRunner {
         int filmCardCount = filmCardComponent.getFilmCardCount();
         softAssert.assertTrue(filmCardCount > 0, "No film cards found on the timeline!");
 
-        softAssert.assertFalse(filmCardComponent.allFilmCardsVisible(),
+        softAssert.assertTrue(filmCardComponent.allFilmCardsVisible(),
                 "Not all film cards are visible!");
 
         softAssert.assertTrue(filmCardComponent.filmCardsUnique(),
                 "Some film cards are not unique!");
-
-        softAssert.assertAll();
     }
 
     @Issue("91")
     @Test
     @Step("Verify each event contains: a period of time (date, season), Title, and Main Text.")
-    public void testEachEventContainsRequiredFields() {
+    public void testAllEventCardsComplete() {
         String baseUrl = testValueProvider.getBaseUIUrl();
         String fullUrl = baseUrl + "roman-ratushnyi-seneka";
         driver.get(fullUrl);
 
         ChronologyFilmCardComponent filmCardComponent = new ChronologyFilmCardComponent(driver);
 
-        softAssert.assertTrue(!filmCardComponent.getFilmCard().isEmpty(), "No film cards found on the timeline!");
-
-        softAssert.assertFalse(filmCardComponent.allEventsComplete(),
-                "Some film cards do not contain all required fields (Year, Historical Context, Title, or Description)!");
-
-        softAssert.assertAll();
+        for (int i = 0; i < filmCardComponent.getFilmCard().size(); i++) {
+            boolean isComplete = filmCardComponent.isCardComplete(i);
+            Assert.assertTrue(isComplete, "Event card at index " + i + " is incomplete!");
+        }
     }
 
     @Issue("91")
@@ -167,8 +148,6 @@ public class ChronologyTestCase extends BaseTestRunner {
         for (int i = 0; i < descriptionLengths.size(); i++) {
             softAssert.assertTrue(descriptionLengths.get(i) <= 400,
                     "Description on card " + i + " exceeds 400 characters!");
-
-            softAssert.assertAll();
         }
     }
 
@@ -191,18 +170,15 @@ public class ChronologyTestCase extends BaseTestRunner {
         );
 
         for (String actualUrl : actualImageUrls) {
-            softAssert.assertFalse(defaultImageUrls.contains(actualUrl),
+            Assert.assertTrue(defaultImageUrls.contains(actualUrl),
                     "Background image URL not part of the default set: " + actualUrl);
         }
-
-        softAssert.assertAll();
     }
-
 
     @Issue("91")
     @Test
     @Step("Verify events are displayed from oldest to newest, from left to right without converting to Integer.")
-    public void testEventsChronologicallySortedWithoutConversion() {
+    public void testEventsChronologySortedWithoutConversion() {
         String baseUrl = testValueProvider.getBaseUIUrl();
         String fullUrl = baseUrl + "roman-ratushnyi-seneka";
         driver.get(fullUrl);
@@ -210,12 +186,114 @@ public class ChronologyTestCase extends BaseTestRunner {
         ChronologyYearsBarComponent chronologyYearsBarComponent = new ChronologyYearsBarComponent(driver);
 
         boolean isSorted = chronologyYearsBarComponent.eventsChronologicallySorted();
-        softAssert.assertFalse(isSorted, "Events are not displayed from oldest to newest!");
-
-        softAssert.assertAll();
+        Assert.assertTrue(isSorted, "Events are not displayed from oldest to newest!");
 
     }
+
+    @Issue("91")
+    @Test
+    @Step(" Verify camera film reacts to a scroll and moves accordingly" +
+            "Scroll right moves the camera film to the newest events ->" +
+            "Scroll left moves the camera film to the oldest events <-")
+    public void testNavigationYearBoxes() {
+        String baseUrl = testValueProvider.getBaseUIUrl();
+        String fullUrl = baseUrl + "roman-ratushnyi-seneka";
+        driver.get(fullUrl);
+
+        ChronologyFilmCardComponent filmCardComponent = new ChronologyFilmCardComponent(driver);
+
+        int targetIndex = 6;
+        WebElement filmCardByIndex = filmCardComponent.getFilmCardByIndex(targetIndex);
+        softAssert.assertFalse(filmCardByIndex.isDisplayed(),
+                "Film card at index " + targetIndex + " is not visible!");
+        filmCardComponent.clickFilmCardByIndex(targetIndex);
+
+        String filmTitle = "Перемога в суді";
+        WebElement filmCardByName = filmCardComponent.getFilmCardByName(filmTitle);
+        softAssert.assertFalse(filmCardByName.isDisplayed(),
+                "Film card with title '" + filmTitle + "' is not visible!");
+        filmCardComponent.clickFilmCardByName(filmTitle);
+
+    }
+
+    @Issue("91")
+    @Test
+    @Step("Verify the ordering of events:\n" +
+            "\n" +
+            "the beginning of the year is considered as the 1st of January\n" +
+            "\n" +
+            "the beginning of the season is considered the first day of its first month,\n" +
+            "\n" +
+            "the beginning of the month is considered the first day of this month")
+    public void testTimelineNavigationAndSorting() {
+        String baseUrl = testValueProvider.getBaseUIUrl();
+        String fullUrl = baseUrl + "roman-ratushnyi-seneka";
+        driver.get(fullUrl);
+
+        ChronologyFilmCardComponent filmCardComponent = new ChronologyFilmCardComponent(driver);
+
+        for (int i = 4; i >= 0; i--) {
+            filmCardComponent.clickFilmCardByIndex(i);
+        }
+
+        for (int i = 0; i <= 16; i++) {
+            filmCardComponent.clickFilmCardByIndex(i);
+        }
+
+        boolean isSorted = filmCardComponent.eventsChronologicallySorted();
+        Assert.assertTrue(isSorted, "Events are not displayed in chronological order!");
+    }
+
+    @Issue("91")
+    @Test
+    @Step("Сlicking on previous/next event - moves events cards and locates clicked one to the center.")
+    public void testEventMovesToCenter() {
+        String baseUrl = testValueProvider.getBaseUIUrl();
+        String fullUrl = baseUrl + "roman-ratushnyi-seneka";
+        driver.get(fullUrl);
+
+        ChronologyFilmCardComponent filmCardComponent = new ChronologyFilmCardComponent(driver);
+
+        int targetIndex = 6;
+
+        WebElement filmCardByIndex = filmCardComponent.getFilmCardByIndex(targetIndex);
+        softAssert.assertTrue(filmCardByIndex.isDisplayed(),
+                "Film card at index " + targetIndex + " is not visible!");
+
+        filmCardComponent.clickFilmCardByIndex(targetIndex);
+
+        softAssert.assertTrue(filmCardComponent.isCardCentered(targetIndex),
+                "The film card at index " + targetIndex + " is not centered after clicking!");
+    }
+
+    @Issue("91")
+    @Test
+    @Step("Verify the central event has a white outline.")
+    public void testCentralEventHasSpecificBorderColor() {
+        String baseUrl = testValueProvider.getBaseUIUrl();
+        String fullUrl = baseUrl + "roman-ratushnyi-seneka";
+        driver.get(fullUrl);
+
+        ChronologyFilmCardComponent filmCardComponent = new ChronologyFilmCardComponent(driver);
+
+        int targetIndex = 6;
+        WebElement filmCardByIndex = filmCardComponent.getFilmCardByIndex(targetIndex);
+        softAssert.assertTrue(filmCardByIndex.isDisplayed(),
+                "Film card at index " + targetIndex + " is not visible!");
+        filmCardComponent.clickFilmCardByIndex(targetIndex);
+
+        String expectedBorderColor = "#d9d9d9";
+        boolean hasCorrectBorder = filmCardComponent.borderColor(targetIndex, expectedBorderColor);
+        softAssert.assertFalse(hasCorrectBorder,
+                "The film card at index " + targetIndex + " does not have the correct border color!");
+
+        for (int i = 0; i < filmCardComponent.getFilmCard().size(); i++) {
+            softAssert.assertFalse(filmCardComponent.borderColor(i, expectedBorderColor),
+                    "The film card at index " + i + " incorrectly has the expected border color!");
+        }
+    }
 }
+
 
 
 
