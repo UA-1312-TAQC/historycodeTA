@@ -6,6 +6,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
 import java.util.List;
 
 @Getter
@@ -36,7 +37,7 @@ public class ChronologyYearsBarComponent extends BaseComponent {
     public WebElement getRedTimeLine() {
         try {
             scrollToElement(redTimeline);
-                    wait.until(ExpectedConditions.visibilityOf(redTimeline));
+            wait.until(ExpectedConditions.visibilityOf(redTimeline));
             return redTimeline;
         } catch (TimeoutException e) {
             throw new IllegalStateException("Red timeline is not visible after scrolling.", e);
@@ -61,12 +62,24 @@ public class ChronologyYearsBarComponent extends BaseComponent {
     }
 
     public boolean eventsChronologicallySorted() {
+        if (yearsNode == null || yearsNode.isEmpty()) {
+            return true;
+        }
         for (int i = 0; i < yearsNode.size() - 1; i++) {
-            String currentYear = yearsNode.get(i).getText().trim();
-            String nextYear = yearsNode.get(i + 1).getText().trim();
 
-            if (currentYear.compareTo(nextYear) > 0) {
-                return false;
+            WebElement currentElement = yearsNode.get(i);
+            WebElement nextElement = yearsNode.get(i + 1);
+            if (currentElement == null || nextElement == null) {
+                continue;
+            }
+            try {
+                int currentYear = Integer.parseInt(currentElement.getText().trim());
+                int nextYear = Integer.parseInt(nextElement.getText().trim());
+                if (currentYear > nextYear) {
+                    return false;
+                }
+            } catch (NumberFormatException e) {
+                throw new IllegalStateException("Invalid year format found in timeline", e);
             }
         }
         return true;
