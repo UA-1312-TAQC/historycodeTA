@@ -22,6 +22,14 @@ public class ChronologyComponent extends BaseComponent {
     @FindBy(xpath = "//div[contains(@class, 'timelineYearTicksContainer')]")
     private WebElement redTimeline;
 
+    @Getter
+    @FindBy(xpath = "//div[contains(@class, 'timeSpanContainer')]")
+    private WebElement years;
+
+    @Getter
+    @FindBy(xpath = "//div[contains(@class, 'timelineYearTicksContainer')]")
+    private WebElement greyBox;
+
     @FindBy(xpath = ".//div[@class='timelineContentContainer']")
     private WebElement filmCardContainer;
 
@@ -41,11 +49,11 @@ public class ChronologyComponent extends BaseComponent {
     }
 
     public String getTitle() {
-        scrollToElement(title);
         return title.getText();
     }
 
     public WebElement getTitleElement() {
+        scrollToElement(title);
         return title;
     }
 
