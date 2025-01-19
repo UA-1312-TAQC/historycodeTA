@@ -204,13 +204,13 @@ public class ChronologyTestCase extends BaseTestRunner {
 
         int targetIndex = 6;
         WebElement filmCardByIndex = filmCardComponent.getFilmCardByIndex(targetIndex);
-        softAssert.assertFalse(filmCardByIndex.isDisplayed(),
+        softAssert.assertTrue(filmCardByIndex.isDisplayed(),
                 "Film card at index " + targetIndex + " is not visible!");
         filmCardComponent.clickFilmCardByIndex(targetIndex);
 
         String filmTitle = "Перемога в суді";
         WebElement filmCardByName = filmCardComponent.getFilmCardByName(filmTitle);
-        softAssert.assertFalse(filmCardByName.isDisplayed(),
+        softAssert.assertTrue(filmCardByName.isDisplayed(),
                 "Film card with title '" + filmTitle + "' is not visible!");
         filmCardComponent.clickFilmCardByName(filmTitle);
 
@@ -284,11 +284,11 @@ public class ChronologyTestCase extends BaseTestRunner {
 
         String expectedBorderColor = "#d9d9d9";
         boolean hasCorrectBorder = filmCardComponent.borderColor(targetIndex, expectedBorderColor);
-        softAssert.assertFalse(hasCorrectBorder,
+        softAssert.assertTrue(hasCorrectBorder,
                 "The film card at index " + targetIndex + " does not have the correct border color!");
 
         for (int i = 0; i < filmCardComponent.getFilmCard().size(); i++) {
-            softAssert.assertFalse(filmCardComponent.borderColor(i, expectedBorderColor),
+            softAssert.assertTrue(filmCardComponent.borderColor(i, expectedBorderColor),
                     "The film card at index " + i + " incorrectly has the expected border color!");
         }
     }
