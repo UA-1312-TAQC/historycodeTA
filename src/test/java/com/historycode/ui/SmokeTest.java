@@ -27,7 +27,7 @@ public class SmokeTest extends BaseTestRunner {
     @Test
     public void testOpenPreviousPage(){
         new HomePage(driver)
-                .clickPersonCardCarouselItem(1)
+                .clickPersonCardCarouselItem(0)
                 .getBreadcrumbs()
                 .clickCatalog();
         Assert.assertTrue(Objects.requireNonNull(driver.getCurrentUrl()).contains("/catalog"), "Navigation to catalog failed");
