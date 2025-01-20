@@ -24,6 +24,10 @@ public class ModalInputElement extends BaseComponent {
         return input;
     }
 
+    public String getInputText() {
+        return input.getDomProperty("value");
+    }
+
     public void setInput(String text) {
         input.sendKeys(text);
     }
