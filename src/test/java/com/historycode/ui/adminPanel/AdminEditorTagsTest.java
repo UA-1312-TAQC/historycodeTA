@@ -15,11 +15,12 @@ public class AdminEditorTagsTest extends TestRunnerWithAdmin {
 
     private String newTag;
     private SoftAssert softAssert;
+    private static final String TAG_PREFIX = "Я_newTag_";
 
     @Step("Adding new Tag")
     public void createNewTag() {
         int lengthOfNewName = 10;
-        this.newTag = "Я_newTag_" + RandomStringUtils.randomAlphanumeric(lengthOfNewName);
+        this.newTag = TAG_PREFIX + RandomStringUtils.randomAlphanumeric(lengthOfNewName);
 
         new HistoryCodesAdminPanelPage(driver)
                 .getAdminMenuBar()
@@ -47,12 +48,12 @@ public class AdminEditorTagsTest extends TestRunnerWithAdmin {
 
         int characterLimit = 50;
         int lengthOfNewName = 60;
-        tagsModalComponent.enterTag("Я_newTag_" + RandomStringUtils.randomAlphanumeric(lengthOfNewName));
+        tagsModalComponent.enterTag(TAG_PREFIX + RandomStringUtils.randomAlphanumeric(lengthOfNewName));
 
         softAssert.assertTrue(tagsModalComponent.getInputComponent().getInputText().length() <= characterLimit, "Header length limit is valid = 50");
 
         lengthOfNewName = 10;
-        this.newTag = "Я_newTag_" + RandomStringUtils.randomAlphanumeric(lengthOfNewName);
+        this.newTag = TAG_PREFIX + RandomStringUtils.randomAlphanumeric(lengthOfNewName);
 
         tagsModalComponent
                 .setTag(newTag)
