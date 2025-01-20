@@ -115,11 +115,11 @@ public class ChronologyFilmCardComponent extends BaseComponent {
     public WebElement getFilmCardByName(String name) {
         for (int i = 0; i < filmTitles.size(); i++) {
             WebElement titleElement = filmTitles.get(i);
-            wait.until(ExpectedConditions.visibilityOf(titleElement)); // Очікуємо, що заголовок буде видимим
+            wait.until(ExpectedConditions.visibilityOf(titleElement));
             if (titleElement.getText().equalsIgnoreCase(name)) {
                 WebElement filmCard = this.filmCard.get(i);
                 scrollToElement(filmCard);
-                wait.until(ExpectedConditions.visibilityOf(filmCard)); // Очікуємо, що картка буде видимою
+                wait.until(ExpectedConditions.visibilityOf(filmCard));
                 return filmCard;
             }
         }
