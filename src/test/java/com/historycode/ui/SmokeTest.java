@@ -3,8 +3,9 @@ package com.historycode.ui;
 
 import com.historycode.ui.page.homePage.HomePage;
 import com.historycode.ui.testrunners.BaseTestRunner;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
 import io.qameta.allure.Issue;
-import lombok.SneakyThrows;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -22,9 +23,10 @@ public class SmokeTest extends BaseTestRunner {
         Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[3]/div[1]/div[1]/div[1]")).isDisplayed());
     }
 
-    @SneakyThrows
-    @Issue("78")
     @Test
+    @Issue("78")
+    @Epic("(Epic#1) StreetCode page")
+    @Description("Verify that after clicking on the StreetCodes, the Catalog page with street codes will be displayed.")
     public void testOpenPreviousPage(){
         new HomePage(driver)
                 .clickPersonCardCarouselItem(0)

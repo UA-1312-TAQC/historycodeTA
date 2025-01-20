@@ -5,6 +5,7 @@ import com.historycode.ui.page.adminpanel.editorpage.components.modals.TagsModal
 import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
 import com.historycode.ui.testrunners.TestRunnerWithAdmin;
 import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Step;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -34,6 +35,7 @@ public class AdminEditorTagsTest extends TestRunnerWithAdmin {
 
     @Test
     @Issue("107")
+    @Epic("(Epic#5) Admin/Other pages")
     @Description("Verify that admin can save a new tag if the mandatory field is full")
     public void createTagTest() {
         softAssert = new SoftAssert();
@@ -68,6 +70,7 @@ public class AdminEditorTagsTest extends TestRunnerWithAdmin {
 
     @Test
     @Issue("102")
+    @Epic("(Epic#5) Admin/Other pages")
     @Description("Verify that admin can edit existing tag")
     public void editTagTest() {
         createNewTag();
@@ -93,6 +96,7 @@ public class AdminEditorTagsTest extends TestRunnerWithAdmin {
 
     @Test
     @Issue("103")
+    @Epic("(Epic#5) Admin/Other pages")
     @Description("Verify that admin can delete existing tag")
     public void deleteTagTest() {
         createNewTag();
