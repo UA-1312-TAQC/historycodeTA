@@ -11,7 +11,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-public class AdminAddTagsTest extends TestRunnerWithAdmin {
+public class AdminEditorTagsTest extends TestRunnerWithAdmin {
 
     private String newTag;
     private SoftAssert softAssert;
