@@ -1,6 +1,7 @@
 package com.historycode.ui.adminPanel;
 
 import com.historycode.ui.page.adminpanel.editorpage.TagsPage;
+import com.historycode.ui.page.adminpanel.editorpage.components.modals.TagsModalComponent;
 import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
 import com.historycode.ui.testrunners.TestRunnerWithAdmin;
 import io.qameta.allure.Description;
@@ -16,10 +17,11 @@ public class AdminEditorTagsTest extends TestRunnerWithAdmin {
     private String newTag;
     private SoftAssert softAssert;
 
-    @BeforeMethod
     @Step("Adding new Tag")
     public void createNewTag() {
-        this.newTag = "Я_newTag_" + RandomStringUtils.randomAlphanumeric(10);
+        int lengthOfNewName = 10;
+        this.newTag = "Я_newTag_" + RandomStringUtils.randomAlphanumeric(lengthOfNewName);
+
         new HistoryCodesAdminPanelPage(driver)
                 .getAdminMenuBar()
                 .goToEditorPage()
@@ -31,9 +33,46 @@ public class AdminEditorTagsTest extends TestRunnerWithAdmin {
     }
 
     @Test
+    @Issue("107")
+    @Description("Verify that admin can save a new tag if the mandatory field is full")
+    public void createTagsTest() {
+        softAssert = new SoftAssert();
+
+        TagsModalComponent tagsModalComponent = new HistoryCodesAdminPanelPage(driver)
+                .getAdminMenuBar()
+                .goToEditorPage()
+                .moveToTags()
+                .clickAddTag();
+
+        softAssert.assertFalse(tagsModalComponent.getSaveButton().isEnabled(), "The name field is requiredThe name field is required");
+
+        int lengthOfNewName = 60;
+        this.newTag = "Я_newTag_" + RandomStringUtils.randomAlphanumeric(lengthOfNewName);
+
+        tagsModalComponent.enterTag(newTag);
+
+        softAssert.assertTrue(tagsModalComponent.get);
+
+
+        tagsModalComponent.save()
+                .close();
+
+
+//        TagsPage tagsPage = new TagsPage(driver);
+//
+//
+//        softAssert.assertNotNull(tagsPage.getTableRowByTitle(newTag), "The tag was successfully created");
+//        softAssert.assertAll();
+//
+//        deleteNewTag();
+    }
+
+    @Test
     @Issue("102")
     @Description("Verify that admin can edit existing tag")
     public void editTagsTest() {
+        createNewTag();
+
         TagsPage tagsPage = new TagsPage(driver);
         softAssert = new SoftAssert();
         String editTagName = "_edited";
@@ -57,6 +96,8 @@ public class AdminEditorTagsTest extends TestRunnerWithAdmin {
     @Issue("103")
     @Description("Verify that admin can delete existing tag")
     public void deleteTagsTest() {
+        createNewTag();
+
         TagsPage tagsPage = new TagsPage(driver);
         softAssert = new SoftAssert();
 
