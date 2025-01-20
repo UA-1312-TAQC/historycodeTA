@@ -8,7 +8,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Step;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -35,7 +34,7 @@ public class AdminEditorTagsTest extends TestRunnerWithAdmin {
     @Test
     @Issue("107")
     @Description("Verify that admin can save a new tag if the mandatory field is full")
-    public void createTagsTest() {
+    public void createTagTest() {
         softAssert = new SoftAssert();
 
         TagsModalComponent tagsModalComponent = new HistoryCodesAdminPanelPage(driver)
@@ -44,33 +43,32 @@ public class AdminEditorTagsTest extends TestRunnerWithAdmin {
                 .moveToTags()
                 .clickAddTag();
 
-        softAssert.assertFalse(tagsModalComponent.getSaveButton().isEnabled(), "The name field is requiredThe name field is required");
+        softAssert.assertFalse(tagsModalComponent.getSaveButton().isEnabled(), "The name field is required");
 
+        int characterLimit = 50;
         int lengthOfNewName = 60;
+        tagsModalComponent.enterTag("Я_newTag_" + RandomStringUtils.randomAlphanumeric(lengthOfNewName));
+
+        softAssert.assertTrue(tagsModalComponent.getInputComponent().getInputText().length() <= characterLimit, "Header length limit is valid = 50");
+
+        lengthOfNewName = 10;
         this.newTag = "Я_newTag_" + RandomStringUtils.randomAlphanumeric(lengthOfNewName);
 
-        tagsModalComponent.enterTag(newTag);
-
-        softAssert.assertTrue(tagsModalComponent.get);
-
-
-        tagsModalComponent.save()
+        tagsModalComponent
+                .setTag(newTag)
+                .save()
                 .close();
 
+        softAssert.assertNotNull(new TagsPage(driver).getTableRowByTitle(newTag), "The tag was successfully created");
+        softAssert.assertAll();
 
-//        TagsPage tagsPage = new TagsPage(driver);
-//
-//
-//        softAssert.assertNotNull(tagsPage.getTableRowByTitle(newTag), "The tag was successfully created");
-//        softAssert.assertAll();
-//
-//        deleteNewTag();
+        deleteNewTag();
     }
 
     @Test
     @Issue("102")
     @Description("Verify that admin can edit existing tag")
-    public void editTagsTest() {
+    public void editTagTest() {
         createNewTag();
 
         TagsPage tagsPage = new TagsPage(driver);
@@ -95,7 +93,7 @@ public class AdminEditorTagsTest extends TestRunnerWithAdmin {
     @Test
     @Issue("103")
     @Description("Verify that admin can delete existing tag")
-    public void deleteTagsTest() {
+    public void deleteTagTest() {
         createNewTag();
 
         TagsPage tagsPage = new TagsPage(driver);
