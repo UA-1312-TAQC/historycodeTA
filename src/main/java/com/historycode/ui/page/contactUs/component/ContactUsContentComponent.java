@@ -12,11 +12,11 @@ import java.util.stream.Collectors;
 public class ContactUsContentComponent extends BaseComponent {
 
     @Getter
-    @FindBy(xpath = "./div[contains(@class, 'contactUsContent')]")
+    @FindBy(xpath = ".//div[contains(@class, 'contactUsContent')]")
     private List<WebElement> text;
 
     @Getter
-    @FindBy(xpath = "./div[contains(@class, 'contactUsBtnContainer')]")
+    @FindBy(xpath = ".//div[contains(@class, 'contactUsBtnContainer')]")
     private WebElement button;
 
 

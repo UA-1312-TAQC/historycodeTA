@@ -4,9 +4,12 @@ import com.historycode.ui.component.adminPanel.dropDownAdminPanel.DropdownCompon
 import com.historycode.ui.component.adminPanel.modalAdminPanel.BaseEditModal;
 import com.historycode.ui.elements.adminPanel.CheckboxElement;
 import com.historycode.ui.elements.adminPanel.InputElement;
+import com.historycode.ui.page.adminpanel.teampage.TeamPageAdminPanel;
 import com.historycode.ui.page.adminpanel.teampage.editModal.photoElement.PhotoModalComponent;
 import com.historycode.ui.page.adminpanel.teampage.editModal.photoElement.PhotoWindowComponent;
 import com.historycode.ui.page.adminpanel.teampage.editModal.socialMediaElement.SocialMediaExistedComponent;
+import com.historycode.ui.utils.ImageLoader;
+import io.qameta.allure.Step;
 import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -18,6 +21,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+
 
 @Getter
 public class CreateEditMemberModal extends BaseEditModal {
@@ -39,6 +43,9 @@ public class CreateEditMemberModal extends BaseEditModal {
     protected WebElement descriptionTextareaElementRoot;
     protected InputElement descriptionTextareaElement;
 
+    @FindBy(xpath = "//span[@class='ant-upload']/input")
+    protected WebElement photoInputField;
+
     @FindBy(xpath = "//a[@class='ant-upload-list-item-thumbnail']//img")
     protected WebElement uploadedPhoto;
 
@@ -56,7 +63,7 @@ public class CreateEditMemberModal extends BaseEditModal {
 
     @FindBy(xpath = "//label[@for = 'logotype']/../..")
     protected WebElement socialMediaDropdownRoot;
-    protected DropdownComponent socialMediaDropdown;
+    protected SocialMediaDropdownComponent socialMediaDropdown;
 
     @FindBy(xpath = "//label[@for = 'url']/../..")
     protected WebElement socialMediaInputRoot;
@@ -70,13 +77,12 @@ public class CreateEditMemberModal extends BaseEditModal {
 
     public CreateEditMemberModal(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-//        PageFactory.initElements(driver, rootElement);
 
         this.keyMemberCheckbox = new CheckboxElement(driver, keyMemberCheckboxRoot);
         this.nameInput = new InputElement(driver, nameInputRoot);
         this.positionsDropdown = new DropdownComponent(driver, positionsDropdownRoot);
         this.descriptionTextareaElement = new InputElement(driver, descriptionTextareaElementRoot);
-        this.socialMediaDropdown = new DropdownComponent(driver, socialMediaDropdownRoot);
+        this.socialMediaDropdown = new SocialMediaDropdownComponent(driver, socialMediaDropdownRoot);
         this.socialMediaInput = new InputElement(driver, socialMediaInputRoot);
 
         this.photoModalComponent = new PhotoModalComponent(driver, rootElement);
@@ -99,8 +105,10 @@ public class CreateEditMemberModal extends BaseEditModal {
         return nameInput.getInputValue();
     }
 
-    public void setName(String name) {
+    @Step("Enter name {name} into Name input field")
+    public CreateEditMemberModal setName(String name) {
         nameInput.setInputField(name);
+        return this;
     }
 
     public void setPositions(List<String> positions) {
@@ -143,14 +151,32 @@ public class CreateEditMemberModal extends BaseEditModal {
         fileInput.sendKeys(filePath);
     }
 
+    @Step("Loading image {imageName} as a team member photo")
+    public CreateEditMemberModal loadPhoto(String imageName){
+        ImageLoader.loadImageUsingRelativePath(imageName, photoInputField);
+        return this;
+    }
+
     public boolean isPhotoUploaded() {
         return !photoWindowComponent.isPlaceholderClickable();
     }
 
-    public void addSocialMedia(String platform, String link) {
-        selectDropdownOption(socialMediaDropdown, platform);
+
+    @Step("Choose social media {platform} from the social media dropdown")
+    public CreateEditMemberModal addSocialMedia(String platform) {
+        openSocialMediaDropdown();
+        socialMediaDropdown.clickOptionByText(platform);
+        //selectDropdownOption(socialMediaDropdown, platform);
+        //TODO Do we really need to click this button here? We need to click on it if we want to add more than 1 social media
+        //addSocialMediaButton.click();
+        return this;
+    }
+
+    @Step("Add social media link {link}")
+    public CreateEditMemberModal addSocialMediaLink(String link) {
         socialMediaInput.setInputField(link);
-        addSocialMediaButton.click();
+        //TODO Do we really need to click this button here? We need to click on it if we want to add more than 1 social media
+        return this;
     }
 
     public void navigateToSocialMediaAccount(int index) {
@@ -184,13 +210,19 @@ public class CreateEditMemberModal extends BaseEditModal {
         dropdown.clickOptionByText(optionText);
     }
 
+    @Step("Click the 'Зберегти' button")
     public CreateEditMemberModal saveEditedMember() {
         clickSaveButton();
         return this;
     }
 
-    public void closeEditMemberModal() {
+    @Step("Close the modal window")
+    public TeamPageAdminPanel closeEditMemberModal() {
+        actions.moveToElement(closeButton).perform();
+        waitUntilElementClickable(closeButton);
         clickCloseButton();
+        wait.until(ExpectedConditions.invisibilityOf(closeButton));
+        return new TeamPageAdminPanel(driver);
     }
 
     public boolean isTooltipVisibleOnHoverCloseButton() {
@@ -202,4 +234,7 @@ public class CreateEditMemberModal extends BaseEditModal {
         return getTooltipText();
     }
 
+    public void openSocialMediaDropdown(){
+        socialMediaDropdown.openDropdown();
+    }
 }
