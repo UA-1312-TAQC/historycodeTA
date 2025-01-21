@@ -41,7 +41,7 @@ public class KeyMemberDisplayed extends TestRunnerWithAdmin {
         }
         Assert.assertNotNull(teamMember, String.format("The member %s is not found in the team grid", teamMember));
 
-        boolean isKeyRoleAssigned = teamMember.getKeyMemebrRole().isDisplayed();
+        boolean isKeyRoleAssigned = teamMember.getKeyMemberRole().isDisplayed();
         Assert.assertTrue(isKeyRoleAssigned, String.format("The member %s is not marked with a key role", teamMember));
 
         teamMember.clickDelete().clickOkButton();

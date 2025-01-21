@@ -16,7 +16,7 @@ public class TeamRowComponent extends BaseComponent {
     protected WebElement lastFirstName;
     @Getter
     @FindBy(xpath = "./td[1]//div[@class='team-table-item-name']//span")
-    protected WebElement keyMemebrRole;
+    protected WebElement keyMemberRole;
     @FindBy(xpath = "./td[2]//div[@class='team-table-item-name']//p")
     protected List<WebElement> positions;
     @FindBy(xpath = "./td[3]//div[@class='team-table-item-name']//p")
