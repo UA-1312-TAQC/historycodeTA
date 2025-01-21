@@ -1,4 +1,4 @@
-package com.historycode.ui;
+package com.historycode.ui.adminPanel;
 
 import com.historycode.ui.page.adminpanel.editorpage.CategoriesPage;
 import com.historycode.ui.page.adminpanel.editorpage.ContextsPage;
@@ -21,9 +21,7 @@ public class AdminPanelEditorPageTest extends TestRunnerWithAdmin {
     @BeforeMethod
     public void admin_panel_login() {
         login();
-        sleep(1);
         driver.get(testValueProvider.getBaseUIUrl() + "/admin-panel/editor");
-        sleep(2);
     }
 
     @Test
@@ -79,13 +77,5 @@ public class AdminPanelEditorPageTest extends TestRunnerWithAdmin {
         boolean actual = tagsPage.isGridDisplayed();
         Assert.assertTrue(actual,
                 "Current rows are not displayed or are displayed incorrectly.");
-    }
-
-    public void sleep(int scnd) {
-        try {
-            Thread.sleep((long) (scnd) * 1000);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
     }
 }

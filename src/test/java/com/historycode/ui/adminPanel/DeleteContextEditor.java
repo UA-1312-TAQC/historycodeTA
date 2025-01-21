@@ -21,13 +21,18 @@ public class DeleteContextEditor extends TestRunnerWithAdmin {
         login();
         Random rand = new Random();
         int n = rand.nextInt(50);
-        contextName = "Context_" + n;
+        contextName = "я";
         driver.get(testValueProvider.getBaseUIUrl() + "/admin-panel/editor");
         ContextsPage contextsPage = new CategoriesPage(driver).moveToContexts();
         contextsPage.clickAddContext()
                 .enterContext(contextName)
                 .save()
                 .close();
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 
     @Test

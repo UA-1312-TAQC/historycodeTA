@@ -117,15 +117,3 @@ public class ContextsGridComponent extends GridComponent {
     }
     //TODO Update edit/deleteRow methods to return modals
 }
-
-//    public ContextsModalComponent editRow(ContextsRowComponent row) {
-//        row.clickEdit();
-//        waitUntilElementVisible(getDisplayedModalRoot());
-//        return new ContextsModalComponent(driver, getDisplayedModalRoot());
-//    }
-//
-//    public DeleteItemModal deleteRow(ContextsRowComponent row) {
-//        row.clickDelete();
-//        waitUntilElementVisible(getDisplayedModalRoot());
-//        return new DeleteItemModal(driver, getDisplayedModalRoot());
-//    }
