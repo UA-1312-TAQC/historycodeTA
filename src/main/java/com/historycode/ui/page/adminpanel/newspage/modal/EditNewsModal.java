@@ -7,8 +7,11 @@ import lombok.Setter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.sql.Date;
+import java.time.Duration;
 
 public class EditNewsModal extends BaseEditModal {
     @FindBy(xpath = "//label[@for = 'title']/../..")
@@ -42,6 +45,34 @@ public class EditNewsModal extends BaseEditModal {
     private WebElement newsCreationDateContainer;
     @Getter
     private final InputElement newsCreationDate;
+
+    @FindBy(xpath = "//button[contains(@class, 'ql-bold')]") 
+    private WebElement boldIcon;
+
+    @FindBy(xpath = "//button[contains(@class, 'ql-italic')]") 
+    private WebElement italicIcon;
+
+    @FindBy(xpath = "//button[contains(@class, 'ql-strike')]")  
+    private WebElement strikethroughIcon;
+
+    @FindBy(xpath = "//button[contains(@class, 'ql-underline')]")  
+    private WebElement underlineIcon;
+
+    @FindBy(xpath = "//button[contains(@class, 'ql-clear')]")  
+    private WebElement clearTextFormatIcon;
+
+    @FindBy(xpath = "//button[contains(@class, 'ql-list') and @value='ordered']")  
+    private WebElement numberedListIcon;
+
+    @FindBy(xpath = "//button[contains(@class, 'ql-list') and @value='bullet']")  
+    private WebElement bulletedListIcon;
+
+    @FindBy(xpath = "//button[span[text()='Зберегти']]")
+    private WebElement saveButton;
+
+    @FindBy(xpath = "//button[@aria-label='Close']")
+    private WebElement closeButton;
+
 
     public EditNewsModal(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
@@ -80,6 +111,48 @@ public class EditNewsModal extends BaseEditModal {
     public void inputNewsCreationDate(Date newsCreationDate) {
         this.newsCreationDate.getInputField().clear();
         this.newsCreationDate.setInputField(newsCreationDate.toString());
+    }
+
+    public void clickBoldIcon() {
+        boldIcon.click();
+    }
+
+    public void clickItalicIcon() {
+        italicIcon.click();
+    }
+
+    public void clickStrikethroughIcon() {
+        strikethroughIcon.click();
+    }
+
+    public void clickUnderlineIcon() {
+        underlineIcon.click();
+    }
+
+    public void clickClearTextFormatIcon() {
+        clearTextFormatIcon.click();
+    }
+
+    public void clickNumberedListIcon() {
+        numberedListIcon.click();
+    }
+
+    public void clickBulletedListIcon() {
+        bulletedListIcon.click();
+    }
+
+    public void saveNews() {
+        saveButton.click();
+    }
+
+    public void clickCloseButton() {
+        closeButton.click();
+        waitUntilModalIsClosed();
+    }
+
+    private void waitUntilModalIsClosed() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.invisibilityOf(closeButton));
     }
 }
 
