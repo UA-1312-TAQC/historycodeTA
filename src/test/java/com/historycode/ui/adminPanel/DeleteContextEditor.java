@@ -21,7 +21,7 @@ public class DeleteContextEditor extends TestRunnerWithAdmin {
         login();
         Random rand = new Random();
         int n = rand.nextInt(50);
-        contextName = "я";
+        contextName = "Context_" + rand;
         driver.get(testValueProvider.getBaseUIUrl() + "/admin-panel/editor");
         ContextsPage contextsPage = new CategoriesPage(driver).moveToContexts();
         contextsPage.clickAddContext()
