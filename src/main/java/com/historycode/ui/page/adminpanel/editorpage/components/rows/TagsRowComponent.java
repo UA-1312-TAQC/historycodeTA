@@ -1,8 +1,6 @@
 package com.historycode.ui.page.adminpanel.editorpage.components.rows;
 
-import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
 import io.qameta.allure.Step;
-import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

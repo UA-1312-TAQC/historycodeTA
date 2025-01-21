@@ -1,18 +1,19 @@
 package com.historycode.ui.adminPanel;
 
 import com.historycode.ui.page.adminpanel.newspage.NewsPageAdminPanel;
-import com.historycode.ui.page.adminpanel.newspage.modal.EditNewsModal;
 import com.historycode.ui.page.adminpanel.newspage.NewsPageGridComponent;
 import com.historycode.ui.page.adminpanel.newspage.NewsRowComponent;
+import com.historycode.ui.page.adminpanel.newspage.modal.EditNewsModal;
 import com.historycode.ui.testrunners.TestRunnerWithAdmin;
 import io.qameta.allure.Issue;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import static org.testng.Assert.*;
 
-import java.util.Random;
 import java.sql.Date;
+import java.util.Random;
+
+import static org.testng.Assert.*;
 
 public class EditNewsTest extends TestRunnerWithAdmin {
 

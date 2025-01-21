@@ -1,6 +1,5 @@
 package com.historycode.ui.page.adminpanel.editorpage.components.grids;
 
-import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.TagsRowComponent;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;

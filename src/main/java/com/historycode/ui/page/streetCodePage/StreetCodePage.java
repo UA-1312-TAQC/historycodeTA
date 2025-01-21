@@ -5,13 +5,9 @@ import com.historycode.ui.elements.ScrollTopButtonElement;
 import com.historycode.ui.page.BasePage;
 import com.historycode.ui.page.streetCodePage.components.*;
 import com.historycode.ui.page.streetCodePage.elememts.QuickDonateButtonElement;
-import lombok.Getter;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-
-import java.util.Optional;
 
 public class StreetCodePage extends BasePage {
     @FindBy(xpath = "//div[@class='card']")
