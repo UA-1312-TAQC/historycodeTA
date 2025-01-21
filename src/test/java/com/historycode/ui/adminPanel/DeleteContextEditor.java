@@ -28,11 +28,6 @@ public class DeleteContextEditor extends TestRunnerWithAdmin {
                 .enterContext(contextName)
                 .save()
                 .close();
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
     }
 
     @Test
