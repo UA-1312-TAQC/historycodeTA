@@ -1,5 +1,6 @@
 package com.historycode.ui;
 
+import com.historycode.ui.page.streetCodePage.StreetCodePage;
 import com.historycode.ui.page.streetCodePage.components.ChronologyComponent;
 import com.historycode.ui.page.streetCodePage.components.ChronologyFilmCardComponent;
 import com.historycode.ui.page.streetCodePage.components.ChronologyYearsBarComponent;
@@ -240,7 +241,7 @@ public class ChronologyTestCase extends BaseTestRunner {
             filmCardComponent.clickFilmCardByIndex(i);
         }
 
-        boolean isSorted = filmCardComponent.eventsChronologicallySorted();
+        boolean isSorted = filmCardComponent.eventsChronologySorted();
         Assert.assertTrue(isSorted, "Events are not displayed in chronological order!");
     }
 
@@ -249,10 +250,14 @@ public class ChronologyTestCase extends BaseTestRunner {
     @Step("Сlicking on previous/next event - moves events cards and locates clicked one to the center.")
     public void testEventMovesToCenter() {
         String baseUrl = testValueProvider.getBaseUIUrl();
-        String fullUrl = baseUrl + "roman-ratushnyi-seneka";
+        String fullUrl = baseUrl + "/roman-ratushnyi-seneka";
         driver.get(fullUrl);
 
-        ChronologyFilmCardComponent filmCardComponent = new ChronologyFilmCardComponent(driver);
+        ChronologyFilmCardComponent filmCardComponent = new StreetCodePage(driver)
+                .getTimeline()
+                .getFilmCardComponent();
+//        filmCardComponent.sleep(10000);
+//        ChronologyFilmCardComponent filmCardComponent = new ChronologyFilmCardComponent(driver);
 
         int targetIndex = 6;
 

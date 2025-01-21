@@ -46,12 +46,12 @@ public class ChronologyFilmCardComponent extends BaseComponent {
 
     public ChronologyFilmCardComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        PageFactory.initElements(driver, this);
+//        PageFactory.initElements(driver, this);
     }
 
     public ChronologyFilmCardComponent(WebDriver driver) {
         super(driver);
-        PageFactory.initElements(driver, this);
+//        PageFactory.initElements(driver, this);
     }
     public int getFilmCardCount() {
         return filmCard.size();

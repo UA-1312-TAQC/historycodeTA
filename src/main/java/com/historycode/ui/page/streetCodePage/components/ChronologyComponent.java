@@ -38,7 +38,7 @@ public class ChronologyComponent extends BaseComponent {
         super(driver, rootElement);
         this.yearsBar = new ChronologyYearsBarComponent(driver, redTimeline);
         this.filmCardComponent = new ChronologyFilmCardComponent(driver, filmCardContainer);
-        PageFactory.initElements(driver, this);
+//        PageFactory.initElements(driver, this);
     }
 
     public ChronologyComponent(WebDriver driver) {

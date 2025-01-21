@@ -5,6 +5,7 @@ import com.historycode.ui.elements.ScrollTopButtonElement;
 import com.historycode.ui.page.BasePage;
 import com.historycode.ui.page.streetCodePage.components.*;
 import com.historycode.ui.page.streetCodePage.elememts.QuickDonateButtonElement;
+import io.qameta.allure.Step;
 import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -67,6 +68,7 @@ public class StreetCodePage extends BasePage {
 
     public StreetCodePage(WebDriver driver) {
         super(driver);
+        sleep(3000);
     }
 
     public StreetCodePage setMainCard() {
@@ -120,11 +122,12 @@ public class StreetCodePage extends BasePage {
         }
         return facts;
     }
-
+    @Step("get Time line")
     public ChronologyComponent getTimeline() {
         if (timeline == null && timelineNode != null) {
             timeline = new ChronologyComponent(driver, timelineNode);
         }
+        scrollToElement(timelineNode);
         return timeline;
     }
 
