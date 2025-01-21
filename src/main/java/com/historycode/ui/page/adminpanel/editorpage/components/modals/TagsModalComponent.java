@@ -20,6 +20,13 @@ public class TagsModalComponent extends ModalComponent {
         return new TagsModalComponent(driver, rootElement);
     }
 
+    @Step("Set another '{name}' Into The Tag Name Input.")
+    public TagsModalComponent setTag(String name) {
+        inputComponent.clearInput();
+        inputComponent.setInput(name);
+        return new TagsModalComponent(driver, rootElement);
+    }
+
     @Step("Check Tag Modal is Displayed.")
     public boolean isExist() {
         return closeButton.isDisplayed() && title.isDisplayed() && saveButton.isDisplayed();
