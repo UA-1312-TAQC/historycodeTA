@@ -24,7 +24,6 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
     @FindBy(xpath = ".//span[contains(@class,'readMore readLess')]")
     private WebElement readLessButton;
 
-
     @FindBy(xpath = "//div[@class='additionalText']")
     private WebElement additionalText;
 
@@ -34,10 +33,10 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
     @FindBy(xpath = ".//div[@class='text']//p")
     private List<WebElement> paragraphs;
 
-    @FindBy(xpath = ".//iframe[(@id='widget2')]")
+    @FindBy(xpath = ".//iframe[contains(@src,'www.youtube.com')]")
     private WebElement videoPlayer;
 
-    @FindBy(xpath = ".//button[(@class = 'ytp-play-button ytp-button' and @title='Відтворити (k)')]")
+    @FindBy(xpath = "//button[contains(@class, 'ytp-large-play-button')]")
     private WebElement videoPlayButton;
 
     @FindBy(xpath = ".//button[(@class = 'ytp-play-button ytp-button' and @title='Призупинити (k)')]")
@@ -59,15 +58,12 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
 
     public void clickReadMoreButton() {
         scrollToElement(readMoreButton);
-        readMoreButton.click();
-//        if (isReadMoreButtonDisplayed()) {
-//            clickDynamicElement(readMoreButton);
-//        }
+        clickDynamicElement(readMoreButton);
     }
 
     public void clickReadLessButton() {
         scrollToElement(readLessButton);
-        readLessButton.click();
+        clickDynamicElement(readLessButton);
     }
 
 
@@ -80,20 +76,15 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
         return paragraphs.size();
     }
 
-    public boolean checkExpanded() {
-        int initialNumberOfParagraph = getParagraphCount();
-        clickReadMoreButton();
+    public boolean checkExpanded(int initialCount) {
         waitUntilElementVisible(paragraphs.getLast());
         int expandedNumberOfParagraph = getParagraphCount();
-
-        return expandedNumberOfParagraph > initialNumberOfParagraph;
+        return expandedNumberOfParagraph > initialCount;
     }
 
     public boolean checkCollapsed(int initialCount) {
-        clickReadLessButton();
         waitUntilElementVisible(paragraphs.getFirst());
         int collapsedCount = getParagraphCount();
-
         return collapsedCount == initialCount;
     }
 
@@ -104,24 +95,22 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
         return videoPlayer.isDisplayed();
     }
 
-    public void clickPlayButton() {
-        if (isVideoVisible()) {
-            clickDynamicElement(videoPlayButton);
-        }
+    public boolean isPlayButtonVisible() {
+        return videoPlayButton.isDisplayed();
     }
 
-    public boolean isVideoPlaying() {
-        return !videoPlayButton.isDisplayed() && videoPauseButton.isDisplayed();
+    public boolean isPauseButtonVisible() {
+        return videoPauseButton.isDisplayed();
+    }
+
+    public void clickPlayButton() {
+        waitUntilElementClickable(videoPlayButton);
+        videoPlayButton.click();
     }
 
     public void clickPauseButton() {
-        if (isVideoVisible()) {
-            clickDynamicElement(videoPauseButton);
-        }
-    }
-
-    public boolean isVideoPaused() {
-        return !videoPauseButton.isDisplayed() && videoPlayButton.isDisplayed();
+        waitUntilElementClickable(videoPauseButton);
+        clickDynamicElement(videoPauseButton);
     }
 
     public boolean isAdditionalTextDisplayed() {

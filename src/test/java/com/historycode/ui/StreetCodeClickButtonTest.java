@@ -1,21 +1,16 @@
 package com.historycode.ui;
 
 import com.historycode.ui.data_provider.StreetCodeDP;
-import com.historycode.ui.page.homePage.HomePage;
 import com.historycode.ui.page.streetCodePage.StreetCodePage;
 import com.historycode.ui.page.streetCodePage.components.StreetCodeTextBlockComponent;
 import com.historycode.ui.testrunners.BaseTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Step;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-
 import java.util.List;
 
-import static org.testng.Assert.assertFalse;
-import static org.testng.AssertJUnit.assertEquals;
 
 
 public class StreetCodeClickButtonTest extends BaseTestRunner {
@@ -39,11 +34,12 @@ public class StreetCodeClickButtonTest extends BaseTestRunner {
 
         //step : click on button 'Трохи ще'
         softAssert.assertTrue(textBlock.isReadMoreButtonDisplayed(), "'Трохи ще' button should be displayed.");
-
-        softAssert.assertTrue(textBlock.checkExpanded(), "Text should expand after clicking 'Трохи ще'.");
+        textBlock.clickReadMoreButton();
+        softAssert.assertTrue(textBlock.checkExpanded(initialCount), "Text should expand after clicking 'Трохи ще'.");
         softAssert.assertTrue(textBlock.isReadLessButtonDisplayed(), "'Дещо менше' button should be visible after clicking 'Трохи ще'.");
 
         //step : click on button 'Дещо менше'
+        textBlock.clickReadLessButton();
         softAssert.assertTrue(textBlock.checkCollapsed(initialCount), "Text should collapse to initial state after clicking 'Дещо менше'.");
         softAssert.assertTrue(textBlock.isReadMoreButtonDisplayed(), "'Трохи ще' button should be visible after clicking 'Дещо менше'.");
         softAssert.assertAll();
@@ -57,12 +53,14 @@ public class StreetCodeClickButtonTest extends BaseTestRunner {
         StreetCodeTextBlockComponent textBlock = streetCodePage.getTextBlock();
         SoftAssert softAssert = new SoftAssert();
 
-        softAssert.assertTrue(textBlock.isVideoVisible(), "Video player should be visible.");
+        softAssert.assertTrue(textBlock.isVideoVisible(), "Video should be visible.");
+        driver.switchTo().frame(textBlock.getVideoPlayer());
+        softAssert.assertTrue(textBlock.isPlayButtonVisible(), "Play button should be visible.");
         textBlock.clickPlayButton();
-        softAssert.assertTrue(textBlock.isVideoPlaying(), "Video is expected to be playing.");
+        softAssert.assertTrue(textBlock.isPauseButtonVisible(), "Video is not playing.");
         textBlock.clickPauseButton();
-        softAssert.assertTrue(textBlock.isVideoPaused(), "Video is expected to be paused.");
-
+        softAssert.assertFalse(textBlock.isPauseButtonVisible(), "Video is not pausing.");
+        driver.switchTo().defaultContent();
     }
 
     @Issue("81")
