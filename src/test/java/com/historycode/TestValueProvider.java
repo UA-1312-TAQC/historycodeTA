@@ -37,4 +37,13 @@ public class TestValueProvider {
         return  properties != null ? properties.getProperty("RefreshToken") : System.getenv("RefreshToken");
     }
 
+    public String getUserDataDir(){
+        return  properties != null ? properties.getProperty("userDataDir") : System.getenv("userDataDir");
+    }
+
+    public String getProfileDir(){
+        return  properties != null ? properties.getProperty("profileDir") : System.getenv("profileDir");
+    }
+
+
 }

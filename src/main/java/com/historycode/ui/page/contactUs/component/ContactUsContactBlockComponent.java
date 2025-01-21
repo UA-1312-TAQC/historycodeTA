@@ -11,12 +11,12 @@ import java.util.stream.Collectors;
 
 public class ContactUsContactBlockComponent extends BaseComponent {
     @Getter
-    @FindBy(xpath = "./div[contains(@class, 'socials')]")
+    @FindBy(xpath = ".//div[contains(@class, 'socials')]")
     private List<WebElement> socialNetworks;
     @Getter
-    @FindBy(xpath = "./div[contains(@class, 'email')]")
+    @FindBy(xpath = ".//div[contains(@class, 'email')]")
     private WebElement emailText;
-    @FindBy(xpath = "./div[contains(@class, 'emailLink')]")
+    @FindBy(xpath = ".//div[contains(@class, 'emailLink')]")
     private WebElement emailLink;
 
     public ContactUsContactBlockComponent(WebDriver driver, WebElement rootElement) {
