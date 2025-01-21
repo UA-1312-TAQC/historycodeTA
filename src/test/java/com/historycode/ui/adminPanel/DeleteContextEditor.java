@@ -38,7 +38,7 @@ public class DeleteContextEditor extends TestRunnerWithAdmin {
         assertNotNull(contextToDelete, "Context should exist before deletion: " + contextName);
         contextsPage.deleteTableRow(contextToDelete).clickOkButton();
         assertNull(contextsPage.getTableRowByTitle(contextName),
-                String.format("Context '%s' still exists after deletion", contextName));
+                String.format("Context '%s' still exists after deletion.", contextName));
     }
 
     @AfterMethod
