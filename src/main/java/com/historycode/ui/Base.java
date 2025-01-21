@@ -73,8 +73,5 @@ public abstract class Base {
         wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
-    public void waitUntilElementInvisibility(WebElement element) {
-        wait.until(ExpectedConditions.invisibilityOf(element));
-    }
 
 }
