@@ -7,8 +7,11 @@ import lombok.Setter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.sql.Date;
+import java.time.Duration;
 
 public class EditNewsModal extends BaseEditModal {
     @FindBy(xpath = "//label[@for = 'title']/../..")
@@ -148,11 +151,8 @@ public class EditNewsModal extends BaseEditModal {
     }
 
     private void waitUntilModalIsClosed() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.invisibilityOf(closeButton));
     }
 }
 

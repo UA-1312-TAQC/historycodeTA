@@ -87,7 +87,8 @@ public class EditNewsTest extends TestRunnerWithAdmin {
 
         assertNotNull(editedNews, "Edited news should exist.");
         assertEquals(editedNews.getName().getText(), editedTitle, "The title was not updated.");
-        assertTrue(editedNews.getDateOfCreation().getText().contains("2025"), "Date was not updated correctly.");
+        String expectedYear = String.valueOf(java.time.Year.now().getValue());
+        assertTrue(editedNews.getDateOfCreation().getText().contains(expectedYear), "Date was not updated correctly.");
     }
 
     @AfterMethod
