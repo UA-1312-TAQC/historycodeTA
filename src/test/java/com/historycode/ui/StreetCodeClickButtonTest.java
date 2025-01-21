@@ -24,7 +24,7 @@ public class StreetCodeClickButtonTest extends BaseTestRunner {
     @Step("Navigate to the 'StreetCode' page")
     private void navigateToStreetCodePage(String addUIUrl) {
         driver.navigate().to(testValueProvider.getBaseUIUrl() + addUIUrl);
-        streetCodePage = new StreetCodePage(driver, false);
+        streetCodePage = new StreetCodePage(driver);
     }
 
     @Issue("81")
@@ -39,6 +39,7 @@ public class StreetCodeClickButtonTest extends BaseTestRunner {
 
         //step : click on button 'Трохи ще'
         softAssert.assertTrue(textBlock.isReadMoreButtonDisplayed(), "'Трохи ще' button should be displayed.");
+
         softAssert.assertTrue(textBlock.checkExpanded(), "Text should expand after clicking 'Трохи ще'.");
         softAssert.assertTrue(textBlock.isReadLessButtonDisplayed(), "'Дещо менше' button should be visible after clicking 'Трохи ще'.");
 

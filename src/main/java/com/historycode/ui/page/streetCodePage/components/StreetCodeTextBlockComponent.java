@@ -18,10 +18,10 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
     @FindBy(xpath = ".//div[@id='text']//div[@class='text']//p")
     private WebElement mainTextContent;
 
-    @FindBy(xpath = ".//div[@class='readMoreContainer false']")
+    @FindBy(xpath = ".//span[contains(@class,'readMore false')]")
     private WebElement readMoreButton;
 
-    @FindBy(xpath = ".//div[@class='readMoreContainer readLessContainer']")
+    @FindBy(xpath = ".//span[contains(@class,'readMore readLess')]")
     private WebElement readLessButton;
 
 
@@ -59,16 +59,15 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
 
     public void clickReadMoreButton() {
         scrollToElement(readMoreButton);
-        if (isReadMoreButtonDisplayed()) {
-            clickDynamicElement(readMoreButton);
-        }
+        readMoreButton.click();
+//        if (isReadMoreButtonDisplayed()) {
+//            clickDynamicElement(readMoreButton);
+//        }
     }
 
     public void clickReadLessButton() {
         scrollToElement(readLessButton);
-        if (isReadLessButtonDisplayed()) {
-            clickDynamicElement(readLessButton);
-        }
+        readLessButton.click();
     }
 
 

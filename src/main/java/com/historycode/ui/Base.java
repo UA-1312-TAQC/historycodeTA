@@ -28,9 +28,7 @@ public abstract class Base {
 
     @Step("Scroll to the element")
     public void scrollToElement(WebElement element) {
-        wait.until(ExpectedConditions.visibilityOf(element));
-        threadJs.executeScript("arguments[0].scrollIntoView(true);", element);
-        wait.until(ExpectedConditions.visibilityOf(element));
+        actions.moveToElement(element).perform();
     }
 
     @Step("Scroll to the end of the page")
