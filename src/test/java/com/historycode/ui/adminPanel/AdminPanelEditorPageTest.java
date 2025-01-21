@@ -18,17 +18,13 @@ public class AdminPanelEditorPageTest extends TestRunnerWithAdmin {
 
     //TODO Add BeforeClass with login to the admin panel
     //TODO Add AfterMethod to move back to the main admin panel page
-    @BeforeMethod
-    public void admin_panel_login() {
-        login();
-        driver.get(testValueProvider.getBaseUIUrl() + "/admin-panel/editor");
-    }
 
     @Test
     @Issue("110")
     @Epic("(Epic#5) Admin/Other pages")
     @Description("Verify that a new context can be created in the admin panel editor")
     public void verifyOpenAddContextModal() {
+        driver.get(testValueProvider.getBaseUIUrl() + "/admin-panel/editor");
 
         CategoriesPage categoriesPage = new CategoriesPage(driver);//TODO Change add Click Editor step
 
@@ -44,6 +40,8 @@ public class AdminPanelEditorPageTest extends TestRunnerWithAdmin {
     @Epic("(Epic#5) Admin/Other pages")
     @Description("Verify that context list is displayed")
     public void verifyContextGridIsCorrectDisplayed() {
+        driver.get(testValueProvider.getBaseUIUrl() + "/admin-panel/editor");
+
         CategoriesPage categoriesPage = new CategoriesPage(driver);//TODO Change add Click Editor step
 
         ContextsPage contextsPage = categoriesPage.moveToContexts();
@@ -64,6 +62,8 @@ public class AdminPanelEditorPageTest extends TestRunnerWithAdmin {
     @Epic("(Epic#5) Admin/Other pages")
     @Description("Verify that tag list is displayed")
     public void verifyTagGridIsCorrectDisplayed() {
+        driver.get(testValueProvider.getBaseUIUrl() + "/admin-panel/editor");
+
         CategoriesPage categoriesPage = new CategoriesPage(driver);//TODO Change add Click Editor step
 
         TagsPage tagsPage = categoriesPage.moveToTags();
