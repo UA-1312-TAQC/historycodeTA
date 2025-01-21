@@ -14,22 +14,22 @@ import org.openqa.selenium.support.FindBy;
 
 public class HistoryCodesAdminPanelSearchMenuComponent extends BaseComponent {
 
-    @FindBy(xpath = "./button[contains(@class, 'ant-btn') and span[text()='Пошук history-кодів']]")
+    @FindBy(xpath = ".//button[contains(@class, 'ant-btn') and span[text()='Пошук history-кодів']]")
     protected WebElement searchButton;
 
     @Getter
     @Setter
     protected InputElement searchInput;
-    @FindBy(xpath = "./div[@class='ant-input css-k7429z']")
+    @FindBy(xpath = ".//div[@class='ant-input css-k7429z']")
     private WebElement searchInputNode;
 
     @Getter
     @Setter
     protected DropdownComponent dropdown;
-    @FindBy(xpath = "./div[@class='ant-select-selection-search-input']")
+    @FindBy(xpath = ".//div[@class='ant-select-selection-search-input']")
     private WebElement dropdownNode;
 
-    @FindBy(xpath = "./button[contains(@class, 'ant-btn') and span[text()='Новий history-код']]")
+    @FindBy(xpath = ".//button[contains(@class, 'ant-btn') and span[text()='Новий history-код']]")
     protected WebElement newHistoryCodeButton;
 
 
