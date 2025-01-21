@@ -29,6 +29,7 @@ public class HistoryCodesAdminPanelRowComponent extends BaseComponent {
     @FindBy(xpath = ".//td[@class='ant-table-cell'][5]//span[contains(@class, 'anticon-bar-chart')]//*[name()='svg']")
     protected WebElement statisticsPageButton;
     @FindBy(xpath = ".//td[@class='ant-table-cell'][3]//button[@class='ant-btn css-k7429z ant-btn-default ant-dropdown-trigger']")
+
     private WebElement dropDownNode;
 
     public HistoryCodesAdminPanelRowComponent(WebDriver driver, WebElement rootElement) {
