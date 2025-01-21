@@ -1,10 +1,12 @@
 package com.historycode.ui.page.adminpanel.editorpage;
 
+import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
 import com.historycode.ui.page.adminpanel.editorpage.components.grids.TagsGridComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.TagsModalComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.TagsRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.elements.AddButtonElement;
 import io.qameta.allure.Step;
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -17,6 +19,7 @@ public class TagsPage extends BaseEditorPage {
     private WebElement rootGrid;
 
     private AddButtonElement addTagButton;
+    @Getter
     private TagsGridComponent grid;
 
     public TagsPage(WebDriver driver) {
@@ -77,15 +80,16 @@ public class TagsPage extends BaseEditorPage {
         return addTagButton.getButtonText();
     }
 
-    public TagsModalComponent editTableRow(TagsRowComponent row) throws InterruptedException {
+    public TagsModalComponent editTableRow(TagsRowComponent row) {
         grid.editRow(row);
-        Thread.sleep(500);
+        sleep(500);
         return new TagsModalComponent(driver, getDisplayedModalRoot());
     }
 
-    public void deleteTableRow(TagsRowComponent row) {
-        //TODO Implement return of modal
+    public DeleteItemModal deleteTableRow(TagsRowComponent row) {
         grid.deleteRow(row);
+        sleep(500);
+        return new DeleteItemModal(driver, getDisplayedModalRoot());
     }
 
     public WebElement getTableRowEditAction(TagsRowComponent row) {
