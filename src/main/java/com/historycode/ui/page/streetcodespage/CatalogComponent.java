@@ -1,6 +1,7 @@
 package com.historycode.ui.page.streetcodespage;
 
 import com.historycode.ui.component.BaseComponent;
+import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -9,10 +10,9 @@ import org.openqa.selenium.support.FindBy;
 import java.util.List;
 import java.util.Optional;
 
-public class CatalogComponent extends BaseComponent {
-    private final String CATALOG_ITEMS_LOCATOR = ".//a[@class='catalogItem']";
 
-    @FindBy(xpath = CATALOG_ITEMS_LOCATOR)
+public class CatalogComponent extends BaseComponent {
+    @FindBy(xpath = ".//a[@class='catalogItem']")
     private List<WebElement> catalogElements;
 
     public CatalogComponent(WebDriver driver, WebElement rootElement) {
@@ -28,7 +28,7 @@ public class CatalogComponent extends BaseComponent {
     }
 
     public void updateElementsAfterScroll() {
-        catalogElements = rootElement.findElements(By.xpath(CATALOG_ITEMS_LOCATOR));
+        catalogElements = rootElement.findElements(By.xpath(".//a[@class='catalogItem']"));
     }
 
     public List<String> getCatalogNames() {
