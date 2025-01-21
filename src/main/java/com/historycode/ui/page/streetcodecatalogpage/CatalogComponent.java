@@ -1,7 +1,6 @@
-package com.historycode.ui.page.streetcodespage;
+package com.historycode.ui.page.streetcodecatalogpage;
 
 import com.historycode.ui.component.BaseComponent;
-import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

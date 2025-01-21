@@ -33,7 +33,6 @@ public class StreetCodeTests extends BaseTestRunner {
         navigateToStreetCodePage(addPath);
 
         int teaserParagraphCount = streetCodePage
-                .setMainCard()
                 .getMainCard()
                 .getTeaserParagraphCount();
 
@@ -65,7 +64,6 @@ public class StreetCodeTests extends BaseTestRunner {
         navigateToStreetCodePage(addPath);
 
         DonateModal donateModal = streetCodePage
-                .setQuickDonateButton()
                 .getQuickDonateButton()
                 .clickDonateButton();
 
