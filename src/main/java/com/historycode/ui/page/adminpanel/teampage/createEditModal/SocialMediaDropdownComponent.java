@@ -1,4 +1,4 @@
-package com.historycode.ui.page.adminpanel.teampage.editModal;
+package com.historycode.ui.page.adminpanel.teampage.createEditModal;
 
 import com.historycode.ui.component.BaseComponent;
 import org.openqa.selenium.By;

@@ -2,7 +2,7 @@ package com.historycode.ui.page.adminpanel.teampage;
 
 import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
 import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
-import com.historycode.ui.page.adminpanel.teampage.editModal.CreateEditMemberModal;
+import com.historycode.ui.page.adminpanel.teampage.createEditModal.CreateEditMemberModal;
 import io.qameta.allure.Step;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;

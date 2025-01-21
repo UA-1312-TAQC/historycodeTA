@@ -1,7 +1,8 @@
 package com.historycode.ui.adminPanel.team;
 
 import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
-import com.historycode.ui.page.adminpanel.teampage.editModal.CreateEditMemberModal;
+import com.historycode.ui.page.adminpanel.teampage.TeamPageAdminPanel;
+import com.historycode.ui.page.adminpanel.teampage.TeamRowComponent;
 import com.historycode.ui.testrunners.TestRunnerWithAdmin;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -15,12 +16,34 @@ public class KeyMemberDisplayed extends TestRunnerWithAdmin {
     @Description("Verify that the admin can mark a member as a \"Key member\" via a radiobutton")
     public void verifyAdminPanelKeyMemberButton() {
         String memberName = "John Wick";
+        String photo = "memberImage.jpg";
+        String socialMedia = "Youtube";
+        String socialMediaLink = "https://www.youtube.com/";
+        boolean keyRole = true;
 
-        CreateEditMemberModal createMemberModal = new HistoryCodesAdminPanelPage(driver)
+        TeamPageAdminPanel memberModal = new HistoryCodesAdminPanelPage(driver)
                 .getAdminMenuBar()
                 .goToTeamPage()
-                .clickAddNewMemberButton();
+                .clickAddNewMemberButton()
+                .setName(memberName)
+                .loadPhoto(photo)
+                .addSocialMedia(socialMedia)
+                .addSocialMediaLink(socialMediaLink)
+                .setKeyMemberStatus(keyRole)
+                .saveEditedMember()
+                .closeEditMemberModal();
 
-        Assert.assertTrue(createMemberModal.isModalDisplayed(), "Modal window is not displayed");
+        TeamRowComponent teamMember = memberModal.getTeamPageGridComponent().findUserByName(memberName);
+
+        if (teamMember == null) {
+            memberModal = memberModal.clickLastPaginationItem();
+            teamMember = memberModal.getTeamPageGridComponent().findUserByName(memberName);
+        }
+        Assert.assertNotNull(teamMember, String.format("The member %s is not found in the team grid", teamMember));
+
+        boolean isKeyRoleAssigned = teamMember.getKeyMemebrRole().isDisplayed();
+        Assert.assertTrue(isKeyRoleAssigned, String.format("The member %s is not marked with a key role", teamMember));
+
+        teamMember.clickDelete().clickOkButton();
     }
 }
