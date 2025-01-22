@@ -15,17 +15,18 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 
-public class TestCase130  extends TestRunnerWithAdmin {
+public class PartnerPageTestCases extends TestRunnerWithAdmin  {
 
     String testName = "SpongeBob";
     String testDescription = "Our optimistic and energetic sponge";
     String testLogo = "logo.jpeg";
+    String testMenuPageName = "Партнери";
 
     @Test
     @Issue("130")
     @Description("Verify that the admin can add a description to a partner's card")
     public void test130 () {
-        CreatePartnersModal createModal = new PartnersPageAdminPanel(driver)
+                CreatePartnersModal createModal = new PartnersPageAdminPanel(driver)
                 .getAdminMenuBar()
                 .goToPartnersPage()
                 .clickAddNewPartnersButton();
@@ -42,10 +43,8 @@ public class TestCase130  extends TestRunnerWithAdmin {
         createModal.clickSaveButton();
         createModal.clickCloseButton();
 
-        //TODO Make a transition to a new page using header
-        String baseUrl = testValueProvider.getBaseUIUrl();
-        driver.get(baseUrl + "/partners-page");
         PartnerPage basePage = new PartnerPage(driver);
+        basePage.openBurgerMenu().clickMenuItem(testMenuPageName);
 
         basePage.scrollToEndOfPage();
         basePage.hoverOverNotKeyPartner(testName);

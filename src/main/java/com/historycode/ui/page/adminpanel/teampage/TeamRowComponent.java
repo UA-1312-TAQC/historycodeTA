@@ -6,33 +6,33 @@ import com.historycode.ui.page.adminpanel.teampage.editModal.EditMemberModal;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TeamRowComponent extends BaseComponent {
-    @FindBy(xpath = "//td[1]//div[@class='team-table-item-name']//p")
+    @FindBy(xpath = "./td[1]//div[@class='team-table-item-name']//p")
     protected WebElement lastFirstName;
-    @FindBy(xpath = "//td[2]//div[@class='team-table-item-name']//p")
+    @FindBy(xpath = "./td[2]//div[@class='team-table-item-name']//p")
     protected List<WebElement> positions;
-    @FindBy(xpath = "//td[3]//div[@class='team-table-item-name']//p")
+    @FindBy(xpath = "./td[3]//div[@class='team-table-item-name']//p")
     protected WebElement description;
-    @FindBy(xpath = "//td[4]//img")
+    @FindBy(xpath = "./td[4]//img")
     protected WebElement photo;
-    @FindBy(xpath = "//td[5]//a")
+    @FindBy(xpath = "./td[5]//a")
     protected List<WebElement> socialMediaElements;
-    @FindBy(xpath = "//td[6]//span[contains(@class, 'delete')]")
+    @FindBy(xpath = "./td[6]//span[contains(@class, 'delete')]")
     protected WebElement deleteAction;
-    @FindBy(xpath = "//td[6]//span[contains(@class, 'edit')]")
+    @FindBy(xpath = "./td[6]//span[contains(@class, 'edit')]")
     protected WebElement editAction;
 
+    @FindBy(xpath = "//p[contains(text(),'видалити')]/ancestor::div[@class = 'ant-modal-content']")
+    protected WebElement deleteModalRoot;
     private List<TeamSocialMediaComponent> socialMediaLinks;
     private List<String> positionTexts;
 
     public TeamRowComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        PageFactory.initElements(driver, this);
     }
 
     public String getLastFirstName() {
@@ -68,12 +68,20 @@ public class TeamRowComponent extends BaseComponent {
     }
 
     public DeleteItemModal clickDelete() {
+        actions.scrollToElement(lastFirstName).perform();
         deleteAction.click();
-        return new DeleteItemModal(driver, rootElement);
+        return new DeleteItemModal(driver, deleteModalRoot);
     }
 
+
+    //TODO check root element
     public EditMemberModal clickEdit() {
         editAction.click();
         return new EditMemberModal(driver, rootElement);
+    }
+
+    @Override
+    public String toString(){
+        return "Lastfirst name " + lastFirstName.getText() + " description " + description.getText();
     }
 }
