@@ -4,6 +4,7 @@ import com.historycode.ui.component.adminPanel.dropDownAdminPanel.DropdownCompon
 import com.historycode.ui.component.adminPanel.modalAdminPanel.BaseEditModal;
 import com.historycode.ui.elements.adminPanel.CheckboxElement;
 import com.historycode.ui.elements.adminPanel.InputElement;
+import com.historycode.ui.elements.adminPanel.TextAreaElement;
 import com.historycode.ui.page.adminpanel.teampage.TeamPageAdminPanel;
 import com.historycode.ui.page.adminpanel.teampage.editModal.photoElement.PhotoModalComponent;
 import com.historycode.ui.page.adminpanel.teampage.editModal.photoElement.PhotoWindowComponent;
@@ -26,50 +27,50 @@ import java.util.List;
 @Getter
 public class EditMemberModal extends BaseEditModal {
 
-    @FindBy(xpath = "//label[contains(@class, 'ant-checkbox-wrapper ant-checkbox-wrapper-checked ant-checkbox-wrapper-in-form-item css-k7429z')]/../..")
+    @FindBy(xpath = ".//label[contains(@class, 'ant-checkbox-wrapper ant-checkbox-wrapper-checked ant-checkbox-wrapper-in-form-item css-k7429z')]/../..")
     protected WebElement keyMemberCheckboxRoot;
     protected CheckboxElement keyMemberCheckbox;
 
-    @FindBy(xpath = "//label[@for = 'name']/../..")
+    @FindBy(xpath = ".//label[@for = 'name']/../..")
     protected WebElement nameInputRoot;
     protected InputElement nameInput;
 
-    @FindBy(xpath = "//label[normalize-space(text())='Позиції']/../..")
+    @FindBy(xpath = ".//label[normalize-space(text())='Позиції']/../..")
     protected WebElement positionsDropdownRoot;
     protected DropdownComponent positionsDropdown;
     protected By SELECTED_POSITIONS_PATH = By.xpath("//div[@class='ant-select-selection-overflow']");
 
-    @FindBy(xpath = "//label[@for = 'description']/../..")
+    @FindBy(xpath = ".//label[@for = 'description']/../..")
     protected WebElement descriptionTextareaElementRoot;
-    protected InputElement descriptionTextareaElement;
+    protected TextAreaElement descriptionTextAreaElement;
 
-    @FindBy(xpath = "//span[@class='ant-upload']/input")
+    @FindBy(xpath = ".//span[@class='ant-upload']/input")
     protected WebElement photoInputField;
 
-    @FindBy(xpath = "//a[@class='ant-upload-list-item-thumbnail']//img")
+    @FindBy(xpath = ".//a[@class='ant-upload-list-item-thumbnail']//img")
     protected WebElement uploadedPhoto;
 
-    @FindBy(xpath = "//span[@role='img' and @aria-label='eye']")
+    @FindBy(xpath = ".//span[@role='img' and @aria-label='eye']")
     protected WebElement previewPhotoButton;
 
-    @FindBy(xpath = "//button[@title='Remove file' and contains(@class, 'ant-btn-icon-only')]")
+    @FindBy(xpath = ".//button[@title='Remove file' and contains(@class, 'ant-btn-icon-only')]")
     protected WebElement deletePhotoButton;
 
-    @FindBy(xpath = "//div[@class='ant-upload ant-upload-select']/span[@role='button']")
+    @FindBy(xpath = ".//div[@class='ant-upload ant-upload-select']/span[@role='button']")
     protected WebElement uploadButton;
 
-    @FindBy(xpath = "//div[@class='team-source-list']//div[contains(@class, 'link-container')]")
+    @FindBy(xpath = ".//div[@class='team-source-list']//div[contains(@class, 'link-container')]")
     protected List<WebElement> existingSocialMedia;
 
-    @FindBy(xpath = "//label[@for = 'logotype']/../..")
+    @FindBy(xpath = ".//label[@for = 'logotype']/../..")
     protected WebElement socialMediaDropdownRoot;
     protected SocialMediaDropdownComponent socialMediaDropdown;
 
-    @FindBy(xpath = "//label[@for = 'url']/../..")
+    @FindBy(xpath = ".//label[@for = 'url']/../..")
     protected WebElement socialMediaInputRoot;
     protected InputElement socialMediaInput;
 
-    @FindBy(xpath = "//button[@type='submit']")
+    @FindBy(xpath = ".//button[@type='submit']")
     protected WebElement addSocialMediaButton;
 
     protected PhotoModalComponent photoModalComponent;
@@ -81,7 +82,7 @@ public class EditMemberModal extends BaseEditModal {
         this.keyMemberCheckbox = new CheckboxElement(driver, keyMemberCheckboxRoot);
         this.nameInput = new InputElement(driver, nameInputRoot);
         this.positionsDropdown = new DropdownComponent(driver, positionsDropdownRoot);
-        this.descriptionTextareaElement = new InputElement(driver, descriptionTextareaElementRoot);
+        this.descriptionTextAreaElement = new TextAreaElement(driver, descriptionTextareaElementRoot);
         this.socialMediaDropdown = new SocialMediaDropdownComponent(driver, socialMediaDropdownRoot);
         this.socialMediaInput = new InputElement(driver, socialMediaInputRoot);
 
@@ -121,11 +122,13 @@ public class EditMemberModal extends BaseEditModal {
     }
 
     public String getDescription() {
-        return descriptionTextareaElement.getInputValue();
+        return descriptionTextAreaElement.getInputValue();
     }
 
-    public void setDescription(String description) {
-        descriptionTextareaElement.setInputField(description);
+    @Step("Enter description {description} into Name input field")
+    public EditMemberModal setDescription(String description) {
+        descriptionTextAreaElement.setInputField(description);
+        return this;
     }
 
     public void previewPhoto() {
@@ -166,16 +169,12 @@ public class EditMemberModal extends BaseEditModal {
     public EditMemberModal addSocialMedia(String platform) {
         openSocialMediaDropdown();
         socialMediaDropdown.clickOptionByText(platform);
-        //selectDropdownOption(socialMediaDropdown, platform);
-        //TODO Do we really need to click this button here? We need to click on it if we want to add more than 1 social media
-        //addSocialMediaButton.click();
         return this;
     }
 
     @Step("Add social media link {link}")
     public EditMemberModal addSocialMediaLink(String link) {
         socialMediaInput.setInputField(link);
-        //TODO Do we really need to click this button here? We need to click on it if we want to add more than 1 social media
         return this;
     }
 
@@ -225,6 +224,13 @@ public class EditMemberModal extends BaseEditModal {
         return new TeamPageAdminPanel(driver);
     }
 
+    @Step("Close the modal window")
+    public void closeEditMemberModalWithoutGridRefresh() {
+        actions.moveToElement(closeButton).perform();
+        waitUntilElementClickable(closeButton);
+        clickCloseButton();
+        wait.until(ExpectedConditions.invisibilityOf(closeButton));
+    }
 
     public boolean isTooltipVisibleOnHoverCloseButton() {
         hoverOverCloseButton();
