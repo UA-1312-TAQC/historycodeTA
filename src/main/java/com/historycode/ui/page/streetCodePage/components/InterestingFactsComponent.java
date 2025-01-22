@@ -17,6 +17,12 @@ public class InterestingFactsComponent extends BaseComponent {
     @FindBy(xpath = ".//div[@class='interestingFactsContainer ']")
     private WebElement carouselRoot;
 
+    @FindBy(xpath = ".//button[@class='slick-arrow slick-prev']")
+    protected WebElement leftArrow;
+
+    @FindBy(xpath = ".//button[@class='slick-arrow slick-next']")
+    protected WebElement rightArrow;
+
     @Getter
     private final InterestingFactsModal interestingFactsModal;
     @Getter
@@ -37,11 +43,11 @@ public class InterestingFactsComponent extends BaseComponent {
     }
 
     public void clickNextSlide() {
-        carousel.clickNext();
+        rightArrow.click();
     }
 
     public void clickPreviousSlide() {
-        carousel.clickPrevious();
+        leftArrow.click();
     }
 
     public void clickFactCard(int index) {

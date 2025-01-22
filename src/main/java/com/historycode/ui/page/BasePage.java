@@ -5,10 +5,8 @@ import com.historycode.ui.component.BurgerMenu.BurgerMenuComponent;
 import com.historycode.ui.component.footer.FooterComponent;
 import com.historycode.ui.component.header.HeaderComponent;
 import lombok.Getter;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.Objects;
 
@@ -94,7 +92,23 @@ public abstract class BasePage extends Base {
         }
     }
 
-    public void waitUntilElementInvisible(WebElement element) {
-        wait.until(ExpectedConditions.invisibilityOf(element));
+    public void scrollUntilElementIsVisible(WebElement element) {
+        int maxAttempts = 3;
+        int attempts = 0;
+
+        while (attempts < maxAttempts) {
+            try {
+                ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({behavior: 'instant', block: 'center'});", element);
+                if (element.isDisplayed()) {
+                    return;
+                }
+            } catch (StaleElementReferenceException e) {
+            }
+            attempts++;
+            sleep(500);
+        }
+
+        throw new TimeoutException("Element is not visible after " + maxAttempts + " attempts to scroll.");
     }
+
 }
