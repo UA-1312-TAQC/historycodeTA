@@ -47,7 +47,7 @@ public class DeleteItemModal extends BaseModal {
     public void clickOkButton() {
         waitUntilElementClickable(ok);
         ok.click();
-        waitUntilElementInvisibility(ok);
+        waitUntilElementInvisible(ok);
     }
 
     public void clickCancelButton() {

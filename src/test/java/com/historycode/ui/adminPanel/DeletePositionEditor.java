@@ -13,9 +13,9 @@ public class DeletePositionEditor extends TestRunnerWithAdmin {
         login();
         driver.get(testValueProvider.getBaseUIUrl() + "/admin-panel/editor");
         CategoriesPage categoriesPage = new CategoriesPage(driver);
-        /*categoriesPage.moveToPositions()
-                .addPosition()
-                .enterPosition("Accountant").close();*/
+        categoriesPage.moveToPositions()
+                .clickAddPosition()
+                .enterPosition("Accountant").close();
     }
 
     @Test

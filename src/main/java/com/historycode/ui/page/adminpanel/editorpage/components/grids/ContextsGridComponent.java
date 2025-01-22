@@ -1,6 +1,5 @@
 package com.historycode.ui.page.adminpanel.editorpage.components.grids;
 
-import com.historycode.ui.page.adminpanel.editorpage.components.rows.CategoriesRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.ContextsRowComponent;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
