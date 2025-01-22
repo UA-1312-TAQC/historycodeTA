@@ -48,7 +48,15 @@ public class CreatePartnersModal extends BaseCreateModal {
         this.linkName = new InputElement(driver, linkNameContainer);
         this.description = new TextAreaElement(driver, textAreaContainer);
         this.logo = new LogoElement(driver, logoContainer);
+    }
 
+    public void clickSaveButton() {
+        waitUntilElementVisible(super.uploadLogo);
+        super.clickSaveButton();
+    }
 
+    public void clickCloseButton() {
+        waitUntilElementVisible(super.tooltipConfirmation);
+        super.clickCloseButton();
     }
 }

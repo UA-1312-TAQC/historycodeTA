@@ -22,6 +22,9 @@ public abstract class BaseCreateModal extends BaseModal {
     @FindBy(xpath = ".//span[@class='ant-upload']")
     protected WebElement uploadLogo;
 
+    @FindBy(xpath = "//div[@class = 'ant-message-notice-content']")
+    protected WebElement tooltipConfirmation;
+
     @FindBy(xpath = "//div[contains(@class, 'ant-message-success')]")
     protected WebElement saveConfirmation;
 
@@ -57,16 +60,18 @@ public abstract class BaseCreateModal extends BaseModal {
     public void clickCloseButton() {
         if (isCloseButtonEnabled()) {
             waitUntilElementClickable(closeButton);
-            waitUntilElementVisible(saveConfirmation);
             closeButton.click();
+        } else {
+            throw new IllegalStateException("The close button is disabled and cannot be clicked.");
         }
     }
 
     public void clickSaveButton() {
         if (isSaveButtonEnabled()) {
             waitUntilElementClickable(saveButton);
-            waitUntilElementVisible(uploadLogo);
             saveButton.click();
+        } else {
+            throw new IllegalStateException("The save button is disabled and cannot be clicked.");
         }
     }
 }

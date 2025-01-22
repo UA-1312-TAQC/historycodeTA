@@ -14,7 +14,6 @@ import org.testng.Assert;
 
 import org.testng.annotations.Test;
 
-
 public class PartnerPageTestCases extends TestRunnerWithAdmin  {
 
     String testName = "SpongeBob";
@@ -50,5 +49,21 @@ public class PartnerPageTestCases extends TestRunnerWithAdmin  {
         basePage.hoverOverNotKeyPartner(testName);
 
         Assert.assertEquals(basePage.getPopoverDescription(), testDescription);
+    }
+
+    @Test
+    @Issue("128")
+    @Description("Verify that the system doesn't save new partner without filled all mandatory fields" +
+            " in the \"Додати партнера\" modal window")
+    public void test128 () {
+        CreatePartnersModal createModal = new PartnersPageAdminPanel(driver)
+                .getAdminMenuBar()
+                .goToPartnersPage()
+                .clickAddNewPartnersButton();
+
+        InputElement name = createModal.name;
+        name.setInputField(testName);
+
+        Assert.assertFalse(createModal.isSaveButtonEnabled());
     }
 }
