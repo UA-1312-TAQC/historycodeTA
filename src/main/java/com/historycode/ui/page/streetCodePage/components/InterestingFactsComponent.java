@@ -11,6 +11,7 @@ import org.openqa.selenium.support.FindBy;
 import java.util.List;
 
 public class InterestingFactsComponent extends BaseComponent {
+    @Getter
     @FindBy(xpath = ".//div[@id='wow-facts']//h1[@class='blockHeadingText']")
     private WebElement title;
 
@@ -28,7 +29,7 @@ public class InterestingFactsComponent extends BaseComponent {
         this.interestingFactsModal = new InterestingFactsModal(driver, rootElement);
     }
 
-    public String getTitle() {
+    public String getTitleName() {
         return title.getText();
     }
 
