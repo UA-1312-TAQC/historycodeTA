@@ -78,56 +78,90 @@ public class EditMemberModal extends BaseEditModal {
 
     public EditMemberModal(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
+        //this.photoModalComponent = new PhotoModalComponent(driver, rootElement);
+        //this.photoWindowComponent = new PhotoWindowComponent(driver, rootElement);
+    }
 
-        this.keyMemberCheckbox = new CheckboxElement(driver, keyMemberCheckboxRoot);
-        this.nameInput = new InputElement(driver, nameInputRoot);
-        this.positionsDropdown = new DropdownComponent(driver, positionsDropdownRoot);
-        this.descriptionTextAreaElement = new TextAreaElement(driver, descriptionTextareaElementRoot);
-        this.socialMediaDropdown = new SocialMediaDropdownComponent(driver, socialMediaDropdownRoot);
-        this.socialMediaInput = new InputElement(driver, socialMediaInputRoot);
 
-        this.photoModalComponent = new PhotoModalComponent(driver, rootElement);
-        this.photoWindowComponent = new PhotoWindowComponent(driver, rootElement);
+    private CheckboxElement getKeyMemberCheckbox(){
+        if(keyMemberCheckbox == null){
+            this.keyMemberCheckbox = new CheckboxElement(driver, keyMemberCheckboxRoot);
+        }
+        return this.keyMemberCheckbox;
+    }
+
+    private InputElement getNameInput(){
+        if(nameInput == null){
+            this.nameInput = new InputElement(driver, nameInputRoot);
+        }
+        return this.nameInput;
+    }
+
+    private DropdownComponent getPositionsDropdown(){
+        if(positionsDropdown == null){
+            this.positionsDropdown = new DropdownComponent(driver, positionsDropdownRoot);
+        }
+        return this.positionsDropdown;
+    }
+    private TextAreaElement getDescriptionTextAreaElement(){
+        if(descriptionTextAreaElement == null){
+            this.descriptionTextAreaElement = new TextAreaElement(driver, descriptionTextareaElementRoot);
+        }
+        return this.descriptionTextAreaElement;
+    }
+
+    private SocialMediaDropdownComponent getSocialMediaDropdown(){
+        if(socialMediaDropdown == null){
+            this.socialMediaDropdown = new SocialMediaDropdownComponent(driver, socialMediaDropdownRoot);
+        }
+        return this.socialMediaDropdown;
+    }
+
+    private InputElement getSocialMediaInput(){
+        if(socialMediaInput == null){
+            this.socialMediaInput = new InputElement(driver, socialMediaInputRoot);
+        }
+        return this.socialMediaInput;
     }
 
     public void setKeyMemberStatus(boolean isKeyMember) {
         if (isKeyMember) {
-            keyMemberCheckbox.check();
+            getKeyMemberCheckbox().check();
         } else {
-            keyMemberCheckbox.uncheck();
+            getKeyMemberCheckbox().uncheck();
         }
     }
 
     public boolean isKeyMemberChecked() {
-        return keyMemberCheckbox.isChecked();
+        return getKeyMemberCheckbox().isChecked();
     }
 
     public String getName() {
-        return nameInput.getInputValue();
+        return getNameInput().getInputValue();
     }
 
     @Step("Enter name {name} into Name input field")
     public EditMemberModal setName(String name) {
-        nameInput.setInputField(name);
+        getNameInput().setInputField(name);
         return this;
     }
 
     public void setPositions(List<String> positions) {
-        positionsDropdown.openDropdown();
+        getPositionsDropdown().openDropdown();
         positionsDropdown.selectMultipleOptions(positions);
     }
 
     public List<String> getSelectedPositions() {
-        return positionsDropdown.getSelectedMultipleOptions();
+        return getPositionsDropdown().getSelectedMultipleOptions();
     }
 
     public String getDescription() {
-        return descriptionTextAreaElement.getInputValue();
+        return getDescriptionTextAreaElement().getInputValue();
     }
 
     @Step("Enter description {description} into Name input field")
     public EditMemberModal setDescription(String description) {
-        descriptionTextAreaElement.setInputField(description);
+        getDescriptionTextAreaElement().setInputField(description);
         return this;
     }
 
@@ -143,9 +177,9 @@ public class EditMemberModal extends BaseEditModal {
         }
     }
 
-    public void closePhotoModal() {
+    /*public void closePhotoModal() {
         photoModalComponent.close();
-    }
+    }*/
 
     public void uploadFile(String filePath) {
         uploadButton.click();
@@ -159,7 +193,7 @@ public class EditMemberModal extends BaseEditModal {
         ImageLoader.loadImageUsingRelativePath(imageName, photoInputField);
         return this;
     }
-    //TODO Do I need to check uploadedPhoto.isDisplayed(), too?
+
     public boolean isPhotoUploaded() {
         return !photoWindowComponent.isPlaceholderClickable();
     }
@@ -174,7 +208,7 @@ public class EditMemberModal extends BaseEditModal {
 
     @Step("Add social media link {link}")
     public EditMemberModal addSocialMediaLink(String link) {
-        socialMediaInput.setInputField(link);
+        getSocialMediaInput().setInputField(link);
         return this;
     }
 
@@ -243,6 +277,6 @@ public class EditMemberModal extends BaseEditModal {
 
 
     public void openSocialMediaDropdown(){
-        socialMediaDropdown.openDropdown();
+        getSocialMediaDropdown().openDropdown();
     }
 }

@@ -9,6 +9,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.time.LocalTime;
+
 public class TeamPageAdminPanel extends BasePageAdminPanel {
 
     @Getter
@@ -22,7 +24,13 @@ public class TeamPageAdminPanel extends BasePageAdminPanel {
 
     public TeamPageAdminPanel(WebDriver driver) {
         super(driver);
-        teamPageGridComponent = new TeamPageGridComponent(driver, gridRootElement);
+    }
+
+    public TeamPageGridComponent getTeamPageGridComponent(){
+        if(teamPageGridComponent == null){
+            teamPageGridComponent = new TeamPageGridComponent(driver, gridRootElement);
+        }
+        return teamPageGridComponent;
     }
 
     @Step("Click on the last page of the pagination")
