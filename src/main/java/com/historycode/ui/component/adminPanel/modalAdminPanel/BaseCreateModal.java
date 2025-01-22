@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 
 public abstract class BaseCreateModal extends BaseModal {
 
-    @FindBy(xpath = ".//button[@class='ant-modal-close']/span")
+    @FindBy(xpath = ".//button[@class='ant-modal-close']")
     protected WebElement closeButton;
 
     @FindBy(xpath = ".//div[@class='ant-popover-content']//div[@class='ant-popover-inner-content']")
@@ -16,7 +16,7 @@ public abstract class BaseCreateModal extends BaseModal {
     @FindBy(xpath = ".//div[@class='center']//h2")
     protected WebElement title;
 
-    @FindBy(xpath = ".//div[@class='center']//button/span")
+    @FindBy(xpath = ".//div[@class='center']//button")
     protected WebElement saveButton;
 
     @FindBy(xpath = ".//span[@class='ant-upload']")
@@ -27,6 +27,9 @@ public abstract class BaseCreateModal extends BaseModal {
 
     @FindBy(xpath = "//div[contains(@class, 'ant-message-success')]")
     protected WebElement saveConfirmation;
+
+    @FindBy(xpath = "//div[contains(@class, 'ant-message-error')]")
+    protected WebElement errorConfirmation;
 
     public BaseCreateModal(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
@@ -40,13 +43,11 @@ public abstract class BaseCreateModal extends BaseModal {
         return tooltip.isDisplayed();
     }
 
-    public boolean isSaveButtonEnabled() {
-        return saveButton.isEnabled();
-    }
+    public boolean isErrorConfirmationDisplayed() { return  errorConfirmation.isDisplayed(); }
 
-    public boolean isCloseButtonEnabled() {
-        return closeButton.isEnabled();
-    }
+    public boolean isSaveButtonEnabled() { return saveButton.isEnabled(); }
+
+    public boolean isCloseButtonEnabled() { return closeButton.isEnabled(); }
 
     public void hoverOverCloseButton() {
         actions.moveToElement(closeButton).perform();
