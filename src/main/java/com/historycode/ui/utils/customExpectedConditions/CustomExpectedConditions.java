@@ -21,10 +21,9 @@ public class CustomExpectedConditions {
             public Boolean apply(WebDriver driver) {
                 log.debug("Applying custom expected condition");
                 try{
-                    //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
-                    //driver.findElement(locator);
-                    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
-                    wait.until(ExpectedConditions.stalenessOf(driver.findElement(locator)));
+                    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
+                    driver.findElement(locator);
+                    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
                 }catch(StaleElementReferenceException | NoSuchElementException ex){
                     log.debug("Expected condition is true: " + ex.getClass().toString() + " is thrown");
                     return true;
