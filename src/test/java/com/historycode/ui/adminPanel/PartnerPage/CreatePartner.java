@@ -1,4 +1,4 @@
-package com.historycode.ui.adminPanel;
+package com.historycode.ui.adminPanel.PartnerPage;
 
 import com.historycode.ui.elements.adminPanel.InputElement;
 import com.historycode.ui.elements.adminPanel.LogoElement;
@@ -15,18 +15,20 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-public class PartnerPageTestCases extends TestRunnerWithAdmin  {
+public class CreatePartner extends TestRunnerWithAdmin  {
 
     String testName = "SpongeBob";
     String testDescription = "Our optimistic and energetic sponge";
     String testLogo = "logo.jpeg";
     String testMenuPageName = "Партнери";
 
+    //TODO Maybe i have to use Dataprovider ? How do my code DRY ?
     @Test
     @Issue("130")
     @Description("Verify that the admin can add a description to a partner's card")
-    public void test130 () {
-                CreatePartnersModal createModal = new PartnersPageAdminPanel(driver)
+    public void createNotKeyPartner () {
+
+        CreatePartnersModal createModal = new PartnersPageAdminPanel(driver)
                 .getAdminMenuBar()
                 .goToPartnersPage()
                 .clickAddNewPartnersButton();
@@ -52,22 +54,37 @@ public class PartnerPageTestCases extends TestRunnerWithAdmin  {
         Assert.assertEquals(basePage.getPopoverDescription(), testDescription);
     }
 
+    //TODO Maybe i have to use Dataprovider ? How do my code DRY ?
     @Test
-    @Issue("128")
-    @Description("Verify that the system doesn't save new partner without filled all mandatory fields" +
-            " in the \"Додати партнера\" modal window")
-    public void test128 () {
-        SoftAssert softAssert = new SoftAssert();
+    @Issue("130")
+    @Description("Verify that the admin can add a description to a Key partner's card")
+    public void createKeyPartner () {
+
         CreatePartnersModal createModal = new PartnersPageAdminPanel(driver)
                 .getAdminMenuBar()
                 .goToPartnersPage()
                 .clickAddNewPartnersButton();
 
+        createModal.keyPartner.check();
+
         InputElement name = createModal.name;
         name.setInputField(testName);
 
+        TextAreaElement description = createModal.description;
+        description.setTextArea(testDescription);
+
+        LogoElement logo = createModal.logo;
+        logo.uploadLogo(testLogo);
+
         createModal.clickSaveButton();
-        softAssert.assertTrue(createModal.isErrorConfirmationDisplayed());
         createModal.clickCloseButton();
+
+        PartnerPage basePage = new PartnerPage(driver);
+        basePage.openBurgerMenu().clickMenuItem(testMenuPageName);
+
+        basePage.scrollToElement(basePage.getConstantKeyPartners());
+        basePage.hoverOverKeyPartner(testName);
+
+        Assert.assertEquals(basePage.getPopoverDescription(), testDescription);
     }
 }

@@ -1,6 +1,7 @@
 package com.historycode.ui.page.partnerPage;
 
 import com.historycode.ui.page.BasePage;
+import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -18,6 +19,13 @@ public class PartnerPage extends BasePage {
     @FindBy(xpath = "//div[@class='otherPartnersBlock']/div[@class='partnersItem']")
     protected List<WebElement> notKeyPartners;
 
+    @Getter
+    @FindBy(xpath = "//div[@class='keyPartnersBlock']//img[@alt='Гадяцька міська рада']")
+    private WebElement ConstantKeyPartners;
+
+    @FindBy(xpath = "//div[@class='keyPartnersBlock']/div[@class='partnersItem']")
+    protected List<WebElement> keyPartners;
+
     @FindBy(xpath = "//div[@class='ant-popover-content']")
     protected WebElement popoverContainer;
 
@@ -26,10 +34,12 @@ public class PartnerPage extends BasePage {
     }
 
     public void hoverOverNotKeyPartner(String alt) {
-        if (alt == null || alt.isEmpty()) {
-            throw new IllegalArgumentException("Alt text must not be null or empty");
-        }
         WebElement logo = findLogo(notKeyPartners, alt);
+        hoverOverLogo(logo);
+    }
+
+    public void hoverOverKeyPartner(String alt) {
+        WebElement logo = findLogo(keyPartners, alt);
         hoverOverLogo(logo);
     }
 
@@ -42,9 +52,13 @@ public class PartnerPage extends BasePage {
     protected void hoverOverLogo (WebElement imageElement) {
         Actions actions = new Actions(driver);
         actions.moveToElement(imageElement).perform();
+        waitUntilElementVisible(popoverContainer);
     }
 
     protected WebElement findLogo (List<WebElement> listOfLogo, String alt) {
+        if (alt == null || alt.isEmpty()) {
+            throw new IllegalArgumentException("Alt text must not be null or empty");
+        }
         for (WebElement logoContainer : listOfLogo) {
             WebElement logo = logoContainer.findElement(By.xpath(LOGO_XPATH));
             String logoAltText = logo.getAttribute("alt");
