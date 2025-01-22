@@ -18,6 +18,7 @@ public class MainCardComponent extends BaseComponent {
 
     @FindBy(xpath = ".//div[@class='streetcodeIndex']")
     private WebElement catalogNumber;
+
     @Getter
     @FindBy(xpath = ".//h2[@class='streetcodeTitle']")
     private WebElement name;
