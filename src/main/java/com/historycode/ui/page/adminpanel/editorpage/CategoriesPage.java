@@ -1,8 +1,10 @@
 package com.historycode.ui.page.adminpanel.editorpage;
 
+import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
 import com.historycode.ui.page.adminpanel.editorpage.components.grids.CategoriesGridComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.CategoriesModalComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.CategoriesRowComponent;
+import com.historycode.ui.page.adminpanel.editorpage.components.rows.ContextsRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.elements.AddButtonElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
@@ -32,7 +34,7 @@ public class CategoriesPage extends BaseEditorPage {
 
     public CategoriesModalComponent clickAddCategory() {
         addCategoryButton.clickButton();
-        sleep(1000);
+        wait.until(driver -> getDisplayedModalRoot() != null);
         return new CategoriesModalComponent(driver, getDisplayedModalRoot());
     }
 
@@ -79,13 +81,14 @@ public class CategoriesPage extends BaseEditorPage {
 
     public CategoriesModalComponent editTableRow(CategoriesRowComponent row) {
         grid.editRow(row);
-        sleep(1000);
+        wait.until(driver -> getDisplayedModalRoot() != null);
         return new CategoriesModalComponent(driver, getDisplayedModalRoot());
     }
 
-    public void deleteTableRow(CategoriesRowComponent row) {
-        //TODO Implement return of modal
+    public DeleteItemModal deleteTableRow(CategoriesRowComponent row) {
         grid.deleteRow(row);
+        wait.until(driver -> getDisplayedModalRoot() != null);
+        return new DeleteItemModal(driver, getDisplayedModalRoot());
     }
 
     public WebElement getTableRowEditAction(CategoriesRowComponent row) {

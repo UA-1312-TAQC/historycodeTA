@@ -1,7 +1,9 @@
 package com.historycode.ui.page.adminpanel.editorpage;
 
+import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
 import com.historycode.ui.page.adminpanel.editorpage.components.grids.PositionsGridComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.PositionsModalComponent;
+import com.historycode.ui.page.adminpanel.editorpage.components.rows.ContextsRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.PositionsRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.elements.AddButtonElement;
 import io.qameta.allure.Step;
@@ -32,7 +34,7 @@ public class PositionsPage extends BaseEditorPage {
 
     public PositionsModalComponent clickAddPosition() {
         addPositionButton.clickButton();
-        sleep(1000);
+        wait.until(driver -> getDisplayedModalRoot() != null);
         return new PositionsModalComponent(driver, getDisplayedModalRoot());
     }
 
@@ -79,13 +81,14 @@ public class PositionsPage extends BaseEditorPage {
 
     public PositionsModalComponent editTableRow(PositionsRowComponent row) throws InterruptedException {
         grid.editRow(row);
-        Thread.sleep(500);
+        wait.until(driver -> getDisplayedModalRoot() != null);
         return new PositionsModalComponent(driver, getDisplayedModalRoot());
     }
 
-    public void deleteTableRow(PositionsRowComponent row) {
-        //TODO Implement return of modal
+    public DeleteItemModal deleteTableRow(PositionsRowComponent row) {
         grid.deleteRow(row);
+        wait.until(driver -> getDisplayedModalRoot() != null);
+        return new DeleteItemModal(driver, getDisplayedModalRoot());
     }
 
     public WebElement getTableRowEditAction(PositionsRowComponent row) {

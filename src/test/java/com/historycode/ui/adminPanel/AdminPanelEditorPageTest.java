@@ -1,4 +1,4 @@
-package com.historycode.ui;
+package com.historycode.ui.adminPanel;
 
 import com.historycode.ui.page.adminpanel.editorpage.CategoriesPage;
 import com.historycode.ui.page.adminpanel.editorpage.ContextsPage;
@@ -18,19 +18,13 @@ public class AdminPanelEditorPageTest extends TestRunnerWithAdmin {
 
     //TODO Add BeforeClass with login to the admin panel
     //TODO Add AfterMethod to move back to the main admin panel page
-    @BeforeMethod
-    public void admin_panel_login() {
-        login();
-        sleep(1);
-        driver.get(testValueProvider.getBaseUIUrl() + "/admin-panel/editor");
-        sleep(2);
-    }
 
     @Test
     @Issue("110")
     @Epic("(Epic#5) Admin/Other pages")
     @Description("Verify that a new context can be created in the admin panel editor")
     public void verifyOpenAddContextModal() {
+        driver.get(testValueProvider.getBaseUIUrl() + "/admin-panel/editor");
 
         CategoriesPage categoriesPage = new CategoriesPage(driver);//TODO Change add Click Editor step
 
@@ -46,6 +40,8 @@ public class AdminPanelEditorPageTest extends TestRunnerWithAdmin {
     @Epic("(Epic#5) Admin/Other pages")
     @Description("Verify that context list is displayed")
     public void verifyContextGridIsCorrectDisplayed() {
+        driver.get(testValueProvider.getBaseUIUrl() + "/admin-panel/editor");
+
         CategoriesPage categoriesPage = new CategoriesPage(driver);//TODO Change add Click Editor step
 
         ContextsPage contextsPage = categoriesPage.moveToContexts();
@@ -66,6 +62,8 @@ public class AdminPanelEditorPageTest extends TestRunnerWithAdmin {
     @Epic("(Epic#5) Admin/Other pages")
     @Description("Verify that tag list is displayed")
     public void verifyTagGridIsCorrectDisplayed() {
+        driver.get(testValueProvider.getBaseUIUrl() + "/admin-panel/editor");
+
         CategoriesPage categoriesPage = new CategoriesPage(driver);//TODO Change add Click Editor step
 
         TagsPage tagsPage = categoriesPage.moveToTags();
@@ -79,13 +77,5 @@ public class AdminPanelEditorPageTest extends TestRunnerWithAdmin {
         boolean actual = tagsPage.isGridDisplayed();
         Assert.assertTrue(actual,
                 "Current rows are not displayed or are displayed incorrectly.");
-    }
-
-    public void sleep(int scnd) {
-        try {
-            Thread.sleep((long) (scnd) * 1000);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
     }
 }
