@@ -12,9 +12,10 @@ import java.util.List;
 
 public class InterestingFactsComponent extends BaseComponent {
     @Getter
-    @FindBy(xpath = ".//div[@id='wow-facts']//h1[@class='blockHeadingText']")
+    @FindBy(xpath = ".//h1[@class='blockHeadingText']")
     private WebElement title;
 
+    @Getter
     @FindBy(xpath = ".//div[@class='interestingFactsContainer ']")
     private WebElement carouselRoot;
 
