@@ -1,9 +1,5 @@
 package com.historycode.ui.adminPanel.PartnerPage;
 
-import com.historycode.ui.elements.adminPanel.InputElement;
-import com.historycode.ui.elements.adminPanel.LogoElement;
-import com.historycode.ui.elements.adminPanel.TextAreaElement;
-
 import com.historycode.ui.page.adminpanel.partnerspage.PartnersPageAdminPanel;
 import com.historycode.ui.page.adminpanel.partnerspage.modal.CreatePartnersModal;
 import com.historycode.ui.page.partnerPage.PartnerPage;
@@ -13,7 +9,6 @@ import io.qameta.allure.Issue;
 import org.testng.Assert;
 
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
 
 public class CreatePartner extends TestRunnerWithAdmin  {
 
@@ -33,15 +28,9 @@ public class CreatePartner extends TestRunnerWithAdmin  {
                 .goToPartnersPage()
                 .clickAddNewPartnersButton();
 
-        InputElement name = createModal.name;
-        name.setInputField(testName);
-
-        TextAreaElement description = createModal.description;
-        description.setTextArea(testDescription);
-
-        LogoElement logo = createModal.logo;
-        logo.uploadLogo(testLogo);
-
+        createModal.name.setInputField(testName);
+        createModal.description.setTextArea(testDescription);
+        createModal.logo.uploadLogo(testLogo);
         createModal.clickSaveButton();
         createModal.clickCloseButton();
 
@@ -49,7 +38,7 @@ public class CreatePartner extends TestRunnerWithAdmin  {
         basePage.openBurgerMenu().clickMenuItem(testMenuPageName);
 
         basePage.scrollToEndOfPage();
-        basePage.hoverOverNotKeyPartner(testName);
+        basePage.hoverOverPartner(testName, PartnerPage.PartnerType.NOT_KEY);
 
         Assert.assertEquals(basePage.getPopoverDescription(), testDescription);
     }
@@ -66,16 +55,9 @@ public class CreatePartner extends TestRunnerWithAdmin  {
                 .clickAddNewPartnersButton();
 
         createModal.keyPartner.check();
-
-        InputElement name = createModal.name;
-        name.setInputField(testName);
-
-        TextAreaElement description = createModal.description;
-        description.setTextArea(testDescription);
-
-        LogoElement logo = createModal.logo;
-        logo.uploadLogo(testLogo);
-
+        createModal.name.setInputField(testName);
+        createModal.description.setTextArea(testDescription);
+        createModal.logo.uploadLogo(testLogo);
         createModal.clickSaveButton();
         createModal.clickCloseButton();
 
@@ -83,7 +65,7 @@ public class CreatePartner extends TestRunnerWithAdmin  {
         basePage.openBurgerMenu().clickMenuItem(testMenuPageName);
 
         basePage.scrollToElement(basePage.getConstantKeyPartners());
-        basePage.hoverOverKeyPartner(testName);
+        basePage.hoverOverPartner(testName, PartnerPage.PartnerType.KEY);
 
         Assert.assertEquals(basePage.getPopoverDescription(), testDescription);
     }

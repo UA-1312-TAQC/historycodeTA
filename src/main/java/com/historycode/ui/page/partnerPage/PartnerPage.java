@@ -33,13 +33,13 @@ public class PartnerPage extends BasePage {
         super(driver);
     }
 
-    public void hoverOverNotKeyPartner(String alt) {
-        WebElement logo = findLogo(notKeyPartners, alt);
-        hoverOverLogo(logo);
+    public enum PartnerType {
+        KEY, NOT_KEY
     }
 
-    public void hoverOverKeyPartner(String alt) {
-        WebElement logo = findLogo(keyPartners, alt);
+    public void hoverOverPartner(String alt, PartnerType type) {
+        List<WebElement> partners = type == PartnerType.KEY ? keyPartners : notKeyPartners;
+        WebElement logo = findLogo(partners, alt);
         hoverOverLogo(logo);
     }
 

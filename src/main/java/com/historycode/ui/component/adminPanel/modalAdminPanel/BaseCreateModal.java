@@ -3,6 +3,7 @@ package com.historycode.ui.component.adminPanel.modalAdminPanel;
 import com.historycode.ui.component.BaseModal;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 public abstract class BaseCreateModal extends BaseModal {
@@ -31,8 +32,11 @@ public abstract class BaseCreateModal extends BaseModal {
     @FindBy(xpath = "//div[contains(@class, 'ant-message-error')]")
     protected WebElement errorConfirmation;
 
+    protected Actions actions;
+
     public BaseCreateModal(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
+        this.actions = new Actions(driver);
     }
 
     public boolean isModalDisplayed() {
