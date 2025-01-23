@@ -7,6 +7,7 @@ import com.historycode.ui.testrunners.BaseTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import java.util.List;
@@ -50,17 +51,20 @@ public class StreetCodeClickButtonTest extends BaseTestRunner {
     @Description("Verify that video play/pause")
     public void testStreetCodeVideoClick(String addUIUrl) {
         navigateToStreetCodePage(addUIUrl);
+        streetCodePage.scrollToElement(streetCodePage.getTextBlock().getVideoPlayer());
         StreetCodeTextBlockComponent textBlock = streetCodePage.getTextBlock();
         SoftAssert softAssert = new SoftAssert();
 
         softAssert.assertTrue(textBlock.isVideoVisible(), "Video should be visible.");
-        driver.switchTo().frame(textBlock.getVideoPlayer());
+
+
         softAssert.assertTrue(textBlock.isPlayButtonVisible(), "Play button should be visible.");
         textBlock.clickPlayButton();
         softAssert.assertTrue(textBlock.isPauseButtonVisible(), "Video is not playing.");
         textBlock.clickPauseButton();
         softAssert.assertFalse(textBlock.isPauseButtonVisible(), "Video is not pausing.");
         driver.switchTo().defaultContent();
+        softAssert.assertAll();
     }
 
     @Issue("81")
@@ -82,6 +86,7 @@ public class StreetCodeClickButtonTest extends BaseTestRunner {
                     "Redirection failed or URL mismatch for link: " + link);
 
         }
+        softAssert.assertAll();
     }
 }
 

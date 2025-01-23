@@ -2,6 +2,7 @@ package com.historycode.ui.page.streetCodePage.components;
 
 import com.historycode.ui.component.BaseComponent;
 import lombok.Getter;
+import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -39,7 +40,7 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
     @FindBy(xpath = "//button[contains(@class, 'ytp-large-play-button')]")
     private WebElement videoPlayButton;
 
-    @FindBy(xpath = ".//button[(@class = 'ytp-play-button ytp-button' and @title='Призупинити (k)')]")
+    @FindBy(xpath = "//button[(@class = 'ytp-play-button ytp-button' and @title='Призупинити (k)')]")
     private WebElement videoPauseButton;
 
     public StreetCodeTextBlockComponent(WebDriver driver, WebElement rootElement) {
@@ -90,17 +91,23 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
 
 
     public boolean isVideoVisible() {
-        waitUntilElementVisible(videoPlayer);
-        scrollToElement(videoPlayer);
+//        waitUntilElementVisible(videoPlayer);
+//        scrollToElement(videoPlayer);
         return videoPlayer.isDisplayed();
     }
 
     public boolean isPlayButtonVisible() {
-        return videoPlayButton.isDisplayed();
+        driver.switchTo().frame(videoPlayer);
+        boolean result = driver.findElement(By.xpath("//button[contains(@class, 'ytp-large-play-button')]")).isDisplayed();
+        driver.switchTo().defaultContent();
+        return result;
     }
 
     public boolean isPauseButtonVisible() {
-        return videoPauseButton.isDisplayed();
+        driver.switchTo().frame(videoPlayer);
+        boolean result = videoPauseButton.isDisplayed();
+        driver.switchTo().defaultContent();
+        return result;
     }
 
     public void clickPlayButton() {
@@ -128,7 +135,5 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
         }
         return links;
     }
-
-
 }
 
