@@ -1,11 +1,13 @@
 package com.historycode.ui.component.adminPanel.modalAdminPanel;
 
 import com.historycode.ui.component.BaseModal;
+import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+@Getter
 public class DeleteItemModal extends BaseModal {
     @FindBy(xpath = "//div[@class='ant-modal-header']//div[@class='ant-modal-title']")
     protected WebElement title;
@@ -16,8 +18,8 @@ public class DeleteItemModal extends BaseModal {
     @FindBy(xpath = "//div[@class='ant-modal-footer']/button[contains(@class, 'ant-btn-default')]")
     protected WebElement cancel;
 
-    @FindBy(xpath = "//div[@class='ant-modal-footer']/button[contains(@class, 'ant-btn-primary')]")
-    protected WebElement ok;
+    @FindBy(xpath = ".//button[contains(@class, 'ant-btn-primary')]")
+    private WebElement ok;
 
     @FindBy(xpath = "//button[@class='ant-modal-close' and @aria-label='Close']")
     protected WebElement closeButton;

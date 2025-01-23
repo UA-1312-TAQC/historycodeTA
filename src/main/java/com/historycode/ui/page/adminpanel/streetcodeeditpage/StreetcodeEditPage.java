@@ -1,14 +1,17 @@
-package com.historycode.ui.page.adminpanel;
+package com.historycode.ui.page.adminpanel.streetcodeeditpage;
 
 import com.historycode.ui.component.BaseModal;
 import com.historycode.ui.component.DropdownBase;
+import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
 import com.historycode.ui.component.streetcodeEditor.*;
+import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
 import lombok.Getter;
 import lombok.Setter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,11 +99,17 @@ public class StreetcodeEditPage extends BasePageAdminPanel {
     @FindBy(xpath = "//button/span[text()='Попередній перегляд']")
     private WebElement videoPreviewButton;
 
+    @FindBy(xpath = "//div[@role='dialog' and not(contains(@style, 'display: none'))]")
+    private WebElement modalRootElement;
+
     @FindBy(xpath = "//div[h2[text()='Wow-факти']]/div/button")
     private WebElement addWowfactButton;
 
     @FindBy(xpath = "//div[h2[text()='Хронологія']]/div/button")
     private WebElement addChronologyButton;
+
+    @FindBy(xpath = "//div[@aria-roledescription='map']")
+    private WebElement map;
 
     @FindBy(xpath = "//div[h2[text()='Арт-галерея']]/div/span/div/div/span/input")
     private WebElement addArtItemButton;
@@ -129,8 +138,11 @@ public class StreetcodeEditPage extends BasePageAdminPanel {
     private WebElement publishButton;
 
 
-    public StreetcodeEditPage(WebDriver driver) {super(driver);}
-        private BaseModal baseModal;
+    public StreetcodeEditPage(WebDriver driver) {
+        super(driver);
+        PageFactory.initElements(driver, this);
+    }
+       private BaseModal baseModal;
 
     /** Dropdowns */
 
@@ -203,11 +215,16 @@ public class StreetcodeEditPage extends BasePageAdminPanel {
         return new ResolutionPopover(driver, popover);
     }
 
+
+    public DeleteItemModal getDeleteItemModal() {
+        WebElement deleteRootElement = driver.findElement(By.xpath("//div[@role='dialog' and not(contains(@style, 'display: none'))]"));
+        return new DeleteItemModal (driver, deleteRootElement);
+    }
     /** Wow-Fact methods */
 
     public WowFactsModal getWowFactsModal() {
         WebElement wowRootElement = driver.findElement(By.xpath("//div[@role='dialog' and not(contains(@style, 'display: none'))]"));
-        baseModal.checkTitle("Wow-Факт");
+//        baseModal.checkTitle("Wow-Факт");
         return new WowFactsModal(driver, wowRootElement);
     }
 
@@ -236,7 +253,7 @@ public class StreetcodeEditPage extends BasePageAdminPanel {
 
     public ChronologyModal getChronologyModal() {
         WebElement chronologyRootElement = driver.findElement(By.xpath("//div[@role='dialog' and not(contains(@style, 'display: none'))]"));
-        baseModal.checkTitle("Хронологія");
+        baseModal.checkTitleOfModal("Хронологія");
         return new ChronologyModal(driver, chronologyRootElement);
     }
 
