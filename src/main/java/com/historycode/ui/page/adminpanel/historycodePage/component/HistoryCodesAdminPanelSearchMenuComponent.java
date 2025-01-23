@@ -3,8 +3,8 @@ package com.historycode.ui.page.adminpanel.historycodePage.component;
 import com.historycode.ui.component.BaseComponent;
 import com.historycode.ui.component.adminPanel.dropDownAdminPanel.DropdownComponent;
 import com.historycode.ui.elements.adminPanel.InputElement;
-import com.historycode.ui.page.adminpanel.StreetcodeEditPage;
 import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
+import com.historycode.ui.page.adminpanel.streetcodeeditpage.StreetcodeEditPage;
 import lombok.Getter;
 import lombok.Setter;
 import org.openqa.selenium.WebDriver;
@@ -20,17 +20,15 @@ public class HistoryCodesAdminPanelSearchMenuComponent extends BaseComponent {
     @Getter
     @Setter
     protected InputElement searchInput;
-    @FindBy(xpath = ".//div[@class='ant-input css-k7429z']")
-    private WebElement searchInputNode;
-
     @Getter
     @Setter
     protected DropdownComponent dropdown;
-    @FindBy(xpath = ".//div[@class='ant-select-selection-search-input']")
-    private WebElement dropdownNode;
-
     @FindBy(xpath = ".//button[contains(@class, 'ant-btn') and span[text()='Новий history-код']]")
     protected WebElement newHistoryCodeButton;
+    @FindBy(xpath = ".//div[@class='ant-input css-k7429z']")
+    private WebElement searchInputNode;
+    @FindBy(xpath = ".//div[@class='ant-select-selection-search-input']")
+    private WebElement dropdownNode;
 
 
     public HistoryCodesAdminPanelSearchMenuComponent(WebDriver driver, WebElement rootElement) {
