@@ -30,7 +30,7 @@ public class EditNewsTest extends TestRunnerWithAdmin {
 
         Random rand = new Random();
         int n = rand.nextInt(50);
-        originalTitle = "Test News " + n;
+        originalTitle = "Тестова новина " + n;
         originalLink = "test-link-" + n;
         originalText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
 
