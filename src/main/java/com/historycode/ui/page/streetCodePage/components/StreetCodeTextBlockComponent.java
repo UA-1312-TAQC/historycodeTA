@@ -2,6 +2,7 @@ package com.historycode.ui.page.streetCodePage.components;
 
 import com.historycode.ui.component.BaseComponent;
 import lombok.Getter;
+import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,34 +14,26 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
+
 public class StreetCodeTextBlockComponent extends BaseComponent {
+    @Getter
     @FindBy(xpath = ".//div[@id='text']//div[@class='text']//p")
     private WebElement mainTextContent;
-
+    @Getter
     @FindBy(xpath = ".//span[contains(@class,'readMore false')]")
     private WebElement readMoreButton;
-
+    @Getter
     @FindBy(xpath = ".//span[contains(@class,'readMore readLess')]")
     private WebElement readLessButton;
-
+    @Getter
     @FindBy(xpath = "//div[@class='additionalText']")
     private WebElement additionalText;
-
+    @Getter
     @FindBy(xpath = "//div[contains(@class,'additionalText')]//a")
     private List<WebElement> linkInAdditionalText;
-
+    @Getter
     @FindBy(xpath = ".//div[@class='text']//p")
     private List<WebElement> paragraphs;
-
-    @FindBy(xpath = ".//iframe[contains(@src,'www.youtube.com')]")
-    private WebElement videoPlayer;
-
-    @FindBy(xpath = "//button[contains(@class, 'ytp-large-play-button')]")
-    private WebElement videoPlayButton;
-
-    @FindBy(xpath = ".//button[(@class = 'ytp-play-button ytp-button' and @title='Призупинити (k)')]")
-    private WebElement videoPauseButton;
 
     public StreetCodeTextBlockComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
@@ -86,31 +79,6 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
         waitUntilElementVisible(paragraphs.getFirst());
         int collapsedCount = getParagraphCount();
         return collapsedCount == initialCount;
-    }
-
-
-    public boolean isVideoVisible() {
-        waitUntilElementVisible(videoPlayer);
-        scrollToElement(videoPlayer);
-        return videoPlayer.isDisplayed();
-    }
-
-    public boolean isPlayButtonVisible() {
-        return videoPlayButton.isDisplayed();
-    }
-
-    public boolean isPauseButtonVisible() {
-        return videoPauseButton.isDisplayed();
-    }
-
-    public void clickPlayButton() {
-        waitUntilElementClickable(videoPlayButton);
-        videoPlayButton.click();
-    }
-
-    public void clickPauseButton() {
-        waitUntilElementClickable(videoPauseButton);
-        clickDynamicElement(videoPauseButton);
     }
 
     public boolean isAdditionalTextDisplayed() {
