@@ -96,7 +96,5 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
         }
         return links;
     }
-
-
 }
 
