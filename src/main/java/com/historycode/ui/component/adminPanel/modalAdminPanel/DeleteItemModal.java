@@ -6,7 +6,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import javax.swing.plaf.TableHeaderUI;
 
 public class DeleteItemModal extends BaseModal {
     @FindBy(xpath = "./div[@class='ant-modal-header']//div[@class='ant-modal-title']")
