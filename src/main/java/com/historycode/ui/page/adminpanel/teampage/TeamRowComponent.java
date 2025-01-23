@@ -3,6 +3,7 @@ package com.historycode.ui.page.adminpanel.teampage;
 import com.historycode.ui.component.BaseComponent;
 import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
 import com.historycode.ui.page.adminpanel.teampage.editModal.EditMemberModal;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -67,6 +68,7 @@ public class TeamRowComponent extends BaseComponent {
         return socialMediaLinks;
     }
 
+    @Step("Clicking delete button next to team member")
     public DeleteItemModal clickDelete() {
         actions.scrollToElement(lastFirstName).perform();
         deleteAction.click();
