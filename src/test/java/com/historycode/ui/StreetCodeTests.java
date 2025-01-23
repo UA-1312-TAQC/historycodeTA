@@ -26,7 +26,7 @@ public class StreetCodeTests extends BaseTestRunner {
     }
 
     @Issue("73")
-    @Test(dataProvider = "urlSetProvider", dataProviderClass = StreetCodeDP.class, priority = 1)
+    @Test(dataProvider = "urlTeaserSetProvider", dataProviderClass = StreetCodeDP.class, priority = 1)
     @Description("Verification of the teaser text Length")
     public void testTeaserTextLength(String addPath) {
 
@@ -57,11 +57,11 @@ public class StreetCodeTests extends BaseTestRunner {
     }
 
     @Issue("79")
-    @Test(dataProvider = "urlProvider", dataProviderClass = StreetCodeDP.class, priority = 1)
+    @Test(priority = 1)
     @Description("Verification that clicking the 'Donate' button displays a modal window with donation options.")
-    public void testDonateButtonClick(String addPath) {
+    public void testDonateButtonClick() {
 
-        navigateToStreetCodePage(addPath);
+        navigateToStreetCodePage("/sichovi-striltsi");
 
         DonateModal donateModal = streetCodePage
                 .getQuickDonateButton()
@@ -73,6 +73,48 @@ public class StreetCodeTests extends BaseTestRunner {
         softAssert.assertTrue(donateModal.isAmountInputDisplayed(), "The manual amount input is not displayed.");
         softAssert.assertTrue(donateModal.areAmountButtonsDisplayed(), "The amount buttons are not displayed.");
         softAssert.assertTrue(donateModal.isDonateButtonDisplayed(), "The 'Donate' button is not displayed.");
+
+        softAssert.assertAll();
+    }
+
+    @Issue("87")
+    @Test(dataProvider = "urlWowFactSetProvider", dataProviderClass = StreetCodeDP.class, priority = 1)
+    @Description("Verification that if 3 or more facts are displayed, they scroll in a loop.")
+    public void testWowFactsScroll(String addPath){
+
+        navigateToStreetCodePage(addPath);
+
+        SoftAssert softAssert = new SoftAssert();
+
+        int countFactCard = streetCodePage
+                .scrollToInterestingFacts()
+                .getFacts()
+                .getCarousel()
+                .getCardCount();
+
+        softAssert.assertTrue(countFactCard >= 3, "The carousel contains less than 3 cards.");
+
+        String currentCardTitle = streetCodePage
+                .getFacts()
+                .getCarousel()
+                .getCurrentNodeTitle();
+
+        int clicksNeeded = (countFactCard == 3) ? countFactCard : countFactCard - 2;
+
+        for (int i = 0; i < clicksNeeded; i++) {
+            streetCodePage
+                    .getFacts()
+                    .getCarousel()
+                    .clickNextButton();
+        }
+
+        String afterScrollCurrentCardTitle = streetCodePage
+                .getFacts()
+                .getCarousel()
+                .getCurrentNodeTitle();
+
+        softAssert.assertEquals(currentCardTitle, afterScrollCurrentCardTitle,
+                "The carousel is not scrolling in a loop.");
 
         softAssert.assertAll();
     }

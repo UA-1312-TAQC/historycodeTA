@@ -163,4 +163,9 @@ public class StreetCodePage extends BasePage {
     public void toggleProgressBar() {
         verticalProgress.toggleProgressBar();
     }
+
+    public StreetCodePage scrollToInterestingFacts() {
+        scrollToElement(factsNode);
+        return this;
+    }
 }
