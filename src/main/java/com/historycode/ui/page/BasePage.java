@@ -27,6 +27,9 @@ public abstract class BasePage extends Base {
     private WebElement footerNode;
     @FindBy(xpath = "//div[contains(@class, 'rightPartContainer')]//div[contains(@class, 'drawerContainer')]//div")
     private WebElement burgerMenu;
+    @Getter
+    @FindBy(xpath = "//div[@class='headerDrawerContainer']//a[@href='/catalog']")
+    private WebElement historyCodeBurgerButton;
 
     public BasePage(WebDriver driver) {
         super(driver);

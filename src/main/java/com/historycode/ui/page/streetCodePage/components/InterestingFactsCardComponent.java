@@ -1,6 +1,7 @@
 package com.historycode.ui.page.streetCodePage.components;
 
 import com.historycode.ui.component.BaseComponent;
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -9,13 +10,18 @@ import org.openqa.selenium.support.FindBy;
 public class InterestingFactsCardComponent extends BaseComponent {
     @FindBy(xpath = ".//div[@class='interestingFactSlide']//img")
     private WebElement image;
-
+    
+    @Getter
+    @FindBy(xpath = ".//div[@class='slick-slide slick-active slick-center slick-current']//img")
+    private WebElement currentImage;
+    
     @FindBy(xpath = ".//p[@class='cardTextContainerTitle']")
     private WebElement title;
 
     @FindBy(xpath = ".//p[@class='cardTextContainerText']")
     private WebElement description;
 
+    @Getter
     @FindBy(xpath = ".//div[@class='description-popup ']/p")
     private WebElement hoverDescription;
 
@@ -41,7 +47,7 @@ public class InterestingFactsCardComponent extends BaseComponent {
 
     public void hoverOverImage() {
         Actions actions = new Actions(driver);
-        actions.moveToElement(image).perform();
+        actions.moveToElement(currentImage).perform();
     }
 
     public String getHoverText() {
