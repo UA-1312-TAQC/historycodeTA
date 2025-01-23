@@ -43,12 +43,11 @@ public abstract class BasePage extends Base {
     }
 
     public boolean isBurgerMenuVisible() {
-        sleep(5000);
         return burgerMenu.isDisplayed();
     }
 
     public BurgerMenuComponent openBurgerMenu() {
-        sleep(5000);
+        waitUntilElementClickable(burgerMenu);
         burgerMenu.click();
         return this.burgerMenuComponent;
     }
