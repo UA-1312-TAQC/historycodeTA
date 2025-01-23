@@ -2,8 +2,10 @@ package com.historycode.ui.elements.adminPanel;
 
 import com.historycode.ui.component.BaseComponent;
 import lombok.Getter;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 
 public class InputElement extends BaseComponent {
@@ -24,7 +26,8 @@ public class InputElement extends BaseComponent {
     }
 
     public void setInputField(String value) {
-        inputField.clear();
+        inputField.click();
+        inputField.sendKeys(Keys.chord(Keys.CONTROL,"a", Keys.DELETE));
         inputField.sendKeys(value);
     }
 

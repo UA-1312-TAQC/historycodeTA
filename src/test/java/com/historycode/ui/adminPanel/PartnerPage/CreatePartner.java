@@ -29,7 +29,7 @@ public class CreatePartner extends TestRunnerWithAdmin  {
                 .clickAddNewPartnersButton();
 
         createModal.name.setInputField(testName);
-        createModal.description.setTextArea(testDescription);
+        createModal.description.setInputField(testDescription);
         createModal.logo.uploadLogo(testLogo);
         createModal.clickSaveButton();
         createModal.clickCloseButton();
@@ -56,7 +56,7 @@ public class CreatePartner extends TestRunnerWithAdmin  {
 
         createModal.keyPartner.check();
         createModal.name.setInputField(testName);
-        createModal.description.setTextArea(testDescription);
+        createModal.description.setInputField(testDescription);
         createModal.logo.uploadLogo(testLogo);
         createModal.clickSaveButton();
         createModal.clickCloseButton();

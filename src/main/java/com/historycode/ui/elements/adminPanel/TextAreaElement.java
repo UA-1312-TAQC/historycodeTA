@@ -1,44 +1,27 @@
 package com.historycode.ui.elements.adminPanel;
 
-
-import com.historycode.ui.component.BaseComponent;
-import lombok.Getter;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class TextAreaElement extends BaseComponent {
+public class TextAreaElement extends BaseInputElement{
 
-    @Getter
-    @FindBy(xpath = ".//div[contains(@class, 'ant-form-item-label')]/label")
-    private WebElement label;
-
-    @Getter
-    @FindBy(xpath = ".//textarea[@id='description']")
-    private WebElement textAreaField;
-
-    @Getter
-    @FindBy(xpath = ".//span[@class='ant-input-suffix']/span")
-    private WebElement charCounter;
+    @FindBy(xpath=".//textarea")
+    protected WebElement inputField;
 
     public TextAreaElement(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
 
-    public void setTextArea(String value) {
-        waitUntilElementVisible(textAreaField);
-        textAreaField.clear();
-        textAreaField.sendKeys(value);
+    @Override
+    public void setInputField(String value) {
+        inputField.click();
+        inputField.sendKeys(Keys.chord(Keys.CONTROL,"a", Keys.DELETE));
+        inputField.sendKeys(value);
     }
-
-    public String getTextAreaValue() {
-        return textAreaField.getDomAttribute("value");
+    @Override
+    public String getInputValue() {
+        return inputField.getText().trim();
     }
-
-    public String getCharCount() {
-        return charCounter.getText();
-    }
-
-    public String getLabel () { return label.getText(); }
 }
