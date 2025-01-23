@@ -1,41 +1,54 @@
 package com.historycode.ui.page.adminpanel.editorpage;
 
+import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
 import com.historycode.ui.page.adminpanel.editorpage.components.grids.TagsGridComponent;
-import com.historycode.ui.page.adminpanel.editorpage.components.modals.ContextsModalComponent;
-import com.historycode.ui.page.adminpanel.editorpage.components.modals.ModalComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.TagsModalComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.TagsRowComponent;
-import com.historycode.ui.page.adminpanel.editorpage.elements.addButtonElement;
-import org.openqa.selenium.By;
+import com.historycode.ui.page.adminpanel.editorpage.elements.AddButtonElement;
+import io.qameta.allure.Step;
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
-public class TagsPage extends BasePage {
-    private final addButtonElement addTagButton = new addButtonElement(driver, getRootAddButton());
-    private final TagsGridComponent grid = new TagsGridComponent(driver, getRootGrid());
+public class TagsPage extends BaseEditorPage {
+
+    @FindBy(xpath = "//div[contains(@class, 'ant-table-wrapper')]")
+    private WebElement rootGrid;
+
+    private AddButtonElement addTagButton;
+    @Getter
+    private TagsGridComponent grid;
 
     public TagsPage(WebDriver driver) {
         super(driver);
+        addTagButton = new AddButtonElement(driver, getRootAddButton());
+        grid = new TagsGridComponent(driver, rootGrid);
     }
 
-    public TagsModalComponent addTag() throws InterruptedException {
+    @Step("Check Tags Grid Is Displayed Correctly.")
+    public boolean isGridDisplayed() {
+        return grid.isDisplayed();
+    }
+
+    public TagsModalComponent clickAddTag() {
         addTagButton.clickButton();
-        Thread.sleep(1000);
+        wait.until(driver -> getDisplayedModalRoot() != null);
         return new TagsModalComponent(driver, getDisplayedModalRoot());
     }
 
-    public int getTableHeadersCount(){
+    public int getTableHeadersCount() {
         return grid.getHeaderItems().size();
     }
 
+    @Step("Get Table Headers.")
     public List<String> getTableHeadersString() {
         return grid.getHeaderItemsString();
     }
 
-    public List<WebElement> getTableHeaders(){
+    public List<WebElement> getTableHeaders() {
         return grid.getHeaderItems();
     }
 
@@ -43,7 +56,7 @@ public class TagsPage extends BasePage {
         return grid.getRows().size();
     }
 
-    public List<String> getTableRowsTitles(){
+    public List<String> getTableRowsTitles() {
         return grid.getRowsTitles();
     }
 
@@ -63,18 +76,60 @@ public class TagsPage extends BasePage {
         return grid.getRowByTitle(title);
     }
 
-    public String getAddButtonText(){
+    public String getAddButtonTitleString() {
         return addTagButton.getButtonText();
     }
 
-    public TagsModalComponent editTableRow(TagsRowComponent row) throws InterruptedException {
+    public TagsModalComponent editTableRow(TagsRowComponent row) {
         grid.editRow(row);
-        Thread.sleep(500);
+        wait.until(driver -> getDisplayedModalRoot() != null);
         return new TagsModalComponent(driver, getDisplayedModalRoot());
     }
 
-    public void deleteTableRow(TagsRowComponent row) {
-        //TODO Implement return of modal
+    public DeleteItemModal deleteTableRow(TagsRowComponent row) {
         grid.deleteRow(row);
+        wait.until(driver -> getDisplayedModalRoot() != null);
+        return new DeleteItemModal(driver, getDisplayedModalRoot());
+    }
+
+    public WebElement getTableRowEditAction(TagsRowComponent row) {
+        return grid.getRowEditAction(row);
+    }
+
+    public WebElement getTableRowDeleteAction(TagsRowComponent row) {
+        return grid.getRowDeleteAction(row);
+    }
+
+    public WebElement getTableRowTitle(TagsRowComponent row) {
+        return grid.getRowTitle(row);
+    }
+
+    public String getTableRowTitleString(TagsRowComponent row) {
+        return grid.getRowTitleString(row);
+    }
+
+    public TagsPage clickNextPage() {
+        grid.clickNextPage();
+        return new TagsPage(driver);
+    }
+
+    public TagsPage clickPrevPage() {
+        grid.clickPrevPage();
+        return new TagsPage(driver);
+    }
+
+    public TagsPage clickPrevFivePages() {
+        grid.clickPrevFivePages();
+        return new TagsPage(driver);
+    }
+
+    public TagsPage clickNextFivePages() {
+        grid.clickNextFivePages();
+        return new TagsPage(driver);
+    }
+
+    public TagsPage clickPaginationItem(int index) {
+        grid.clickPaginationItem(index);
+        return new TagsPage(driver);
     }
 }

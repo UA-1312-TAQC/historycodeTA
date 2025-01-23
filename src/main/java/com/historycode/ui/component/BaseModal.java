@@ -5,15 +5,18 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-@Getter
+
 public abstract class BaseModal extends BaseComponent{
 
+    @Getter
     @FindBy(xpath = ".//button[@class='ant-modal-close']")
     private WebElement сloseButton;
 
+    @Getter
     @FindBy(xpath = ".//button[@class='ant-btn css-k7429z ant-btn-default streetcode-custom-button']")
     private WebElement saveButton;
 
+    @Getter
     @FindBy(xpath = ".//div[@class='center']/h2")
     private WebElement modTitle;
 

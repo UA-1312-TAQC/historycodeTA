@@ -23,7 +23,7 @@ public abstract class Base {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         this.threadJs = (JavascriptExecutor) driver;
         this.actions = new Actions(driver);
-        PageFactory.initElements(driver, this);
+        PageFactory.initElements(this.driver, this);
     }
 
     @Step("Scroll to the element")
@@ -45,12 +45,18 @@ public abstract class Base {
         sleep(1000);
     }
 
-    protected boolean isContentOverflowing(WebElement element) {
+    protected boolean isContentTruncatedOrOverflow(WebElement element) {
         String script = "var element = arguments[0];" +
-                "return element.scrollWidth > element.clientWidth || " +
-                "element.scrollHeight > element.clientHeight;";
+                "var computedStyle = window.getComputedStyle(element);" +
+                "var isOverflowing = element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;" +
+                "var isTextOverflowing = computedStyle.overflow === 'hidden' || computedStyle.textOverflow === 'ellipsis' || computedStyle.whiteSpace === 'nowrap';" +
+                "return isOverflowing && !isTextOverflowing;";
         Boolean isOverflowing = (Boolean) threadJs.executeScript(script, element);
         return isOverflowing != null && isOverflowing;
+    }
+
+    protected void clickDynamicElement(WebElement element) {
+        threadJs.executeScript("arguments[0].click();", element);
     }
 
     public void sleep(long millisSeconds) {
@@ -65,7 +71,13 @@ public abstract class Base {
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
+    public void waitUntilElementInvisible(WebElement element) {
+        wait.until(ExpectedConditions.invisibilityOf(element));
+    }
+
     public void waitUntilElementClickable(WebElement element) {
         wait.until(ExpectedConditions.elementToBeClickable(element));
     }
+
+
 }

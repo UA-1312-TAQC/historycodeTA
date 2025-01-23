@@ -33,22 +33,82 @@ public class PaginationAdminPanelComponent extends BaseComponent {
     }
 
     public void clickNextPage() {
+        if (!hasNextPage()) {
+            throw new IllegalStateException("Next page is not available");
+        }
+        scrollToElement(nextPage);
         nextPage.click();
     }
 
     public void clickPrevPage() {
+        if (!hasPrevPage()) {
+            throw new IllegalStateException("Previous page is not available");
+        }
+        scrollToElement(prevPage);
         prevPage.click();
     }
 
     public void clickPrevFivePages() {
+        if (!hasPrevFivePages()) {
+            throw new IllegalStateException("Previous pages are not available");
+        }
+        scrollToElement(prevFivePages);
         prevFivePages.click();
     }
 
     public void clickNextFivePages() {
+        if (!hasNextFivePages()) {
+            throw new IllegalStateException("Next pages are not available");
+        }
+        scrollToElement(nextFivePages);
         nextFivePages.click();
     }
 
     public void clickPaginationItem(int index) {
+        if (!isValidPaginationItem(index)) {
+            throw new IllegalArgumentException("Pagination item with index " + index + " is not available or invalid");
+        }
+        scrollToElement(prevPage);
         paginationItems.get(index).click();
+    }
+
+
+    private boolean isPaginationButtonEnabled(WebElement button) {
+        try {
+            return button.isDisplayed() && button.isEnabled();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean hasPrevPage() {
+        return isPaginationButtonEnabled(prevPage);
+    }
+
+    public boolean hasNextPage() {
+        return isPaginationButtonEnabled(nextPage);
+    }
+
+    public boolean hasPrevFivePages() {
+        return isPaginationButtonEnabled(prevFivePages);
+    }
+
+    public boolean hasNextFivePages() {
+        return isPaginationButtonEnabled(nextFivePages);
+    }
+
+    private boolean isValidPaginationItem(int index) {
+        if (index < 0 || index >= paginationItems.size()) {
+            return false;
+        }
+        WebElement item = paginationItems.get(index);
+        return item.isDisplayed() && item.isEnabled();
+    }
+
+
+    public void clickLastPage(){
+        scrollToElement(prevPage);
+        waitUntilElementClickable(paginationItems.getLast());
+        paginationItems.getLast().click();
     }
 }

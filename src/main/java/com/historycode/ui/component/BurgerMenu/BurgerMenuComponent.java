@@ -1,6 +1,6 @@
 package com.historycode.ui.component.BurgerMenu;
 
-import com.historycode.ui.page.BasePage;
+import com.historycode.ui.component.BaseComponent;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,7 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
 
-public class BurgerMenuComponent extends BasePage {
+public class BurgerMenuComponent extends BaseComponent {
 
     @FindBy(xpath = "//div[contains(@class, 'drawerContainer')]")
     private WebElement containerMenu;

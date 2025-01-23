@@ -91,7 +91,7 @@ public class WowfactsTest extends TestRunnerWithAdmin {
         /* перевірка видалення */
         streetcodeEditPage.clickWowfactDeleteButton(1);
         streetcodeEditPage.waitUntilElementVisible(streetcodeEditPage.getModalRootElement());
-        streetcodeEditPage.getDeleteItemModal().getOk().click();
+        streetcodeEditPage.getDeleteItemModal().clickOkButton();
         streetcodeEditPage.isElementInvisible(streetcodeEditPage.getModalRootElement());
         List<String> new2expectedWowFacts = Arrays.asList(
         ); // список пустий, бо елемент видалено

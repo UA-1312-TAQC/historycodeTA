@@ -12,7 +12,7 @@ public class PersonasCarousel extends BaseCarousel {
     @FindBy(xpath = ".//div[@class='slider-item-container']")
     private List<WebElement> personCardNodes;
 
-    private List<RelatedPersonasCardComponent> personCards;
+    private final List<RelatedPersonasCardComponent> personCards;
 
     public PersonasCarousel(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);

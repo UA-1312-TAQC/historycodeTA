@@ -12,7 +12,7 @@ public class PartnersCarousel extends BaseCarousel {
     @FindBy(xpath = ".//div[@class='partnerItem']")
     private List<WebElement> partnerLogoNodes;
 
-    private List<PartnerLogoComponent> partnerLogos;
+    private final List<PartnerLogoComponent> partnerLogos;
     private boolean isAutoScrollPaused;
 
     public PartnersCarousel(WebDriver driver, WebElement rootElement) {

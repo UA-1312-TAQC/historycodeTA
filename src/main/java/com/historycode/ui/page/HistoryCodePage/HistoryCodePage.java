@@ -16,7 +16,7 @@ public class HistoryCodePage extends BaseComponent {
     private WebElement streetsCodesCaptionNode;
 
     @Getter
-    private CatalogComponent historyCodesCatalogComponent;
+    private final CatalogComponent historyCodesCatalogComponent;
 
 
     public HistoryCodePage(WebDriver driver) {

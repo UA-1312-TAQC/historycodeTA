@@ -1,10 +1,12 @@
 package com.historycode.ui.elements;
 
+//import com.historycode.ui.page.adminpanel.editorpage.BaseEditorPage;
+import com.historycode.ui.page.streetcodecatalogpage.StreetCodeCatalogPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class BreadcrumbsElement extends BaseElement{
+public class BreadcrumbsElement extends BaseElement {
     @FindBy(xpath = ".//nav[@class='ant-breadcrumb breadcrumbContainer css-k7429z']")
     private WebElement breadcrumbsContainer;
 
@@ -22,8 +24,10 @@ public class BreadcrumbsElement extends BaseElement{
         return currentPage.getText();
     }
 
-    public void clickCatalog() {
+    public StreetCodeCatalogPage clickCatalog() {
+        //BaseEditorPage.moveToElement(driver, catalogLink);
         catalogLink.click();
+        return new StreetCodeCatalogPage(driver);
     }
 
     public String getCatalogTitle() {

@@ -1,7 +1,8 @@
 package com.historycode.ui.page.homePage;
 
 import com.historycode.ui.component.BaseComponent;
-import org.openqa.selenium.*;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;

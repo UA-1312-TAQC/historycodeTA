@@ -47,7 +47,7 @@ reviews:
     - path: /**/src/test/**/*.java
       instructions: >-
         test_naming: descriptive; test_size: small_specific; fixed_data: true;
-        junit5_features: true; assert_use: assertThat; assert_specificity: true;
+        testng: true; assert_use: assertThat; assert_specificity: true;
         archunit_use: enforce_package_rules; db_query_count_tests:
         track_performance; util_service_factory_pattern: true; avoid_db_access:
         true; mock_strategy: static_mocks; context_restart_minimize: true\n
@@ -56,7 +56,6 @@ reviews:
         - Test coverage of edge cases
         - Clear test naming and documentation
         - Be more lenient with code style and minor optimisations
-        - Check for test method naming convention featureTestScenario (https://github.com/ita-social-projects/GreenCity/wiki/Naming-Conventions)
     - path: /**/*.js
       instructions: |
         Review the JavaScript/JQuery code for best practices and potential bugs.
@@ -115,7 +114,7 @@ reviews:
     enabled: true
     auto_incremental_review: true
     drafts: false
-    base_branches: [ "dev","prod","prod21" ]
+    base_branches: [ "develop"]
 chat:
   auto_reply: true
 knowledge_base:

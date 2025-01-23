@@ -25,13 +25,13 @@
 //                .collect(Collectors.toList());
 //    }
 //
-////    public void scrollToNext() {
-////
-////    }
-////
-////    public void scrollToPrevious() {
-////
-////    }
+/// /    public void scrollToNext() {
+/// /
+/// /    }
+/// /
+/// /    public void scrollToPrevious() {
+/// /
+/// /    }
 //
 //    public List<ChronologyCardComponent> getVisibleCards() {
 //        return cards.stream()
