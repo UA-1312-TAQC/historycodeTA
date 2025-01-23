@@ -50,15 +50,13 @@ public class CreatePartnersModal extends BaseCreateModal {
         this.logo = new LogoElement(driver, logoContainer);
     }
 
-    @Override
     public void clickSaveButton() {
         sleep(1000);
-        super.clickSaveButton();
+        saveButton.click();
     }
 
-    @Override
     public void clickCloseButton() {
         waitUntilElementVisible(super.tooltipConfirmation);
-        super.clickCloseButton();
+        closeButton.click();
     }
 }

@@ -31,5 +31,6 @@ public class TestCase128 extends TestRunnerWithAdmin  {
         createModal.clickSaveButton();
         softAssert.assertTrue(createModal.isErrorConfirmationDisplayed());
         createModal.clickCloseButton();
+        softAssert.assertAll();
     }
 }

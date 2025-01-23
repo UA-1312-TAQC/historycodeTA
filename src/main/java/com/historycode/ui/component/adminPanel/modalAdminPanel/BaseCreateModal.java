@@ -62,21 +62,4 @@ public abstract class BaseCreateModal extends BaseModal {
         return tooltip.getText();
     }
 
-    public void clickCloseButton() {
-        if (isCloseButtonEnabled()) {
-            waitUntilElementClickable(closeButton);
-            closeButton.click();
-        } else {
-            throw new IllegalStateException("The close button is disabled and cannot be clicked.");
-        }
-    }
-
-    public void clickSaveButton() {
-        if (isSaveButtonEnabled()) {
-            waitUntilElementClickable(saveButton);
-            saveButton.click();
-        } else {
-            throw new IllegalStateException("The save button is disabled and cannot be clicked.");
-        }
-    }
 }
