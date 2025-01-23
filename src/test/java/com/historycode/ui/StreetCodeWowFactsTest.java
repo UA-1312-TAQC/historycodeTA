@@ -2,7 +2,7 @@ package com.historycode.ui;
 
 import com.historycode.ui.page.homePage.HomePage;
 import com.historycode.ui.page.streetCodePage.StreetCodePage;
-import com.historycode.ui.page.streetcodespage.StreetCodesPage;
+import com.historycode.ui.page.streetcodecatalogpage.StreetCodeCatalogPage;
 import com.historycode.ui.testrunners.BaseTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -22,8 +22,7 @@ public class StreetCodeWowFactsTest extends BaseTestRunner {
     private SoftAssert softAssert;
     private Actions actions;
     private WebDriverWait wait;
-    private StreetCodesPage streetCodesPage;
-
+    private StreetCodeCatalogPage streetCodeCatalogPage;
 
 
     @BeforeMethod
@@ -31,7 +30,7 @@ public class StreetCodeWowFactsTest extends BaseTestRunner {
         softAssert = new SoftAssert();
         actions = new Actions(driver);
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        streetCodesPage = new StreetCodesPage(driver);
+        streetCodeCatalogPage = new StreetCodeCatalogPage(driver);
 
         driver.get(testValueProvider.getBaseUIUrl());
 
@@ -39,8 +38,8 @@ public class StreetCodeWowFactsTest extends BaseTestRunner {
         homePage.openBurgerMenu();
         homePage.getHistoryCodeBurgerButton().click();
 
-        streetCodesPage.waitUntilElementVisible(streetCodesPage.getContainerRootNode());
-        streetCodesPage.clickCatalogItemByName(0);
+        streetCodeCatalogPage.waitUntilElementVisible(streetCodeCatalogPage.getContainerRootNode());
+        streetCodeCatalogPage.clickCatalogItemByName(0);
 
         streetPage = new StreetCodePage(driver);
 
@@ -56,35 +55,26 @@ public class StreetCodeWowFactsTest extends BaseTestRunner {
         streetPage.waitUntilElementVisible(streetPage.getMainCard().getName());
 
 
-        actions.moveToElement(streetPage.getFacts()
-                .getCarouselRoot())
-                .perform();
+        actions.moveToElement(streetPage.getFacts().getCarouselRoot()).perform();
 
 
-        WebElement hintElement = streetPage.getFactsCard()
-                .getHoverDescription();
+        WebElement hintElement = streetPage.getFactsCard().getHoverDescription();
 
 
         streetPage.waitUntilElementVisible(hintElement);
         softAssert.assertTrue(hintElement.isDisplayed(), "Підказка не з'явилася");
 
-        actions.moveToElement(streetPage.getFacts()
-                .getTitle())
-                .perform();
+        actions.moveToElement(streetPage.getFacts().getTitle()).perform();
 
         wait.until(ExpectedConditions.invisibilityOf(hintElement));
         softAssert.assertFalse(hintElement.isDisplayed(), "Підказка не зникла через 4 секунди.");
 
 
-        actions.moveToElement(streetPage.getFactsCard()
-                .getCurrentImage())
-                .perform();
+        actions.moveToElement(streetPage.getFactsCard().getCurrentImage()).perform();
 
         softAssert.assertTrue(hintElement.isDisplayed(), "Підказка не з'явилася після наведення.");
 
-        actions.moveToElement(streetPage.getFacts()
-                .getTitle())
-                .perform();
+        actions.moveToElement(streetPage.getFacts().getTitle()).perform();
 
         softAssert.assertTrue(!hintElement.isDisplayed(), "Підказка не зникла.");
         softAssert.assertAll();
