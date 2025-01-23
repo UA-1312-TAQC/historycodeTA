@@ -40,32 +40,3 @@ public class ContextsModalComponent extends ModalComponent {
         return new ContextsModalComponent(driver, rootElement);
     }
 }
-
-//public class ContextsModalComponent extends BaseEditModal {
-//
-//    @FindBy(xpath = "//label[@for = 'context']/../..")
-//    private WebElement contextContainer;
-//
-//    private InputElement contextInput;
-//
-//    public ContextsModalComponent(WebDriver driver, WebElement rootElement) {
-//        super(driver, rootElement);
-//        this.contextInput = new InputElement(driver, contextContainer);
-//    }
-//
-//    public ContextsModalComponent inputNewContext(String name) {
-//        contextInput.setInputField(name);
-//        return this;
-//    }
-//
-//    public ContextsModalComponent saveNewContext() {
-//        clickSaveButton();
-//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-//        wait.until(ExpectedConditions.invisibilityOf(rootElement));
-//        return this;
-//    }
-//
-//    public void closeModal() {
-//        clickCloseButton();
-//    }
-//}
