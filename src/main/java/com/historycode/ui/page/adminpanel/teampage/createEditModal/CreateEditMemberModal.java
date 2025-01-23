@@ -1,13 +1,13 @@
-package com.historycode.ui.page.adminpanel.teampage.editModal;
+package com.historycode.ui.page.adminpanel.teampage.createEditModal;
 
 import com.historycode.ui.component.adminPanel.dropDownAdminPanel.DropdownComponent;
 import com.historycode.ui.component.adminPanel.modalAdminPanel.BaseEditModal;
 import com.historycode.ui.elements.adminPanel.CheckboxElement;
 import com.historycode.ui.elements.adminPanel.InputElement;
 import com.historycode.ui.page.adminpanel.teampage.TeamPageAdminPanel;
-import com.historycode.ui.page.adminpanel.teampage.editModal.photoElement.PhotoModalComponent;
-import com.historycode.ui.page.adminpanel.teampage.editModal.photoElement.PhotoWindowComponent;
-import com.historycode.ui.page.adminpanel.teampage.editModal.socialMediaElement.SocialMediaExistedComponent;
+import com.historycode.ui.page.adminpanel.teampage.createEditModal.photoElement.PhotoModalComponent;
+import com.historycode.ui.page.adminpanel.teampage.createEditModal.photoElement.PhotoWindowComponent;
+import com.historycode.ui.page.adminpanel.teampage.createEditModal.socialMediaElement.SocialMediaExistedComponent;
 import com.historycode.ui.utils.ImageLoader;
 import io.qameta.allure.Step;
 import lombok.Getter;
@@ -24,7 +24,7 @@ import java.util.List;
 
 
 @Getter
-public class EditMemberModal extends BaseEditModal {
+public class CreateEditMemberModal extends BaseEditModal {
 
     @FindBy(xpath = "//label[contains(@class, 'ant-checkbox-wrapper ant-checkbox-wrapper-checked ant-checkbox-wrapper-in-form-item css-k7429z')]/../..")
     protected WebElement keyMemberCheckboxRoot;
@@ -75,7 +75,7 @@ public class EditMemberModal extends BaseEditModal {
     protected PhotoModalComponent photoModalComponent;
     protected PhotoWindowComponent photoWindowComponent;
 
-    public EditMemberModal(WebDriver driver, WebElement rootElement) {
+    public CreateEditMemberModal(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
 
         this.keyMemberCheckbox = new CheckboxElement(driver, keyMemberCheckboxRoot);
@@ -89,12 +89,13 @@ public class EditMemberModal extends BaseEditModal {
         this.photoWindowComponent = new PhotoWindowComponent(driver, rootElement);
     }
 
-    public void setKeyMemberStatus(boolean isKeyMember) {
+    public CreateEditMemberModal setKeyMemberStatus(boolean isKeyMember) {
         if (isKeyMember) {
             keyMemberCheckbox.check();
         } else {
             keyMemberCheckbox.uncheck();
         }
+        return this;
     }
 
     public boolean isKeyMemberChecked() {
@@ -106,7 +107,7 @@ public class EditMemberModal extends BaseEditModal {
     }
 
     @Step("Enter name {name} into Name input field")
-    public EditMemberModal setName(String name) {
+    public CreateEditMemberModal setName(String name) {
         nameInput.setInputField(name);
         return this;
     }
@@ -152,30 +153,27 @@ public class EditMemberModal extends BaseEditModal {
     }
 
     @Step("Loading image {imageName} as a team member photo")
-    public EditMemberModal loadPhoto(String imageName){
+    public CreateEditMemberModal loadPhoto(String imageName){
         ImageLoader.loadImageUsingRelativePath(imageName, photoInputField);
         return this;
     }
-    //TODO Do I need to check uploadedPhoto.isDisplayed(), too?
+
     public boolean isPhotoUploaded() {
         return !photoWindowComponent.isPlaceholderClickable();
     }
 
 
     @Step("Choose social media {platform} from the social media dropdown")
-    public EditMemberModal addSocialMedia(String platform) {
+    public CreateEditMemberModal addSocialMedia(String platform) {
         openSocialMediaDropdown();
         socialMediaDropdown.clickOptionByText(platform);
-        //selectDropdownOption(socialMediaDropdown, platform);
-        //TODO Do we really need to click this button here? We need to click on it if we want to add more than 1 social media
-        //addSocialMediaButton.click();
         return this;
     }
 
     @Step("Add social media link {link}")
-    public EditMemberModal addSocialMediaLink(String link) {
+    public CreateEditMemberModal addSocialMediaLink(String link) {
         socialMediaInput.setInputField(link);
-        //TODO Do we really need to click this button here? We need to click on it if we want to add more than 1 social media
+        addSocialMediaButton.click();
         return this;
     }
 
@@ -211,7 +209,7 @@ public class EditMemberModal extends BaseEditModal {
     }
 
     @Step("Click the 'Зберегти' button")
-    public EditMemberModal saveEditedMember() {
+    public CreateEditMemberModal saveEditedMember() {
         clickSaveButton();
         return this;
     }
@@ -225,7 +223,6 @@ public class EditMemberModal extends BaseEditModal {
         return new TeamPageAdminPanel(driver);
     }
 
-
     public boolean isTooltipVisibleOnHoverCloseButton() {
         hoverOverCloseButton();
         return isTooltipVisible();
@@ -235,8 +232,9 @@ public class EditMemberModal extends BaseEditModal {
         return getTooltipText();
     }
 
-
     public void openSocialMediaDropdown(){
         socialMediaDropdown.openDropdown();
     }
+
+
 }

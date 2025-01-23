@@ -2,7 +2,7 @@ package com.historycode.ui.page.adminpanel.teampage;
 
 import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
 import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
-import com.historycode.ui.page.adminpanel.teampage.editModal.EditMemberModal;
+import com.historycode.ui.page.adminpanel.teampage.createEditModal.CreateEditMemberModal;
 import io.qameta.allure.Step;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
@@ -32,13 +32,13 @@ public class TeamPageAdminPanel extends BasePageAdminPanel {
     }
 
     @Step("Click the 'Створити нового члена команди' button")
-    public EditMemberModal clickAddNewMemberButton() {
+    public CreateEditMemberModal clickAddNewMemberButton() {
         addNewMemberButton.click();
         waitUntilElementVisible(createEditModalNode);
-        return new EditMemberModal(driver, createEditModalNode);
+        return new CreateEditMemberModal(driver, createEditModalNode);
     }
 
-    public EditMemberModal editMemberByIndex(int index) {
+    public CreateEditMemberModal editMemberByIndex(int index) {
         if (index < 0 || index >= teamPageGridComponent.getRowsCount()){
             throw new IllegalArgumentException("Member with index" + index + " is not available or invalid");
         }
