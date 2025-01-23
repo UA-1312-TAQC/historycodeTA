@@ -8,7 +8,6 @@ import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.Objects;
 
@@ -85,16 +84,11 @@ public abstract class BasePage extends Base {
         return ((Number) Objects.requireNonNull(threadJs.executeScript("return document.body.scrollHeight;"))).intValue();
     }
 
-
     private boolean isLoaderPresent() {
         try {
             return loaderIcon.isDisplayed();
         } catch (Exception e) {
             return false;
         }
-    }
-
-    public void waitUntilElementInvisible(WebElement element) {
-        wait.until(ExpectedConditions.invisibilityOf(element));
     }
 }

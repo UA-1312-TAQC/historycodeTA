@@ -51,5 +51,4 @@ public class InterestingFactsCardComponent extends BaseComponent {
     public boolean isDisplayed() {
         return rootElement.isDisplayed();
     }
-
 }

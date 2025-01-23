@@ -65,16 +65,6 @@ public class StreetCodePage extends BasePage {
         super(driver);
     }
 
-    public StreetCodePage setMainCard() {
-        this.mainCard = new MainCardComponent(driver, mainCardNode);
-        return this;
-    }
-
-    public StreetCodePage setQuickDonateButton() {
-        this.quickDonateButton = new QuickDonateButtonElement(driver, quickDonateButtonNode);
-        return this;
-    }
-
     public BreadcrumbsElement getBreadcrumbs() {
         if (breadcrumbs == null) {
             breadcrumbs = new BreadcrumbsElement(driver);
@@ -172,5 +162,10 @@ public class StreetCodePage extends BasePage {
 
     public void toggleProgressBar() {
         verticalProgress.toggleProgressBar();
+    }
+
+    public StreetCodePage scrollToInterestingFacts() {
+        scrollToElement(factsNode);
+        return this;
     }
 }
