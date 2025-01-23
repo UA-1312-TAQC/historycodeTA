@@ -14,7 +14,7 @@ public class StreetCodeButtonsTest extends BaseTestRunner {
     @BeforeMethod
     public void goToStreetCode() {
         new HomePage(driver).openBurgerMenu().clickMenuItem("History-коди");
-        new StreetCodeCatalogPage(driver).clickCatalogItemByName(0);
+        new StreetCodeCatalogPage(driver).clickCatalogItemByIndex(0);
     }
 
     @Test
