@@ -2,7 +2,7 @@ package com.historycode.ui;
 
 import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
 import com.historycode.ui.page.adminpanel.teampage.TeamRowComponent;
-import com.historycode.ui.page.adminpanel.teampage.editModal.EditMemberModal;
+import com.historycode.ui.page.adminpanel.teampage.createEditModal.CreateEditMemberModal;
 import com.historycode.ui.testrunners.TestRunnerWithAdmin;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -53,7 +53,7 @@ public class TeamMemberEditingTest extends TestRunnerWithAdmin {
                 .setName(newTeamMemberName)
                 .saveEditedMember()
                 .closeEditMemberModalWithoutGridRefresh();
-        EditMemberModal res = targetTeamMember.clickEdit();
+        CreateEditMemberModal res = targetTeamMember.clickEdit();
         String actual = res.getName();
         Assert.assertEquals(newTeamMemberName, actual);
         res.closeEditMemberModalWithoutGridRefresh();
@@ -71,7 +71,7 @@ public class TeamMemberEditingTest extends TestRunnerWithAdmin {
                 .setName(newTeamMemberName)
                 .saveEditedMember()
                 .closeEditMemberModalWithoutGridRefresh();
-        EditMemberModal res = targetTeamMember.clickEdit();
+        CreateEditMemberModal res = targetTeamMember.clickEdit();
         String actual = res.getName();
         Assert.assertEquals(newTeamMemberName.substring(0,41), actual);
         res.closeEditMemberModalWithoutGridRefresh();
@@ -89,7 +89,7 @@ public class TeamMemberEditingTest extends TestRunnerWithAdmin {
                 .setName("")
                 .saveEditedMember()
                 .closeEditMemberModalWithoutGridRefresh();
-        EditMemberModal res = targetTeamMember.clickEdit();
+        CreateEditMemberModal res = targetTeamMember.clickEdit();
         String actual = res.getName();
         Assert.assertEquals(teamMemberName, actual);
         res.closeEditMemberModalWithoutGridRefresh();
@@ -107,7 +107,7 @@ public class TeamMemberEditingTest extends TestRunnerWithAdmin {
                 .setDescription(newTeamMemberDescription)
                 .saveEditedMember()
                 .closeEditMemberModalWithoutGridRefresh();
-        EditMemberModal res = targetTeamMember.clickEdit();
+        CreateEditMemberModal res = targetTeamMember.clickEdit();
         String actual = res.getDescription();
         Assert.assertEquals(newTeamMemberDescription, actual);
         res.closeEditMemberModalWithoutGridRefresh();
@@ -125,7 +125,7 @@ public class TeamMemberEditingTest extends TestRunnerWithAdmin {
                 .setDescription(newTeamMemberDescription)
                 .saveEditedMember()
                 .closeEditMemberModalWithoutGridRefresh();
-        EditMemberModal res = targetTeamMember.clickEdit();
+        CreateEditMemberModal res = targetTeamMember.clickEdit();
         String actual = res.getDescription();
         System.out.println(newTeamMemberDescription);
         Assert.assertEquals(newTeamMemberDescription.substring(0,70), actual);
@@ -142,7 +142,7 @@ public class TeamMemberEditingTest extends TestRunnerWithAdmin {
                 .setDescription("")
                 .saveEditedMember()
                 .closeEditMemberModalWithoutGridRefresh();
-        EditMemberModal res = targetTeamMember.clickEdit();
+        CreateEditMemberModal res = targetTeamMember.clickEdit();
         String actual = res.getDescription();
         Assert.assertTrue(actual.isEmpty());
         res.closeEditMemberModalWithoutGridRefresh();

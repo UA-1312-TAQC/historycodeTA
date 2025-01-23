@@ -1,7 +1,7 @@
 package com.historycode.ui;
 
-import com.historycode.ui.page.streetcodespage.CatalogItemComponent;
-import com.historycode.ui.page.streetcodespage.StreetCodesPage;
+import com.historycode.ui.page.streetcodecatalogpage.CatalogItemComponent;
+import com.historycode.ui.page.streetcodecatalogpage.StreetCodeCatalogPage;
 import com.historycode.ui.testrunners.BaseTestRunner;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Step;
@@ -17,7 +17,7 @@ import java.util.Map;
 @Slf4j
 public class StreetCodesCssTest extends BaseTestRunner {
 
-    private StreetCodesPage streetCodesPage;
+    private StreetCodeCatalogPage streetCodesPage;
 
     private static final Map<String, String> TITLE_CSS_EXPECTATIONS = Map.of(
             "color", "rgba(221, 221, 221, 1)",
@@ -44,7 +44,7 @@ public class StreetCodesCssTest extends BaseTestRunner {
     @BeforeMethod
     public void openStreetCodesPage() {
         driver.get(testValueProvider.getBaseUIUrl() + "/catalog");
-        streetCodesPage = new StreetCodesPage(driver);
+        streetCodesPage = new StreetCodeCatalogPage(driver);
     }
 
     @Test

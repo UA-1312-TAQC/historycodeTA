@@ -1,4 +1,4 @@
-package com.historycode.ui.page.streetcodespage;
+package com.historycode.ui.page.streetcodecatalogpage;
 
 import com.historycode.ui.component.BaseComponent;
 import lombok.Getter;

@@ -1,14 +1,18 @@
 package com.historycode.ui.page.adminpanel.editorpage;
 
+import com.historycode.ui.Base;
 import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
+import com.historycode.ui.page.BasePage;
 import com.historycode.ui.page.adminpanel.editorpage.components.grids.ContextsGridComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.ContextsModalComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.ContextsRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.elements.AddButtonElement;
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
@@ -86,6 +90,7 @@ public class ContextsPage extends BaseEditorPage {
 
     public DeleteItemModal deleteTableRow(ContextsRowComponent row) {
         grid.deleteRow(row);
+        wait.until(driver -> getDisplayedModalRoot() != null);
         return new DeleteItemModal(driver, getDisplayedModalRoot());
     }
 

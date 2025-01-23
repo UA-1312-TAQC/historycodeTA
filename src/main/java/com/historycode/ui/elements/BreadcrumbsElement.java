@@ -1,7 +1,7 @@
 package com.historycode.ui.elements;
 
 //import com.historycode.ui.page.adminpanel.editorpage.BaseEditorPage;
-import com.historycode.ui.page.streetcodespage.StreetCodesPage;
+import com.historycode.ui.page.streetcodecatalogpage.StreetCodeCatalogPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -24,10 +24,10 @@ public class BreadcrumbsElement extends BaseElement {
         return currentPage.getText();
     }
 
-    public StreetCodesPage clickCatalog() {
+    public StreetCodeCatalogPage clickCatalog() {
         //BaseEditorPage.moveToElement(driver, catalogLink);
         catalogLink.click();
-        return new StreetCodesPage(driver);
+        return new StreetCodeCatalogPage(driver);
     }
 
     public String getCatalogTitle() {

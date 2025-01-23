@@ -14,7 +14,7 @@ import java.util.Random;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertNull;
 
-public class DeleteContextEditor extends TestRunnerWithAdmin {
+public class DeleteContextEditorTest extends TestRunnerWithAdmin {
     String contextName;
     @BeforeMethod
     public void setupForDeleteContext() throws InterruptedException {
@@ -38,7 +38,7 @@ public class DeleteContextEditor extends TestRunnerWithAdmin {
         assertNotNull(contextToDelete, "Context should exist before deletion: " + contextName);
         contextsPage.deleteTableRow(contextToDelete).clickOkButton();
         assertNull(contextsPage.getTableRowByTitle(contextName),
-                String.format("Context '%s' still exists after deletion", contextName));
+                String.format("Context '%s' still exists after deletion.", contextName));
     }
 
     @AfterMethod
