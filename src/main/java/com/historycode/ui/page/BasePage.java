@@ -31,6 +31,8 @@ public abstract class BasePage extends Base {
     private WebElement footerNode;
     @FindBy(xpath = "//div[contains(@class, 'rightPartContainer')]//div[contains(@class, 'drawerContainer')]//div")
     private WebElement burgerMenu;
+    @FindBy(xpath = "//div[@class='ant-drawer-body']")
+    private WebElement burgerMenuBody;
     @Getter
     @FindBy(xpath = "//div[@class='headerDrawerContainer']//a[@href='/catalog']")
     private WebElement historyCodeBurgerButton;
@@ -39,7 +41,6 @@ public abstract class BasePage extends Base {
         super(driver);
         this.header = new HeaderComponent(driver, this.headerNode);
         this.footer = new FooterComponent(driver, this.footerNode);
-        this.burgerMenuComponent = new BurgerMenuComponent(driver, this.burgerMenu);
     }
 
     public boolean isBurgerMenuVisible() {
@@ -47,9 +48,9 @@ public abstract class BasePage extends Base {
     }
 
     public BurgerMenuComponent openBurgerMenu() {
-        waitUntilElementClickable(burgerMenu);
         burgerMenu.click();
-        return this.burgerMenuComponent;
+        waitUntilElementVisible(burgerMenuBody);
+        return new BurgerMenuComponent(driver, burgerMenuBody);
     }
 
     public void waitForElementThenScrollUntilAllContentLoaded(WebElement elementToWaitFor) {
