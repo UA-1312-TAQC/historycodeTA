@@ -29,7 +29,8 @@ public class TeamRowComponent extends BaseComponent {
     protected WebElement deleteAction;
     @FindBy(xpath = "./td[6]//span[contains(@class, 'edit')]")
     protected WebElement editAction;
-
+    @FindBy(xpath = "//h2[contains(text(),'Редагувати')]/ancestor::div[@class = 'ant-modal-content']")
+    protected WebElement editModalRoot;
     @FindBy(xpath = "//p[contains(text(),'видалити')]/ancestor::div[@class = 'ant-modal-content']")
     protected WebElement deleteModalRoot;
 
@@ -79,10 +80,10 @@ public class TeamRowComponent extends BaseComponent {
     }
 
 
-    //TODO check root element
     public CreateEditMemberModal clickEdit() {
+        scrollToElement(editAction);
         editAction.click();
-        return new CreateEditMemberModal(driver, rootElement);
+        return new CreateEditMemberModal(driver, editModalRoot);
     }
 
     @Override

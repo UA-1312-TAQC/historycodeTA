@@ -1,30 +1,27 @@
 package com.historycode.ui.elements.adminPanel;
 
-import com.historycode.ui.component.BaseComponent;
-import lombok.Getter;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 
-public class InputElement extends BaseInputElement {
+public class TextAreaElement extends BaseInputElement{
 
-    @Getter
-    @FindBy(xpath = ".//div[contains(@class, 'input-content')]//span//input[@type='text']")
+    @FindBy(xpath=".//textarea")
     protected WebElement inputField;
 
-    public InputElement(WebDriver driver, WebElement rootElement) {
+    public TextAreaElement(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
 
+    @Override
     public void setInputField(String value) {
         inputField.click();
         inputField.sendKeys(Keys.chord(Keys.CONTROL,"a", Keys.DELETE));
         inputField.sendKeys(value);
     }
-
+    @Override
     public String getInputValue() {
-        return inputField.getDomAttribute("value");
+        return inputField.getText().trim();
     }
 }
