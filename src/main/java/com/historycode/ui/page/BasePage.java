@@ -47,9 +47,10 @@ public abstract class BasePage extends Base {
         return burgerMenu.isDisplayed();
     }
 
-    public void openBurgerMenu() {
+    public BurgerMenuComponent openBurgerMenu() {
         sleep(5000);
         burgerMenu.click();
+        return this.burgerMenuComponent;
     }
 
     public void waitForElementThenScrollUntilAllContentLoaded(WebElement elementToWaitFor) {
