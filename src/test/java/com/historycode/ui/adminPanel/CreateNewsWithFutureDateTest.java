@@ -22,6 +22,8 @@ public class CreateNewsWithFutureDateTest extends TestRunnerWithAdmin {
     private String createdLink;
     private String createdText;
 
+    final long ONE_DAY_IN_MILLIS = 24 * 60 * 60 * 1000L;
+
     @BeforeMethod
     public void setupForCreateNewsWithFutureDate() {
         login();
@@ -32,6 +34,7 @@ public class CreateNewsWithFutureDateTest extends TestRunnerWithAdmin {
         createdLink = "test-link-" + n;
         createdText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras et commodo ex. Pellentesque id sagittis ex. Morbi tincidunt volutpat ante, ut elementum turpis pulvinar et.";
 
+        
         driver.get(testValueProvider.getBaseUIUrl() + "/admin-panel/news");
         NewsPageAdminPanel newsPage = new NewsPageAdminPanel(driver);
 
@@ -39,7 +42,8 @@ public class CreateNewsWithFutureDateTest extends TestRunnerWithAdmin {
         editNewsModal.inputNewsTitle(createdTitle);
         editNewsModal.inputNewsLinkTranslit(createdLink);
         editNewsModal.inputNewsTextEditor(createdText);
-        editNewsModal.inputNewsCreationDate(new Date(System.currentTimeMillis() + 86400000));  // Set date to present + 1 day
+        Date futureDate = new Date(System.currentTimeMillis() + ONE_DAY_IN_MILLIS);
+        editNewsModal.inputNewsCreationDate(futureDate);
         editNewsModal.clickUploadNews();
         editNewsModal.saveNews();
     }
@@ -55,8 +59,9 @@ public class CreateNewsWithFutureDateTest extends TestRunnerWithAdmin {
         NewsRowComponent createdNews = newsGrid.getRowById(0);
         assertNotNull(createdNews, "Created news should exist.");
         assertEquals(createdNews.getName().getText(), createdTitle, "The title is not correct.");
-        String expectedYear = String.valueOf(java.time.Year.now().getValue());
-        assertTrue(createdNews.getDateOfCreation().getText().contains(expectedYear), "Date was not correct.");
+        Date expectedDate = new Date(System.currentTimeMillis() + ONE_DAY_IN_MILLIS);
+        String expectedDateString = new java.text.SimpleDateFormat("yyyy-MM-dd").format(expectedDate);
+        assertTrue(createdNews.getDateOfCreation().getText().contains(expectedDateString), "Future date was not set correctly");
 
         assertFalse(createdNews.getDateOfCreation().getText().contains("published"), "The news should not be published yet.");
     }

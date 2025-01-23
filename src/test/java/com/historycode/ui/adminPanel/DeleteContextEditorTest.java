@@ -14,7 +14,7 @@ import java.util.Random;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertNull;
 
-public class DeleteContextEditor extends TestRunnerWithAdmin {
+public class DeleteContextEditorTest extends TestRunnerWithAdmin {
     String contextName;
     @BeforeMethod
     public void setupForDeleteContext() throws InterruptedException {

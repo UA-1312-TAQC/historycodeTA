@@ -6,6 +6,7 @@ import com.historycode.ui.testrunners.TestRunnerWithAdmin;
 
 import io.qameta.allure.Issue;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
@@ -32,42 +33,22 @@ public class VerifyInvalidLinkNewsTest extends TestRunnerWithAdmin {
         editNewsModal.inputNewsCreationDate(new java.sql.Date(System.currentTimeMillis()));
     }
 
-    @Test
-    @Issue("158.1")
-    public void testLinkFieldWithUppercaseLatin() {
-        String invalidLink = "TESTLINK";  
-    
-        editNewsModal.inputNewsLinkTranslit(invalidLink);
-    
-        assertFalse(editNewsModal.isSaveButtonEnabled());
-    
-        String errorMessage = editNewsModal.getNewsLinkTranslitErrorMessage();
-        assertEquals(errorMessage, "Транслітерація має містити лише малі латинські літери, цифри та дефіс");
+    private static final String EXPECTED_ERROR_MESSAGE = 
+        "Транслітерація має містити лише малі латинські літери, цифри та дефіс";
+    @DataProvider(name = "invalidLinks")
+    public Object[][] getInvalidLinks() {
+        return new Object[][] {
+            {"TESTLINK", "158.1"},
+            {"Тестлінк", "158.2"},
+            {"№\"?:*", "158.3"}
+        };
     }
-    
-    @Test
-    @Issue("158.2")
-    public void testLinkFieldWithCyrillic() {
-        String invalidLink = "Тестлінк";  
-    
+    @Test(dataProvider = "invalidLinks")
+    @Issue("#{1}")
+    public void testInvalidLink(String invalidLink, String issueId) {
         editNewsModal.inputNewsLinkTranslit(invalidLink);
-    
         assertFalse(editNewsModal.isSaveButtonEnabled());
-    
-        String errorMessage = editNewsModal.getNewsLinkTranslitErrorMessage();
-        assertEquals(errorMessage, "Транслітерація має містити лише малі латинські літери, цифри та дефіс");
+        assertEquals(editNewsModal.getNewsLinkTranslitErrorMessage(), 
+            EXPECTED_ERROR_MESSAGE);
     }
-    
-    @Test
-    @Issue("158.3")
-    public void testLinkFieldWithSpecialCharacters() {
-        String invalidLink = "№\"?:*";  
-    
-        editNewsModal.inputNewsLinkTranslit(invalidLink);
-    
-        assertFalse(editNewsModal.isSaveButtonEnabled());
-    
-        String errorMessage = editNewsModal.getNewsLinkTranslitErrorMessage();
-        assertEquals(errorMessage, "Транслітерація має містити лише малі латинські літери, цифри та дефіс");
-    }    
 }

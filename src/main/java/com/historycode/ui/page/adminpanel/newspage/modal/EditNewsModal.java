@@ -159,7 +159,13 @@ public class EditNewsModal extends BaseEditModal {
     }
 
     public String getNewsLinkTranslitErrorMessage() {
-        return newsLinkTranslitErrorMessage.getText();
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.visibilityOf(newsLinkTranslitErrorMessage));
+            return newsLinkTranslitErrorMessage.getText();
+        } catch (Exception e) {
+            return ""; // or throw a custom exception depending on your error handling strategy
+        }
     }
 }
 

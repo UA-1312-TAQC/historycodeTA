@@ -6,6 +6,9 @@ import com.historycode.ui.page.adminpanel.newspage.NewsRowComponent;
 import com.historycode.ui.page.adminpanel.newspage.modal.EditNewsModal;
 import com.historycode.ui.testrunners.TestRunnerWithAdmin;
 import io.qameta.allure.Issue;
+
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -22,7 +25,7 @@ public class CreateNewsTest extends TestRunnerWithAdmin {
     private String createdText;
 
     @BeforeMethod
-    public void setupForCreateNews() throws InterruptedException {
+    public void setupForCreateNews() {
         login();
 
         Random rand = new Random();
