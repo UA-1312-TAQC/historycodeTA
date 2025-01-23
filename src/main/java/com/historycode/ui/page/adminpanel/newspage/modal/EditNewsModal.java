@@ -73,6 +73,9 @@ public class EditNewsModal extends BaseEditModal {
     @FindBy(xpath = "//button[@aria-label='Close']")
     private WebElement closeButton;
 
+    @FindBy(xpath = "//div[contains(@class, 'ant-form-item-explain-error')]")
+    private WebElement newsLinkTranslitErrorMessage;
+
 
     public EditNewsModal(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
@@ -153,6 +156,10 @@ public class EditNewsModal extends BaseEditModal {
     private void waitUntilModalIsClosed() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.invisibilityOf(closeButton));
+    }
+
+    public String getNewsLinkTranslitErrorMessage() {
+        return newsLinkTranslitErrorMessage.getText();
     }
 }
 
