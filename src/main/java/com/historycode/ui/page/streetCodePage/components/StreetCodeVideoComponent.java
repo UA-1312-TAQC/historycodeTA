@@ -46,7 +46,7 @@ public class StreetCodeVideoComponent extends BaseComponent {
     }
 
     public void clickPauseButton() {
-        driver.switchTo().frame(videoPauseButton);
+        driver.switchTo().frame(videoPlayer);
         driver.findElement(By.xpath("//button[(@class = 'ytp-play-button ytp-button' and @title='Призупинити (k)')]")).click();
         driver.switchTo().defaultContent();
     }
