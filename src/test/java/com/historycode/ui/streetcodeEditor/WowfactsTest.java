@@ -41,7 +41,7 @@ public class WowfactsTest extends TestRunnerWithAdmin {
         /* перевірка завантаження фото */
         streetcodeEditPage.getWowFactsModal().checkAttribute(streetcodeEditPage
                 .getWowFactsModal().getFileuploader(), "accept", ".jpeg,.png,.jpg,.webp");
-        File file = new File("src/test/java/com/historycode/ui/streetcodeEditor/uploadfiles/test.webp");
+        File file = new File("src/test/resources/uploadfiles/test.webp");
         String absolutePath = file.getAbsolutePath();
         streetcodeEditPage.getWowFactsModal().getFileuploader().sendKeys(absolutePath);
         Assert.assertTrue(streetcodeEditPage.getWowFactsModal().getUploadedImage().isDisplayed());
