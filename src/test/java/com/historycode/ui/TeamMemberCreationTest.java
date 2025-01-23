@@ -20,7 +20,6 @@ public class TeamMemberCreationTest extends TestRunnerWithAdmin {
     @Test
     @Description("Verify that the new team member is immediately displayed in the list of team members")
     public void testTeamMemberPresentAfterCreation(){
-        login();
         String teamMember = RandomStringUtils.randomAlphabetic(7) + " " + RandomStringUtils.randomAlphabetic(10);
         TeamPageAdminPanel res= new HistoryCodesAdminPanelPage(driver)
                 .getAdminMenuBar()

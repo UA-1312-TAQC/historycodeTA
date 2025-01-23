@@ -9,6 +9,8 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 
@@ -17,6 +19,8 @@ public abstract class Base {
     protected WebDriverWait wait;
     protected JavascriptExecutor threadJs;
     protected Actions actions;
+    private static final int SCROLL_STABILIZATION_DELAY = 500;
+    private static final Logger logger = LoggerFactory.getLogger(Base.class);
 
     public Base(WebDriver driver) {
         this.driver = driver;
@@ -33,8 +37,8 @@ public abstract class Base {
 
     @Step("Scroll to the end of the page")
     public void scrollToEndOfPage() {
-        threadJs.executeScript("window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });");
         sleep(1000);
+        threadJs.executeScript("window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });");
     }
 
     protected boolean isContentTruncatedOrOverflow(WebElement element) {
