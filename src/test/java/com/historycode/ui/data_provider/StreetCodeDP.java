@@ -18,7 +18,7 @@ public class StreetCodeDP {
     public Object[][] urlWowFactSetProvider() {
         return new Object[][]{
                 {"/sichovi-striltsi"},
-                {"/ivan-mazepa"}
+                {"/khrystyna-skachkivska-sushko"}
         };
     }
 }
