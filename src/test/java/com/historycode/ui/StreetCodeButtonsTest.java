@@ -1,7 +1,7 @@
 package com.historycode.ui;
 
 import com.historycode.ui.page.homePage.HomePage;
-import com.historycode.ui.page.streetcodecatalogpage.StreetCodeCatalogPage;
+import com.historycode.ui.page.streetCodePage.StreetCodePage;
 import com.historycode.ui.testrunners.BaseTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -13,8 +13,10 @@ public class StreetCodeButtonsTest extends BaseTestRunner {
 
     @BeforeMethod
     public void goToStreetCode() {
-        new HomePage(driver).openBurgerMenu().clickMenuItem("History-коди");
-        new StreetCodeCatalogPage(driver).clickCatalogItemByIndex(0);
+        new HomePage(driver)
+                .openBurgerMenu()
+                .goToStreetCodeCatalogPage()
+                .clickCatalogItemByIndex(0);
     }
 
     @Test
@@ -22,6 +24,7 @@ public class StreetCodeButtonsTest extends BaseTestRunner {
     @Epic("StreetCode page")
     @Description("Page UP and donate buttons")
     public void testStreetCodeButtons() {
-        // Test code here
+        StreetCodePage streetCodePage = new StreetCodePage(driver);
+        streetCodePage.scrollToEndOfPage();
     }
 }
