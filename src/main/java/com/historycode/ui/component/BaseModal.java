@@ -27,5 +27,4 @@ public abstract class BaseModal extends BaseComponent {
         String attributeValue = element.getAttribute(attributeName);
         return expectedValue.equals(attributeValue);
     }
-
 }

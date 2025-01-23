@@ -1,4 +1,4 @@
-package com.historycode.ui.page.adminpanel.teampage.editModal.photoElement;
+package com.historycode.ui.page.adminpanel.teampage.createEditModal.photoElement;
 
 import com.historycode.ui.component.BaseComponent;
 import org.openqa.selenium.WebDriver;

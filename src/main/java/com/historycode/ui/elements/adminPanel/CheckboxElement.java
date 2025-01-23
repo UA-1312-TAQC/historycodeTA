@@ -13,7 +13,7 @@ public class CheckboxElement {
     private WebElement checboxLabel;
 
     @Getter
-    @FindBy(xpath = "./input[@type = 'checkbox']")
+    @FindBy(xpath = ".//input[@type = 'checkbox']")
     private WebElement checkbox;
 
     public CheckboxElement(WebDriver driver, WebElement rootElement) {
