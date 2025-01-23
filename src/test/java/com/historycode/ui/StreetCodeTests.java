@@ -81,6 +81,7 @@ public class StreetCodeTests extends BaseTestRunner {
     @Test(dataProvider = "urlWowFactSetProvider", dataProviderClass = StreetCodeDP.class, priority = 1)
     @Description("Verification that if 3 or more facts are displayed, they scroll in a loop.")
     public void testWowFactsScroll(String addPath){
+        final int ADDITIONAL_CARD = 2;
 
         navigateToStreetCodePage(addPath);
 
@@ -92,16 +93,14 @@ public class StreetCodeTests extends BaseTestRunner {
                 .getCarousel()
                 .getCardCount();
 
-        softAssert.assertTrue(countFactCard >= 3, "The carousel contains less than 3 cards.");
+        softAssert.assertTrue(countFactCard >= (3 + ADDITIONAL_CARD), "The carousel contains less than 3 cards.");
 
         String currentCardTitle = streetCodePage
                 .getFacts()
                 .getCarousel()
                 .getCurrentNodeTitle();
 
-        int clicksNeeded = (countFactCard == 3) ? countFactCard : countFactCard - 2;
-
-        for (int i = 0; i < clicksNeeded; i++) {
+        for (int i = 0; i < countFactCard - ADDITIONAL_CARD; i++) {
             streetCodePage
                     .getFacts()
                     .getCarousel()
