@@ -34,6 +34,14 @@ public abstract class BaseCarousel extends BaseComponent {
         }
     }
 
+    public boolean hasPagination() {
+        try {
+            return paginationNode.isDisplayed();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
     public BaseCarousel clickNext() {
         if (hasArrows()) {
             rightArrow.click();

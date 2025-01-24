@@ -7,6 +7,7 @@ import com.historycode.ui.testrunners.BaseTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Step;
+import org.openqa.selenium.Point;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -77,6 +78,49 @@ public class StreetCodeTests extends BaseTestRunner {
         softAssert.assertAll();
     }
 
+    @Issue("86")
+    @Test(priority = 1)
+    @Description("Verification if only one fact is displayed - it is located in the center of the block.")
+    public void testWowFactsOneElementAlign(){
+        final int CENTER_ALIGNMENT_TOLERANCE = 10;
+
+        navigateToStreetCodePage("/sergii-zhadan");
+
+        SoftAssert softAssert = new SoftAssert();
+
+        boolean isOneCard = streetCodePage
+                .scrollToInterestingFacts()
+                .getFacts()
+                .getCarousel()
+                .isOneCardPresent();
+
+        softAssert.assertTrue(isOneCard , "The carousel contains more than one cards");
+
+        Point elementCenterDifference = streetCodePage
+                .getFacts()
+                .getCarousel()
+                .getElementCenterRelativeToBlock();
+
+        softAssert.assertTrue(elementCenterDifference.getX() <= CENTER_ALIGNMENT_TOLERANCE, String.format("The element is not centered. Difference for X is %d", elementCenterDifference.getX()));
+        softAssert.assertTrue(elementCenterDifference.getY() <= CENTER_ALIGNMENT_TOLERANCE, String.format("The element is not centered. Difference for Y is %d", elementCenterDifference.getY()));
+
+        boolean hasArrows = streetCodePage
+                .getFacts()
+                .getCarousel()
+                .hasArrows();
+
+        softAssert.assertFalse(hasArrows, "The navigation arrows are displayed");
+
+        boolean hasPagination = streetCodePage
+                .getFacts()
+                .getCarousel()
+                .hasPagination();
+
+        softAssert.assertFalse(hasPagination, "The navigation arrows are displayed");
+
+        softAssert.assertAll();
+    }
+
     @Issue("87")
     @Test(dataProvider = "urlWowFactSetProvider", dataProviderClass = StreetCodeDP.class, priority = 1)
     @Description("Verification that if 3 or more facts are displayed, they scroll in a loop.")
@@ -117,4 +161,5 @@ public class StreetCodeTests extends BaseTestRunner {
 
         softAssert.assertAll();
     }
+
 }

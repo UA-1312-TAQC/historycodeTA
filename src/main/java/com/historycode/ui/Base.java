@@ -3,6 +3,7 @@ package com.historycode.ui;
 
 import io.qameta.allure.Step;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -13,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
+import java.util.Objects;
 
 public abstract class Base {
     protected WebDriver driver;
@@ -63,6 +65,28 @@ public abstract class Base {
         threadJs.executeScript("arguments[0].click();", element);
     }
 
+    public Point getCenterRelativeToBlock(WebElement block, WebElement element) {
+        double blockLeft = ((Number) Objects.requireNonNull(threadJs.executeScript("return arguments[0].getBoundingClientRect().left;", block))).doubleValue();
+        double blockTop = ((Number) Objects.requireNonNull(threadJs.executeScript("return arguments[0].getBoundingClientRect().top;", block))).doubleValue();
+        double blockWidth = ((Number) Objects.requireNonNull(threadJs.executeScript("return arguments[0].getBoundingClientRect().width;", block))).doubleValue();
+        double blockHeight = ((Number) Objects.requireNonNull(threadJs.executeScript("return arguments[0].getBoundingClientRect().height;", block))).doubleValue();
+
+        double elementLeft = ((Number) Objects.requireNonNull(threadJs.executeScript("return arguments[0].getBoundingClientRect().left;", element))).doubleValue();
+        double elementTop = ((Number) Objects.requireNonNull(threadJs.executeScript("return arguments[0].getBoundingClientRect().top;", element))).doubleValue();
+        double elementWidth = ((Number) Objects.requireNonNull(threadJs.executeScript("return arguments[0].getBoundingClientRect().width;", element))).doubleValue();
+        double elementHeight = ((Number) Objects.requireNonNull(threadJs.executeScript("return arguments[0].getBoundingClientRect().height;", element))).doubleValue();
+
+        int scrollX = ((Long) Objects.requireNonNull(threadJs.executeScript("return window.scrollX;"))).intValue();
+        int scrollY = ((Long) Objects.requireNonNull(threadJs.executeScript("return window.scrollY;"))).intValue();
+
+        double blockCenterX = blockLeft + blockWidth / 2 - scrollX;
+        double blockCenterY = blockTop + blockHeight / 2 - scrollY;
+        double elementCenterX = elementLeft + elementWidth / 2 - scrollX;
+        double elementCenterY = elementTop + elementHeight / 2 - scrollY;
+
+        return new Point((int) (elementCenterX - blockCenterX), (int) (elementCenterY - blockCenterY));
+    }
+
     public void sleep(long millisSeconds) {
         try {
             Thread.sleep(millisSeconds);
@@ -82,6 +106,5 @@ public abstract class Base {
     public void waitUntilElementClickable(WebElement element) {
         wait.until(ExpectedConditions.elementToBeClickable(element));
     }
-
 
 }
