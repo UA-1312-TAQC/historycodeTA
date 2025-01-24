@@ -5,7 +5,7 @@ import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 
 public class ChronologyComponent extends BaseComponent {
@@ -34,18 +34,10 @@ public class ChronologyComponent extends BaseComponent {
     private WebElement filmCardContainer;
 
 
-    public ChronologyComponent(WebDriver driver, WebElement rootElement) {
-        super(driver, rootElement);
-        this.yearsBar = new ChronologyYearsBarComponent(driver, redTimeline);
-        this.filmCardComponent = new ChronologyFilmCardComponent(driver, filmCardContainer);
-//        PageFactory.initElements(driver, this);
-    }
-
     public ChronologyComponent(WebDriver driver) {
         super(driver);
-        this.yearsBar = new ChronologyYearsBarComponent(driver, redTimeline);
-        this.filmCardComponent = new ChronologyFilmCardComponent(driver, filmCardContainer);
-        PageFactory.initElements(driver, this);
+        this.yearsBar = new ChronologyYearsBarComponent(driver);
+        this.filmCardComponent = new ChronologyFilmCardComponent(driver);
     }
 
     public String getTitle() {
@@ -53,12 +45,46 @@ public class ChronologyComponent extends BaseComponent {
     }
 
     public WebElement getTitleElement() {
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         scrollToElement(title);
+        wait.until(ExpectedConditions.visibilityOf(title));
         return title;
     }
 
     public WebElement getRedTimeline() {
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         scrollToElement(redTimeline);
+        wait.until(ExpectedConditions.visibilityOf(redTimeline));
         return redTimeline;
+    }
+
+    public WebElement getGreyBox() {
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        scrollToElement(greyBox);
+        wait.until(ExpectedConditions.visibilityOf(greyBox));
+        return greyBox;
+    }
+
+    public WebElement getFilmCardContainer() {
+        try {
+            Thread.sleep(15000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        scrollToElement(filmCardContainer);
+        wait.until(ExpectedConditions.visibilityOf(filmCardContainer));
+        return filmCardContainer;
     }
 }
