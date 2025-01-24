@@ -5,6 +5,7 @@ import lombok.Getter;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -71,39 +72,31 @@ public class ChronologyYearsBarComponent extends BaseComponent {
         threadJs.executeScript("arguments[0].click();", yearBox);
     }
 
-
     public boolean isYearBoxLarger(int index) {
+
         scrollToElement(redTimeline);
         wait.until(ExpectedConditions.visibilityOf(redTimeline));
 
         WebElement selectedBox = selectedYearBoxContainer.get(index);
+
         Dimension selectedBoxSize = selectedBox.getSize();
 
         System.out.println("+++selectedBox.getSize() = " + selectedBox.getSize() +
                 "  selectedBox.getCssValue height = " + selectedBox.getCssValue("height"));
-
         for (WebElement current : selectedYearBoxContainer) {
-            String currentText = current.getText().trim();
-            Dimension otherBoxSize = current.getSize();
-
-            System.out.println("current text = " + currentText +
-                    "  current.getSize() = " + otherBoxSize +
-                    "  current.getCssValue height = " + current.getCssValue("height"));
-
-            if (currentText.isEmpty() || otherBoxSize.getHeight() == 0 || otherBoxSize.getWidth() == 0) {
-                continue;
-            }
-
-            if (selectedBoxSize.getHeight() <= otherBoxSize.getHeight() ||
-                    selectedBoxSize.getWidth() <= otherBoxSize.getWidth()) {
-                System.err.println("Selected box is not larger than box with text: " + currentText);
-                return false;
-            }
+            System.out.println("current text = " + current.getText()
+                    + "  current.getSize() = " + current.getSize()
+                    + "  current.getCssValue height = " + current.getCssValue("height"));
         }
 
-        return true;
-    }
+        return selectedYearBoxContainer.stream()
+                .allMatch(box -> {
+                    Dimension otherBoxSize = box.getSize();
+                    return selectedBoxSize.getHeight() > otherBoxSize.getHeight() &&
+                            selectedBoxSize.getWidth() > otherBoxSize.getWidth();
+                });
 
+    }
 
     public String getActiveYearBoxText() {
         try {
