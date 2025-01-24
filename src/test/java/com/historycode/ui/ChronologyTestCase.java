@@ -70,6 +70,7 @@ public class ChronologyTestCase extends BaseTestRunner {
     @Test
     @Step("Verify that the selected year box is bigger than the others.")
     public void testSelectedYearBoxSize() {
+
         HomePage homePage = new HomePage(driver);
         homePage.openBurgerMenu();
         BurgerMenuComponent burgerMenuComponent = homePage.getBurgerMenuComponent();
@@ -83,8 +84,10 @@ public class ChronologyTestCase extends BaseTestRunner {
         ChronologyYearsBarComponent yearsBar = new ChronologyYearsBarComponent(driver);
         yearsBar.sleep(10000);
 
+        yearsBar.clickYearBoxByIndex(3);
+        yearsBar.getSelectedYearBoxByIndex(3);
         int targetIndex = 3;
-        yearsBar.clickYearBoxByIndex(targetIndex);
+
 
         Assert.assertTrue(yearsBar.isYearBoxLarger(targetIndex),
                 "The selected year box is not larger than the others!");
