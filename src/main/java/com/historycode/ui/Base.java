@@ -1,6 +1,5 @@
 package com.historycode.ui;
 
-
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.JavascriptExecutor;
@@ -10,8 +9,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 
@@ -22,7 +19,6 @@ public abstract class Base {
     protected JavascriptExecutor threadJs;
     protected Actions actions;
     private static final int SCROLL_STABILIZATION_DELAY = 500;
-    private static final Logger logger = LoggerFactory.getLogger(Base.class);
 
     public Base(WebDriver driver) {
         this.driver = driver;
@@ -40,7 +36,7 @@ public abstract class Base {
                     "arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});", element);
             Thread.sleep(SCROLL_STABILIZATION_DELAY); // Коротка пауза для стабільності
         } catch (Exception e) {
-            logger.error("Error scrolling to element", e);
+            log.error("Error scrolling to element", e);
         }
         wait.until(ExpectedConditions.elementToBeClickable(element));
     }
