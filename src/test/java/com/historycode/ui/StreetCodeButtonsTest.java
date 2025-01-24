@@ -8,6 +8,7 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Issue;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 public class StreetCodeButtonsTest extends BaseTestRunner {
 
@@ -24,7 +25,13 @@ public class StreetCodeButtonsTest extends BaseTestRunner {
     @Epic("StreetCode page")
     @Description("Page UP and donate buttons")
     public void testStreetCodeButtons() {
+        SoftAssert softAssert = new SoftAssert();
         StreetCodePage streetCodePage = new StreetCodePage(driver);
-        streetCodePage.scrollToEndOfPage();
+
+        streetCodePage.getVerticalProgress().clickSection(2);
+
+        softAssert.assertTrue(streetCodePage.getScrollTopButton().isButtonDisplayed(), "Scroll top button is not visible");
+
+        softAssert.assertAll();
     }
 }
