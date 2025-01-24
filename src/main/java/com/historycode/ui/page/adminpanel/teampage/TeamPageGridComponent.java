@@ -1,18 +1,21 @@
 package com.historycode.ui.page.adminpanel.teampage;
 
 import com.historycode.ui.component.adminPanel.gridAdminPanel.BaseGridComponent;
-import com.historycode.ui.utils.customExpectedConditions.CustomExpectedConditions;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+
 import java.time.Duration;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@Slf4j
 public class TeamPageGridComponent extends BaseGridComponent {
 
     @Getter
@@ -29,11 +32,12 @@ public class TeamPageGridComponent extends BaseGridComponent {
 
     public TeamPageGridComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
+        log.debug("Team page - Table initialization started");
         teamRowComponents = new ArrayList<>();
-        wait.until(CustomExpectedConditions.StalenessOfElementLocatedBy(By.cssSelector("#loadingGif")));
         for(WebElement element: teamRowNodes){
             teamRowComponents.add(new TeamRowComponent(driver, element));
         }
+        log.debug("Team page - Table initialization finished");
     }
 
 

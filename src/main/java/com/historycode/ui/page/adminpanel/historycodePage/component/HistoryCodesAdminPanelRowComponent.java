@@ -2,8 +2,8 @@ package com.historycode.ui.page.adminpanel.historycodePage.component;
 
 import com.historycode.ui.component.BaseComponent;
 import com.historycode.ui.component.adminPanel.dropDownAdminPanel.DropdownComponent;
-import com.historycode.ui.page.adminpanel.StreetcodeEditPage;
 import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelStatisticsPage;
+import com.historycode.ui.page.adminpanel.streetcodeeditpage.StreetcodeEditPage;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

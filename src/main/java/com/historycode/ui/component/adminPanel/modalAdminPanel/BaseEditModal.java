@@ -5,7 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-
 public abstract class BaseEditModal extends BaseModal {
     @FindBy(xpath = ".//button[@class='ant-modal-close']/span")
     protected WebElement closeButton;
