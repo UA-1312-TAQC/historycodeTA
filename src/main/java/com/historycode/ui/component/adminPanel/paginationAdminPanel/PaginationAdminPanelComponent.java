@@ -25,6 +25,7 @@ public class PaginationAdminPanelComponent extends BaseComponent {
     @FindBy(xpath = "//li[@title = 'Next 5 Pages']")
     WebElement nextFivePages;
 
+    @Getter
     @FindBy(xpath = "//*[@title and number(@title) = number(@title)]")
     List<WebElement> paginationItems;
 

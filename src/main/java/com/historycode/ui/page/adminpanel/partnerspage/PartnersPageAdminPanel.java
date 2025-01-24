@@ -44,9 +44,6 @@ public class PartnersPageAdminPanel extends BasePageAdminPanel {
     }
 
     public PartnersPageAdminPanel clickPaginationItem(int index) {
-        if (index < 0) {
-            throw new IllegalArgumentException("Pagination index cannot be negative");
-        }
         partnersPageGridComponent.clickPaginationItem(index);
         return this;
     }

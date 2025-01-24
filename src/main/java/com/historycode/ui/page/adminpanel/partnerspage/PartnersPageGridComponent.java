@@ -16,10 +16,10 @@ public class PartnersPageGridComponent extends BaseGridComponent {
 
     public PartnersPageGridComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        partnersRowComponents = getPartnersRows(driver);
+        partnersRowComponents = getPartnersRows();
     }
 
-    public List<PartnersRowComponent> getPartnersRows(WebDriver driver) {
+    public List<PartnersRowComponent> getPartnersRows() {
 
         List<WebElement> gridRows = driver.findElements(By.xpath("./tbody//tr"));
 
