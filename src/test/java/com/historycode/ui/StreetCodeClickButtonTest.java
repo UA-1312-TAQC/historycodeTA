@@ -60,9 +60,10 @@ public class StreetCodeClickButtonTest extends BaseTestRunner {
         softAssert.assertTrue(streetCodeVideoComponent.isVideoVisible(), "Video should be visible.");
         softAssert.assertTrue(streetCodeVideoComponent.isPlayButtonVisible(), "Play button should be visible.");
         streetCodeVideoComponent.clickPlayButton();
-        softAssert.assertTrue(streetCodeVideoComponent.isPauseButtonVisible(), "Video is not playing.");
+        softAssert.assertTrue(streetCodeVideoComponent.isActionPauseButtonVisible(), "Video is not playing.");
         streetCodeVideoComponent.clickPauseButton();
-//        softAssert.assertFalse(streetCodeVideoComponent.isPauseButtonVisible(), "Video is not pausing.");
+        softAssert.assertTrue(streetCodeVideoComponent.isActionPlayButtonVisible(), "Video is not pausing.");
+        softAssert.assertAll();
     }
 
     @Issue("81")
