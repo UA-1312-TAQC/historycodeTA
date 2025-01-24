@@ -16,7 +16,7 @@ public class ScrollTopButtonElement extends BaseElement {
         scrollButton.click();
     }
 
-    public void isButtonDisplayed() {
-        scrollButton.isDisplayed();
+    public boolean isButtonDisplayed() {
+        return scrollButton.isDisplayed();
     }
 }
