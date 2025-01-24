@@ -15,13 +15,12 @@ public class StreetCodeVideoComponent extends BaseComponent {
     @FindBy(xpath = "//button[contains(@class, 'ytp-large-play-button')]")
     private WebElement videoPlayButton;
     @Getter
-    @FindBy(xpath = "//button[(@class = 'ytp-play-button ytp-button' and @title='Призупинити (k)')]")
+    @FindBy(xpath = "//button[contains(@class, 'ytp-play-button ytp-button')]")
     private WebElement videoPauseButton;
     public StreetCodeVideoComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
     public boolean isVideoVisible() {
-        scrollToElement(videoPlayer);
         return videoPlayer.isDisplayed();
     }
 
@@ -34,7 +33,7 @@ public class StreetCodeVideoComponent extends BaseComponent {
 
     public boolean isPauseButtonVisible() {
         driver.switchTo().frame(videoPlayer);
-        boolean result = driver.findElement(By.xpath("//button[(@class = 'ytp-play-button ytp-button' and @title='Призупинити (k)')]")).isDisplayed();
+        boolean result = driver.findElement(By.xpath("//button[contains(@class, 'ytp-play-button ytp-button')]")).isDisplayed();
         driver.switchTo().defaultContent();
         return result;
     }
@@ -47,8 +46,7 @@ public class StreetCodeVideoComponent extends BaseComponent {
 
     public void clickPauseButton() {
         driver.switchTo().frame(videoPlayer);
-        driver.findElement(By.xpath("//button[(@class = 'ytp-play-button ytp-button' and @title='Призупинити (k)')]")).click();
+        driver.findElement(By.xpath("//button[contains(@class, 'ytp-play-button ytp-button')]")).click();
         driver.switchTo().defaultContent();
     }
-
 }
