@@ -18,8 +18,10 @@ public class StreetCodeButtonsTest extends BaseTestRunner {
     StreetCodePage streetCodePage;
 
     @BeforeMethod
+    @Step("Go to the first StreetCode page")
     public void goToStreetCode() {
-        new HomePage(driver)
+        softAssert = new SoftAssert();
+        streetCodePage = new HomePage(driver)
                 .openBurgerMenu()
                 .goToStreetCodeCatalogPage()
                 .clickCatalogItemByIndex(0);
@@ -28,53 +30,58 @@ public class StreetCodeButtonsTest extends BaseTestRunner {
     @Test
     @Issue("54")
     @Epic("StreetCode page")
-    @Description("Page UP and donate buttons")
-    public void testStreetCodeButtons() {
-        softAssert = new SoftAssert();
-        streetCodePage = new StreetCodePage(driver);
-
-        pageUpButtonTest();
-        donateButtonTest();
-
-        // verify questionnaire does not appear at the bottom of the page
-
-        //refresh page
-        //verify questionnaire appears at the bottom of the page
-
-        //verify questionnaire does not appear at the second time at the bottom of the page
-
-        softAssert.assertAll();
-    }
-
-    @Step("Page UP button test")
+    @Description("Page UP button test")
     private void pageUpButtonTest() {
+        //todo: Vertical Progress is not working
         streetCodePage.getVerticalProgress().clickSection(2);
         softAssert.assertTrue(streetCodePage.getScrollTopButton().isButtonDisplayed(), "Scroll top button is not visible");
 
         streetCodePage.getScrollTopButton().clickScrollTop();
-        softAssert.assertTrue(streetCodePage.getMainCard().isNameVisible(), "Main card is not visible");
+        softAssert.assertTrue(streetCodePage.getMainCard().isNameVisible(), "Scroll top button is not working");
+        softAssert.assertAll();
     }
 
-    @Step("Donate button test")
+    @Test
+    @Issue("54")
+    @Epic("StreetCode page")
+    @Description("Donate button test")
     private void donateButtonTest() {
         softAssert.assertTrue(streetCodePage.getQuickDonateButton().isDonateButtonDisplayed(), "Donate button is not visible");
 
         DonateModal donateModal = streetCodePage.getQuickDonateButton().clickDonateButton();
         softAssert.assertTrue(donateModal.isDonateButtonDisplayed(), "Donate popup is not visible");
 
-        // Підтримати unClicable
+        softAssert.assertFalse(donateModal.getSaveButton().isEnabled(), "Save button is enabled, 0/2 mandatory actions taken");
         // confirm agreement about personal data
 
-        // Підтримати unClicable
+        softAssert.assertFalse(donateModal.getSaveButton().isEnabled(), "Save button is enabled, 1/2 mandatory actions taken");
         // Click on "500 грн"
 
-        // Підтримати Clicable
+        softAssert.assertTrue(donateModal.getSaveButton().isEnabled(), "Save button is not enabled, 2/2 mandatory actions taken");
 
         donateModal.close();
+        softAssert.assertAll();
     }
 
-    @Step("Questionnaire test")
-    public void goToQuestionnaire() {
+    @Test
+    @Issue("54")
+    @Epic("StreetCode page")
+    @Description("Questionnaire modal Test")
+    public void questionnaireTest() {
         streetCodePage.scrollToEndOfPage();
+        //softAssert.assertTrue(streetCodePage.getQuestionnaire().isVisible());
+
+        //streetCodePage.getQuestionnaire().clickCloseButton();
+        streetCodePage.scrollToTop();
+        streetCodePage.scrollToEndOfPage();
+        //softAssert.assertFalse(streetCodePage.getQuestionnaire().isVisible());
+
+        //streetCodePage.refreshPage();
+        DonateModal donateModal = streetCodePage.getQuickDonateButton().clickDonateButton();
+        donateModal.close();
+        streetCodePage.scrollToEndOfPage();
+        //softAssert.assertTrue(streetCodePage.getQuestionnaire().isVisible());
+
+        softAssert.assertAll();
     }
 }
