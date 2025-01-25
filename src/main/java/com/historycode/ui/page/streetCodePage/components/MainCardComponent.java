@@ -152,4 +152,8 @@ public class MainCardComponent extends BaseComponent {
             return false;
         }
     }
+
+    public boolean isNameVisible() {
+        return name.isDisplayed();
+    }
 }
