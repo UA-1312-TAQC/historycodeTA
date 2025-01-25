@@ -16,6 +16,7 @@ public class StreetCodeButtonsTest extends BaseTestRunner {
 
     SoftAssert softAssert;
     StreetCodePage streetCodePage;
+    final String DONATE_AMOUNT = "500₴";
 
     @BeforeMethod
     @Step("Go to the first StreetCode page")
@@ -31,7 +32,7 @@ public class StreetCodeButtonsTest extends BaseTestRunner {
     @Issue("54")
     @Epic("StreetCode page")
     @Description("Page UP button test")
-    private void pageUpButtonTest() {
+    public void pageUpButtonTest() {
         //todo: Vertical Progress is not working
         streetCodePage.getVerticalProgress().clickSection(2);
         softAssert.assertTrue(streetCodePage.getScrollTopButton().isButtonDisplayed(), "Scroll top button is not visible");
@@ -45,19 +46,19 @@ public class StreetCodeButtonsTest extends BaseTestRunner {
     @Issue("54")
     @Epic("StreetCode page")
     @Description("Donate button test")
-    private void donateButtonTest() {
+    public void donateButtonTest() {
         softAssert.assertTrue(streetCodePage.getQuickDonateButton().isDonateButtonDisplayed(), "Donate button is not visible");
 
         DonateModal donateModal = streetCodePage.getQuickDonateButton().clickDonateButton();
         softAssert.assertTrue(donateModal.isDonateButtonDisplayed(), "Donate popup is not visible");
 
-        softAssert.assertFalse(donateModal.getSaveButton().isEnabled(), "Save button is enabled, 0/2 mandatory actions taken");
-        // confirm agreement about personal data
+        softAssert.assertFalse(donateModal.isDonateButtonEnabled(), "Save button is enabled, 0/2 mandatory actions taken");
+        donateModal.clickAgreeCheckbox();
 
-        softAssert.assertFalse(donateModal.getSaveButton().isEnabled(), "Save button is enabled, 1/2 mandatory actions taken");
-        // Click on "500 грн"
+        softAssert.assertFalse(donateModal.isDonateButtonEnabled(), "Save button is enabled, 1/2 mandatory actions taken");
+        donateModal.clickAmountButton(DONATE_AMOUNT);
 
-        softAssert.assertTrue(donateModal.getSaveButton().isEnabled(), "Save button is not enabled, 2/2 mandatory actions taken");
+        softAssert.assertTrue(donateModal.isDonateButtonEnabled(), "Save button is not enabled, 2/2 mandatory actions taken");
 
         donateModal.close();
         softAssert.assertAll();
@@ -68,6 +69,7 @@ public class StreetCodeButtonsTest extends BaseTestRunner {
     @Epic("StreetCode page")
     @Description("Questionnaire modal Test")
     public void questionnaireTest() {
+        //todo: implement questionnaire modal and refreshPage function
         streetCodePage.scrollToEndOfPage();
         //softAssert.assertTrue(streetCodePage.getQuestionnaire().isVisible());
 
