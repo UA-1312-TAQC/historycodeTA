@@ -37,12 +37,9 @@ public class TestCase128 extends TestRunnerWithAdmin  {
         createModal.clickCloseButton();
         softAssert.assertAll();*/
 
-        PartnersPageGridComponent adminGried = new PartnersPageAdminPanel(driver)
+        PartnersPageAdminPanel adminPage = new PartnersPageAdminPanel(driver)
                 .getAdminMenuBar()
-                .goToPartnersPage().getPartnersPageGridComponent();
-
-        adminGried.scrollToEndOfPage();
-        adminGried.goToSelectedPage(adminGried.getLastPage());
-        List<PartnersRowComponent>  partnersRowComponents = adminGried.getPartnersRows();
+                .goToPartnersPage()
+                .clickLastPage();
     }
 }
