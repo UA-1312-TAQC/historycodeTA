@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class DonateModal extends BaseModal {
 
@@ -107,5 +108,6 @@ public class DonateModal extends BaseModal {
                 return;
             }
         }
+        throw new NoSuchElementException("Amount button with text '" + desiredAmount + "' not found");
     }
 }
