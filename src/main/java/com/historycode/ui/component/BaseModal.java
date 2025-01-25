@@ -10,7 +10,7 @@ public abstract class BaseModal extends BaseComponent{
 
     @Getter
     @FindBy(xpath = ".//button[@class='ant-modal-close']")
-    private WebElement сloseButton;
+    private WebElement closeButton;
 
     @Getter
     @FindBy(xpath = ".//button[@class='ant-btn css-k7429z ant-btn-default streetcode-custom-button']")
