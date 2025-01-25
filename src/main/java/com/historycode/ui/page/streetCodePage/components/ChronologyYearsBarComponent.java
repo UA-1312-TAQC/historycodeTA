@@ -5,7 +5,6 @@ import lombok.Getter;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,12 +17,20 @@ public class ChronologyYearsBarComponent extends BaseComponent {
     private WebElement redTimeline;
 
     @Getter
-    @FindBy(xpath = "//div[contains(@id, 'timeline')]//div[contains(@class, 'timeSpanContainer')]//div[contains(@class, 'swiper-slide')][not(contains(@class, 'swiperEdgeBtn'))]//span")
+    @FindBy(xpath = "//div[contains(@id, 'timeline')]//div[contains(@class, 'timeSpanContainer')]//span")
     private List<WebElement> yearsNode;
+
+//    @Getter - Селектор з виключенням помилки 1997 рік
+//    @FindBy(xpath = "//div[contains(@id, 'timeline')]//div[contains(@class, 'timeSpanContainer')]//div[contains(@class, 'swiper-slide')][not(contains(@class, 'swiperEdgeBtn'))]//span")
+//    private List<WebElement> yearsNode;
 
     @Getter
     @FindBy(xpath = "//div[contains(@class, 'tickContainer')]//div[contains(@class, 'timelineYearTick')]")
     private List<WebElement> selectedYearBoxContainer;
+
+    @Getter
+    @FindBy(xpath = "//div[contains(@class, 'tickContainer')]")
+    private List<WebElement> activeYearBox;
 
     public ChronologyYearsBarComponent(WebDriver driver) {
         super(driver);
@@ -92,15 +99,15 @@ public class ChronologyYearsBarComponent extends BaseComponent {
         return selectedYearBoxContainer.stream()
                 .allMatch(box -> {
                     Dimension otherBoxSize = box.getSize();
-                    return selectedBoxSize.getHeight() > otherBoxSize.getHeight() &&
-                            selectedBoxSize.getWidth() > otherBoxSize.getWidth();
+                    return selectedBoxSize.getHeight() >= otherBoxSize.getHeight() &&
+                            selectedBoxSize.getWidth() >= otherBoxSize.getWidth();
                 });
 
     }
 
     public String getActiveYearBoxText() {
         try {
-            WebElement yearsNode = selectedYearBoxContainer.stream()
+            WebElement yearsNode = activeYearBox.stream()
                     .filter(box -> box.getAttribute("class").contains("active"))
                     .findFirst()
                     .orElseThrow(() -> new NoSuchElementException("No active year box found!"));
@@ -162,8 +169,7 @@ public class ChronologyYearsBarComponent extends BaseComponent {
         while (currentIndex < lastIndex) {
             clickYearBoxByIndex(currentIndex + 1);
             currentIndex++;
-            boolean isSorted = yearsChronologicallySorted();
-           // System.out.println("Checking years at index " + currentIndex + " -> Sorted: " + isSorted);
+            yearsChronologicallySorted();
         }
     }
 }
