@@ -8,8 +8,6 @@ import org.openqa.selenium.support.FindBy;
 import java.util.List;
 
 public class DonateModal extends BaseModal {
-    @FindBy(xpath = ".//div[contains(@class, 'donatesModal')]//button[@class='ant-modal-close']")
-    private WebElement closeButton;
 
     @FindBy(xpath = ".//div[@class = 'donatesModalContent']/h1")
     private WebElement firstTitle;
@@ -43,7 +41,7 @@ public class DonateModal extends BaseModal {
     }
 
     public void close() {
-        closeButton.click();
+        getCloseButton().click();
     }
 
     public boolean isFirstTitleDisplayed() {
@@ -89,8 +87,25 @@ public class DonateModal extends BaseModal {
         return donateButton.isDisplayed();
     }
 
+    public boolean isDonateButtonEnabled() {
+        return donateButton.isEnabled();
+    }
+
     public DonateModal clickDonateButton() {
         donateButton.click();
         return this;
+    }
+
+    public void clickAgreeCheckbox() {
+        agreeCheckbox.click();
+    }
+
+    public void clickAmountButton(String desiredAmount) {
+        for (WebElement amount : amountButtons) {
+            if (amount.getText().equals(desiredAmount)) {
+                amount.click();
+                return;
+            }
+        }
     }
 }
