@@ -15,8 +15,8 @@ import org.testng.annotations.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.asserts.SoftAssert;
-
 import java.util.List;
+import java.util.Map;
 
 public class ChronologyTestCase extends BaseTestRunner {
 
@@ -38,6 +38,8 @@ public class ChronologyTestCase extends BaseTestRunner {
 
         String actualTitle = chronologyComponent.getTitle();
         softAssert.assertEquals(actualTitle, "Хронологія", "The title text is incorrect!");
+
+        softAssert.assertAll();
 
     }
 
@@ -88,9 +90,75 @@ public class ChronologyTestCase extends BaseTestRunner {
         yearsBar.getSelectedYearBoxByIndex(3);
         int targetIndex = 3;
 
-
         Assert.assertTrue(yearsBar.isYearBoxLarger(targetIndex),
                 "The selected year box is not larger than the others!");
+    }
+
+    @Issue("91")
+    @Test
+    @Step("Verify each event is located separately as an element of a camera film.")
+    public void testEachEventIsLocatedSeparately() {
+        HomePage homePage = new HomePage(driver);
+        homePage.openBurgerMenu();
+        BurgerMenuComponent burgerMenuComponent = homePage.getBurgerMenuComponent();
+        burgerMenuComponent.clickMenuItem("History-коди");
+
+        StreetCodesPage streetCodesPage = new StreetCodesPage(driver);
+        streetCodesPage.clickOnCatalogComponent(0);
+
+        ChronologyComponent chronologyComponent = new ChronologyComponent(driver);
+        chronologyComponent.getFilmCardContainer();
+
+        ChronologyFilmCardComponent filmCardComponent = new ChronologyFilmCardComponent(driver);
+        filmCardComponent.sleep(10000);
+
+        for (int i = 4; i >= 0; i--) {
+            filmCardComponent.clickFilmCardByIndex(i);
+        }
+
+        filmCardComponent.getFilmCardByIndex(0);
+        filmCardComponent.isFilmCardProperlySeparated(0);
+        for (int i = 0; i <= 16; i++) {
+            filmCardComponent.clickFilmCardByIndex(i);
+            filmCardComponent.getFilmCardByIndex(i);
+            filmCardComponent.isFilmCardProperlySeparated(i);
+
+            Assert.assertTrue(filmCardComponent.isFilmCardProperlySeparated(i), "Film card at index " + i + " is not properly separated!");
+        }
+    }
+
+    @Issue("91")
+    @Test
+    @Step(" Verify each event contains: a period of time (date, season), Title, and Main Text.")
+    public void testEventsComplete() {
+        HomePage homePage = new HomePage(driver);
+        homePage.openBurgerMenu();
+        BurgerMenuComponent burgerMenuComponent = homePage.getBurgerMenuComponent();
+        burgerMenuComponent.clickMenuItem("History-коди");
+
+        StreetCodesPage streetCodesPage = new StreetCodesPage(driver);
+        streetCodesPage.clickOnCatalogComponent(0);
+        ChronologyComponent chronologyComponent = new ChronologyComponent(driver);
+        chronologyComponent.getFilmCardContainer();
+        ChronologyFilmCardComponent filmCardComponent = new ChronologyFilmCardComponent(driver);
+
+        for (int i = 4; i >= 0; i--) {
+            filmCardComponent.clickFilmCardByIndex(i);
+        }
+        boolean result = true;
+        for (int i = 0; i <= 16; i++) {
+            filmCardComponent.clickFilmCardByIndex(i);
+            filmCardComponent.getFilmCardByIndex(i);
+            Map<String, String> card = filmCardComponent.getFilmCardData(i);
+            for (Map.Entry<String, String> entry : card.entrySet()) {
+                result = result && (entry.getValue() != null) && (entry.getValue().length() > 0);// порівнює та витягує інформацію
+                if (!result) {
+                    System.out.println("Element is empty : " + entry.getKey());
+                }
+            }
+        }
+
+        Assert.assertTrue(result);
     }
 
     @Issue("91")
@@ -105,7 +173,7 @@ public class ChronologyTestCase extends BaseTestRunner {
         StreetCodesPage streetCodesPage = new StreetCodesPage(driver);
         streetCodesPage.clickOnCatalogComponent(0);
         ChronologyComponent chronologyComponent = new ChronologyComponent(driver);
-        chronologyComponent.getRedTimeline();
+        chronologyComponent.getFilmCardContainer();
 
         ChronologyFilmCardComponent filmCardComponent = new ChronologyFilmCardComponent(driver);
         filmCardComponent.sleep(10000);
@@ -131,75 +199,30 @@ public class ChronologyTestCase extends BaseTestRunner {
         homePage.openBurgerMenu();
         BurgerMenuComponent burgerMenuComponent = homePage.getBurgerMenuComponent();
         burgerMenuComponent.clickMenuItem("History-коди");
-        softAssert.assertTrue(driver.getCurrentUrl().contains("/catalog"), "Page did not navigate to 'History-коди'!");
-
 
         StreetCodesPage streetCodesPage = new StreetCodesPage(driver);
         streetCodesPage.clickOnCatalogComponent(0);
-        softAssert.assertTrue(driver.getCurrentUrl().contains("/roman-ratushnyi-seneka"));
         ChronologyComponent chronologyComponent = new ChronologyComponent(driver);
-        chronologyComponent.getRedTimeline();
+        chronologyComponent.getFilmCardContainer();
 
         ChronologyFilmCardComponent filmCardComponent = new ChronologyFilmCardComponent(driver);
         filmCardComponent.sleep(10000);
         for (int i = 4; i >= 0; i--) {
             filmCardComponent.clickFilmCardByIndex(i);
         }
-
         filmCardComponent.getFilmCardByIndex(0);
         filmCardComponent.descriptionsWithinLimit(400);
-        filmCardComponent.clickFilmCardByIndex(1);
-        filmCardComponent.getFilmCardByIndex(1);
-        filmCardComponent.descriptionsWithinLimit(400);
-        filmCardComponent.clickFilmCardByIndex(2);
-        filmCardComponent.getFilmCardByIndex(2);
-        filmCardComponent.descriptionsWithinLimit(400);
-        filmCardComponent.clickFilmCardByIndex(3);
-        filmCardComponent.getFilmCardByIndex(3);
-        filmCardComponent.descriptionsWithinLimit(400);
-        filmCardComponent.clickFilmCardByIndex(4);
-        filmCardComponent.getFilmCardByIndex(4);
-        filmCardComponent.descriptionsWithinLimit(400);
-        filmCardComponent.clickFilmCardByIndex(5);
-        filmCardComponent.getFilmCardByIndex(5);
-        filmCardComponent.descriptionsWithinLimit(400);
-        filmCardComponent.clickFilmCardByIndex(6);
-        filmCardComponent.getFilmCardByIndex(6);
-        filmCardComponent.descriptionsWithinLimit(400);
-        filmCardComponent.clickFilmCardByIndex(7);
-        filmCardComponent.getFilmCardByIndex(7);
-        filmCardComponent.descriptionsWithinLimit(400);
-        filmCardComponent.clickFilmCardByIndex(8);
-        filmCardComponent.getFilmCardByIndex(8);
-        filmCardComponent.descriptionsWithinLimit(400);
-        filmCardComponent.clickFilmCardByIndex(9);
-        filmCardComponent.getFilmCardByIndex(9);
-        filmCardComponent.descriptionsWithinLimit(400);
-        filmCardComponent.clickFilmCardByIndex(10);
-        filmCardComponent.getFilmCardByIndex(10);
-        filmCardComponent.descriptionsWithinLimit(400);
-        filmCardComponent.clickFilmCardByIndex(11);
-        filmCardComponent.getFilmCardByIndex(11);
-        filmCardComponent.descriptionsWithinLimit(400);
-        filmCardComponent.clickFilmCardByIndex(12);
-        filmCardComponent.getFilmCardByIndex(12);
-        filmCardComponent.descriptionsWithinLimit(400);
-        filmCardComponent.clickFilmCardByIndex(13);
-        filmCardComponent.getFilmCardByIndex(13);
-        filmCardComponent.descriptionsWithinLimit(400);
-        filmCardComponent.clickFilmCardByIndex(14);
-        filmCardComponent.getFilmCardByIndex(14);
-        filmCardComponent.descriptionsWithinLimit(400);
-        filmCardComponent.clickFilmCardByIndex(15);
-        filmCardComponent.getFilmCardByIndex(15);
-        filmCardComponent.descriptionsWithinLimit(400);
-        filmCardComponent.clickFilmCardByIndex(16);
-        filmCardComponent.getFilmCardByIndex(16);
-        filmCardComponent.descriptionsWithinLimit(400);
+        for (int i = 0; i <= 16; i++) {
+            filmCardComponent.clickFilmCardByIndex(i);
+            filmCardComponent.getFilmCardByIndex(i);
+            filmCardComponent.descriptionsWithinLimit(400);
+        }
 
         boolean descriptionsValid = filmCardComponent.descriptionsWithinLimit(400);
-        softAssert.assertTrue(descriptionsValid, "Some film card descriptions exceed 400 characters!");
-        }
+        Assert.assertTrue(descriptionsValid, "Some film card descriptions exceed 400 characters!");
+
+
+    }
 
     @Issue("91")
     @Test
@@ -246,6 +269,7 @@ public class ChronologyTestCase extends BaseTestRunner {
 
         ChronologyYearsBarComponent carouselComponent = new ChronologyYearsBarComponent(driver);
         carouselComponent.verifyCarouselChronology();
+
     }
 
 
@@ -254,7 +278,7 @@ public class ChronologyTestCase extends BaseTestRunner {
     @Step(" Verify camera film reacts to a scroll and moves accordingly" +
             "Scroll right moves the camera film to the newest events ->" +
             "Scroll left moves the camera film to the oldest events <-")
-    public void testNavigationYearBoxes() {
+    public void testNavigationFilmCard() {
         HomePage homePage = new HomePage(driver);
         homePage.openBurgerMenu();
         BurgerMenuComponent burgerMenuComponent = homePage.getBurgerMenuComponent();
@@ -266,21 +290,70 @@ public class ChronologyTestCase extends BaseTestRunner {
         chronologyComponent.getRedTimeline();
 
         ChronologyFilmCardComponent filmCardComponent = new ChronologyFilmCardComponent(driver);
+
+        for (int i = 5; i >= 0; i--) {
+            filmCardComponent.clickFilmCardByIndex(i);
+            WebElement currentCard = filmCardComponent.getFilmCardByIndex(i);
+            softAssert.assertTrue(currentCard.isDisplayed(),
+                    "Film card at index " + i + " is not visible after scrolling left!");
+        }
+
+        WebElement firstCard = filmCardComponent.getFilmCardByIndex(0);
+        softAssert.assertTrue(firstCard.isDisplayed(),
+                "First film card (index 0) is not visible after scrolling left!");
+
+        for (int i = 0; i <= 16; i++) {
+            filmCardComponent.clickFilmCardByIndex(i);
+            WebElement currentCard = filmCardComponent.getFilmCardByIndex(i);
+            softAssert.assertTrue(currentCard.isDisplayed(),
+                    "Film card at index " + i + " is not visible after scrolling right!");
+        }
+
+        WebElement lastCard = filmCardComponent.getFilmCardByIndex(16);
+        softAssert.assertTrue(lastCard.isDisplayed(),
+                "Last film card (index 16) is not visible after scrolling right!");
+
+        softAssert.assertAll();
+    }
+
+    @Issue("91")
+    @Test
+    @Step("Verify the ordering of events:\n" +
+            "\n" +
+            "the beginning of the year is considered as the 1st of January\n" +
+            "\n" +
+            "the beginning of the season is considered the first day of its first month,\n" +
+            "\n" +
+            "the beginning of the month is considered the first day of this month")
+    public void testTimelineNavigationAndSorting() {
+        HomePage homePage = new HomePage(driver);
+        homePage.openBurgerMenu();
+        BurgerMenuComponent burgerMenuComponent = homePage.getBurgerMenuComponent();
+        burgerMenuComponent.clickMenuItem("History-коди");
+
+        StreetCodesPage streetCodesPage = new StreetCodesPage(driver);
+        streetCodesPage.clickOnCatalogComponent(0);
+        ChronologyComponent chronologyComponent = new ChronologyComponent(driver);
+        chronologyComponent.getFilmCardContainer();
+
+        ChronologyFilmCardComponent filmCardComponent = new ChronologyFilmCardComponent(driver);
         filmCardComponent.sleep(10000);
 
-        int targetIndex = 6;
-        WebElement filmCardByIndex = filmCardComponent.getFilmCardByIndex(targetIndex);
-        softAssert.assertTrue(filmCardByIndex.isDisplayed(),
-                "Film card at index " + targetIndex + " is not visible!");
-        filmCardComponent.clickFilmCardByIndex(targetIndex);
 
-        String filmTitle = "Захистимо Протасів Яр";
-        WebElement filmCardByName = filmCardComponent.getFilmCardByName(filmTitle);
-        softAssert.assertTrue(filmCardByName.isDisplayed(),
-                "Film card with title '" + filmTitle + "' is not visible!");
-        filmCardComponent.clickFilmCardByName(filmTitle);
+        for (int i = 4; i >= 0; i--) {
+            filmCardComponent.clickFilmCardByIndex(i);
+        }
+        boolean isSorted = true;
+        for (int i = 0; i <= 15; i++) {
+            filmCardComponent.clickFilmCardByIndex(i);
+            filmCardComponent.getFilmCardByIndex(i);
+            isSorted = isSorted && filmCardComponent.eventsChronologySorted();
 
+        }
+
+        Assert.assertTrue(isSorted, "Events are not displayed in chronological order!");
     }
+
 
     @Issue("91")
     @Test
@@ -301,7 +374,7 @@ public class ChronologyTestCase extends BaseTestRunner {
         ChronologyFilmCardComponent filmCardComponent = new ChronologyFilmCardComponent(driver);
         filmCardComponent.sleep(10000);
 
-        int targetIndex = 6;
+        int targetIndex = 5;
 
         WebElement filmCardByIndex = filmCardComponent.getFilmCardByIndex(targetIndex);
 
@@ -334,7 +407,7 @@ public class ChronologyTestCase extends BaseTestRunner {
 
         ChronologyFilmCardComponent filmCardComponent = new ChronologyFilmCardComponent(driver);
 
-        int targetIndex = 6;
+        int targetIndex = 5;
         WebElement filmCardByIndex = filmCardComponent.getFilmCardByIndex(targetIndex);
         softAssert.assertTrue(filmCardByIndex.isDisplayed(),
                 "Film card at index " + targetIndex + " is not visible!");
@@ -348,6 +421,8 @@ public class ChronologyTestCase extends BaseTestRunner {
         for (int i = 0; i < filmCardComponent.getFilmCard().size(); i++) {
             softAssert.assertTrue(filmCardComponent.borderColor(i, expectedBorderColor),
                     "The film card at index " + i + " incorrectly has the expected border color!");
+
+            softAssert.assertAll();
         }
     }
 }
