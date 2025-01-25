@@ -27,6 +27,7 @@ public class PartnersPageAdminPanel extends BasePageAdminPanel {
 
     public PartnersPageGridComponent getPartnersPageGridComponent(){
         if(partnersPageGridComponent == null){
+            waitUntilElementVisible(gridRootElement);
             partnersPageGridComponent = new PartnersPageGridComponent(driver, gridRootElement);
         }
         return partnersPageGridComponent;

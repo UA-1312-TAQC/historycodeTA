@@ -24,7 +24,7 @@ public class BaseTestRunner {
     }
 
     @Step("init ChromeDriver")
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void beforeMethod() {
         ChromeOptions options = new ChromeOptions();
 
@@ -34,7 +34,7 @@ public class BaseTestRunner {
         driver.get(testValueProvider.getBaseUIUrl());
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     public void afterMethod() {
         if (driver != null) {
             driver.quit();
