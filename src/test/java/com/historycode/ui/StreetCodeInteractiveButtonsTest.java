@@ -3,7 +3,7 @@ package com.historycode.ui;
 import com.historycode.ui.page.homePage.HomePage;
 import com.historycode.ui.page.streetCodePage.StreetCodePage;
 import com.historycode.ui.page.streetCodePage.components.MainCardComponent;
-import com.historycode.ui.page.streetcodespage.StreetCodesPage;
+import com.historycode.ui.page.streetcodecatalogpage.StreetCodeCatalogPage;
 import com.historycode.ui.testrunners.BaseTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -26,7 +26,7 @@ public class StreetCodeInteractiveButtonsTest extends BaseTestRunner {
         homePage.openBurgerMenu();
         homePage.getBurgerMenuComponent().clickMenuItem("History-коди");
 
-        StreetCodesPage catalogPage = new StreetCodesPage(driver);
+        StreetCodeCatalogPage catalogPage = new StreetCodeCatalogPage(driver);
         streetCodePage = catalogPage.clickCatalogItemByName(0);
     }
 
