@@ -12,6 +12,8 @@ import org.testng.annotations.Test;
 
 public class MandatoryFieldsMemberAdd extends TestRunnerWithAdmin {
 
+    private static final String SUCCESS_MESSAGE = "Члена команди успішно додано/оновлено!";
+
     @Issue("116")
     @Test
     @Description("Verify if the admin can add a new team member using only the mandatory fields")
@@ -45,7 +47,7 @@ public class MandatoryFieldsMemberAdd extends TestRunnerWithAdmin {
         Assert.assertTrue(popUpMessageComponent.isSuccessPopUpDisplayed(), "Success popup is not displayed.");
 
         String actualMessage = popUpMessageComponent.getSuccessMessage();
-        Assert.assertEquals(actualMessage, "Члена команди успішно додано/оновлено!", "Unexpected success message.");
+        Assert.assertEquals(actualMessage, SUCCESS_MESSAGE);
 
         teamMember.clickDelete().clickOkButton();
     }

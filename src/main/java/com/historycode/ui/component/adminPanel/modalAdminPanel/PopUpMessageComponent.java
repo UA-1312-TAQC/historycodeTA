@@ -18,7 +18,7 @@ public class PopUpMessageComponent extends BaseComponent {
     @FindBy(xpath = "//div[contains(@class, 'ant-message-notice-error')]")
     private WebElement errorPopUpWindowRoot;
 
-    protected String MESSAGE_PATH = ".//span[not(@role='img')]";
+    private static final String MESSAGE_PATH = ".//span[not(@role='img')]";
 
     private final WebDriverWait wait;
 
@@ -27,33 +27,33 @@ public class PopUpMessageComponent extends BaseComponent {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
     }
 
-    public boolean isSuccessPopUpDisplayed() {
+    private boolean isPopUpDisplayed(WebElement popupElement) {
         try {
-            wait.until(ExpectedConditions.visibilityOf(successPopUpWindowRoot));
-            return successPopUpWindowRoot.isDisplayed();
+            wait.until(ExpectedConditions.visibilityOf(popupElement));
+            return popupElement.isDisplayed();
         } catch (Exception e) {
             return false;
         }
     }
 
-    //Locating the success message dynamically within the popup
-    public String getSuccessMessage() {
-        WebElement message = successPopUpWindowRoot.findElement(By.xpath(MESSAGE_PATH));
+    private String getMessageText(WebElement popupElement) {
+        WebElement message = popupElement.findElement(By.xpath(MESSAGE_PATH));
         return message.getText();
+    }
+
+    public boolean isSuccessPopUpDisplayed() {
+        return isPopUpDisplayed(successPopUpWindowRoot);
+    }
+
+    public String getSuccessMessage() {
+        return getMessageText(successPopUpWindowRoot);
     }
 
     public boolean isErrorPopUpDisplayed() {
-        try {
-            wait.until(ExpectedConditions.visibilityOf(errorPopUpWindowRoot));
-            return errorPopUpWindowRoot.isDisplayed();
-        } catch (Exception e) {
-            return false;
-        }
+        return isPopUpDisplayed(errorPopUpWindowRoot);
     }
 
     public String getErrorMessage() {
-        WebElement message = errorPopUpWindowRoot.findElement(By.xpath(MESSAGE_PATH));
-        return message.getText();
+        return getMessageText(errorPopUpWindowRoot);
     }
-
 }
