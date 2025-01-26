@@ -2,7 +2,7 @@ package com.historycode.ui.page.adminpanel.newspage;
 
 import com.historycode.ui.component.BaseComponent;
 import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
-import com.historycode.ui.page.adminpanel.newspage.modal.EditNewsModal;
+import com.historycode.ui.page.adminpanel.newspage.modal.CreateEditNewsModal;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -39,8 +39,8 @@ public class NewsRowComponent extends BaseComponent {
         return new DeleteItemModal(driver, rootElement);
     }
 
-    public EditNewsModal clickEdit() {
+    public CreateEditNewsModal clickEdit() {
         actionEdit.click();
-        return new EditNewsModal(driver, rootElement);
+        return new CreateEditNewsModal(driver, rootElement);
     }
 }

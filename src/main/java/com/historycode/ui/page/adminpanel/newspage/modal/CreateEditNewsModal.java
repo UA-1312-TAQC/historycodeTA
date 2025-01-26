@@ -1,6 +1,6 @@
 package com.historycode.ui.page.adminpanel.newspage.modal;
 
-import com.historycode.ui.component.adminPanel.modalAdminPanel.BaseEditModal;
+import com.historycode.ui.component.adminPanel.modalAdminPanel.BaseCreateEditModal;
 import com.historycode.ui.elements.adminPanel.InputElement;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.sql.Date;
 import java.time.Duration;
 
-public class EditNewsModal extends BaseEditModal {
+public class CreateEditNewsModal extends BaseCreateEditModal {
     @FindBy(xpath = "//label[@for = 'title']/../..")
     private WebElement newsTitleContainer;
     @Getter
@@ -77,7 +77,7 @@ public class EditNewsModal extends BaseEditModal {
     private WebElement newsLinkTranslitErrorMessage;
 
 
-    public EditNewsModal(WebDriver driver, WebElement rootElement) {
+    public CreateEditNewsModal(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
         this.newsTitle = new InputElement(driver, newsTitleContainer);
         this.newsLinkTranslit = new InputElement(driver, newsLinkTranslitContainer);

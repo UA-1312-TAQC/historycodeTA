@@ -2,7 +2,7 @@ package com.historycode.ui.page.adminpanel.partnerspage;
 
 import com.historycode.ui.component.BaseComponent;
 import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
-import com.historycode.ui.page.adminpanel.partnerspage.modal.EditPartnersModal;
+import com.historycode.ui.page.adminpanel.partnerspage.modal.CreateEditPartnersModal;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -51,9 +51,9 @@ public class PartnersRowComponent extends BaseComponent {
         return new DeleteItemModal(driver, deleteModalRootElement);
     }
 
-    public EditPartnersModal clickEdit() {
+    public CreateEditPartnersModal clickEdit() {
         editAction.click();
-        return new EditPartnersModal(driver, editModalRootElement);
+        return new CreateEditPartnersModal(driver, editModalRootElement);
     }
 
 }

@@ -1,6 +1,6 @@
 package com.historycode.ui.page.adminpanel.partnerspage.modal;
 
-import com.historycode.ui.component.adminPanel.modalAdminPanel.BaseEditModal;
+import com.historycode.ui.component.adminPanel.modalAdminPanel.BaseCreateEditModal;
 import com.historycode.ui.elements.adminPanel.CheckboxElement;
 import com.historycode.ui.elements.adminPanel.InputElement;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class EditPartnersModal extends BaseEditModal {
+public class CreateEditPartnersModal extends BaseCreateEditModal {
 
     @FindBy(xpath = "./label[@for = 'isKeyPartner']/../..")
     private WebElement keyPartnerCheckboxContainer;
@@ -35,7 +35,7 @@ public class EditPartnersModal extends BaseEditModal {
     @Getter
     private final InputElement partnerLinkName = new InputElement(driver, partnerLinkNameContainer);
 
-    public EditPartnersModal(WebDriver driver, WebElement rootElement) {
+    public CreateEditPartnersModal(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
 

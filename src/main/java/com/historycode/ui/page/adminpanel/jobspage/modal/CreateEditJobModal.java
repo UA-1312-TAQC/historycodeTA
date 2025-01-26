@@ -1,7 +1,7 @@
 package com.historycode.ui.page.adminpanel.jobspage.modal;
 
 import com.historycode.ui.component.adminPanel.dropDownAdminPanel.DropdownComponent;
-import com.historycode.ui.component.adminPanel.modalAdminPanel.BaseEditModal;
+import com.historycode.ui.component.adminPanel.modalAdminPanel.BaseCreateEditModal;
 import com.historycode.ui.elements.adminPanel.InputElement;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class EditJobModal extends BaseEditModal {
+public class CreateEditJobModal extends BaseCreateEditModal {
     @FindBy(xpath = "./label[@for = 'title']/../..")
     private WebElement titleContainer;
 
@@ -40,7 +40,7 @@ public class EditJobModal extends BaseEditModal {
     @Getter
     private final InputElement salary;
 
-    public EditJobModal(WebDriver driver, WebElement rootElement) {
+    public CreateEditJobModal(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
         this.title = new InputElement(driver, titleContainer);
         this.salary = new InputElement(driver, salaryContainer);
@@ -71,7 +71,7 @@ public class EditJobModal extends BaseEditModal {
         this.salary.setInputField(salary.toString());
     }
 
-    public EditJobModal saveEditedJob() {
+    public CreateEditJobModal saveEditedJob() {
         clickSaveButton();
         return this;
     }

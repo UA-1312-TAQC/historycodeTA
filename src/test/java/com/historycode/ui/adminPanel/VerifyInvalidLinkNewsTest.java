@@ -1,7 +1,7 @@
 package com.historycode.ui.adminPanel;
 
 import com.historycode.ui.page.adminpanel.newspage.NewsPageAdminPanel;
-import com.historycode.ui.page.adminpanel.newspage.modal.EditNewsModal;
+import com.historycode.ui.page.adminpanel.newspage.modal.CreateEditNewsModal;
 import com.historycode.ui.testrunners.TestRunnerWithAdmin;
 
 import io.qameta.allure.Issue;
@@ -15,7 +15,7 @@ public class VerifyInvalidLinkNewsTest extends TestRunnerWithAdmin {
 
     private String newsTitle;
     private String newsText;
-    private EditNewsModal editNewsModal;
+    private CreateEditNewsModal editNewsModal;
 
     @BeforeMethod
     public void setupForCreateNews() {
