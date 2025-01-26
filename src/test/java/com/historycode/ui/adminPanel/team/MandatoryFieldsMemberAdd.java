@@ -40,7 +40,7 @@ public class MandatoryFieldsMemberAdd extends TestRunnerWithAdmin {
             memberModal = memberModal.clickLastPaginationItem();
             teamMember = memberModal.getTeamPageGridComponent().findUserByName(memberName);
         }
-        Assert.assertNotNull(teamMember, String.format("The member %s is not found in the team grid", teamMember));
+        Assert.assertNotNull(teamMember, String.format("The member %s is not found in the team grid", memberName));
 
         //Validate the success popup firstly
         PopUpMessageComponent popUpMessageComponent = new PopUpMessageComponent(driver);
