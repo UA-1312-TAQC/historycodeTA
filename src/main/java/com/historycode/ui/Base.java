@@ -21,8 +21,7 @@ public abstract class Base {
     protected WebDriverWait wait;
     protected JavascriptExecutor threadJs;
     protected Actions actions;
-    private static final int SCROLL_STABILIZATION_DELAY = 500;
-    private static final Logger logger = LoggerFactory.getLogger(Base.class);
+    protected static final Logger logger = LoggerFactory.getLogger(Base.class);
 
     public Base(WebDriver driver) {
         this.driver = driver;
@@ -34,21 +33,26 @@ public abstract class Base {
 
     @Step("Scroll to the element")
     public void scrollToElement(WebElement element) {
-        wait.until(ExpectedConditions.visibilityOf(element));
+        waitUntilElementVisible(element);
         try {
-            ((JavascriptExecutor) driver).executeScript(
+            threadJs.executeScript(
                     "arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});", element);
-            Thread.sleep(SCROLL_STABILIZATION_DELAY); // Коротка пауза для стабільності
         } catch (Exception e) {
             logger.error("Error scrolling to element", e);
+            throw e;
         }
-        wait.until(ExpectedConditions.elementToBeClickable(element));
+        waitUntilElementClickable(element);
     }
 
     @Step("Scroll to the end of the page")
     public void scrollToEndOfPage() {
         sleep(1000);
-        threadJs.executeScript("window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });");
+        try {
+            threadJs.executeScript("window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });");
+        } catch (Exception e) {
+            logger.error("Error scrolling to to the end of the page", e);
+            throw e;
+        }
     }
 
     protected boolean isContentTruncatedOrOverflow(WebElement element) {
@@ -57,27 +61,65 @@ public abstract class Base {
                 "var isOverflowing = element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;" +
                 "var isTextOverflowing = computedStyle.overflow === 'hidden' || computedStyle.textOverflow === 'ellipsis' || computedStyle.whiteSpace === 'nowrap';" +
                 "return isOverflowing && !isTextOverflowing;";
-        Boolean isOverflowing = (Boolean) threadJs.executeScript(script, element);
+
+        Boolean isOverflowing;
+
+        try {
+            isOverflowing = (Boolean) threadJs.executeScript(script, element);
+        } catch (Exception ex) {
+            logger.error("Error checking if content is truncated or overflowing", ex);
+            throw ex;
+        }
         return isOverflowing != null && isOverflowing;
     }
 
     protected void clickDynamicElement(WebElement element) {
-        threadJs.executeScript("arguments[0].click();", element);
+        waitUntilElementVisible(element);
+        try {
+            threadJs.executeScript("arguments[0].click();", element);
+        } catch (Exception e) {
+            logger.error("Error clicking on element", e);
+            throw e;
+        }
     }
 
     public Point getCenterRelativeToBlock(WebElement block, WebElement element) {
-        double blockLeft = ((Number) Objects.requireNonNull(threadJs.executeScript("return arguments[0].getBoundingClientRect().left;", block))).doubleValue();
-        double blockTop = ((Number) Objects.requireNonNull(threadJs.executeScript("return arguments[0].getBoundingClientRect().top;", block))).doubleValue();
-        double blockWidth = ((Number) Objects.requireNonNull(threadJs.executeScript("return arguments[0].getBoundingClientRect().width;", block))).doubleValue();
-        double blockHeight = ((Number) Objects.requireNonNull(threadJs.executeScript("return arguments[0].getBoundingClientRect().height;", block))).doubleValue();
+        double blockLeft, blockTop, blockWidth, blockHeight, elementLeft, elementTop, elementWidth, elementHeight;
+        int scrollX, scrollY;
 
-        double elementLeft = ((Number) Objects.requireNonNull(threadJs.executeScript("return arguments[0].getBoundingClientRect().left;", element))).doubleValue();
-        double elementTop = ((Number) Objects.requireNonNull(threadJs.executeScript("return arguments[0].getBoundingClientRect().top;", element))).doubleValue();
-        double elementWidth = ((Number) Objects.requireNonNull(threadJs.executeScript("return arguments[0].getBoundingClientRect().width;", element))).doubleValue();
-        double elementHeight = ((Number) Objects.requireNonNull(threadJs.executeScript("return arguments[0].getBoundingClientRect().height;", element))).doubleValue();
+        try {
+            blockLeft = ((Number) Objects.requireNonNull(threadJs
+                    .executeScript("return arguments[0].getBoundingClientRect().left;", block)))
+                    .doubleValue();
+            blockTop = ((Number) Objects.requireNonNull(threadJs
+                    .executeScript("return arguments[0].getBoundingClientRect().top;", block)))
+                    .doubleValue();
+            blockWidth = ((Number) Objects.requireNonNull(threadJs
+                    .executeScript("return arguments[0].getBoundingClientRect().width;", block)))
+                    .doubleValue();
+            blockHeight = ((Number) Objects.requireNonNull(threadJs
+                    .executeScript("return arguments[0].getBoundingClientRect().height;", block)))
+                    .doubleValue();
 
-        int scrollX = ((Long) Objects.requireNonNull(threadJs.executeScript("return window.scrollX;"))).intValue();
-        int scrollY = ((Long) Objects.requireNonNull(threadJs.executeScript("return window.scrollY;"))).intValue();
+            elementLeft = ((Number) Objects.requireNonNull(threadJs
+                    .executeScript("return arguments[0].getBoundingClientRect().left;", element)))
+                    .doubleValue();
+            elementTop = ((Number) Objects.requireNonNull(threadJs
+                    .executeScript("return arguments[0].getBoundingClientRect().top;", element)))
+                    .doubleValue();
+            elementWidth = ((Number) Objects.requireNonNull(threadJs
+                    .executeScript("return arguments[0].getBoundingClientRect().width;", element)))
+                    .doubleValue();
+            elementHeight = ((Number) Objects.requireNonNull(threadJs
+                    .executeScript("return arguments[0].getBoundingClientRect().height;", element)))
+                    .doubleValue();
+
+            scrollX = ((Long) Objects.requireNonNull(threadJs.executeScript("return window.scrollX;"))).intValue();
+            scrollY = ((Long) Objects.requireNonNull(threadJs.executeScript("return window.scrollY;"))).intValue();
+        } catch (Exception e) {
+            logger.error("Error getting center relative to block", e);
+            throw e;
+        }
 
         double blockCenterX = blockLeft + blockWidth / 2 - scrollX;
         double blockCenterY = blockTop + blockHeight / 2 - scrollY;

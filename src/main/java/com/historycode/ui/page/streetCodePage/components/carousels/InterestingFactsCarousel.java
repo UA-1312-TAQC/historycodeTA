@@ -20,13 +20,13 @@ public class InterestingFactsCarousel extends BaseCarousel {
     private WebElement oneCardNode;
 
     //TODO: remove this
-    @FindBy(xpath = "//div[@id='wow-facts']//div[@class='interestingFactsContainer ']//button[@class='slick-arrow slick-next']")
+    @FindBy(xpath = ".//button[@class='slick-arrow slick-next']")
     private WebElement nextButtonNode;
 
-    @FindBy(xpath = "//div[@id='wow-facts']//div[@class='interestingFactsContainer ']//button[@class='slick-arrow slick-prev']")
+    @FindBy(xpath = ".//button[@class='slick-arrow slick-prev']")
     private WebElement prevButtonNode;
 
-    @FindBy(xpath = "//div[@id='wow-facts']//div[@class='interestingFactsContainer ']//ul[@class='slick-dots']")
+    @FindBy(xpath = ".//ul[@class='slick-dots']")
     private WebElement paginationNode;
 
     private final List<InterestingFactsCardComponent> factCards;
@@ -58,10 +58,9 @@ public class InterestingFactsCarousel extends BaseCarousel {
         return factCards.get(index).getTitle();
     }
 
-    @Step("Click the 'Next' button")
+    @Step("Click the 'Next' button.")
     public InterestingFactsCarousel clickNextButton() {
         clickDynamicElement(nextButtonNode);
-        sleep(5000);
         return this;
     }
 
@@ -81,6 +80,7 @@ public class InterestingFactsCarousel extends BaseCarousel {
         try {
             return prevButtonNode.isDisplayed() && nextButtonNode.isDisplayed();
         } catch (NoSuchElementException e) {
+            logger.error("Previous or next button is not displayed", e);
             return false;
         }
     }
@@ -90,6 +90,7 @@ public class InterestingFactsCarousel extends BaseCarousel {
         try {
             return paginationNode.isDisplayed();
         } catch (NoSuchElementException e) {
+            logger.error("Pagination is not displayed", e);
             return false;
         }
     }

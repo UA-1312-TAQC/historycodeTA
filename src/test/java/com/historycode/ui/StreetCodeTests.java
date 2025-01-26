@@ -78,10 +78,73 @@ public class StreetCodeTests extends BaseTestRunner {
         softAssert.assertAll();
     }
 
+    @Issue("80")
+    @Test(priority = 1)
+    @Description("Verification if working 'Трохи ще' button and 'Дещо менше' if there is more text available on the page")
+    public void testCheckExpandButton() throws InterruptedException {
+
+        navigateToStreetCodePage("/roman-ratushnyi-seneka");
+
+        SoftAssert softAssert = new SoftAssert();
+
+        boolean isExpandButtonDisplayed = streetCodePage
+                .scrollToTextVideoBlock()
+                .getTextBlock()
+                .isExpandButtonDisplayed();
+
+        boolean isLastParagraphVisible = streetCodePage
+                .getTextBlock()
+                .isLastParagraphVisibleInParent();
+
+        softAssert.assertTrue(isExpandButtonDisplayed, "The expand button is not displayed");
+        softAssert.assertTrue(isLastParagraphVisible, "The last paragraph is not visible");
+
+        int paragraphFirstCount = streetCodePage
+                .getTextBlock()
+                .getParagraphCount();
+
+        int paragraphSecondCount = streetCodePage
+                .getTextBlock()
+                .toggleTextContent()
+                .getParagraphCount(paragraphFirstCount);
+
+        boolean isLessButtonDisplayed = streetCodePage
+                .getTextBlock()
+                .scrollToLessButton()
+                .isLessButtonDisplayed();
+
+        isExpandButtonDisplayed = streetCodePage
+                .getTextBlock()
+                .isExpandButtonDisplayed();
+
+        softAssert.assertTrue(paragraphFirstCount < paragraphSecondCount, "The text is not expanded");
+        softAssert.assertTrue(isLessButtonDisplayed, "The less button is not displayed");
+        softAssert.assertFalse(isExpandButtonDisplayed, "The expand button is displayed");
+
+        boolean collapsedParagraphCount = streetCodePage
+                .getTextBlock()
+                .isLessButtonClick()
+                .getCollapsedParagraphCount(paragraphFirstCount);
+
+        isExpandButtonDisplayed = streetCodePage
+                .getTextBlock()
+                .isExpandButtonDisplayed();
+
+        isLessButtonDisplayed = streetCodePage
+                .getTextBlock()
+                .isLessButtonDisplayed();
+
+        softAssert.assertTrue(collapsedParagraphCount, "The text is not collapsed");
+        softAssert.assertTrue(isExpandButtonDisplayed, "The expand button is not displayed");
+        softAssert.assertFalse(isLessButtonDisplayed, "The less button is displayed");
+
+        softAssert.assertAll();
+    }
+
     @Issue("86")
     @Test(priority = 1)
     @Description("Verification if only one fact is displayed - it is located in the center of the block.")
-    public void testWowFactsOneElementAlign(){
+    public void testWowFactsOneElementAlign() {
         final int CENTER_ALIGNMENT_TOLERANCE = 10;
 
         navigateToStreetCodePage("/sergii-zhadan");
@@ -94,7 +157,7 @@ public class StreetCodeTests extends BaseTestRunner {
                 .getCarousel()
                 .isOneCardPresent();
 
-        softAssert.assertTrue(isOneCard , "The carousel contains more than one cards");
+        softAssert.assertTrue(isOneCard, "The carousel contains more than one cards");
 
         Point elementCenterDifference = streetCodePage
                 .getFacts()
@@ -124,7 +187,7 @@ public class StreetCodeTests extends BaseTestRunner {
     @Issue("87")
     @Test(dataProvider = "urlWowFactSetProvider", dataProviderClass = StreetCodeDP.class, priority = 1)
     @Description("Verification that if 3 or more facts are displayed, they scroll in a loop.")
-    public void testWowFactsScroll(String addPath){
+    public void testWowFactsScroll(String addPath) {
         final int ADDITIONAL_CARD = 2;
 
         navigateToStreetCodePage(addPath);
