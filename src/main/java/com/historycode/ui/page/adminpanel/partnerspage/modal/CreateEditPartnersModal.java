@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+//TODO to expand this class using CreatePartnersModal and use it as the base for creating/editing the partner object
 public class CreateEditPartnersModal extends BaseCreateEditModal {
 
     @FindBy(xpath = "./label[@for = 'isKeyPartner']/../..")
