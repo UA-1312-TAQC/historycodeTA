@@ -1,6 +1,7 @@
 package com.historycode.ui.page.homePage;
 
 import com.historycode.ui.component.BaseComponent;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -30,9 +31,10 @@ public class TeamCardComponent extends BaseComponent {
     }
 
     public String getPhotoUrl() {
-        return (photo != null) ? photo.getAttribute("src") : "";
-    }
+            wait.until(driver -> photo.getAttribute("src") != null);
+            return photo.getAttribute("src");
 
+    }
     public String getMemberName() {
         return (name != null) ? name.getText().trim() : "";
     }
@@ -46,4 +48,6 @@ public class TeamCardComponent extends BaseComponent {
                 .map(link -> link.getAttribute("href"))
                 .collect(Collectors.toList());
     }
+
+
 }

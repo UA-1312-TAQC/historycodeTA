@@ -14,6 +14,9 @@ public class HistoryCodePage extends BaseComponent {
 
     @FindBy(xpath = "//p[@class='streetcodeCatalogCaption']")
     private WebElement streetsCodesCaptionNode;
+    @Getter
+    @FindBy(xpath = "//a[@class='ant-breadcrumb-link activeLink']")
+    private WebElement streetsCodesLink;
 
     @Getter
     private final CatalogComponent historyCodesCatalogComponent;

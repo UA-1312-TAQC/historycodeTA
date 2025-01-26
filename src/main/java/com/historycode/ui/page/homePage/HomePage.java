@@ -19,7 +19,7 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//div[contains(@class, 'newsSliderContainer')]//div[contains(@class, 'sliderClass')]")
     private WebElement newsCarouselElement;
 
-    @FindBy(xpath = "//div[@class='streetcodeSliderContainer']")
+    @FindBy(xpath = "//div[contains(@class, 'streetcodeSliderContent')]//div[contains(@class, 'slick-track')]")
     private WebElement personCarouselElement;
 
     @FindBy(xpath = "//div[@class='teamComponent']//div[@class='sliderClass']")

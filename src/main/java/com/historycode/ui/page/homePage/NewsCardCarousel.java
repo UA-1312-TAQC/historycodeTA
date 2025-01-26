@@ -18,11 +18,17 @@ public class NewsCardCarousel extends CarouselComponent<NewsCardComponent> {
         super(driver, rootElement);
     }
 
+
     @Override
     public List<NewsCardComponent> getCarouselItems() {
         return itemElements.stream()
                 .map(element -> new NewsCardComponent(driver, element))
                 .collect(Collectors.toList());
     }
+    @Override
+    public NewsCardComponent getActiveSlideComponent() {
+        return new NewsCardComponent(driver, slickActive);
+    }
 }
+
 

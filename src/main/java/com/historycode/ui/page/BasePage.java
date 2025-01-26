@@ -5,11 +5,13 @@ import com.historycode.ui.component.BurgerMenu.BurgerMenuComponent;
 import com.historycode.ui.component.footer.FooterComponent;
 import com.historycode.ui.component.header.HeaderComponent;
 import lombok.Getter;
+import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.Objects;
-
+@Slf4j
 @Getter
 public abstract class BasePage extends Base {
 
@@ -93,22 +95,16 @@ public abstract class BasePage extends Base {
     }
 
     public void scrollUntilElementIsVisible(WebElement element) {
-        int maxAttempts = 3;
-        int attempts = 0;
-
-        while (attempts < maxAttempts) {
-            try {
-                ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({behavior: 'instant', block: 'center'});", element);
-                if (element.isDisplayed()) {
-                    return;
-                }
-            } catch (StaleElementReferenceException e) {
-            }
-            attempts++;
-            sleep(500);
+        try {
+            wait.until(driver -> {
+                ((JavascriptExecutor) driver).executeScript(
+                        "arguments[0].scrollIntoView({behavior: 'instant', block: 'center'});", element);
+                return element.isDisplayed();
+            });
+            log.info("Element is now visible.");
+        } catch (TimeoutException e) {
+            throw new TimeoutException("Element is not visible after scrolling.", e);
         }
-
-        throw new TimeoutException("Element is not visible after " + maxAttempts + " attempts to scroll.");
     }
 
 }
