@@ -3,6 +3,7 @@ package com.historycode.ui.component.adminPanel.modalAdminPanel;
 import com.historycode.ui.component.BaseModal;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 public abstract class BaseCreateEditModal extends BaseModal {
@@ -18,8 +19,15 @@ public abstract class BaseCreateEditModal extends BaseModal {
     @FindBy(xpath = ".//div[@class='center']//button/span")
     protected WebElement saveButton;
 
+
+    @FindBy(xpath = "//div[@class = 'ant-message-notice-content']")
+    protected WebElement tooltipConfirmation;
+
+    protected Actions actions;
+
     public BaseCreateEditModal(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
+        this.actions = new Actions(driver);
     }
 
     public boolean isModalDisplayed() {
@@ -39,6 +47,8 @@ public abstract class BaseCreateEditModal extends BaseModal {
         return tooltip.getText();
     }
 
+    public boolean isCloseButtonEnabled() { return closeButton.isEnabled(); }
+
     public void clickCloseButton() {
         waitUntilElementClickable(closeButton);
         closeButton.click();
@@ -54,4 +64,5 @@ public abstract class BaseCreateEditModal extends BaseModal {
             saveButton.click();
         }
     }
+
 }
