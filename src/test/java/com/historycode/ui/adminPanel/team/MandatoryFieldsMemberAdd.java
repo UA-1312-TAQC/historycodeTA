@@ -1,6 +1,6 @@
 package com.historycode.ui.adminPanel.team;
 
-import com.historycode.ui.component.adminPanel.modalAdminPanel.SuccessPopupComponent;
+import com.historycode.ui.component.adminPanel.modalAdminPanel.PopUpMessageComponent;
 import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
 import com.historycode.ui.page.adminpanel.teampage.TeamPageAdminPanel;
 import com.historycode.ui.page.adminpanel.teampage.TeamRowComponent;
@@ -41,10 +41,10 @@ public class MandatoryFieldsMemberAdd extends TestRunnerWithAdmin {
         Assert.assertNotNull(teamMember, String.format("The member %s is not found in the team grid", teamMember));
 
         //Validate the success popup firstly
-        SuccessPopupComponent successPopupComponent = new SuccessPopupComponent(driver);
-        Assert.assertTrue(successPopupComponent.isSuccessPopUpDisplayed(), "Success popup is not displayed.");
+        PopUpMessageComponent popUpMessageComponent = new PopUpMessageComponent(driver);
+        Assert.assertTrue(popUpMessageComponent.isSuccessPopUpDisplayed(), "Success popup is not displayed.");
 
-        String actualMessage = successPopupComponent.getSuccessMessage();
+        String actualMessage = popUpMessageComponent.getSuccessMessage();
         Assert.assertEquals(actualMessage, "Члена команди успішно додано/оновлено!", "Unexpected success message.");
 
         teamMember.clickDelete().clickOkButton();

@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class SuccessPopupComponent extends BaseComponent {
+public class PopUpMessageComponent extends BaseComponent {
 
     @FindBy(xpath = "//div[contains(@class, 'ant-message-notice-success')]")
     private WebElement successPopUpWindow;
@@ -19,7 +19,7 @@ public class SuccessPopupComponent extends BaseComponent {
 
     private final WebDriverWait wait;
 
-    public SuccessPopupComponent(WebDriver driver) {
+    public PopUpMessageComponent(WebDriver driver) {
         super(driver);
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
     }
