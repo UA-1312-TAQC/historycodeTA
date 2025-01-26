@@ -2,37 +2,51 @@ package com.historycode.ui.page.adminpanel.teampage;
 
 import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
 import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
-import com.historycode.ui.page.adminpanel.teampage.editModal.EditMemberModal;
-import org.openqa.selenium.By;
+import com.historycode.ui.page.adminpanel.teampage.createEditModal.CreateEditMemberModal;
+import io.qameta.allure.Step;
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
-import java.time.Duration;
+import java.time.LocalTime;
 
 public class TeamPageAdminPanel extends BasePageAdminPanel {
 
+    @Getter
     protected TeamPageGridComponent teamPageGridComponent;
     @FindBy(xpath = "//div[@class = 'team-page-container']")
     protected WebElement gridRootElement;
     @FindBy(xpath = "//button[span[text()='Створити нового члена команди']]")
     protected WebElement addNewMemberButton;
+    @FindBy(xpath = "//h2[starts-with(text(),'Додати')]/ancestor::div[@class = 'ant-modal-content']")
+    protected WebElement createEditModalNode;
 
     public TeamPageAdminPanel(WebDriver driver) {
         super(driver);
-        teamPageGridComponent = new TeamPageGridComponent(driver, gridRootElement);
     }
 
-    public TeamPageGridComponent getTeamPageGridComponent() {
+    public TeamPageGridComponent getTeamPageGridComponent(){
+        if(teamPageGridComponent == null){
+            teamPageGridComponent = new TeamPageGridComponent(driver, gridRootElement);
+        }
         return teamPageGridComponent;
     }
 
-    public void clickAddNewMemberButton() {
-        addNewMemberButton.click();
+    @Step("Click on the last page of the pagination")
+    public TeamPageAdminPanel clickLastPaginationItem(){
+        this.getTeamPageGridComponent().clickLastPage();
+        return new TeamPageAdminPanel(driver);
     }
 
-    public EditMemberModal editMemberByIndex(int index) {
+    @Step("Click the 'Створити нового члена команди' button")
+    public CreateEditMemberModal clickAddNewMemberButton() {
+        addNewMemberButton.click();
+        waitUntilElementVisible(createEditModalNode);
+        return new CreateEditMemberModal(driver, createEditModalNode);
+    }
+
+    public CreateEditMemberModal editMemberByIndex(int index) {
         if (index < 0 || index >= teamPageGridComponent.getRowsCount()){
             throw new IllegalArgumentException("Member with index" + index + " is not available or invalid");
         }

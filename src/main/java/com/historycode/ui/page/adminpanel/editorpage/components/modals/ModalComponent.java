@@ -1,40 +1,32 @@
 package com.historycode.ui.page.adminpanel.editorpage.components.modals;
 
 import com.historycode.ui.component.BaseComponent;
-import com.historycode.ui.page.adminpanel.editorpage.BasePage;
-import com.historycode.ui.page.adminpanel.editorpage.elements.modalInputElement;
+import com.historycode.ui.page.adminpanel.editorpage.elements.ModalInputElement;
+import io.qameta.allure.Step;
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class ModalComponent extends BaseComponent {
-    private static final String CLOSE_XPATH = ".//button[@aria-label='Close']";
-    private static final String TITLE_XPATH = ".//div[@class='ant-modal-title']";
-    private static final String SAVE_XPATH = ".//button";
-    public final modalInputElement inputComponent;
-    @FindBy(xpath = CLOSE_XPATH)
-    private WebElement closeButton;
-    @FindBy(xpath = TITLE_XPATH)
-    private WebElement title;
-    @FindBy(xpath = SAVE_XPATH)
-    private WebElement saveButton;
+
+    @FindBy(xpath = "./button[@aria-label='Close']")
+    protected WebElement closeButton;
+    @FindBy(xpath = ".//div[@class='center']//button")
+    protected WebElement saveButton;
+
+    @Getter
+    protected ModalInputElement inputComponent;
 
     public ModalComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        inputComponent = new modalInputElement(driver, rootElement);
+        inputComponent = new ModalInputElement(driver, rootElement);
     }
 
+    @Step("Close Modal With 'X'")
     public void close() {
-        BasePage.moveToElement(driver, closeButton);
         closeButton.click();
-    }
-
-    public void save() {
-        saveButton.click();
-    }
-
-    public WebElement getTitle() {
-        return title;
+        waitUntilElementInvisible(closeButton);
     }
 
     public WebElement getCloseButton() {
@@ -45,11 +37,7 @@ public class ModalComponent extends BaseComponent {
         return saveButton;
     }
 
-    public String getTitleString() {
-        return title.getText();
-    }
-
-    public String getSaveButtonText() {
+    public String getSaveButtonTitleString() {
         return saveButton.getText();
     }
 

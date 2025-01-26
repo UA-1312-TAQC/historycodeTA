@@ -34,16 +34,18 @@ public abstract class BaseCarousel extends BaseComponent {
         }
     }
 
-    public void clickNext() {
+    public BaseCarousel clickNext() {
         if (hasArrows()) {
             rightArrow.click();
         }
+        return this;
     }
 
-    public void clickPrevious() {
+    public BaseCarousel clickPrevious() {
         if (hasArrows()) {
             leftArrow.click();
         }
+        return this;
     }
 
     protected void initializePagination(WebDriver driver) {

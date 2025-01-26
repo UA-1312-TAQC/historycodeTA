@@ -3,6 +3,7 @@ package com.historycode.ui.page.streetCodePage.components;
 import com.historycode.ui.component.BaseComponent;
 import com.historycode.ui.page.streetCodePage.modals.KeywordPersonasModal;
 import io.qameta.allure.Step;
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -18,6 +19,7 @@ public class MainCardComponent extends BaseComponent {
     @FindBy(xpath = ".//div[@class='streetcodeIndex']")
     private WebElement catalogNumber;
 
+    @Getter
     @FindBy(xpath = ".//h2[@class='streetcodeTitle']")
     private WebElement name;
 

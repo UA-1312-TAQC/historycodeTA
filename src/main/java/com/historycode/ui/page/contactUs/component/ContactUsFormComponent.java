@@ -9,23 +9,23 @@ import org.openqa.selenium.support.FindBy;
 
 public class ContactUsFormComponent extends BaseComponent {
     @Getter
-    @FindBy(xpath = "./div[contains(@class, 'formTitle')]")
+    @FindBy(xpath = ".//div[contains(@class, 'formTitle')]")
     private WebElement formTitle;
 
     @Getter
-    @FindBy(xpath = "./div[contains(@class, 'formSubTitle')]")
+    @FindBy(xpath = ".//div[contains(@class, 'formSubTitle')]")
     private WebElement formSubTitle;
 
     @Getter
-    @FindBy(xpath = "./textarea[contains(@class, 'ant-input') and contains(@class, 'css-k7429z')]")
+    @FindBy(xpath = ".//textarea[contains(@class, 'ant-input') and contains(@class, 'css-k7429z')]")
     private WebElement message;
 
     @Getter
-    @FindBy(xpath = "./input[contains(@class, 'ant-input') and contains(@class, 'input')]")
+    @FindBy(xpath = ".//input[contains(@class, 'ant-input') and contains(@class, 'input')]")
     private WebElement email;
 
     @Getter
-    @FindBy(xpath = "./button[contains(@class, 'ant-btn') and contains(@class, 'ant-btn-primary')]")
+    @FindBy(xpath = ".//button[contains(@class, 'ant-btn') and contains(@class, 'ant-btn-primary')]")
     private WebElement button;
 
     public ContactUsFormComponent(WebDriver driver, WebElement rootElement) {

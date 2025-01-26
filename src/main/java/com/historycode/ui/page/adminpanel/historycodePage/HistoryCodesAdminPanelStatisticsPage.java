@@ -13,22 +13,23 @@ import java.util.List;
 public class HistoryCodesAdminPanelStatisticsPage extends BasePageAdminPanel {
 
     @Getter
-    @FindBy(xpath = "./h2[@class='streetcodeName']")
-    private WebElement title;
+    @FindBy(xpath = ".//h2[@class='streetcodeName']")
+    protected WebElement title;
 
     @Getter
-    @FindBy(xpath = "./img[@class='streetcodeImg no_exif_metadata']")
-    private WebElement image;
-
-    @FindBy(xpath = "./div[@class='statisticTableWrapper']//h2[@class='streetcodeName' and text()='Статистика']")
-    private WebElement statisticHeader;
+    @FindBy(xpath = ".//img[@class='streetcodeImg no_exif_metadata']")
+    protected WebElement image;
 
     @Getter
-    private final List<WebElement> statisticTitles = new ArrayList<>();
-    @FindBy(xpath = "./thead[@class='ant-table-thead']//th[@class='ant-table-cell']")
+    @FindBy(xpath = ".//div[@class='statisticTableWrapper']//h2[@class='streetcodeName' and text()='Статистика']")
+    protected WebElement statisticHeader;
+
+    @Getter
+    protected final List<WebElement> statisticTitles = new ArrayList<>();
+    @FindBy(xpath = ".//thead[@class='ant-table-thead']//th[@class='ant-table-cell']")
     private List<WebElement> statisticTitlesNode;
 
-    private NoDataComponent noDataComponent;
+    protected NoDataComponent noDataComponent;
     @FindBy(xpath = "//tr[@class='ant-table-placeholder']//div[@class='ant-empty-description']")
     private WebElement noData;
 

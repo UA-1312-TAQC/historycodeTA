@@ -2,9 +2,8 @@ package com.historycode.ui.page.adminpanel.historycodePage.component;
 
 import com.historycode.ui.component.BaseComponent;
 import com.historycode.ui.component.adminPanel.dropDownAdminPanel.DropdownComponent;
-import com.historycode.ui.page.adminpanel.StreetcodeEditPage;
-import com.historycode.ui.page.adminpanel.editorpage.BasePage;
 import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelStatisticsPage;
+import com.historycode.ui.page.adminpanel.streetcodeeditpage.StreetcodeEditPage;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,30 +12,25 @@ import org.openqa.selenium.support.FindBy;
 public class HistoryCodesAdminPanelRowComponent extends BaseComponent {
 
     @Getter
-    @FindBy(xpath = "./td[@class='ant-table-cell'][1]")
-    private WebElement name;
-
+    protected final DropdownComponent dropDown;
     @Getter
-    @FindBy(xpath = "./td[@class='ant-table-cell'][2]")
-    private WebElement id;
-
+    @FindBy(xpath = ".//td[@class='ant-table-cell'][1]")
+    protected WebElement name;
     @Getter
-    private final DropdownComponent dropDown;
-    @FindBy(xpath = "./td[@class='ant-table-cell'][3]//button[@class='ant-btn css-k7429z ant-btn-default ant-dropdown-trigger']")
-    private WebElement dropDownNode;
-
+    @FindBy(xpath = ".//td[@class='ant-table-cell'][2]")
+    protected WebElement id;
     @Getter
-    @FindBy(xpath = "./td[@class='ant-table-cell'][4]")
-    private WebElement Data;
-
+    @FindBy(xpath = ".//td[@class='ant-table-cell'][4]")
+    protected WebElement Data;
     @FindBy(xpath = ".//td[@class='ant-table-cell'][5]//span[contains(@class, 'anticon-edit')]//*[name()='svg']")
-    private WebElement editPageButton;
+    protected WebElement editPageButton;
+    @FindBy(xpath = ".//td[@class='ant-table-cell'][5]//span[contains(@class, 'anticon-delete')]//*[name()='svg']")
+    protected WebElement deleteButton;
+    @FindBy(xpath = ".//td[@class='ant-table-cell'][5]//span[contains(@class, 'anticon-bar-chart')]//*[name()='svg']")
+    protected WebElement statisticsPageButton;
+    @FindBy(xpath = ".//td[@class='ant-table-cell'][3]//button[@class='ant-btn css-k7429z ant-btn-default ant-dropdown-trigger']")
 
-    @FindBy(xpath = "./td[@class='ant-table-cell'][5]//span[contains(@class, 'anticon-delete')]//*[name()='svg']")
-    private WebElement deleteButton;
-
-    @FindBy(xpath = "./td[@class='ant-table-cell'][5]//span[contains(@class, 'anticon-bar-chart')]//*[name()='svg']")
-    private WebElement statisticsPageButton;
+    private WebElement dropDownNode;
 
     public HistoryCodesAdminPanelRowComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
@@ -48,18 +42,18 @@ public class HistoryCodesAdminPanelRowComponent extends BaseComponent {
     }
 
     public StreetcodeEditPage clickEdit() {
-        BasePage.moveToElement(driver, editPageButton);
+        actions.moveToElement(editPageButton);
         editPageButton.click();
         return new StreetcodeEditPage(driver);
     }
 
     public void clickDelete() {
-        BasePage.moveToElement(driver, deleteButton);
+        actions.moveToElement(deleteButton);
         deleteButton.click();
     }
 
     public HistoryCodesAdminPanelStatisticsPage clickStatistics() {
-        BasePage.moveToElement(driver, statisticsPageButton);
+        actions.moveToElement(statisticsPageButton);
         statisticsPageButton.click();
         return new HistoryCodesAdminPanelStatisticsPage(driver);
     }

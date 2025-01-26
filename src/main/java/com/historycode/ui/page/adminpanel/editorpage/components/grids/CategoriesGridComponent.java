@@ -1,6 +1,7 @@
 package com.historycode.ui.page.adminpanel.editorpage.components.grids;
 
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.CategoriesRowComponent;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -9,11 +10,25 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class CategoriesGridComponent extends GridComponent {
-    List<CategoriesRowComponent> rows = new ArrayList<>();
+    List<CategoriesRowComponent> rows;
 
     public CategoriesGridComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
+        rows = new ArrayList<>();
         initRows(driver);
+    }
+
+    @Step("Check Categories Grid Components Are Displayed Correctly.")
+    public boolean isDisplayed() {
+        return (isHeadersDisplayed() && isRowsDisplayed());
+    }
+
+    @Step("Check Categories Rows Are Displayed Correctly.")
+    public boolean isRowsDisplayed() {
+        for (CategoriesRowComponent row : rows) {
+            if (!row.isExist()) { return false; }
+        }
+        return true;
     }
 
     public void initRows(WebDriver driver) {
@@ -24,10 +39,10 @@ public class CategoriesGridComponent extends GridComponent {
         }
     }
 
-    public List<String> getRowsTitles() {
+    public List<String> getRowsTitles(){
         List<String> titles = new ArrayList<>();
-        for (CategoriesRowComponent row : rows) {
-            titles.add(row.getTitle());
+        for (CategoriesRowComponent row : rows){
+            titles.add(row.getTitleString());
         }
         return titles;
     }
@@ -41,14 +56,34 @@ public class CategoriesGridComponent extends GridComponent {
     }
 
     public CategoriesRowComponent getRowByTitle(String title) {
-        return rows.stream().filter(row -> row.getTitle().equals(title))
+        return rows.stream().filter(row -> row.getTitleString().equals(title))
                 .findFirst().orElse(null);
     }
 
     public List<CategoriesRowComponent> getRowsByTitlePart(String part) {
         return rows.stream()
-                .filter(row -> row.getTitle().contains(part))
+                .filter(row -> row.getTitleString().contains(part))
                 .collect(Collectors.toList());
+    }
+
+    public String getRowTitleString(CategoriesRowComponent row){
+        return row.getTitleString();
+    }
+
+    public WebElement getRowTitle(CategoriesRowComponent row){
+        return row.getTitle();
+    }
+
+    public WebElement getRowEditAction(CategoriesRowComponent row) {
+        return row.getEditAction();
+    }
+
+    public WebElement getRowDeleteAction(CategoriesRowComponent row) {
+        return row.getDeleteAction();
+    }
+
+    public WebElement getRowPicture (CategoriesRowComponent row) {
+        return row.getPicture();
     }
 
     public void editRow(CategoriesRowComponent row) {
@@ -59,9 +94,25 @@ public class CategoriesGridComponent extends GridComponent {
         row.clickDelete();
     }
 
+    public void clickNextPage() {
+        pagination.clickNextPage();
+    }
+
+    public void clickPrevPage() {
+        pagination.clickPrevPage();
+    }
+
+    public void clickPrevFivePages() {
+        pagination.clickPrevFivePages();
+    }
+
+    public void clickNextFivePages() {
+        pagination.clickNextFivePages();
+    }
+
+    public void clickPaginationItem(int index) {
+        pagination.clickPaginationItem(index);
+    }
     //TODO Update edit/deleteRow methods to return modals
     //TODO Implement methods to work with row picture
 }
-
-
-

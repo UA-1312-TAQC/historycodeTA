@@ -1,37 +1,53 @@
 package com.historycode.ui.page.adminpanel.editorpage;
 
+import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
 import com.historycode.ui.page.adminpanel.editorpage.components.grids.PositionsGridComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.PositionsModalComponent;
+import com.historycode.ui.page.adminpanel.editorpage.components.rows.ContextsRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.PositionsRowComponent;
-import com.historycode.ui.page.adminpanel.editorpage.elements.addButtonElement;
+import com.historycode.ui.page.adminpanel.editorpage.elements.AddButtonElement;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
-public class PositionsPage extends BasePage {
-    private final addButtonElement addPositionButton = new addButtonElement(driver, getRootAddButton());
-    private final PositionsGridComponent grid = new PositionsGridComponent(driver, getRootGrid());
+public class PositionsPage extends BaseEditorPage {
+
+    @FindBy(xpath = "//div[contains(@class, 'ant-table-wrapper')]")
+    private WebElement rootGrid;
+
+    private AddButtonElement addPositionButton;
+    private PositionsGridComponent grid;
 
     public PositionsPage(WebDriver driver) {
         super(driver);
+        addPositionButton = new AddButtonElement(driver, getRootAddButton());
+        grid = new PositionsGridComponent(driver, rootGrid);
     }
 
-    public PositionsModalComponent addPosition() {
+    @Step("Check Positions Grid Is Displayed Correctly.")
+    public boolean isGridDisplayed() {
+        return grid.isDisplayed();
+    }
+
+    public PositionsModalComponent clickAddPosition() {
         addPositionButton.clickButton();
-//        Thread.sleep(1000);
+        wait.until(driver -> getDisplayedModalRoot() != null);
         return new PositionsModalComponent(driver, getDisplayedModalRoot());
     }
 
-    public int getTableHeadersCount() {
+    public int getTableHeadersCount(){
         return grid.getHeaderItems().size();
     }
 
+    @Step("Get Table Headers.")
     public List<String> getTableHeadersString() {
         return grid.getHeaderItemsString();
     }
 
-    public List<WebElement> getTableHeaders() {
+    public List<WebElement> getTableHeaders(){
         return grid.getHeaderItems();
     }
 
@@ -39,7 +55,7 @@ public class PositionsPage extends BasePage {
         return grid.getRows().size();
     }
 
-    public List<String> getTableRowsTitles() {
+    public List<String> getTableRowsTitles(){
         return grid.getRowsTitles();
     }
 
@@ -59,18 +75,60 @@ public class PositionsPage extends BasePage {
         return grid.getRowByTitle(title);
     }
 
-    public String getAddButtonText() {
+    public String getAddButtonText(){
         return addPositionButton.getButtonText();
     }
 
     public PositionsModalComponent editTableRow(PositionsRowComponent row) throws InterruptedException {
         grid.editRow(row);
-        Thread.sleep(500);
+        wait.until(driver -> getDisplayedModalRoot() != null);
         return new PositionsModalComponent(driver, getDisplayedModalRoot());
     }
 
-    public void deleteTableRow(PositionsRowComponent row) {
-        //TODO Implement return of modal
+    public DeleteItemModal deleteTableRow(PositionsRowComponent row) {
         grid.deleteRow(row);
+        wait.until(driver -> getDisplayedModalRoot() != null);
+        return new DeleteItemModal(driver, getDisplayedModalRoot());
+    }
+
+    public WebElement getTableRowEditAction(PositionsRowComponent row) {
+        return grid.getRowEditAction(row);
+    }
+
+    public WebElement getTableRowDeleteAction(PositionsRowComponent row) {
+        return grid.getRowDeleteAction(row);
+    }
+
+    public WebElement getTableRowTitle(PositionsRowComponent row) {
+        return grid.getRowTitle(row);
+    }
+
+    public String getTableRowTitleString(PositionsRowComponent row) {
+        return grid.getRowTitleString(row);
+    }
+
+    public PositionsPage clickNextPage() {
+        grid.clickNextPage();
+        return new PositionsPage(driver);
+    }
+
+    public PositionsPage clickPrevPage() {
+        grid.clickPrevPage();
+        return new PositionsPage(driver);
+    }
+
+    public PositionsPage clickPrevFivePages() {
+        grid.clickPrevFivePages();
+        return new PositionsPage(driver);
+    }
+
+    public PositionsPage clickNextFivePages() {
+        grid.clickNextFivePages();
+        return new PositionsPage(driver);
+    }
+
+    public PositionsPage clickPaginationItem(int index) {
+        grid.clickPaginationItem(index);
+        return new PositionsPage(driver);
     }
 }
