@@ -70,19 +70,20 @@ public class StreetCodeButtonsTest extends BaseTestRunner {
     @Description("Questionnaire modal Test")
     public void questionnaireTest() {
         //todo: implement questionnaire modal and refreshPage function
+        streetCodePage.sleep(2200);
         streetCodePage.scrollToEndOfPage();
-        //softAssert.assertTrue(streetCodePage.getQuestionnaire().isVisible());
+        softAssert.assertTrue(streetCodePage.getSurveyModal().isDisplayed());
 
-        //streetCodePage.getQuestionnaire().clickCloseButton();
+        streetCodePage.getSurveyModal().close();
         streetCodePage.scrollToTop();
         streetCodePage.scrollToEndOfPage();
-        //softAssert.assertFalse(streetCodePage.getQuestionnaire().isVisible());
+        softAssert.assertFalse(streetCodePage.getSurveyModal().isDisplayed());
 
         //streetCodePage.refreshPage();
         DonateModal donateModal = streetCodePage.getQuickDonateButton().clickDonateButton();
         donateModal.close();
         streetCodePage.scrollToEndOfPage();
-        //softAssert.assertTrue(streetCodePage.getQuestionnaire().isVisible());
+        softAssert.assertTrue(streetCodePage.getSurveyModal().isDisplayed());
 
         softAssert.assertAll();
     }
