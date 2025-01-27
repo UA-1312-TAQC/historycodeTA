@@ -32,15 +32,18 @@ public abstract class Base {
 
     @Step("Scroll to the element")
     public void scrollToElement(WebElement element) {
-        wait.until(ExpectedConditions.visibilityOf(element));
-        try {
-            ((JavascriptExecutor) driver).executeScript(
-                    "arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});", element);
-            Thread.sleep(SCROLL_STABILIZATION_DELAY); // Коротка пауза для стабільності
-        } catch (Exception e) {
-            logger.error("Error scrolling to element", e);
-        }
-        wait.until(ExpectedConditions.elementToBeClickable(element));
+        actions.moveToElement(element).perform();
+    }
+
+    @Step("Scroll to the middle of the page")
+    public void scrollToMiddlePage() {
+        Number startY = (Number) threadJs.executeScript("return window.pageYOffset;");
+        threadJs.executeScript("window.scrollTo(0, document.body.scrollHeight/2)");
+
+        wait.until(driver -> {
+            Number currentY = (Number) threadJs.executeScript("return window.pageYOffset;");
+            return currentY.doubleValue() != startY.doubleValue();
+        });
     }
 
     @Step("Scroll to the end of the page")

@@ -3,17 +3,13 @@ package com.historycode.ui.page.streetCodePage;
 import com.historycode.ui.elements.BreadcrumbsElement;
 import com.historycode.ui.elements.ScrollTopButtonElement;
 import com.historycode.ui.page.BasePage;
-import com.historycode.ui.page.streetCodePage.modals.SurveyModal;
-import lombok.Getter;
 import com.historycode.ui.page.streetCodePage.components.*;
 import com.historycode.ui.page.streetCodePage.elememts.QuickDonateButtonElement;
+import com.historycode.ui.page.streetCodePage.modals.SurveyModal;
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
 
 public class StreetCodePage extends BasePage {
     @Getter
@@ -53,6 +49,8 @@ public class StreetCodePage extends BasePage {
     @FindBy(xpath = "//div[@class='tickerContainer']")
     private WebElement runningLineNode;
 
+    @FindBy(xpath = ".//div[@class='player-wrapper']")
+    private WebElement videoNode;
     @FindBy(xpath = "//div[@role='dialog' and contains(@class,'surveyModal')]")
     private WebElement surveyModalNode;
 
@@ -71,6 +69,7 @@ public class StreetCodePage extends BasePage {
     private PartnerComponent partners;
     private RunningLineComponent runningLine;
     private PageNavigationBarComponent verticalProgress;
+    private StreetCodeVideoComponent videoComponent;
 
     public StreetCodePage(WebDriver driver) {
         super(driver);
@@ -112,12 +111,20 @@ public class StreetCodePage extends BasePage {
         return textBlock;
     }
 
+    public StreetCodeVideoComponent getVideoBlock() {
+        if (videoComponent == null) {
+            videoComponent = new StreetCodeVideoComponent(driver, videoNode);
+        }
+        return videoComponent;
+    }
+
     public InterestingFactsComponent getFacts() {
         if (facts == null) {
             facts = new InterestingFactsComponent(driver, factsNode);
         }
         return facts;
     }
+
     public InterestingFactsCardComponent getFactsCard() {
         if (factsCard == null) {
             factsCard = new InterestingFactsCardComponent(driver, factsNode);
