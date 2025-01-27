@@ -3,6 +3,7 @@ package com.historycode.ui.page.streetCodePage;
 import com.historycode.ui.elements.BreadcrumbsElement;
 import com.historycode.ui.elements.ScrollTopButtonElement;
 import com.historycode.ui.page.BasePage;
+import com.historycode.ui.page.streetCodePage.modals.SurveyModal;
 import lombok.Getter;
 import com.historycode.ui.page.streetCodePage.components.*;
 import com.historycode.ui.page.streetCodePage.elememts.QuickDonateButtonElement;
@@ -47,6 +48,9 @@ public class StreetCodePage extends BasePage {
 
     @FindBy(xpath = "//div[@class='tickerContainer']")
     private WebElement runningLineNode;
+
+    @FindBy(xpath = "//div[@role='dialog' and contains(@class,'surveyModal')]")
+    private WebElement surveyModalNode;
 
 
     private BreadcrumbsElement breadcrumbs;
@@ -176,5 +180,10 @@ public class StreetCodePage extends BasePage {
     public StreetCodePage scrollToInterestingFacts() {
         scrollToElement(factsNode);
         return this;
+    }
+
+    public SurveyModal getSurveyModal() {
+        waitUntilElementVisible(surveyModalNode);
+        return new SurveyModal(driver, surveyModalNode);
     }
 }
