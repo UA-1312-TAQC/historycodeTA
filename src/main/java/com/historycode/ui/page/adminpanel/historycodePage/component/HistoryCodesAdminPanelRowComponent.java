@@ -2,8 +2,8 @@ package com.historycode.ui.page.adminpanel.historycodePage.component;
 
 import com.historycode.ui.component.BaseComponent;
 import com.historycode.ui.component.adminPanel.dropDownAdminPanel.DropdownComponent;
-import com.historycode.ui.page.adminpanel.StreetcodeEditPage;
 import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelStatisticsPage;
+import com.historycode.ui.page.adminpanel.streetcodeeditpage.StreetcodeEditPage;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,21 +14,22 @@ public class HistoryCodesAdminPanelRowComponent extends BaseComponent {
     @Getter
     protected final DropdownComponent dropDown;
     @Getter
-    @FindBy(xpath = "./td[@class='ant-table-cell'][1]")
+    @FindBy(xpath = ".//td[@class='ant-table-cell'][1]")
     protected WebElement name;
     @Getter
-    @FindBy(xpath = "./td[@class='ant-table-cell'][2]")
+    @FindBy(xpath = ".//td[@class='ant-table-cell'][2]")
     protected WebElement id;
     @Getter
-    @FindBy(xpath = "./td[@class='ant-table-cell'][4]")
+    @FindBy(xpath = ".//td[@class='ant-table-cell'][4]")
     protected WebElement Data;
     @FindBy(xpath = ".//td[@class='ant-table-cell'][5]//span[contains(@class, 'anticon-edit')]//*[name()='svg']")
     protected WebElement editPageButton;
-    @FindBy(xpath = "./td[@class='ant-table-cell'][5]//span[contains(@class, 'anticon-delete')]//*[name()='svg']")
+    @FindBy(xpath = ".//td[@class='ant-table-cell'][5]//span[contains(@class, 'anticon-delete')]//*[name()='svg']")
     protected WebElement deleteButton;
-    @FindBy(xpath = "./td[@class='ant-table-cell'][5]//span[contains(@class, 'anticon-bar-chart')]//*[name()='svg']")
+    @FindBy(xpath = ".//td[@class='ant-table-cell'][5]//span[contains(@class, 'anticon-bar-chart')]//*[name()='svg']")
     protected WebElement statisticsPageButton;
-    @FindBy(xpath = "./td[@class='ant-table-cell'][3]//button[@class='ant-btn css-k7429z ant-btn-default ant-dropdown-trigger']")
+    @FindBy(xpath = ".//td[@class='ant-table-cell'][3]//button[@class='ant-btn css-k7429z ant-btn-default ant-dropdown-trigger']")
+
     private WebElement dropDownNode;
 
     public HistoryCodesAdminPanelRowComponent(WebDriver driver, WebElement rootElement) {

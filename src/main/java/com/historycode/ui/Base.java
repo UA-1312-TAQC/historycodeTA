@@ -9,6 +9,8 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 
@@ -17,6 +19,8 @@ public abstract class Base {
     protected WebDriverWait wait;
     protected JavascriptExecutor threadJs;
     protected Actions actions;
+    private static final int SCROLL_STABILIZATION_DELAY = 500;
+    private static final Logger logger = LoggerFactory.getLogger(Base.class);
 
     public Base(WebDriver driver) {
         this.driver = driver;
@@ -28,16 +32,21 @@ public abstract class Base {
 
     @Step("Scroll to the element")
     public void scrollToElement(WebElement element) {
-//        wait.until(ExpectedConditions.visibilityOf(element));
-        threadJs.executeScript("arguments[0].scrollIntoView(true);", element);
         wait.until(ExpectedConditions.visibilityOf(element));
-        sleep(1000);
+        try {
+            ((JavascriptExecutor) driver).executeScript(
+                    "arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});", element);
+            Thread.sleep(SCROLL_STABILIZATION_DELAY); // Коротка пауза для стабільності
+        } catch (Exception e) {
+            logger.error("Error scrolling to element", e);
+        }
+        wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
     @Step("Scroll to the end of the page")
     public void scrollToEndOfPage() {
-        threadJs.executeScript("window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });");
         sleep(1000);
+        threadJs.executeScript("window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });");
     }
 
     protected boolean isContentTruncatedOrOverflow(WebElement element) {
@@ -66,7 +75,13 @@ public abstract class Base {
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
+    public void waitUntilElementInvisible(WebElement element) {
+        wait.until(ExpectedConditions.invisibilityOf(element));
+    }
+
     public void waitUntilElementClickable(WebElement element) {
         wait.until(ExpectedConditions.elementToBeClickable(element));
     }
+
+
 }

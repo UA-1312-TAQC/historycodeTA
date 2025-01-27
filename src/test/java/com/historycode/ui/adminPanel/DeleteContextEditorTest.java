@@ -4,17 +4,17 @@ import com.historycode.ui.page.adminpanel.editorpage.CategoriesPage;
 import com.historycode.ui.page.adminpanel.editorpage.ContextsPage;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.ContextsRowComponent;
 import com.historycode.ui.testrunners.TestRunnerWithAdmin;
-
 import io.qameta.allure.Issue;
-
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import static org.testng.Assert.*;
 
 import java.util.Random;
 
-public class DeleteContextEditor extends TestRunnerWithAdmin {
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertNull;
+
+public class DeleteContextEditorTest extends TestRunnerWithAdmin {
     String contextName;
     @BeforeMethod
     public void setupForDeleteContext() throws InterruptedException {
@@ -38,7 +38,7 @@ public class DeleteContextEditor extends TestRunnerWithAdmin {
         assertNotNull(contextToDelete, "Context should exist before deletion: " + contextName);
         contextsPage.deleteTableRow(contextToDelete).clickOkButton();
         assertNull(contextsPage.getTableRowByTitle(contextName),
-                String.format("Context '%s' still exists after deletion", contextName));
+                String.format("Context '%s' still exists after deletion.", contextName));
     }
 
     @AfterMethod

@@ -3,18 +3,15 @@ package com.historycode.ui.page.streetCodePage;
 import com.historycode.ui.elements.BreadcrumbsElement;
 import com.historycode.ui.elements.ScrollTopButtonElement;
 import com.historycode.ui.page.BasePage;
+import lombok.Getter;
 import com.historycode.ui.page.streetCodePage.components.*;
 import com.historycode.ui.page.streetCodePage.elememts.QuickDonateButtonElement;
-import io.qameta.allure.Step;
-import lombok.Getter;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import java.util.Optional;
-
 public class StreetCodePage extends BasePage {
+    @Getter
     @FindBy(xpath = "//div[@class='card']")
     private WebElement mainCardNode;
 
@@ -58,6 +55,7 @@ public class StreetCodePage extends BasePage {
     private MainCardComponent mainCard;
     private StreetCodeTextBlockComponent textBlock;
     private InterestingFactsComponent facts;
+    private InterestingFactsCardComponent factsCard;
     private ChronologyComponent timeline;
     private RelatedPersonasComponent relatedFigures;
     private SourcesComponent sources;
@@ -68,17 +66,6 @@ public class StreetCodePage extends BasePage {
 
     public StreetCodePage(WebDriver driver) {
         super(driver);
-        sleep(3000);
-    }
-
-    public StreetCodePage setMainCard() {
-        this.mainCard = new MainCardComponent(driver, mainCardNode);
-        return this;
-    }
-
-    public StreetCodePage setQuickDonateButton() {
-        this.quickDonateButton = new QuickDonateButtonElement(driver, quickDonateButtonNode);
-        return this;
     }
 
     public BreadcrumbsElement getBreadcrumbs() {
@@ -122,12 +109,17 @@ public class StreetCodePage extends BasePage {
         }
         return facts;
     }
-    @Step("get Time line")
+    public InterestingFactsCardComponent getFactsCard() {
+        if (factsCard == null) {
+            factsCard = new InterestingFactsCardComponent(driver, factsNode);
+        }
+        return factsCard;
+    }
+
     public ChronologyComponent getTimeline() {
         if (timeline == null && timelineNode != null) {
             timeline = new ChronologyComponent(driver, timelineNode);
         }
-        scrollToElement(timelineNode);
         return timeline;
     }
 
@@ -179,5 +171,10 @@ public class StreetCodePage extends BasePage {
 
     public void toggleProgressBar() {
         verticalProgress.toggleProgressBar();
+    }
+
+    public StreetCodePage scrollToInterestingFacts() {
+        scrollToElement(factsNode);
+        return this;
     }
 }

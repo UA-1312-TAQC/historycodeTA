@@ -1,6 +1,5 @@
 package com.historycode.ui.page.adminpanel.editorpage.components.grids;
 
-import com.historycode.ui.page.adminpanel.editorpage.components.rows.CategoriesRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.ContextsRowComponent;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
@@ -117,15 +116,3 @@ public class ContextsGridComponent extends GridComponent {
     }
     //TODO Update edit/deleteRow methods to return modals
 }
-
-//    public ContextsModalComponent editRow(ContextsRowComponent row) {
-//        row.clickEdit();
-//        waitUntilElementVisible(getDisplayedModalRoot());
-//        return new ContextsModalComponent(driver, getDisplayedModalRoot());
-//    }
-//
-//    public DeleteItemModal deleteRow(ContextsRowComponent row) {
-//        row.clickDelete();
-//        waitUntilElementVisible(getDisplayedModalRoot());
-//        return new DeleteItemModal(driver, getDisplayedModalRoot());
-//    }

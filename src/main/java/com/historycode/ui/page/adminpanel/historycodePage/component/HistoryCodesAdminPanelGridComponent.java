@@ -13,10 +13,10 @@ import java.util.stream.Collectors;
 public class HistoryCodesAdminPanelGridComponent extends BaseGridComponent {
 
     protected List<HistoryCodesAdminPanelRowComponent> rowElements = new ArrayList<>();
-    @FindBy(xpath = "./tbody//tr")
+    @FindBy(xpath = ".//tbody//tr")
     private List<WebElement> rowElementsNode;
 
-    @FindBy(xpath = "./thead//th")
+    @FindBy(xpath = ".//thead//th")
     private List<WebElement> headerElementsNode;
 
     public HistoryCodesAdminPanelGridComponent(WebDriver driver, WebElement rootElement) {
