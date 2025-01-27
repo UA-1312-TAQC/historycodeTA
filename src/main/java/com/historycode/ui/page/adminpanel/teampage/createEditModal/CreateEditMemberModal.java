@@ -34,10 +34,10 @@ public class CreateEditMemberModal extends BaseEditModal {
     @FindBy(xpath = ".//label[@for = 'name']/../..")
     protected WebElement nameInputRoot;
     protected InputElement nameInput;
-
-    @FindBy(xpath = ".//label[normalize-space(text())='Позиції']/../..")
+//TODO
+    @FindBy(xpath = ".//input[@aria-label='Позиції']/../..")
     protected WebElement positionsDropdownRoot;
-    protected DropdownComponent positionsDropdown;
+    protected SocialMediaDropdownComponent positionsDropdown;
     protected By SELECTED_POSITIONS_PATH = By.xpath("//div[@class='ant-select-selection-overflow']");
 
     @FindBy(xpath = ".//label[@for = 'description']/../..")
@@ -82,7 +82,6 @@ public class CreateEditMemberModal extends BaseEditModal {
         //this.photoWindowComponent = new PhotoWindowComponent(driver, rootElement);
     }
 
-
     private CheckboxElement getKeyMemberCheckbox(){
         if(keyMemberCheckbox == null){
             this.keyMemberCheckbox = new CheckboxElement(driver, keyMemberCheckboxRoot);
@@ -96,13 +95,14 @@ public class CreateEditMemberModal extends BaseEditModal {
         }
         return this.nameInput;
     }
-
-    private DropdownComponent getPositionsDropdown(){
+//TODO
+    private SocialMediaDropdownComponent getPositionsDropdown(){
         if(positionsDropdown == null){
-            this.positionsDropdown = new DropdownComponent(driver, positionsDropdownRoot);
+            this.positionsDropdown = new SocialMediaDropdownComponent(driver, positionsDropdownRoot);
         }
         return this.positionsDropdown;
     }
+
     private TextAreaElement getDescriptionTextAreaElement(){
         if(descriptionTextAreaElement == null){
             this.descriptionTextAreaElement = new TextAreaElement(driver, descriptionTextareaElementRoot);
@@ -147,14 +147,14 @@ public class CreateEditMemberModal extends BaseEditModal {
         return this;
     }
 
-    public void setPositions(List<String> positions) {
-        getPositionsDropdown().openDropdown();
-        positionsDropdown.selectMultipleOptions(positions);
-    }
-
-    public List<String> getSelectedPositions() {
-        return getPositionsDropdown().getSelectedMultipleOptions();
-    }
+//    public void setPositions(List<String> positions) {
+//        getPositionsDropdown().openDropdown();
+//        positionsDropdown.selectMultipleOptions(positions);
+//    }
+//
+//    public List<String> getSelectedPositions() {
+//        return getPositionsDropdown().getSelectedMultipleOptions();
+//    }
 
     public String getDescription() {
         return getDescriptionTextAreaElement().getInputValue();
@@ -199,11 +199,17 @@ public class CreateEditMemberModal extends BaseEditModal {
         return !photoWindowComponent.isPlaceholderClickable();
     }
 
-
     @Step("Choose social media {platform} from the social media dropdown")
     public CreateEditMemberModal addSocialMedia(String platform) {
         openSocialMediaDropdown();
         socialMediaDropdown.clickOptionByText(platform);
+        return this;
+    }
+//TODO
+    @Step("Choose positions {position} from the social media dropdown")
+    public CreateEditMemberModal addPosition(String position) {
+        openPositionsDropdown();
+        positionsDropdown.clickOptionByText(position);
         return this;
     }
 
@@ -278,5 +284,9 @@ public class CreateEditMemberModal extends BaseEditModal {
 
     public void openSocialMediaDropdown(){
         getSocialMediaDropdown().openDropdown();
+    }
+
+    public void openPositionsDropdown(){
+        getPositionsDropdown().openDropdownPosition();
     }
 }

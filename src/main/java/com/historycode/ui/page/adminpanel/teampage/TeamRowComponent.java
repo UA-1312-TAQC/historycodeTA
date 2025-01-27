@@ -7,6 +7,7 @@ import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ public class TeamRowComponent extends BaseComponent {
     @Getter
     @FindBy(xpath = "./td[1]//div[@class='team-table-item-name']//span")
     protected WebElement keyMemberRole;
-    @FindBy(xpath = "./td[2]//div[@class='team-table-item-name']//p")
+    @FindBy(xpath = "./td[2]//div[@class='team-table-item-name']")
     protected List<WebElement> positions;
     @FindBy(xpath = "./td[3]//div[@class='team-table-item-name']//p")
     protected WebElement description;
@@ -48,8 +49,12 @@ public class TeamRowComponent extends BaseComponent {
     public List<String> getPositions() {
         if (positionTexts == null) {
             positionTexts = new ArrayList<>();
+            wait.until(ExpectedConditions.visibilityOfAllElements(positions));
             for (WebElement positionElement : positions) {
-                positionTexts.add(positionElement.getText());
+                String text = positionElement.getText().trim();
+                if (!text.isEmpty()) {
+                    positionTexts.add(text);
+                }
             }
         }
         return positionTexts;
