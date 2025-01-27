@@ -46,6 +46,7 @@ public class MandatoryFieldsMemberAdd extends TestRunnerWithAdmin {
         PopUpMessageComponent popUpMessageComponent = new PopUpMessageComponent(driver);
         Assert.assertTrue(popUpMessageComponent.isSuccessPopUpDisplayed(), "Success popup is not displayed.");
 
+        //Then check the presence of the message
         String actualMessage = popUpMessageComponent.getSuccessMessage();
         Assert.assertEquals(actualMessage, SUCCESS_MESSAGE);
 

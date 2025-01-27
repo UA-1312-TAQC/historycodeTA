@@ -7,7 +7,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 
-//TODO to delete after adjusting CreateEditPartnersModal and CreatePartnersModal classes
+//TODO to delete after adjusting (combining) EditPartnersModal and CreatePartnersModal classes and then rename the result class (EditPartnersModal + CreatePartnersModal) as CreateEditPartnersModal
 public abstract class BaseCreateModal extends BaseModal {
 
     @FindBy(xpath = ".//button[@class='ant-modal-close']")

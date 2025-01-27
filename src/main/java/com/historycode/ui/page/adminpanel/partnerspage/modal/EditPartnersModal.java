@@ -8,8 +8,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-//TODO to expand this class using CreatePartnersModal and use it as the base for creating/editing the partner object
-public class CreateEditPartnersModal extends BaseCreateEditModal {
+//TODO to expand this class using CreatePartnersModal and use it as the base for creating/editing the partner object. At the end rename as CreateEditPartnersModal
+public class EditPartnersModal extends BaseCreateEditModal {
 
     @FindBy(xpath = "./label[@for = 'isKeyPartner']/../..")
     private WebElement keyPartnerCheckboxContainer;
@@ -36,7 +36,7 @@ public class CreateEditPartnersModal extends BaseCreateEditModal {
     @Getter
     private final InputElement partnerLinkName = new InputElement(driver, partnerLinkNameContainer);
 
-    public CreateEditPartnersModal(WebDriver driver, WebElement rootElement) {
+    public EditPartnersModal(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
 
