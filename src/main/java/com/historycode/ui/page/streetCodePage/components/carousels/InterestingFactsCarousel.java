@@ -66,6 +66,7 @@ public class InterestingFactsCarousel extends BaseCarousel {
 
     @Step("Get a current card title.")
     public String getCurrentNodeTitle(){
+        waitUntilElementVisible(factCardCurrentNode);
         return factCardCurrentNode.findElement(By.xpath(".//p[@class = 'cardTextContainerTitle']")).getText();
     }
 
@@ -80,7 +81,6 @@ public class InterestingFactsCarousel extends BaseCarousel {
         try {
             return prevButtonNode.isDisplayed() && nextButtonNode.isDisplayed();
         } catch (NoSuchElementException e) {
-            logger.error("Previous or next button is not displayed", e);
             return false;
         }
     }
@@ -90,7 +90,6 @@ public class InterestingFactsCarousel extends BaseCarousel {
         try {
             return paginationNode.isDisplayed();
         } catch (NoSuchElementException e) {
-            logger.error("Pagination is not displayed", e);
             return false;
         }
     }

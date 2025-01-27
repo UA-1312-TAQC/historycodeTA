@@ -59,7 +59,7 @@ public class StreetCodeTests extends BaseTestRunner {
 
     @Issue("79")
     @Test(priority = 1)
-    @Description("Verification that clicking the 'Donate' button displays a modal window with donation options.")
+    @Description("Verification that clicking the 'Donate' button displays a modal window with donation options")
     public void testDonateButtonClick() {
 
         navigateToStreetCodePage("/sichovi-striltsi");
@@ -73,6 +73,7 @@ public class StreetCodeTests extends BaseTestRunner {
         softAssert.assertTrue(donateModal.isFirstTitleDisplayed(), "The title of the modal window is not displayed.'");
         softAssert.assertTrue(donateModal.isAmountInputDisplayed(), "The manual amount input is not displayed.");
         softAssert.assertTrue(donateModal.areAmountButtonsDisplayed(), "The amount buttons are not displayed.");
+        softAssert.assertTrue(donateModal.isAgreeCheckboxDisplayed(), "The 'Agree' checkbox is not displayed.");
         softAssert.assertTrue(donateModal.isDonateButtonDisplayed(), "The 'Donate' button is not displayed.");
 
         softAssert.assertAll();
@@ -103,10 +104,9 @@ public class StreetCodeTests extends BaseTestRunner {
                 .getTextBlock()
                 .getParagraphCount();
 
-        int paragraphSecondCount = streetCodePage
+        streetCodePage
                 .getTextBlock()
-                .toggleTextContent()
-                .getParagraphCount(paragraphFirstCount);
+                .toggleTextContent();
 
         boolean isLessButtonDisplayed = streetCodePage
                 .getTextBlock()
@@ -116,6 +116,10 @@ public class StreetCodeTests extends BaseTestRunner {
         isExpandButtonDisplayed = streetCodePage
                 .getTextBlock()
                 .isExpandButtonDisplayed();
+
+        int paragraphSecondCount = streetCodePage
+                .getTextBlock()
+                .getParagraphCount(paragraphFirstCount);
 
         softAssert.assertTrue(paragraphFirstCount < paragraphSecondCount, "The text is not expanded");
         softAssert.assertTrue(isLessButtonDisplayed, "The less button is not displayed");
@@ -164,8 +168,10 @@ public class StreetCodeTests extends BaseTestRunner {
                 .getCarousel()
                 .getElementCenterRelativeToBlock();
 
-        softAssert.assertTrue(elementCenterDifference.getX() <= CENTER_ALIGNMENT_TOLERANCE, String.format("The element is not centered. Difference for X is %d", elementCenterDifference.getX()));
-        softAssert.assertTrue(elementCenterDifference.getY() <= CENTER_ALIGNMENT_TOLERANCE, String.format("The element is not centered. Difference for Y is %d", elementCenterDifference.getY()));
+        softAssert.assertTrue(elementCenterDifference.getX() <= CENTER_ALIGNMENT_TOLERANCE,
+                String.format("The element is not centered. Difference for X is %d", elementCenterDifference.getX()));
+        softAssert.assertTrue(elementCenterDifference.getY() <= CENTER_ALIGNMENT_TOLERANCE,
+                String.format("The element is not centered. Difference for Y is %d", elementCenterDifference.getY()));
 
         boolean hasArrows = streetCodePage
                 .getFacts()

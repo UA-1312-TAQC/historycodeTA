@@ -11,7 +11,7 @@ import java.util.List;
 
 public class StreetCodeTextBlockComponent extends BaseComponent {
     final String EXPAND_BUTTON_LOCATOR = ".//div[@class='text']//p";
-    final By LESS_BUTTON_LOCATOR = By.xpath("//span[@class = 'readMore readLess']");
+    final String LESS_BUTTON_LOCATOR = "//span[@class = 'readMore readLess']";
 
     @FindBy(xpath = EXPAND_BUTTON_LOCATOR)
     private List<WebElement> mainTextContent;
@@ -65,7 +65,6 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
         try {
             return expandButton.isDisplayed();
         } catch (NoSuchElementException e) {
-            logger.error("Error checking visibility of the 'Expand' button", e);
             return false;
         }
     }
@@ -73,16 +72,15 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
     @Step("The 'Трохи ще' button is displayed")
     public boolean isLessButtonDisplayed() {
         try {
-            return rootElement.findElement(LESS_BUTTON_LOCATOR).isDisplayed();
+            return rootElement.findElement(By.xpath(LESS_BUTTON_LOCATOR)).isDisplayed();
         } catch (NoSuchElementException e) {
-            logger.error("Error checking visibility of 'Less' button", e);
             return false;
         }
     }
 
     @Step("Click the 'Дещо менше' button")
     public StreetCodeTextBlockComponent isLessButtonClick() {
-        clickDynamicElement(rootElement.findElement(LESS_BUTTON_LOCATOR));
+        clickDynamicElement(rootElement.findElement(By.xpath(LESS_BUTTON_LOCATOR)));
         return this;
     }
 
@@ -124,7 +122,8 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
     }
 
     public StreetCodeTextBlockComponent scrollToLessButton() {
-        scrollToElement(rootElement.findElement(LESS_BUTTON_LOCATOR));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(LESS_BUTTON_LOCATOR)));
+        scrollToElement(rootElement.findElement(By.xpath(LESS_BUTTON_LOCATOR)));
         return this;
     }
 

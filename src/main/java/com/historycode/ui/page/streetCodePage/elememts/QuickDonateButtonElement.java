@@ -2,6 +2,7 @@ package com.historycode.ui.page.streetCodePage.elememts;
 
 import com.historycode.ui.elements.BaseElement;
 import com.historycode.ui.page.streetCodePage.modals.DonateModal;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,19 +14,18 @@ public class QuickDonateButtonElement extends BaseElement {
     @FindBy(xpath = ".//h2[@class='donateBtnText']")
     private WebElement donateBtnTextNode;
 
-    @FindBy(xpath = "//div[@role='dialog' and contains(@class,'donatesModal')]")
-    private WebElement modalDonateRootNode;
-
     public QuickDonateButtonElement(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
 
     public DonateModal clickDonateButton() {
         clickDynamicElement(rootElement);
-        return new DonateModal(driver, modalDonateRootNode);
+        return new DonateModal(driver,
+                driver.findElement(By.xpath("//div[@role='dialog' and contains(@class,'donatesModal')]")));
     }
 
     public boolean isDonateButtonDisplayed() {
         return rootElement.isDisplayed();
     }
+
 }
