@@ -73,6 +73,8 @@ public class TeamMemberCreationTest extends TestRunnerWithAdmin{
 
     @AfterMethod
     public void deleteUser(){
-        targetTeamMember.clickDelete().clickOkButton();
+        if(targetTeamMember != null){
+            targetTeamMember.clickDelete().clickOkButton();
+        }
     }
 }
