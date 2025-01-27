@@ -38,7 +38,8 @@ public class StreetCodeCatalogPage extends BasePage {
         return streetsCodesCaptionNode.getText();
     }
 
-    public StreetCodePage clickCatalogItemByName(int index) {
+    public StreetCodePage clickCatalogItemByIndex(int index) {
+        waitUntilElementVisible(containerRootNode);
         streetCodesCatalogComponent.getItemComponents().get(index).getNameNode().click();
         return new StreetCodePage(driver);
     }
