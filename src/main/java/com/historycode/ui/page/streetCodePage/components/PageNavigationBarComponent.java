@@ -26,9 +26,10 @@ public class PageNavigationBarComponent extends BaseComponent {
         if(!isProgressBarVisible()) {
             toggleProgressBar();
         }
-
         if (sectionNumber > 0 && sectionNumber <= sectionNumbers.size()) {
-            sectionNumbers.get(sectionNumber - 1).click();
+            WebElement element = sectionNumbers.get(sectionNumber - 1);
+            actions.moveToElement(element).perform();
+            element.click();
         } else {
             throw new IllegalArgumentException("Invalid section number");
         }
@@ -36,10 +37,11 @@ public class PageNavigationBarComponent extends BaseComponent {
 
     public void toggleProgressBar() {
         hideButton.click();
+        waitUntilElementClickable(sectionNumbers.getFirst());
     }
 
     public boolean isProgressBarVisible() {
-        return progressBar.isDisplayed();
+        return this.hideButton.getDomAttribute("class").contains("visible");
     }
 
     public int getSectionsCount() {

@@ -21,8 +21,8 @@ public abstract class BaseComponent extends Base {
         super(driver);
     }
 
-    public void waitUntilElementVisible(WebElement element) {
-        sleep(2000);
-        wait.until(ExpectedConditions.visibilityOf(element));
-    }
+//    public void waitUntilElementVisible(WebElement element) {
+//        sleep(2000);
+//        wait.until(ExpectedConditions.visibilityOf(element));
+//    }
 }

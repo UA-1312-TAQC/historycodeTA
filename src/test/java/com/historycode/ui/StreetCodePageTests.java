@@ -27,7 +27,7 @@ public class StreetCodePageTests extends BaseTestRunner {
         homePage.getBurgerMenuComponent().clickMenuItem("History-коди");
 
         StreetCodeCatalogPage catalogPage = new StreetCodeCatalogPage(driver);
-        streetCodePage = catalogPage.clickCatalogItemByName(0);
+        streetCodePage = catalogPage.clickCatalogItemByIndex(0);
     }
 
     @Issue("70")
