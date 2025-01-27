@@ -21,4 +21,12 @@ public class StreetCodeDP {
                 {"/khrystyna-skachkivska-sushko"}
         };
     }
+
+    @DataProvider(name = "urlProviderForTextBlock")
+    public Object[][] urlProviderForTextBlock(){
+        return new Object[][]{
+                {"/roman-ratushnyi-seneka"},
+                {"/vasyl-stus"}
+        };
+    }
 }
