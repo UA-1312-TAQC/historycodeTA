@@ -3,8 +3,6 @@ package com.historycode.ui.page.homePage;
 import com.historycode.ui.component.BaseComponent;
 import com.historycode.ui.page.HistoryCodePage.HistoryCodePage;
 import lombok.Getter;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -42,7 +40,7 @@ public class PersonCardComponent extends BaseComponent {
 
     public String getCategory() {
         if (category == null || !category.isDisplayed()) {
-            return null; // Повертаємо null, якщо елемент відсутній або не відображається
+            return null;
         }
         return category.getText().trim();
     }

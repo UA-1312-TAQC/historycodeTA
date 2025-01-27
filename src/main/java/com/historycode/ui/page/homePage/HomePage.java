@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Getter
 public class HomePage extends BasePage {
 
-    @FindBy(css = ".slick-slider.top-carousel")
+    @FindBy(xpath = "//div[contains(@class, 'top-carousel')]//div[contains(@class, 'slick-track')]")
     private WebElement topCarouselElement;
 
     @FindBy(xpath = "//div[contains(@class, 'newsSliderContainer')]//div[contains(@class, 'sliderClass')]")

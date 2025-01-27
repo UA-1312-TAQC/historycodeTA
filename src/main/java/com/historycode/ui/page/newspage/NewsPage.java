@@ -7,17 +7,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 
-@Getter
 public class NewsPage extends BasePage {
+
+    @Getter
     @FindBy(xpath = "//div[@class='NewsHeader']")
     private WebElement newsHeaderRoot;
 
     public NewsPage(WebDriver driver) {
         super(driver);
-    }
-
-    public WebElement getNewsTitle() {
-        return newsHeaderRoot;
     }
 
 //    public String getPublicationDate() {
@@ -52,6 +49,4 @@ public class NewsPage extends BasePage {
         return false;
     }
 
-    public void main() {
-    }
 }

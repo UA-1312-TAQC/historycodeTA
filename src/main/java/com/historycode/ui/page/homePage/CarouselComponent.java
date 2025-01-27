@@ -4,10 +4,10 @@ import com.historycode.ui.component.BaseComponent;
 import lombok.Getter;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.interactions.MoveTargetOutOfBoundsException;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
+import io.qameta.allure.Step;
 
 import java.util.List;
 import java.util.function.Function;
@@ -19,6 +19,7 @@ public abstract class CarouselComponent<T extends BaseComponent> extends BaseCom
 
     @FindBy(xpath = ".//button[contains(@class, 'slick-arrow') and contains(@class, 'slick-next')]")
     protected WebElement rightArrow;
+
     @Getter
     @FindBy(xpath = ".//div[contains(@class,'slick-slide') and contains(@class,'slick-active')]")
     public WebElement slickActive;
@@ -28,23 +29,33 @@ public abstract class CarouselComponent<T extends BaseComponent> extends BaseCom
         PageFactory.initElements(new DefaultElementLocatorFactory(rootElement), this);
     }
 
+    @Step("Clicking left arrow")
     public void clickLeftArrow() {
         waitUntilElementVisible(leftArrow);
         leftArrow.click();
     }
 
-
+    @Step("Clicking right arrow")
     public void clickRightArrow() {
         waitUntilElementVisible(rightArrow);
         rightArrow.click();
     }
 
+    @Step("Safely clicking right arrow and waiting for slide to change")
     public void safeClickRightArrow() {
         String currentId = getActiveSlideId();
         clickRightArrow();
         wait.until(d -> !getActiveSlideId().equals(currentId));
     }
 
+    @Step("Safely clicking left arrow and waiting for slide to change")
+    public void safeClickLeftArrow() {
+        String currentId = getActiveSlideId();
+        clickLeftArrow();
+        wait.until(d -> !getActiveSlideId().equals(currentId));
+    }
+
+    @Step("Swiping carousel with offset {xOffset}")
     public void swipe(int xOffset) {
         try {
             int startX = slickActive.getLocation().getX() + (slickActive.getSize().getWidth() / 2);
@@ -67,7 +78,7 @@ public abstract class CarouselComponent<T extends BaseComponent> extends BaseCom
         }
     }
 
-
+    @Step("Moving to slide with target index {targetIndex}")
     public void moveToSlide(int targetIndex) {
         int maxAttempts = 20;
         int attempts = 0;
@@ -89,6 +100,7 @@ public abstract class CarouselComponent<T extends BaseComponent> extends BaseCom
         }
     }
 
+    @Step("Moving to slide with target index {targetIndex} using swipe")
     public void moveToSlideUsingSwipe(int targetIndex) {
         int maxAttempts = 20;
         int attempts = 0;
@@ -111,10 +123,12 @@ public abstract class CarouselComponent<T extends BaseComponent> extends BaseCom
         }
     }
 
+    @Step("Getting ID of the active slide")
     public String getActiveSlideId() {
         return getSlickActive().getAttribute("data-index");
     }
 
+    @Step("Scrolling to card element based on condition")
     public T scrollToCardElement(Function<T, Boolean> condition) {
         int totalSlides = getCarouselItems().size();
         for (int i = 0; i < totalSlides; i++) {
@@ -127,6 +141,7 @@ public abstract class CarouselComponent<T extends BaseComponent> extends BaseCom
         throw new IllegalStateException("No card matching the condition was found.");
     }
 
+    @Step("Scrolling to card element using swipe based on condition")
     public T scrollToCardElementUsingSwipe(Function<T, Boolean> condition) {
         int maxAttempts = 20;
         int attempts = 0;

@@ -286,7 +286,6 @@ public class SmokeHomePageTest extends BaseTestRunner {
                     log.info("Slide #{} -> Name: {}, Category: {}, Description: {}, ImageSrc: {}",
                             i, personName, category, description, imageSrc);
 
-                    // Validating slide data
                     softAssert.assertTrue(personName != null && !personName.trim().isEmpty(),
                             "Person name must not be blank.");
                     softAssert.assertTrue(category == null || !category.trim().isEmpty(),
