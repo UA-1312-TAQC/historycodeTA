@@ -14,7 +14,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 
-public class StreetCodeInteractiveButtonsTest extends BaseTestRunner {
+public class StreetCodePageTests extends BaseTestRunner {
     private StreetCodePage streetCodePage;
     private SoftAssert softAssert;
 
