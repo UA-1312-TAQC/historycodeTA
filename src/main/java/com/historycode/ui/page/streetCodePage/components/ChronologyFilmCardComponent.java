@@ -76,26 +76,17 @@ public class ChronologyFilmCardComponent extends BaseComponent {
     }
 
     public WebElement getFilmCardByIndex(int index) {
-        try {
-            Thread.sleep(15000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         if (index < 0 || index >= filmCard.size()) {
             throw new IndexOutOfBoundsException("Invalid index: " + index);
         }
         WebElement filmCardElement = filmCard.get(index);
         scrollToElement(filmCardElement);
-        wait.until(ExpectedConditions.visibilityOf(filmCardElement));
+        wait.until(ExpectedConditions.and(ExpectedConditions.visibilityOf(filmCardElement),
+                ExpectedConditions.elementToBeClickable(filmCardElement)));
         return filmCardElement;
     }
 
     public WebElement getFilmCardTextByIndex(int index) {
-        try {
-            Thread.sleep(20000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         if (index < 0 || index >= filmCard.size()) {
             throw new IndexOutOfBoundsException("Invalid index: " + index);
         }
@@ -129,11 +120,6 @@ public class ChronologyFilmCardComponent extends BaseComponent {
         }
 
     public WebElement getFilmCardByName(String name) {
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         for (int i = 0; i < filmTitles.size(); i++) {
             WebElement titleElement = filmTitles.get(i);
             if (titleElement.getText().equalsIgnoreCase(name)) {
@@ -179,12 +165,6 @@ public class ChronologyFilmCardComponent extends BaseComponent {
 
 
     public boolean descriptionsWithinLimit(int maxLength) {
-        try {
-            Thread.sleep(15000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
         for (int i = 0; i < description.size(); i++) {
             WebElement descriptionElement = description.get(i);
             String text = descriptionElement.getText();
@@ -316,12 +296,6 @@ public class ChronologyFilmCardComponent extends BaseComponent {
     }
 
     public boolean isCardCentered(int index) {
-
-        try {
-            Thread.sleep(15000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         if (index < 0 || index >= filmCardStyle.size()) {
             throw new IndexOutOfBoundsException("Invalid index: " + index);
         }
