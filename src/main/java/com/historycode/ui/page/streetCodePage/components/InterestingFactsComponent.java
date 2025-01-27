@@ -39,11 +39,11 @@ public class InterestingFactsComponent extends BaseComponent {
     }
 
     public void clickNextSlide() {
-        carousel.clickNext();
+        carousel.clickNextArrow();
     }
 
     public void clickPreviousSlide() {
-        carousel.clickPrevious();
+        carousel.clickPreviousArrow();
     }
 
     public void clickFactCard(int index) {
@@ -59,8 +59,26 @@ public class InterestingFactsComponent extends BaseComponent {
     public int getCurrentSlideIndex() {
         return carousel.getCurrentSlideIndex();
     }
+    public int getCurrentCardIndex() {
+        return carousel.getCurrentCardIndex();
+    }
 
     public int getTotalSlides() {
         return carousel.getTotalSlides();
     }
+
+    public int getActiveWowFactsSlickDotIndex() {
+        return carousel.getActiveWowFactsSlickDotIndex();
+    }
+
+    public int getLastWowFactsSlickDotIndex() {
+        return carousel.getLastWowFactsSlickDotIndex();
+    }
+
+    public void clickWowFactsSlickDotByIndex(int index) {
+        carousel.clickWowFactsSlickDotByIndex(index);
+    }
+
+
+
 }

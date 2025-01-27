@@ -2,6 +2,7 @@ package com.historycode.ui.page.streetCodePage.components.carousels;
 
 import com.historycode.ui.page.streetCodePage.components.InterestingFactsCardComponent;
 import com.historycode.ui.page.streetCodePage.components.InterestingFactsComponent;
+import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,6 +20,12 @@ public class InterestingFactsCarousel extends BaseCarousel {
     @FindBy(xpath = ".//div[contains(@class, 'slick-current')]//div[@class='interestingFactSlide']")
     private WebElement factCardCurrentNode;
 
+    @FindBy(xpath = "//div[@class ='slick-slide slick-active slick-center slick-current']")
+    private WebElement activeCard;
+    @FindBy(xpath = "//div[@id ='wow-facts']//ul[contains(@class, 'slick-dots')]/li/button")
+    private List<WebElement> allWowFactsSlickDots;
+    @FindBy(xpath = "//div[@id ='wow-facts']//ul[contains(@class, 'slick-dots')]/li[contains(@class, 'slick-active')]/button")
+    private WebElement activeWowFactsSlickDot;
     //TODO: remove this
     @FindBy(xpath = "//div[@id='wow-facts']//div[@class='interestingFactsContainer ']//button[@class='slick-arrow slick-next']")
     private WebElement nextButton;
@@ -51,7 +58,26 @@ public class InterestingFactsCarousel extends BaseCarousel {
         return this;
     }
 
-    public String getCurrentNodeTitle(){
+    public String getCurrentNodeTitle() {
         return factCardCurrentNode.findElement(By.xpath(".//p[@class = 'cardTextContainerTitle']")).getText();
     }
+
+    public int getCurrentCardIndex() {
+        String index = activeCard.getAttribute("data-index");
+        return Integer.parseInt(index);
+    }
+
+    public int getActiveWowFactsSlickDotIndex() {
+        return Integer.parseInt(activeWowFactsSlickDot.getText().trim());
+    }
+
+    public int getLastWowFactsSlickDotIndex(){
+        return Integer.parseInt(allWowFactsSlickDots.get(allWowFactsSlickDots.size() - 1).getText().trim());
+    }
+
+    public void clickWowFactsSlickDotByIndex(int index) {
+        allWowFactsSlickDots.get(index).click();
+    }
+
+
 }

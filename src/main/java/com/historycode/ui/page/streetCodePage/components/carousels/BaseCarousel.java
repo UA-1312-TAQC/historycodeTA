@@ -34,14 +34,14 @@ public abstract class BaseCarousel extends BaseComponent {
         }
     }
 
-    public BaseCarousel clickNext() {
+    public BaseCarousel clickNextArrow() {
         if (hasArrows()) {
             rightArrow.click();
         }
         return this;
     }
 
-    public BaseCarousel clickPrevious() {
+    public BaseCarousel clickPreviousArrow() {
         if (hasArrows()) {
             leftArrow.click();
         }
