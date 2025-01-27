@@ -16,7 +16,7 @@ public class StreetCodeButtonsTest extends BaseTestRunner {
 
     SoftAssert softAssert;
     StreetCodePage streetCodePage;
-    final String DONATE_AMOUNT = "500₴";
+    final int DONATE_AMOUNT = 500;
 
     @BeforeMethod
     @Step("Go to the first StreetCode page")
@@ -69,19 +69,17 @@ public class StreetCodeButtonsTest extends BaseTestRunner {
     @Epic("StreetCode page")
     @Description("Questionnaire modal Test")
     public void questionnaireTest() {
-        //todo: implement questionnaire modal and refreshPage function
-        streetCodePage.sleep(2200);
+        //todo: Scroll to the end of the page is not working
         streetCodePage.scrollToEndOfPage();
         softAssert.assertTrue(streetCodePage.getSurveyModal().isDisplayed());
-
         streetCodePage.getSurveyModal().close();
+
         streetCodePage.scrollToTop();
         streetCodePage.scrollToEndOfPage();
         softAssert.assertFalse(streetCodePage.getSurveyModal().isDisplayed());
 
-        //streetCodePage.refreshPage();
-        DonateModal donateModal = streetCodePage.getQuickDonateButton().clickDonateButton();
-        donateModal.close();
+        streetCodePage.refreshPage();
+        streetCodePage.getQuickDonateButton().clickDonateButton().close();
         streetCodePage.scrollToEndOfPage();
         softAssert.assertTrue(streetCodePage.getSurveyModal().isDisplayed());
 
