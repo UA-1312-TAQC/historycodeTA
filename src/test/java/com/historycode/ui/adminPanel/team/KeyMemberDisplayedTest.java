@@ -9,7 +9,7 @@ import io.qameta.allure.Issue;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class KeyMemberDisplayed extends TestRunnerWithAdmin {
+public class KeyMemberDisplayedTest extends TestRunnerWithAdmin {
 
     @Issue("121")
     @Test
