@@ -50,8 +50,6 @@ public abstract class BaseGridComponent extends BaseComponent {
         pagination.clickNextFivePages();
     }
 
-    public int getLastPage() { return pagination.getPaginationItems().size() + 1; }
-
     /*
     public NoDataComponent getNoDataComponent(){
         if(noDataComponent == null){

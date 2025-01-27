@@ -24,7 +24,7 @@ public class BaseTestRunner {
     }
 
     @Step("init ChromeDriver")
-    @BeforeMethod(alwaysRun = true)
+    @BeforeMethod
     public void beforeMethod() {
         ChromeOptions options = new ChromeOptions();
 

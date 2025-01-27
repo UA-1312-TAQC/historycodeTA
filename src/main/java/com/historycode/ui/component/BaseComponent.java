@@ -1,7 +1,6 @@
 package com.historycode.ui.component;
 
 import com.historycode.ui.Base;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -23,6 +22,7 @@ public abstract class BaseComponent extends Base {
     }
 
     public void waitUntilElementVisible(WebElement element) {
+        sleep(2000);
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 }
