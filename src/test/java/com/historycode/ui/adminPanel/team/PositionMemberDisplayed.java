@@ -41,10 +41,8 @@ public class PositionMemberDisplayed extends TestRunnerWithAdmin {
 
 
         driver.navigate().refresh();
-        memberModal = new TeamPageAdminPanel(driver);
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='ant-table-content']"))); // Ensure positions are loaded
+        memberModal = new TeamPageAdminPanel(driver);
 
         TeamRowComponent teamMember = memberModal.getTeamPageGridComponent().findUserByName(memberName);
 
@@ -55,11 +53,10 @@ public class PositionMemberDisplayed extends TestRunnerWithAdmin {
 
         Assert.assertNotNull(teamMember, String.format("The member %s is not found in the team grid", memberName));
 
-        List<String> actualPositions = teamMember.getPositions();
-        System.out.println("Positions found for member: " + actualPositions);
-        Assert.assertTrue(actualPositions.contains(position),
-                String.format("Position '%s' is not displayed for the team member %s. Actual positions: %s",
-                        position, memberName, actualPositions));
+        //List<String> actualPositions = teamMember.getPositions();
+        //System.out.println("Positions found for member: " + actualPositions);
+        Assert.assertEquals(teamMember.getPosition(), position, String.format("Position '%s' is not displayed for the team member %s. Actual position: %s",
+                position, memberName, teamMember.getPosition()));
 
         teamMember.clickDelete().clickOkButton();
     }
