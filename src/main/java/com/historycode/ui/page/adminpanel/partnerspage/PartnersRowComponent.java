@@ -3,6 +3,7 @@ package com.historycode.ui.page.adminpanel.partnerspage;
 import com.historycode.ui.component.BaseComponent;
 import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
 import com.historycode.ui.page.adminpanel.partnerspage.modal.EditPartnersModal;
+import io.qameta.allure.Step;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -46,14 +47,25 @@ public class PartnersRowComponent extends BaseComponent {
         super(driver, rootElement);
     }
 
+    public String getNameText() {
+        return name.getText();
+    }
+
+    @Step("Click on the delete button next to partner item")
     public DeleteItemModal clickDelete() {
         deleteAction.click();
         return new DeleteItemModal(driver, deleteModalRootElement);
     }
 
+    @Step("Click on the edit button next to partner item")
     public EditPartnersModal clickEdit() {
         editAction.click();
         return new EditPartnersModal(driver, editModalRootElement);
+    }
+
+    @Override
+    public String toString(){
+        return " name " + getNameText();
     }
 
 }
