@@ -23,10 +23,10 @@ import java.util.List;
 
 public class BurgerMenuComponent extends BaseComponent {
 
-    @FindBy(xpath = ".//div[contains(@class, 'drawerContainer')]")
+    @FindBy(xpath = "//div[contains(@class, 'drawerContainer')]")
     private WebElement containerMenu;
 
-    @FindBy(xpath = ".//a[contains(@class, 'headerItem')]")
+    @FindBy(xpath = "//a[contains(@class, 'headerItem')]")
     private List<WebElement> menuItems;
 
     @FindBy(xpath = ".//a[@class='headerItem' and text()='Головна']")
