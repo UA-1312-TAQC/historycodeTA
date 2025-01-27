@@ -34,7 +34,6 @@ public class KeywordPersonasModal extends BaseModal {
     }
 
     public List<TagsPersonasCardComponent> getPersons() {
-        //wait.until(ExpectedConditions.visibilityOf(personsCardsContainer));
         waitUntilElementVisible(personsCardsContainer);
         List<WebElement> currentPersonCards = driver.findElements(
                 By.xpath(".//div[@class='relatedFiguresByTagsContentContainer']/a")
