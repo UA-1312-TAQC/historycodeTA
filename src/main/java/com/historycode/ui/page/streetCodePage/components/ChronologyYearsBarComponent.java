@@ -37,11 +37,6 @@ public class ChronologyYearsBarComponent extends BaseComponent {
     }
 
     public WebElement getRedTimeLine() {
-        try {
-            Thread.sleep(15000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         scrollToElement(redTimeline);
         wait.until(ExpectedConditions.visibilityOf(redTimeline));
         return redTimeline;
@@ -54,11 +49,6 @@ public class ChronologyYearsBarComponent extends BaseComponent {
     }
 
     public WebElement getSelectedYearBoxByIndex(int index) {
-        try {
-            Thread.sleep(15000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         if (index < 0 || index >= selectedYearBoxContainer.size()) {
         }
 
@@ -69,11 +59,6 @@ public class ChronologyYearsBarComponent extends BaseComponent {
     }
 
     public void clickYearBoxByIndex(int index) {
-        try {
-            Thread.sleep(15000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         WebElement yearBox = getSelectedYearBoxByIndex(index);
         wait.until(ExpectedConditions.elementToBeClickable(yearBox));
         threadJs.executeScript("arguments[0].click();", yearBox);
