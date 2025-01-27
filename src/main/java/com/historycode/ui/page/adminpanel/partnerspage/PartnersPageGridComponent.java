@@ -21,10 +21,16 @@ public class PartnersPageGridComponent extends BaseGridComponent {
 
     public PartnersPageGridComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        partnersRowComponents = new ArrayList<>();
-        for(WebElement element: partnerRowNodes){
-            partnersRowComponents.add(new PartnersRowComponent(driver, element));
+        sleep(3000); // Потрібно зачикати поки сторінка завантажиться
+        this.partnersRowComponents = initializePartnersRowComponents(driver, partnerRowNodes);
+    }
+
+    private List<PartnersRowComponent> initializePartnersRowComponents(WebDriver driver, List<WebElement> partnerRowNodes) {
+        List<PartnersRowComponent> components = new ArrayList<>();
+        for (WebElement element : partnerRowNodes) {
+            components.add(new PartnersRowComponent(driver, element));
         }
+        return components;
     }
 
     public PartnersRowComponent findUserByName(String name){
@@ -44,26 +50,26 @@ public class PartnersPageGridComponent extends BaseGridComponent {
     }
 
     public void clickNextPage() {
-        sleep(1000);
+        waitUntilElementClickable(pagination.getNextPage());
         pagination.clickNextPage();
-        waitUntilElementInvisible(partnersRowComponents.get(0).getName());
+        waitUntilElementInvisible(partnerRowNodes.getFirst());
     }
 
     public void clickPrevPage() {
-        sleep(1000);
+        waitUntilElementClickable(pagination.getPrevPage());
         pagination.clickPrevPage();
-        waitUntilElementInvisible(partnersRowComponents.get(0).getName());
+        waitUntilElementInvisible(partnerRowNodes.getFirst());
     }
 
     public void clickPaginationItem(int index) {
-        sleep(1000);
+        waitUntilElementVisible(pagination.getPaginationItems().getLast());
         pagination.clickPaginationItem(index);
-        waitUntilElementInvisible(partnersRowComponents.get(0).getName());
+        waitUntilElementInvisible(partnerRowNodes.getFirst());
     }
 
     public void clickLastPage(){
-        sleep(1000);
+        waitUntilElementVisible(pagination.getPaginationItems().getLast());
         pagination.clickLastPage();
-        waitUntilElementInvisible(partnersRowComponents.get(0).getName());
+        waitUntilElementInvisible(partnerRowNodes.getFirst());
     }
 }

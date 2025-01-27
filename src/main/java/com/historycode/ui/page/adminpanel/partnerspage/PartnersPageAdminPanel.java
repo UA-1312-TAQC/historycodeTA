@@ -27,6 +27,7 @@ public class PartnersPageAdminPanel extends BasePageAdminPanel {
 
     public PartnersPageGridComponent getPartnersPageGridComponent(){
         if(partnersPageGridComponent == null){
+            waitUntilElementVisible(gridRootElement);
             partnersPageGridComponent = new PartnersPageGridComponent(driver, gridRootElement);
         }
         return partnersPageGridComponent;
@@ -41,21 +42,25 @@ public class PartnersPageAdminPanel extends BasePageAdminPanel {
 
     public PartnersPageAdminPanel clickNextPage() {
         getPartnersPageGridComponent().clickNextPage();
+        waitUntilElementVisible(getPartnersPageGridComponent().partnerRowNodes.getLast());
         return new PartnersPageAdminPanel(driver);
     }
 
     public PartnersPageAdminPanel clickPrevPage() {
         getPartnersPageGridComponent().clickPrevPage();
+        waitUntilElementVisible(getPartnersPageGridComponent().partnerRowNodes.getLast());
         return new PartnersPageAdminPanel(driver);
     }
 
     public PartnersPageAdminPanel clickPaginationItem(int index) {
         getPartnersPageGridComponent().clickPaginationItem(index);
+        waitUntilElementVisible(getPartnersPageGridComponent().partnerRowNodes.getLast());
         return new PartnersPageAdminPanel(driver);
     }
 
     public PartnersPageAdminPanel clickLastPage(){
         getPartnersPageGridComponent().clickLastPage();
+        waitUntilElementVisible(getPartnersPageGridComponent().partnerRowNodes.getLast());
         return new PartnersPageAdminPanel(driver);
     }
 }

@@ -2,6 +2,7 @@ package com.historycode.ui;
 
 
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -81,6 +82,10 @@ public abstract class Base {
 
     public void waitUntilElementClickable(WebElement element) {
         wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
+
+    public void waitUntilPageLouder() {
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.tagName("body")));
     }
 
 
