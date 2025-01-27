@@ -3,6 +3,8 @@ package com.historycode.ui;
 import com.historycode.ui.page.homePage.HomePage;
 import com.historycode.ui.page.streetCodePage.StreetCodePage;
 import com.historycode.ui.page.streetCodePage.components.MainCardComponent;
+import com.historycode.ui.page.streetCodePage.components.TagsPersonasCardComponent;
+import com.historycode.ui.page.streetCodePage.modals.KeywordPersonasModal;
 import com.historycode.ui.page.streetcodecatalogpage.StreetCodeCatalogPage;
 import com.historycode.ui.testrunners.BaseTestRunner;
 import io.qameta.allure.Description;
@@ -18,6 +20,8 @@ public class StreetCodePageTests extends BaseTestRunner {
     private StreetCodePage streetCodePage;
     private SoftAssert softAssert;
 
+    private MainCardComponent mainCard;
+
     @BeforeMethod
     @Step("Navigate to StreetCode page")
     public void navigateToStreetCodePage() {
@@ -27,7 +31,7 @@ public class StreetCodePageTests extends BaseTestRunner {
         homePage.getBurgerMenuComponent().clickMenuItem("History-коди");
 
         StreetCodeCatalogPage catalogPage = new StreetCodeCatalogPage(driver);
-        streetCodePage = catalogPage.clickCatalogItemByName(0);
+        streetCodePage = catalogPage.clickCatalogItemByIndex(0);
     }
 
     @Issue("70")
@@ -78,6 +82,48 @@ public class StreetCodePageTests extends BaseTestRunner {
                 "X-coordinate of Donate button should remain the same after scrolling to bottom");
         softAssert.assertTrue(endPosition.getY() > middlePosition.getY(),
                 "Y-coordinate of Donate button should increase after scrolling to bottom");
+
+        softAssert.assertAll();
+    }
+
+    @Issue("77")
+    @Test
+    @Description("Verify that clicking on the tag opens a modal window with relevant StreetCodes")
+    public void testTagModalFunctionality() {
+
+        mainCard = streetCodePage.getMainCard();
+        softAssert.assertFalse(mainCard.getTags().isEmpty(), "Tags should be present on the page");
+        String selectedTag = mainCard.getTags().get(0);
+
+        //test tag hover
+        String originalBorderColor = mainCard.getTagBorderColor(selectedTag);
+        String originalTextColor = mainCard.getTagTextColor(selectedTag);
+
+        mainCard.hoverOverTag(selectedTag);
+
+        String hoveredBorderColor = mainCard.getTagBorderColor(selectedTag);
+        String hoveredTextColor = mainCard.getTagTextColor(selectedTag);
+
+        softAssert.assertNotEquals(hoveredBorderColor, originalBorderColor,
+                "Tag border color should change on hover");
+        softAssert.assertNotEquals(hoveredTextColor, originalTextColor,
+                "Tag text color should change on hover");
+
+        //test modal
+        KeywordPersonasModal modal = mainCard.clickKeyword(selectedTag);
+        softAssert.assertTrue(mainCard.isModalVisible(),
+                "Modal window should be visible after clicking the tag");
+        softAssert.assertFalse(modal.getPersons().isEmpty(),
+                "Modal should contain related StreetCode cards");
+
+        TagsPersonasCardComponent firstPerson = modal.getPersons().get(0);
+        softAssert.assertNotNull(firstPerson.getName(),
+                "Cards in modal should have a displayed name");
+
+        //verify selected tag presence
+        String selectedTagInModal = modal.getSelectedTag();
+        softAssert.assertEquals(selectedTagInModal, selectedTag,
+                "Selected tag should be highlighted in modal");
 
         softAssert.assertAll();
     }

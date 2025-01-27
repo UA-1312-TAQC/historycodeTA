@@ -1,32 +1,44 @@
 package com.historycode.ui.page.adminpanel.partnerspage;
 
 import com.historycode.ui.component.adminPanel.gridAdminPanel.BaseGridComponent;
+
 import lombok.Getter;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class PartnersPageGridComponent extends BaseGridComponent {
 
     @Getter
-    private final List<PartnersRowComponent> partnersRowComponents;
+    private List<PartnersRowComponent> partnersRowComponents;
+
+    @FindBy(xpath = "//tbody//tr")
+    protected List<WebElement> partnerRowNodes;
 
     public PartnersPageGridComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        partnersRowComponents = getPartnersRows(driver);
+        sleep(3000); // Потрібно зачикати поки сторінка завантажиться
+        this.partnersRowComponents = initializePartnersRowComponents(driver, partnerRowNodes);
     }
 
-    public List<PartnersRowComponent> getPartnersRows(WebDriver driver) {
-
-        List<WebElement> gridRows = driver.findElements(By.xpath("./tbody//tr"));
-
-        for (WebElement rootElement : gridRows) {
-            partnersRowComponents.add(new PartnersRowComponent(driver, rootElement));
+    private List<PartnersRowComponent> initializePartnersRowComponents(WebDriver driver, List<WebElement> partnerRowNodes) {
+        List<PartnersRowComponent> components = new ArrayList<>();
+        for (WebElement element : partnerRowNodes) {
+            components.add(new PartnersRowComponent(driver, element));
         }
-        return partnersRowComponents;
+        return components;
+    }
+
+    public PartnersRowComponent findUserByName(String name){
+        for(PartnersRowComponent item: getPartnersRowComponents()){
+            if(item.getNameText().equals(name))
+                return item;
+        }
+        return null;
     }
 
     public PartnersRowComponent getRowById(int id) {
@@ -37,18 +49,27 @@ public class PartnersPageGridComponent extends BaseGridComponent {
         return partnersRowComponents.size();
     }
 
-    public PartnersPageGridComponent clickNextPage() {
+    public void clickNextPage() {
+        waitUntilElementClickable(pagination.getNextPage());
         pagination.clickNextPage();
-        return new PartnersPageGridComponent(driver, rootElement);
+        waitUntilElementInvisible(partnerRowNodes.getFirst());
     }
 
-    public PartnersPageGridComponent clickPrevPage() {
+    public void clickPrevPage() {
+        waitUntilElementClickable(pagination.getPrevPage());
         pagination.clickPrevPage();
-        return new PartnersPageGridComponent(driver, rootElement);
+        waitUntilElementInvisible(partnerRowNodes.getFirst());
     }
 
-    public PartnersPageGridComponent clickPaginationItem(int index) {
+    public void clickPaginationItem(int index) {
+        waitUntilElementVisible(pagination.getPaginationItems().getLast());
         pagination.clickPaginationItem(index);
-        return new PartnersPageGridComponent(driver, rootElement);
+        waitUntilElementInvisible(partnerRowNodes.getFirst());
+    }
+
+    public void clickLastPage(){
+        waitUntilElementVisible(pagination.getPaginationItems().getLast());
+        pagination.clickLastPage();
+        waitUntilElementInvisible(partnerRowNodes.getFirst());
     }
 }

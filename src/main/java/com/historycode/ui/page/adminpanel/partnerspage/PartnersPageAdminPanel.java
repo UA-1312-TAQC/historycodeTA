@@ -1,32 +1,39 @@
 package com.historycode.ui.page.adminpanel.partnerspage;
 
 import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
-
 import com.historycode.ui.page.adminpanel.partnerspage.modal.CreatePartnersModal;
-import lombok.Getter;
+
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class PartnersPageAdminPanel extends BasePageAdminPanel {
 
+    protected PartnersPageGridComponent partnersPageGridComponent;
+
     @FindBy(xpath = "//button[span[text()='Створити партнера']]")
     private WebElement addNewPartnersButton;
 
-    @FindBy(xpath = "//div[contains(@class, 'partners-table')]")
-    private WebElement rootElement;
+    @FindBy(xpath = "//div[@class = 'ant-table-container']")
+    private WebElement gridRootElement;
 
     @FindBy(xpath = "//div[@class='ant-modal-content']//span[text()='Зберегти']/../../../..")
     private WebElement createModalRootElement;
 
-    @Getter
-    private final PartnersPageGridComponent partnersPageGridComponent;
-
     public PartnersPageAdminPanel(WebDriver driver) {
         super(driver);
-        partnersPageGridComponent = new PartnersPageGridComponent(driver, rootElement);
     }
 
+    public PartnersPageGridComponent getPartnersPageGridComponent(){
+        if(partnersPageGridComponent == null){
+            waitUntilElementVisible(gridRootElement);
+            partnersPageGridComponent = new PartnersPageGridComponent(driver, gridRootElement);
+        }
+        return partnersPageGridComponent;
+    }
+
+    @Step("Click the 'Створити нового члена команди' button")
     public CreatePartnersModal clickAddNewPartnersButton() {
         addNewPartnersButton.click();
         waitUntilElementVisible(createModalRootElement);
@@ -34,20 +41,26 @@ public class PartnersPageAdminPanel extends BasePageAdminPanel {
     }
 
     public PartnersPageAdminPanel clickNextPage() {
-        partnersPageGridComponent.clickNextPage();
-        return this;
+        getPartnersPageGridComponent().clickNextPage();
+        waitUntilElementVisible(getPartnersPageGridComponent().partnerRowNodes.getLast());
+        return new PartnersPageAdminPanel(driver);
     }
 
     public PartnersPageAdminPanel clickPrevPage() {
-        partnersPageGridComponent.clickPrevPage();
-        return this;
+        getPartnersPageGridComponent().clickPrevPage();
+        waitUntilElementVisible(getPartnersPageGridComponent().partnerRowNodes.getLast());
+        return new PartnersPageAdminPanel(driver);
     }
 
     public PartnersPageAdminPanel clickPaginationItem(int index) {
-        if (index < 0) {
-            throw new IllegalArgumentException("Pagination index cannot be negative");
-        }
-        partnersPageGridComponent.clickPaginationItem(index);
-        return this;
+        getPartnersPageGridComponent().clickPaginationItem(index);
+        waitUntilElementVisible(getPartnersPageGridComponent().partnerRowNodes.getLast());
+        return new PartnersPageAdminPanel(driver);
+    }
+
+    public PartnersPageAdminPanel clickLastPage(){
+        getPartnersPageGridComponent().clickLastPage();
+        waitUntilElementVisible(getPartnersPageGridComponent().partnerRowNodes.getLast());
+        return new PartnersPageAdminPanel(driver);
     }
 }
