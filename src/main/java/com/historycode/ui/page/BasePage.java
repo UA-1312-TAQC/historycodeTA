@@ -49,6 +49,7 @@ public abstract class BasePage extends Base {
     }
 
     public BurgerMenuComponent openBurgerMenu() {
+        wait.until(ExpectedConditions.elementToBeClickable(burgerMenu));
         burgerMenu.click();
         return burgerMenuComponent;
     }
