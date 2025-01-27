@@ -9,9 +9,6 @@ import org.openqa.selenium.support.FindBy;
 import java.util.List;
 
 public class DonateModal extends BaseModal {
-    @FindBy(xpath = ".//div[contains(@class, 'donatesModal')]//button[@class='ant-modal-close']")
-    private WebElement closeButton;
-
     @FindBy(xpath = ".//div[@class = 'donatesModalContent']/h1")
     private WebElement firstTitle;
 
@@ -41,10 +38,6 @@ public class DonateModal extends BaseModal {
 
     public DonateModal(WebDriver driver, WebElement rootModalElement) {
         super(driver, rootModalElement);
-    }
-
-    public void close() {
-        closeButton.click();
     }
 
     public boolean isFirstTitleDisplayed() {
@@ -81,12 +74,12 @@ public class DonateModal extends BaseModal {
 
     public Boolean isAgreeCheckboxDisplayed() {
         String script = """
-            return arguments[0].offsetParent !== null &&
-                   getComputedStyle(arguments[0]).display !== 'none' &&
-                   getComputedStyle(arguments[0]).visibility !== 'hidden' &&
-                   arguments[0].getBoundingClientRect().width > 0 &&
-                   arguments[0].getBoundingClientRect().height > 0;
-            """;
+                return arguments[0].offsetParent !== null &&
+                       getComputedStyle(arguments[0]).display !== 'none' &&
+                       getComputedStyle(arguments[0]).visibility !== 'hidden' &&
+                       arguments[0].getBoundingClientRect().width > 0 &&
+                       arguments[0].getBoundingClientRect().height > 0;
+                """;
         try {
             return (Boolean) threadJs.executeScript(script, agreeCheckbox);
         } catch (NoSuchElementException e) {
@@ -107,4 +100,5 @@ public class DonateModal extends BaseModal {
         donateButton.click();
         return this;
     }
+
 }

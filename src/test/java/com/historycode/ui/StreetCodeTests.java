@@ -84,65 +84,65 @@ public class StreetCodeTests extends BaseTestRunner {
     @Description("Verification if working 'Трохи ще' button and 'Дещо менше' if there is more text available on the page")
     public void testCheckExpandButton() throws InterruptedException {
 
-//        navigateToStreetCodePage("/roman-ratushnyi-seneka");
-//
-//        SoftAssert softAssert = new SoftAssert();
-//
-//        boolean isExpandButtonDisplayed = streetCodePage
-//                .scrollToTextVideoBlock()
-//                .getTextBlock()
-//                .isExpandButtonDisplayed();
-//
-//        boolean isLastParagraphVisible = streetCodePage
-//                .getTextBlock()
-//                .isLastParagraphVisibleInParent();
-//
-//        softAssert.assertTrue(isExpandButtonDisplayed, "The expand button is not displayed");
-//        softAssert.assertTrue(isLastParagraphVisible, "The last paragraph is not visible");
-//
-//        int paragraphFirstCount = streetCodePage
-//                .getTextBlock()
-//                .getParagraphCount();
-//
-//        streetCodePage
-//                .getTextBlock()
-//                .toggleTextContent();
-//
-//        boolean isLessButtonDisplayed = streetCodePage
-//                .getTextBlock()
-//                .scrollToLessButton()
-//                .isLessButtonDisplayed();
-//
-//        isExpandButtonDisplayed = streetCodePage
-//                .getTextBlock()
-//                .isExpandButtonDisplayed();
-//
-//        int paragraphSecondCount = streetCodePage
-//                .getTextBlock()
-//                .getParagraphCount(paragraphFirstCount);
-//
-//        softAssert.assertTrue(paragraphFirstCount < paragraphSecondCount, "The text is not expanded");
-//        softAssert.assertTrue(isLessButtonDisplayed, "The less button is not displayed");
-//        softAssert.assertFalse(isExpandButtonDisplayed, "The expand button is displayed");
-//
-//        boolean collapsedParagraphCount = streetCodePage
-//                .getTextBlock()
-//                .isLessButtonClick()
-//                .getCollapsedParagraphCount(paragraphFirstCount);
-//
-//        isExpandButtonDisplayed = streetCodePage
-//                .getTextBlock()
-//                .isExpandButtonDisplayed();
-//
-//        isLessButtonDisplayed = streetCodePage
-//                .getTextBlock()
-//                .isLessButtonDisplayed();
-//
-//        softAssert.assertTrue(collapsedParagraphCount, "The text is not collapsed");
-//        softAssert.assertTrue(isExpandButtonDisplayed, "The expand button is not displayed");
-//        softAssert.assertFalse(isLessButtonDisplayed, "The less button is displayed");
-//
-//        softAssert.assertAll();
+        navigateToStreetCodePage("/roman-ratushnyi-seneka");
+
+        SoftAssert softAssert = new SoftAssert();
+
+        boolean isReadMoreDisplayed = streetCodePage
+                .scrollToTextVideoBlock()
+                .getTextBlock()
+                .isMoreButtonDisplayed();
+
+        boolean isLastParagraphVisible = streetCodePage
+                .getTextBlock()
+                .isLastParagraphVisibleInParent();
+
+        softAssert.assertTrue(isReadMoreDisplayed, "The 'Read More' button is not displayed");
+        softAssert.assertTrue(isLastParagraphVisible, "The last paragraph is not visible");
+
+        int paragraphFirstCount = streetCodePage
+                .getTextBlock()
+                .getParagraphCount();
+
+        streetCodePage
+                .getTextBlock()
+                .clickMoreButton();
+
+        boolean isLessButtonDisplayed = streetCodePage
+                .getTextBlock()
+                .scrollToLessButton()
+                .isLessButtonDisplayed();
+
+        isReadMoreDisplayed = streetCodePage
+                .getTextBlock()
+                .isMoreButtonDisplayed();
+
+        int paragraphSecondCount = streetCodePage
+                .getTextBlock()
+                .getExpandedParagraphCount(paragraphFirstCount);
+
+        softAssert.assertTrue(paragraphFirstCount < paragraphSecondCount, "The text is not expanded");
+        softAssert.assertTrue(isLessButtonDisplayed, "The less button is not displayed");
+        softAssert.assertFalse(isReadMoreDisplayed, "The expand button is displayed");
+
+        boolean collapsedParagraphCount = streetCodePage
+                .getTextBlock()
+                .clickLessButton()
+                .getCollapsedParagraphCount(paragraphFirstCount);
+
+        isReadMoreDisplayed = streetCodePage
+                .getTextBlock()
+                .isMoreButtonDisplayed();
+
+        isLessButtonDisplayed = streetCodePage
+                .getTextBlock()
+                .isLessButtonDisplayed();
+
+        softAssert.assertTrue(collapsedParagraphCount, "The text is not collapsed");
+        softAssert.assertTrue(isReadMoreDisplayed, "The expand button is not displayed");
+        softAssert.assertFalse(isLessButtonDisplayed, "The less button is displayed");
+
+        softAssert.assertAll();
     }
 
     @Issue("86")

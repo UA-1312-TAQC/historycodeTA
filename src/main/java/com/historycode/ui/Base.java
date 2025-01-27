@@ -32,21 +32,21 @@ public abstract class Base {
         PageFactory.initElements(this.driver, this);
     }
 
-    public void scrollToWebElement(WebElement element) {
+    @Step("Scroll to the element")
+    public void scrollToElement(WebElement element) {
+        actions.moveToElement(element).perform();
+    }
+
+    public void scrollToElementAndWait(WebElement element) {
         waitUntilElementVisible(element);
         try {
             threadJs.executeScript(
                     "arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});", element);
         } catch (Exception e) {
-            logger.error("Error scrolling to element", e);
+            logger.error("Error scrolling to the element", e);
             throw e;
         }
         waitUntilElementClickable(element);
-    }
-    
-    @Step("Scroll to the element")
-    public void scrollToElement(WebElement element) {
-        actions.moveToElement(element).perform();
     }
 
     @Step("Scroll to the middle of the page")
@@ -164,9 +164,9 @@ public abstract class Base {
     public void waitUntilElementClickable(WebElement element) {
         wait.until(ExpectedConditions.elementToBeClickable(element));
     }
-    
+
     public void waitUntilPageLouder() {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.tagName("body")));
     }
-    
+
 }

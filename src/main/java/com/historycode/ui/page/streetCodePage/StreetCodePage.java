@@ -186,7 +186,7 @@ public class StreetCodePage extends BasePage {
     }
 
     public StreetCodePage scrollToInterestingFacts() {
-        scrollToElement(factsNode);
+        scrollToElementAndWait(factsNode);
         return this;
     }
 
