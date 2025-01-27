@@ -45,44 +45,24 @@ public class ChronologyComponent extends BaseComponent {
     }
 
     public WebElement getTitleElement() {
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         scrollToElement(title);
         wait.until(ExpectedConditions.visibilityOf(title));
         return title;
     }
 
     public WebElement getRedTimeline() {
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         scrollToElement(redTimeline);
         wait.until(ExpectedConditions.visibilityOf(redTimeline));
         return redTimeline;
     }
 
     public WebElement getGreyBox() {
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         scrollToElement(greyBox);
         wait.until(ExpectedConditions.visibilityOf(greyBox));
         return greyBox;
     }
 
     public WebElement getFilmCardContainer() {
-        try {
-            Thread.sleep(15000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         scrollToElement(filmCardContainer);
         wait.until(ExpectedConditions.visibilityOf(filmCardContainer));
         return filmCardContainer;
