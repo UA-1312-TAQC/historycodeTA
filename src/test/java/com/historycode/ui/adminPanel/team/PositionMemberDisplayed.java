@@ -41,6 +41,7 @@ public class PositionMemberDisplayed extends TestRunnerWithAdmin {
 
 
         driver.navigate().refresh();
+        memberModal = new TeamPageAdminPanel(driver);
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='ant-table-content']"))); // Ensure positions are loaded
