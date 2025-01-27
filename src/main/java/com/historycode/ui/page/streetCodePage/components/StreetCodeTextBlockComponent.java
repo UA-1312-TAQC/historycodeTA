@@ -181,7 +181,7 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
 
     public StreetCodeTextBlockComponent scrollToLessButton() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(LESS_BUTTON_LOCATOR)));
-        scrollToElement(rootElement.findElement(By.xpath(LESS_BUTTON_LOCATOR)));
+        scrollToElementAndWait(rootElement.findElement(By.xpath(LESS_BUTTON_LOCATOR)));
         return this;
     }
 
