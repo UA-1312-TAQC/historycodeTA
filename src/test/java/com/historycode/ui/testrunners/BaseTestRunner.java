@@ -34,7 +34,7 @@ public class BaseTestRunner {
         driver.get(testValueProvider.getBaseUIUrl());
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     public void afterMethod() {
         if (driver != null) {
             driver.quit();
