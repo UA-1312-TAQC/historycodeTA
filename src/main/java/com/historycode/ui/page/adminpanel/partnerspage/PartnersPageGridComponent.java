@@ -50,27 +50,26 @@ public class PartnersPageGridComponent extends BaseGridComponent {
     }
 
     public void clickNextPage() {
-        sleep(1000);
+        waitUntilElementClickable(pagination.getNextPage());
         pagination.clickNextPage();
-        waitUntilElementInvisible(partnersRowComponents.get(0).getName());
+        waitUntilElementInvisible(partnerRowNodes.getFirst());
     }
 
     public void clickPrevPage() {
-        sleep(1000);
+        waitUntilElementClickable(pagination.getPrevPage());
         pagination.clickPrevPage();
-        waitUntilElementInvisible(partnersRowComponents.get(0).getName());
+        waitUntilElementInvisible(partnerRowNodes.getFirst());
     }
 
     public void clickPaginationItem(int index) {
-        sleep(1000);
+        waitUntilElementVisible(pagination.getPaginationItems().getLast());
         pagination.clickPaginationItem(index);
-        waitUntilElementInvisible(partnersRowComponents.getLast().getName());
+        waitUntilElementInvisible(partnerRowNodes.getFirst());
     }
 
     public void clickLastPage(){
-        sleep(6000);
+        waitUntilElementVisible(pagination.getPaginationItems().getLast());
         pagination.clickLastPage();
-        waitUntilElementInvisible(partnersRowComponents.getLast().getName());
-        sleep(2000);
+        waitUntilElementInvisible(partnerRowNodes.getFirst());
     }
 }

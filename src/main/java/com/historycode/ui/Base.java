@@ -2,6 +2,7 @@ package com.historycode.ui;
 
 
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -45,8 +46,7 @@ public abstract class Base {
 
     @Step("Scroll to the end of the page")
     public void scrollToEndOfPage() {
-        sleep(1000);
-        threadJs.executeScript("window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });");
+           threadJs.executeScript("window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });");
     }
 
     protected boolean isContentTruncatedOrOverflow(WebElement element) {
@@ -81,6 +81,10 @@ public abstract class Base {
 
     public void waitUntilElementClickable(WebElement element) {
         wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
+
+    public void waitUntilPageLouder() {
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.tagName("body")));
     }
 
 
