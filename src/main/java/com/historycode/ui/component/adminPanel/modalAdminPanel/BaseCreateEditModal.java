@@ -23,8 +23,6 @@ public abstract class BaseCreateEditModal extends BaseModal {
     @FindBy(xpath = "//div[@class = 'ant-message-notice-content']")
     protected WebElement tooltipConfirmation;
 
-    protected Actions actions;
-
     public BaseCreateEditModal(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
         this.actions = new Actions(driver);

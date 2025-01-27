@@ -20,11 +20,11 @@ public class PopUpMessageComponent extends BaseComponent {
 
     private static final String MESSAGE_PATH = ".//span[not(@role='img')]";
 
-    private final WebDriverWait wait;
+    //private final WebDriverWait wait;
 
     public PopUpMessageComponent(WebDriver driver) {
         super(driver);
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        //this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
     }
 
     private boolean isPopUpDisplayed(WebElement popupElement) {

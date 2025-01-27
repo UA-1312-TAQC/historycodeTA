@@ -1,4 +1,4 @@
-package com.historycode.ui;
+package com.historycode.ui.adminPanel.team;
 
 import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
 import com.historycode.ui.page.adminpanel.teampage.TeamPageAdminPanel;
