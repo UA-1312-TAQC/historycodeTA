@@ -83,5 +83,7 @@ public abstract class Base {
         wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
-
+    public void refreshPage() {
+        driver.navigate().refresh();
+    }
 }
