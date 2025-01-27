@@ -49,6 +49,8 @@ public class StreetCodePage extends BasePage {
     @FindBy(xpath = "//div[@class='tickerContainer']")
     private WebElement runningLineNode;
 
+    @FindBy(xpath = ".//div[@class='player-wrapper']")
+    private WebElement videoNode;
 
     private BreadcrumbsElement breadcrumbs;
     private ScrollTopButtonElement scrollTopButton;
@@ -64,6 +66,7 @@ public class StreetCodePage extends BasePage {
     private PartnerComponent partners;
     private RunningLineComponent runningLine;
     private PageNavigationBarComponent verticalProgress;
+    private StreetCodeVideoComponent videoComponent;
 
     public StreetCodePage(WebDriver driver) {
         super(driver);
@@ -102,6 +105,13 @@ public class StreetCodePage extends BasePage {
             textBlock = new StreetCodeTextBlockComponent(driver, textBlockRoot);
         }
         return textBlock;
+    }
+
+    public StreetCodeVideoComponent getVideoBlock() {
+        if (videoComponent == null) {
+            videoComponent = new StreetCodeVideoComponent(driver, videoNode);
+        }
+        return videoComponent;
     }
 
     public InterestingFactsComponent getFacts() {

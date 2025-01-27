@@ -2,6 +2,7 @@ package com.historycode.ui;
 
 
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
@@ -31,8 +32,7 @@ public abstract class Base {
         PageFactory.initElements(this.driver, this);
     }
 
-    @Step("Scroll to the element")
-    public void scrollToElement(WebElement element) {
+    public void scrollToWebElement(WebElement element) {
         waitUntilElementVisible(element);
         try {
             threadJs.executeScript(
@@ -42,6 +42,22 @@ public abstract class Base {
             throw e;
         }
         waitUntilElementClickable(element);
+    }
+    
+    @Step("Scroll to the element")
+    public void scrollToElement(WebElement element) {
+        actions.moveToElement(element).perform();
+    }
+
+    @Step("Scroll to the middle of the page")
+    public void scrollToMiddlePage() {
+        Number startY = (Number) threadJs.executeScript("return window.pageYOffset;");
+        threadJs.executeScript("window.scrollTo(0, document.body.scrollHeight/2)");
+
+        wait.until(driver -> {
+            Number currentY = (Number) threadJs.executeScript("return window.pageYOffset;");
+            return currentY.doubleValue() != startY.doubleValue();
+        });
     }
 
     @Step("Scroll to the end of the page")
@@ -148,5 +164,9 @@ public abstract class Base {
     public void waitUntilElementClickable(WebElement element) {
         wait.until(ExpectedConditions.elementToBeClickable(element));
     }
-
+    
+    public void waitUntilPageLouder() {
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.tagName("body")));
+    }
+    
 }
