@@ -1,8 +1,10 @@
 package com.historycode.ui;
 
+import com.historycode.ui.data_provider.enums.SocialMedia;
 import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
 import com.historycode.ui.page.adminpanel.teampage.TeamPageAdminPanel;
 import com.historycode.ui.page.adminpanel.teampage.TeamRowComponent;
+import com.historycode.ui.page.adminpanel.teampage.TeamSocialMediaComponent;
 import com.historycode.ui.testrunners.TestRunnerWithAdmin;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -10,9 +12,15 @@ import io.qameta.allure.Issue;
 import io.qameta.allure.Story;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
+import com.historycode.ui.data_provider.StreetCodeDP;
 
-public class TeamMemberCreationTest extends TestRunnerWithAdmin {
+import java.util.List;
+
+public class TeamMemberCreationTest extends TestRunnerWithAdmin{
+
+    TeamRowComponent targetTeamMember;
 
     @Issue("117")
     @Epic("(Epic #5) Admin/other pages")
@@ -33,8 +41,38 @@ public class TeamMemberCreationTest extends TestRunnerWithAdmin {
                 .closeEditMemberModal();
         if(res.getTeamPageGridComponent().findUserByName(teamMember) == null)
             res = res.clickLastPaginationItem();
-        TeamRowComponent result = res.getTeamPageGridComponent().findUserByName(teamMember);
-        Assert.assertNotNull(result, String.format("User with name %s was not found after creation", teamMember));
-        result.clickDelete().clickOkButton();
+        TeamRowComponent targetTeamMember = res.getTeamPageGridComponent().findUserByName(teamMember);
+        Assert.assertNotNull(targetTeamMember, String.format("User with name %s was not found after creation", teamMember));
+    }
+
+    @Issue("123")
+    @Epic("(Epic #5) Admin/other pages")
+    @Story("95")
+    @Description("Verify that the admin can add 8 social links to the team member")
+    @Test(dataProvider = "socialMediaDataProvider",  dataProviderClass = StreetCodeDP.class)
+    public void addDifferentSocialMediaTest(SocialMedia media){
+        String teamMember = RandomStringUtils.randomAlphabetic(7) + " " + RandomStringUtils.randomAlphabetic(10);
+        TeamPageAdminPanel res= new HistoryCodesAdminPanelPage(driver)
+                .getAdminMenuBar()
+                .goToTeamPage()
+                .clickAddNewMemberButton()
+                .setName(teamMember)
+                .loadPhoto("TeamMemberImage.png")
+                .addSocialMedia(media.getName())
+                .addSocialMediaLink(media.getValidLink())
+                .saveEditedMember()
+                .closeEditMemberModal();
+        if(res.getTeamPageGridComponent().findUserByName(teamMember) == null)
+            res = res.clickLastPaginationItem();
+        targetTeamMember = res.getTeamPageGridComponent().findUserByName(teamMember);
+        List<TeamSocialMediaComponent> result = targetTeamMember.getSocialMediaLinks();
+        Assert.assertFalse(result.isEmpty(), "Team member has no added social media");
+        Assert.assertEquals(result.get(0).getIcon(), media.getIcon(), "The social media icon is incorrect");
+    }
+
+
+    @AfterMethod
+    public void deleteUser(){
+        targetTeamMember.clickDelete().clickOkButton();
     }
 }

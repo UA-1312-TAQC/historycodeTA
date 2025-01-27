@@ -31,6 +31,7 @@ public class AddSocialMediaLinksTest extends TestRunnerWithAdmin {
                 .setName(teamMember)
                 .loadPhoto("TeamMemberImage.png");
         for(SocialMedia socialMedia : SocialMedia.values()){
+            //click add new social media
             socialMedia.getName();
             socialMedia.getValidLink();//add social media
             socialMediaLimiter--;
