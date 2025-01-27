@@ -5,7 +5,7 @@ import com.historycode.ui.page.homePage.HomePage;
 import com.historycode.ui.page.streetCodePage.components.ChronologyComponent;
 import com.historycode.ui.page.streetCodePage.components.ChronologyFilmCardComponent;
 import com.historycode.ui.page.streetCodePage.components.ChronologyYearsBarComponent;
-import com.historycode.ui.page.streetcodespage.StreetCodesPage;
+import com.historycode.ui.page.streetcodecatalogpage.StreetCodeCatalogPage;
 import com.historycode.ui.testrunners.BaseTestRunner;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Step;
@@ -27,11 +27,15 @@ public class ChronologyTestCase extends BaseTestRunner {
     @Test
     @Step("Verify the title 'Хронологія' is displayed.")
     public void testChronologyDisplaeyd() {
-        String baseUrl = testValueProvider.getBaseUIUrl();
-        String fullUrl = baseUrl + "roman-ratushnyi-seneka";
-        driver.get(fullUrl);
+        HomePage homePage = new HomePage(driver);
+        homePage.openBurgerMenu();
+        BurgerMenuComponent burgerMenuComponent = homePage.getBurgerMenuComponent();
+        burgerMenuComponent.clickMenuItem("History-коди");
 
+        StreetCodeCatalogPage streetCodeCatalogPage = new StreetCodeCatalogPage(driver);
+        streetCodeCatalogPage.clickOnCatalogComponent(0);
         ChronologyComponent chronologyComponent = new ChronologyComponent(driver);
+        chronologyComponent.getTitleElement();
 
         WebElement titleElement = chronologyComponent.getTitleElement();
         softAssert.assertTrue(titleElement.isDisplayed(), "Title element is not visible!");
@@ -53,8 +57,8 @@ public class ChronologyTestCase extends BaseTestRunner {
         BurgerMenuComponent burgerMenuComponent = homePage.getBurgerMenuComponent();
         burgerMenuComponent.clickMenuItem("History-коди");
 
-        StreetCodesPage streetCodesPage = new StreetCodesPage(driver);
-        streetCodesPage.clickOnCatalogComponent(0);
+        StreetCodeCatalogPage streetCodeCatalogPage = new StreetCodeCatalogPage(driver);
+        streetCodeCatalogPage.clickOnCatalogComponent(0);
         ChronologyComponent chronologyComponent = new ChronologyComponent(driver);
         chronologyComponent.getRedTimeline();
 
@@ -78,13 +82,12 @@ public class ChronologyTestCase extends BaseTestRunner {
         BurgerMenuComponent burgerMenuComponent = homePage.getBurgerMenuComponent();
         burgerMenuComponent.clickMenuItem("History-коди");
 
-        StreetCodesPage streetCodesPage = new StreetCodesPage(driver);
-        streetCodesPage.clickOnCatalogComponent(0);
+        StreetCodeCatalogPage streetCodeCatalogPage = new StreetCodeCatalogPage(driver);
+        streetCodeCatalogPage.clickOnCatalogComponent(0);
         ChronologyComponent chronologyComponent = new ChronologyComponent(driver);
         chronologyComponent.getRedTimeline();
 
         ChronologyYearsBarComponent yearsBar = new ChronologyYearsBarComponent(driver);
-        yearsBar.sleep(10000);
 
         yearsBar.clickYearBoxByIndex(3);
         yearsBar.getSelectedYearBoxByIndex(3);
@@ -103,14 +106,13 @@ public class ChronologyTestCase extends BaseTestRunner {
         BurgerMenuComponent burgerMenuComponent = homePage.getBurgerMenuComponent();
         burgerMenuComponent.clickMenuItem("History-коди");
 
-        StreetCodesPage streetCodesPage = new StreetCodesPage(driver);
-        streetCodesPage.clickOnCatalogComponent(0);
+        StreetCodeCatalogPage streetCodeCatalogPage = new StreetCodeCatalogPage(driver);
+        streetCodeCatalogPage.clickOnCatalogComponent(0);
 
         ChronologyComponent chronologyComponent = new ChronologyComponent(driver);
         chronologyComponent.getFilmCardContainer();
 
         ChronologyFilmCardComponent filmCardComponent = new ChronologyFilmCardComponent(driver);
-        filmCardComponent.sleep(10000);
 
         for (int i = 4; i >= 0; i--) {
             filmCardComponent.clickFilmCardByIndex(i);
@@ -136,8 +138,8 @@ public class ChronologyTestCase extends BaseTestRunner {
         BurgerMenuComponent burgerMenuComponent = homePage.getBurgerMenuComponent();
         burgerMenuComponent.clickMenuItem("History-коди");
 
-        StreetCodesPage streetCodesPage = new StreetCodesPage(driver);
-        streetCodesPage.clickOnCatalogComponent(0);
+        StreetCodeCatalogPage streetCodeCatalogPage = new StreetCodeCatalogPage(driver);
+        streetCodeCatalogPage.clickOnCatalogComponent(0);
         ChronologyComponent chronologyComponent = new ChronologyComponent(driver);
         chronologyComponent.getFilmCardContainer();
         ChronologyFilmCardComponent filmCardComponent = new ChronologyFilmCardComponent(driver);
@@ -170,21 +172,18 @@ public class ChronologyTestCase extends BaseTestRunner {
         BurgerMenuComponent burgerMenuComponent = homePage.getBurgerMenuComponent();
         burgerMenuComponent.clickMenuItem("History-коди");
 
-        StreetCodesPage streetCodesPage = new StreetCodesPage(driver);
-        streetCodesPage.clickOnCatalogComponent(0);
+        StreetCodeCatalogPage streetCodeCatalogPage = new StreetCodeCatalogPage(driver);
+        streetCodeCatalogPage.clickOnCatalogComponent(0);
         ChronologyComponent chronologyComponent = new ChronologyComponent(driver);
         chronologyComponent.getFilmCardContainer();
 
         ChronologyFilmCardComponent filmCardComponent = new ChronologyFilmCardComponent(driver);
-        filmCardComponent.sleep(10000);
         ChronologyYearsBarComponent chronologyYearsBarComponent = new ChronologyYearsBarComponent(driver);
 
         filmCardComponent.getFilmCardByIndex(4);
         filmCardComponent.clickFilmCardByIndex(4);
-        filmCardComponent.sleep(10000);
 
         chronologyYearsBarComponent.getRedTimeLine();
-        chronologyYearsBarComponent.sleep(10000);
 
         String activeYearText = chronologyYearsBarComponent.getActiveYearBoxText();
         System.out.println("Active year text after clicking film card: " + activeYearText);
@@ -200,13 +199,12 @@ public class ChronologyTestCase extends BaseTestRunner {
         BurgerMenuComponent burgerMenuComponent = homePage.getBurgerMenuComponent();
         burgerMenuComponent.clickMenuItem("History-коди");
 
-        StreetCodesPage streetCodesPage = new StreetCodesPage(driver);
-        streetCodesPage.clickOnCatalogComponent(0);
+        StreetCodeCatalogPage streetCodeCatalogPage = new StreetCodeCatalogPage(driver);
+        streetCodeCatalogPage.clickOnCatalogComponent(0);
         ChronologyComponent chronologyComponent = new ChronologyComponent(driver);
         chronologyComponent.getFilmCardContainer();
 
         ChronologyFilmCardComponent filmCardComponent = new ChronologyFilmCardComponent(driver);
-        filmCardComponent.sleep(10000);
         for (int i = 4; i >= 0; i--) {
             filmCardComponent.clickFilmCardByIndex(i);
         }
@@ -233,13 +231,12 @@ public class ChronologyTestCase extends BaseTestRunner {
         BurgerMenuComponent burgerMenuComponent = homePage.getBurgerMenuComponent();
         burgerMenuComponent.clickMenuItem("History-коди");
 
-        StreetCodesPage streetCodesPage = new StreetCodesPage(driver);
-        streetCodesPage.clickOnCatalogComponent(0);
+        StreetCodeCatalogPage streetCodeCatalogPage = new StreetCodeCatalogPage(driver);
+        streetCodeCatalogPage.clickOnCatalogComponent(0);
         ChronologyComponent chronologyComponent = new ChronologyComponent(driver);
         chronologyComponent.getFilmCardContainer();
 
         ChronologyFilmCardComponent filmCardComponent = new ChronologyFilmCardComponent(driver);
-        filmCardComponent.sleep(10000);
 
         List<String> actualImageUrls = filmCardComponent.getBackgroundImageUrls();
 
@@ -264,12 +261,11 @@ public class ChronologyTestCase extends BaseTestRunner {
         BurgerMenuComponent burgerMenuComponent = homePage.getBurgerMenuComponent();
         burgerMenuComponent.clickMenuItem("History-коди");
 
-        StreetCodesPage streetCodesPage = new StreetCodesPage(driver);
-        streetCodesPage.clickOnCatalogComponent(0);
+        StreetCodeCatalogPage streetCodeCatalogPage = new StreetCodeCatalogPage(driver);
+        streetCodeCatalogPage.clickOnCatalogComponent(0);
 
         ChronologyYearsBarComponent carouselComponent = new ChronologyYearsBarComponent(driver);
         carouselComponent.verifyCarouselChronology();
-
     }
 
 
@@ -284,8 +280,8 @@ public class ChronologyTestCase extends BaseTestRunner {
         BurgerMenuComponent burgerMenuComponent = homePage.getBurgerMenuComponent();
         burgerMenuComponent.clickMenuItem("History-коди");
 
-        StreetCodesPage streetCodesPage = new StreetCodesPage(driver);
-        streetCodesPage.clickOnCatalogComponent(0);
+        StreetCodeCatalogPage streetCodeCatalogPage = new StreetCodeCatalogPage(driver);
+        streetCodeCatalogPage.clickOnCatalogComponent(0);
         ChronologyComponent chronologyComponent = new ChronologyComponent(driver);
         chronologyComponent.getRedTimeline();
 
@@ -331,14 +327,12 @@ public class ChronologyTestCase extends BaseTestRunner {
         BurgerMenuComponent burgerMenuComponent = homePage.getBurgerMenuComponent();
         burgerMenuComponent.clickMenuItem("History-коди");
 
-        StreetCodesPage streetCodesPage = new StreetCodesPage(driver);
-        streetCodesPage.clickOnCatalogComponent(0);
+        StreetCodeCatalogPage streetCodeCatalogPage = new StreetCodeCatalogPage(driver);
+        streetCodeCatalogPage.clickOnCatalogComponent(0);
         ChronologyComponent chronologyComponent = new ChronologyComponent(driver);
         chronologyComponent.getFilmCardContainer();
 
         ChronologyFilmCardComponent filmCardComponent = new ChronologyFilmCardComponent(driver);
-        filmCardComponent.sleep(10000);
-
 
         for (int i = 4; i >= 0; i--) {
             filmCardComponent.clickFilmCardByIndex(i);
@@ -354,7 +348,6 @@ public class ChronologyTestCase extends BaseTestRunner {
         Assert.assertTrue(isSorted, "Events are not displayed in chronological order!");
     }
 
-
     @Issue("91")
     @Test
     @Step("Сlicking on previous/next event - moves events cards and locates clicked one to the center.")
@@ -365,14 +358,13 @@ public class ChronologyTestCase extends BaseTestRunner {
         BurgerMenuComponent burgerMenuComponent = homePage.getBurgerMenuComponent();
         burgerMenuComponent.clickMenuItem("History-коди");
 
-        StreetCodesPage streetCodesPage = new StreetCodesPage(driver);
-        streetCodesPage.clickOnCatalogComponent(0);
+        StreetCodeCatalogPage streetCodeCatalogPage = new StreetCodeCatalogPage(driver);
+        streetCodeCatalogPage.clickOnCatalogComponent(0);
 
         ChronologyComponent chronologyComponent = new ChronologyComponent(driver);
         chronologyComponent.getFilmCardContainer();
 
         ChronologyFilmCardComponent filmCardComponent = new ChronologyFilmCardComponent(driver);
-        filmCardComponent.sleep(10000);
 
         int targetIndex = 5;
 
@@ -399,8 +391,8 @@ public class ChronologyTestCase extends BaseTestRunner {
         BurgerMenuComponent burgerMenuComponent = homePage.getBurgerMenuComponent();
         burgerMenuComponent.clickMenuItem("History-коди");
 
-        StreetCodesPage streetCodesPage = new StreetCodesPage(driver);
-        streetCodesPage.clickOnCatalogComponent(0);
+        StreetCodeCatalogPage streetCodeCatalogPage = new StreetCodeCatalogPage(driver);
+        streetCodeCatalogPage.clickOnCatalogComponent(0);
 
         ChronologyComponent chronologyComponent = new ChronologyComponent(driver);
         chronologyComponent.getFilmCardContainer();
