@@ -101,7 +101,8 @@ public class DonateModal extends BaseModal {
         agreeCheckbox.click();
     }
 
-    public void clickAmountButton(String desiredAmount) {
+    public void clickAmountButton(int money) {
+        String desiredAmount = money + "₴";
         for (WebElement amount : amountButtons) {
             if (amount.getText().equals(desiredAmount)) {
                 amount.click();
