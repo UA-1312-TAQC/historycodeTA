@@ -35,6 +35,17 @@ public abstract class Base {
         actions.moveToElement(element).perform();
     }
 
+    @Step("Scroll to the middle of the page")
+    public void scrollToMiddlePage() {
+        Number startY = (Number) threadJs.executeScript("return window.pageYOffset;");
+        threadJs.executeScript("window.scrollTo(0, document.body.scrollHeight/2)");
+
+        wait.until(driver -> {
+            Number currentY = (Number) threadJs.executeScript("return window.pageYOffset;");
+            return currentY.doubleValue() != startY.doubleValue();
+        });
+    }
+
     @Step("Scroll to the end of the page")
     public void scrollToEndOfPage() {
         sleep(1000);
