@@ -32,15 +32,7 @@ public abstract class Base {
 
     @Step("Scroll to the element")
     public void scrollToElement(WebElement element) {
-        wait.until(ExpectedConditions.visibilityOf(element));
-        try {
-            ((JavascriptExecutor) driver).executeScript(
-                    "arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});", element);
-            Thread.sleep(SCROLL_STABILIZATION_DELAY); // Коротка пауза для стабільності
-        } catch (Exception e) {
-            logger.error("Error scrolling to element", e);
-        }
-        wait.until(ExpectedConditions.elementToBeClickable(element));
+        actions.moveToElement(element).perform();
     }
 
     @Step("Scroll to the end of the page")
