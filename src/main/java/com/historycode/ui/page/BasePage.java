@@ -41,6 +41,7 @@ public abstract class BasePage extends Base {
         super(driver);
         this.header = new HeaderComponent(driver, this.headerNode);
         this.footer = new FooterComponent(driver, this.footerNode);
+        this.burgerMenuComponent = new BurgerMenuComponent(driver, this.burgerMenu);
     }
 
     public boolean isBurgerMenuVisible() {
@@ -49,8 +50,7 @@ public abstract class BasePage extends Base {
 
     public BurgerMenuComponent openBurgerMenu() {
         burgerMenu.click();
-        waitUntilElementVisible(burgerMenuBody);
-        return new BurgerMenuComponent(driver, burgerMenuBody);
+        return burgerMenuComponent;
     }
 
     public void waitForElementThenScrollUntilAllContentLoaded(WebElement elementToWaitFor) {
