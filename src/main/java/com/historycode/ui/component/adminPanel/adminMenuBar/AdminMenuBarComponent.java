@@ -38,6 +38,7 @@ public class AdminMenuBarComponent extends BaseComponent {
     @Step("Click on the 'Партнери' button in the left navigation panel")
     public PartnersPageAdminPanel goToPartnersPage() {
         partners.click();
+        waitUntilPageLouder();
         return new PartnersPageAdminPanel(driver);
     }
 
