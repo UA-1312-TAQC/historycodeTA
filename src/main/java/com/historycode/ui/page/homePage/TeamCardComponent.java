@@ -27,7 +27,6 @@ public class TeamCardComponent extends BaseComponent {
 
     public TeamCardComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        PageFactory.initElements(new DefaultElementLocatorFactory(rootElement), this);
     }
 
     public String getPhotoUrl() {

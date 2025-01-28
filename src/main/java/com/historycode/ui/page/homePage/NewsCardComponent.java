@@ -29,7 +29,6 @@ public class NewsCardComponent extends BaseComponent {
 
     public NewsCardComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        PageFactory.initElements(new DefaultElementLocatorFactory(rootElement), this);
     }
 
 

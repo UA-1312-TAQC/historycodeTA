@@ -26,7 +26,6 @@ public abstract class CarouselComponent<T extends BaseComponent> extends BaseCom
 
     public CarouselComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        PageFactory.initElements(new DefaultElementLocatorFactory(rootElement), this);
     }
 
     @Step("Clicking left arrow")

@@ -31,7 +31,6 @@ public class TopCarousel extends BaseComponent {
 
     public TopCarousel(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        PageFactory.initElements(new DefaultElementLocatorFactory(rootElement), this);
     }
 
     public int getDotsCount() {
