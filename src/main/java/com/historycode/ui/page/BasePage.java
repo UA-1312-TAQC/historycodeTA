@@ -41,7 +41,7 @@ public abstract class BasePage extends Base {
         super(driver);
         this.header = new HeaderComponent(driver, this.headerNode);
         this.footer = new FooterComponent(driver, this.footerNode);
-        this.burgerMenuComponent = new BurgerMenuComponent(driver, this.burgerMenu);
+        this.burgerMenuComponent = new BurgerMenuComponent(driver, this.burgerMenuBody);
     }
 
     public boolean isBurgerMenuVisible() {

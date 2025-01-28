@@ -32,9 +32,10 @@ public class ChronologyYearsBarComponent extends BaseComponent {
     @FindBy(xpath = "//div[contains(@class, 'tickContainer')]")
     private List<WebElement> activeYearBox;
 
-    public ChronologyYearsBarComponent(WebDriver driver) {
-        super(driver);
+    public ChronologyYearsBarComponent(WebDriver driver, WebElement rootElement) {
+        super(driver, rootElement);
     }
+
 
     public WebElement getRedTimeLine() {
         scrollToElement(redTimeline);

@@ -19,31 +19,32 @@ public class ChronologyFilmCardComponent extends BaseComponent {
 
     @Getter
     @FindBy(xpath = ".//div[@class='timelineItem']")
-    private List<WebElement> filmCard;
+    private WebElement filmCard;
 
     @Getter
     @FindBy(xpath = "//div[@id='timeline']//div[@class='slick-track']/div")
-    private List<WebElement> filmCardStyle;
+    private WebElement filmCardStyle;
 
     @Getter
     @FindBy(xpath = "//div[@class='slick-list']//div[@class='timelineItem']//p[@class='timelineItemMetadata']")
-    private List<WebElement> dataCards;
+    private WebElement dataCards;
 
     @Getter
     @FindBy(xpath = "//div[@class='slick-slide']//p[@class='timelineItemMetadata']//span")
-    private List<WebElement> historicalContext;
+    private WebElement historicalContext;
 
     @Getter
     @FindBy(xpath = "//div[@class='slick-slide']//p[@class='timelineItemTitle']")
-    private List<WebElement> filmTitles;
+    private WebElement filmTitles;
 
     @Getter
     @FindBy(xpath = "//div[@class='slick-slide']//p[@class='timelineItemDescription']")
-    private List<WebElement> description;
+    private WebElement description;
 
-    public ChronologyFilmCardComponent(WebDriver driver) {
-        super(driver);
+    public ChronologyFilmCardComponent(WebDriver driver, WebElement rootElement) {
+        super(driver, rootElement);
     }
+
 
     public Map<String, String> getFilmCardData(int index) {
         getFilmCardByIndex(index);
@@ -60,6 +61,21 @@ public class ChronologyFilmCardComponent extends BaseComponent {
         cardData.put("Description", descriptionText);
 
         System.out.println("Card data at index " + index + ": " + cardData);
+        return cardData;
+    }
+
+    public Map<String, String> getFilmCardData() {
+
+        String title = filmTitles.getText();
+        String year = dataCards.getText();
+        String context = historicalContext.getText();
+        String descriptionText = description.getText();
+
+        Map<String, String> cardData = new HashMap<>();
+        cardData.put("Title", title);
+        cardData.put("dataCards", year);
+        cardData.put("Context", context);
+        cardData.put("Description", descriptionText);
         return cardData;
     }
 
@@ -314,6 +330,10 @@ public class ChronologyFilmCardComponent extends BaseComponent {
         WebElement card = filmCardStyle.get(index);
         String borderColor = card.getCssValue("border-color");
         return expectedColor.equals(borderColor);
+    }
+    public ChronologyComponent click(){
+        rootElement.click();
+        return this;
     }
 }
 

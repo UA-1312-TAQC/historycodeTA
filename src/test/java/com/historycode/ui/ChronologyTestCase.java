@@ -2,6 +2,7 @@ package com.historycode.ui;
 
 import com.historycode.ui.component.BurgerMenu.BurgerMenuComponent;
 import com.historycode.ui.page.homePage.HomePage;
+import com.historycode.ui.page.streetCodePage.StreetCodePage;
 import com.historycode.ui.page.streetCodePage.components.ChronologyComponent;
 import com.historycode.ui.page.streetCodePage.components.ChronologyFilmCardComponent;
 import com.historycode.ui.page.streetCodePage.components.ChronologyYearsBarComponent;
@@ -11,6 +12,7 @@ import io.qameta.allure.Issue;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,8 +22,18 @@ import java.util.Map;
 
 public class ChronologyTestCase extends BaseTestRunner {
 
-    SoftAssert softAssert = new SoftAssert();
+    SoftAssert softAssert;
     private static final Logger logger = LoggerFactory.getLogger(ChronologyTestCase.class);
+    protected StreetCodePage streetCodePage;
+
+    @BeforeMethod
+    public void openStreetCodePage(){
+         streetCodePage = new HomePage(driver)
+                .openBurgerMenu()
+                .goToStreetCodeCatalogPage()
+                .clickCatalogItemByIndex(0);
+         softAssert = new SoftAssert();
+    }
 
     @Issue("91")
     @Test
@@ -51,15 +63,7 @@ public class ChronologyTestCase extends BaseTestRunner {
     @Test
     @Step("Verify that a red timeline is displayed and a grey square is visible under each year in a timeline.")
     public void testChronologyTimeLineIsDisplayed() {
-
-        HomePage homePage = new HomePage(driver);
-        homePage.openBurgerMenu();
-        BurgerMenuComponent burgerMenuComponent = homePage.getBurgerMenuComponent();
-        burgerMenuComponent.clickMenuItem("History-коди");
-
-        StreetCodeCatalogPage streetCodeCatalogPage = new StreetCodeCatalogPage(driver);
-        streetCodeCatalogPage.clickOnCatalogComponent(0);
-        ChronologyComponent chronologyComponent = new ChronologyComponent(driver);
+        ChronologyComponent chronologyComponent = streetCodePage.getTimeline();
         chronologyComponent.getRedTimeline();
 
         WebElement redTimeline = chronologyComponent.getRedTimeline();
@@ -77,14 +81,7 @@ public class ChronologyTestCase extends BaseTestRunner {
     @Step("Verify that the selected year box is bigger than the others.")
     public void testSelectedYearBoxSize() {
 
-        HomePage homePage = new HomePage(driver);
-        homePage.openBurgerMenu();
-        BurgerMenuComponent burgerMenuComponent = homePage.getBurgerMenuComponent();
-        burgerMenuComponent.clickMenuItem("History-коди");
-
-        StreetCodeCatalogPage streetCodeCatalogPage = new StreetCodeCatalogPage(driver);
-        streetCodeCatalogPage.clickOnCatalogComponent(0);
-        ChronologyComponent chronologyComponent = new ChronologyComponent(driver);
+        ChronologyComponent chronologyComponent = streetCodePage.getTimeline();
         chronologyComponent.getRedTimeline();
 
         ChronologyYearsBarComponent yearsBar = new ChronologyYearsBarComponent(driver);
@@ -101,26 +98,18 @@ public class ChronologyTestCase extends BaseTestRunner {
     @Test
     @Step("Verify each event is located separately as an element of a camera film.")
     public void testEachEventIsLocatedSeparately() {
-        HomePage homePage = new HomePage(driver);
-        homePage.openBurgerMenu();
-        BurgerMenuComponent burgerMenuComponent = homePage.getBurgerMenuComponent();
-        burgerMenuComponent.clickMenuItem("History-коди");
 
-        StreetCodeCatalogPage streetCodeCatalogPage = new StreetCodeCatalogPage(driver);
-        streetCodeCatalogPage.clickOnCatalogComponent(0);
-
-        ChronologyComponent chronologyComponent = new ChronologyComponent(driver);
-        chronologyComponent.getFilmCardContainer();
-
-        ChronologyFilmCardComponent filmCardComponent = new ChronologyFilmCardComponent(driver);
-
+        List<ChronologyFilmCardComponent> filmCardComponent = streetCodePage.getTimeline().getFilmCard();
         for (int i = 4; i >= 0; i--) {
-            filmCardComponent.clickFilmCardByIndex(i);
+            filmCardComponent.get(i).click();
+        }
+        for (int i = 4; i >= 0; i--) {
+            filmCardComponent.get(i).click();
         }
 
-        filmCardComponent.getFilmCardByIndex(0);
+        filmCardComponent.get(0).getFilmCardByIndex(0);
         filmCardComponent.isFilmCardProperlySeparated(0);
-        for (int i = 0; i <= 16; i++) {
+        for (int i = 0; i <= filmCardComponent.size(); i++) {
             filmCardComponent.clickFilmCardByIndex(i);
             filmCardComponent.getFilmCardByIndex(i);
             filmCardComponent.isFilmCardProperlySeparated(i);

@@ -8,6 +8,9 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class ChronologyComponent extends BaseComponent {
 
@@ -20,28 +23,41 @@ public class ChronologyComponent extends BaseComponent {
     @FindBy(xpath = ".//div[@id='timeline']//h1")
     private WebElement title;
 
-    @FindBy(xpath = "//div[contains(@class, 'timelineYearTicksContainer')]")
+    @FindBy(xpath = ".//div[contains(@class, 'timelineYearTicksContainer')]")
     private WebElement redTimeline;
 
     @Getter
-    @FindBy(xpath = "//div[contains(@class, 'timeSpanContainer')]")
+    @FindBy(xpath = ".//div[contains(@class, 'timeSpanContainer')]")
     private WebElement years;
 
     @Getter
-    @FindBy(xpath = "//div[contains(@class, 'timelineYearTicksContainer')]")
+    @FindBy(xpath = ".//div[contains(@class, 'timelineYearTicksContainer')]")
     private WebElement greyBox;
 
     @FindBy(xpath = ".//div[@class='timelineContentContainer']")
     private WebElement filmCardContainer;
 
+    @Getter
+    @FindBy(xpath = ".//div[@class=\"timelineItem\"]/../../..")
+    private List<WebElement> filmCardNode;
 
-    public ChronologyComponent(WebDriver driver) {
-        super(driver);
+    private  List<ChronologyFilmCardComponent> filmCardComponents;
+
+
+    public ChronologyComponent(WebDriver driver, WebElement rootElement) {
+        super(driver, rootElement);
         this.yearsBar = new ChronologyYearsBarComponent(driver);
         this.filmCardComponent = new ChronologyFilmCardComponent(driver);
-        PageFactory.initElements(driver, this);
     }
-
+    public  List<ChronologyFilmCardComponent> getFilmCard(){
+        if (filmCardComponents == null){
+            filmCardComponents = new ArrayList<>();
+            for(WebElement element: filmCardNode){
+                filmCardComponents.add(new ChronologyFilmCardComponent(driver, element));
+            }
+        }
+        return filmCardComponents;
+    }
     public String getTitle() {
         return title.getText();
     }
@@ -69,4 +85,5 @@ public class ChronologyComponent extends BaseComponent {
         wait.until(ExpectedConditions.visibilityOf(filmCardContainer));
         return filmCardContainer;
     }
+
 }
