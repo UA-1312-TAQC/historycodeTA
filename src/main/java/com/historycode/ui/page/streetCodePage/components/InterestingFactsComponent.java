@@ -11,9 +11,11 @@ import org.openqa.selenium.support.FindBy;
 import java.util.List;
 
 public class InterestingFactsComponent extends BaseComponent {
-    @FindBy(xpath = ".//div[@id='wow-facts']//h1[@class='blockHeadingText']")
+    @Getter
+    @FindBy(xpath = ".//h1[@class='blockHeadingText']")
     private WebElement title;
 
+    @Getter
     @FindBy(xpath = ".//div[@class='interestingFactsContainer ']")
     private WebElement carouselRoot;
 
@@ -34,7 +36,7 @@ public class InterestingFactsComponent extends BaseComponent {
         this.interestingFactsModal = new InterestingFactsModal(driver, rootElement);
     }
 
-    public String getTitle() {
+    public String getTitleName() {
         return title.getText();
     }
 

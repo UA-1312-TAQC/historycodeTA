@@ -1,6 +1,7 @@
 package com.historycode.ui.component.adminPanel.paginationAdminPanel;
 
 import com.historycode.ui.component.BaseComponent;
+import io.qameta.allure.Step;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -25,6 +26,7 @@ public class PaginationAdminPanelComponent extends BaseComponent {
     @FindBy(xpath = "//li[@title = 'Next 5 Pages']")
     WebElement nextFivePages;
 
+    @Getter
     @FindBy(xpath = "//*[@title and number(@title) = number(@title)]")
     List<WebElement> paginationItems;
 
@@ -48,6 +50,7 @@ public class PaginationAdminPanelComponent extends BaseComponent {
         prevPage.click();
     }
 
+    @Step("Click on the prev page of the pagination")
     public void clickPrevFivePages() {
         if (!hasPrevFivePages()) {
             throw new IllegalStateException("Previous pages are not available");
@@ -56,6 +59,7 @@ public class PaginationAdminPanelComponent extends BaseComponent {
         prevFivePages.click();
     }
 
+    @Step("Click on the next page of the pagination")
     public void clickNextFivePages() {
         if (!hasNextFivePages()) {
             throw new IllegalStateException("Next pages are not available");
@@ -64,6 +68,7 @@ public class PaginationAdminPanelComponent extends BaseComponent {
         nextFivePages.click();
     }
 
+    @Step("Click on the {index} page of the pagination")
     public void clickPaginationItem(int index) {
         if (!isValidPaginationItem(index)) {
             throw new IllegalArgumentException("Pagination item with index " + index + " is not available or invalid");
@@ -105,9 +110,9 @@ public class PaginationAdminPanelComponent extends BaseComponent {
         return item.isDisplayed() && item.isEnabled();
     }
 
-
+    @Step("Click on the last page of the pagination")
     public void clickLastPage(){
-        scrollToElement(prevPage);
+        scrollToElement(nextPage);
         waitUntilElementClickable(paginationItems.getLast());
         paginationItems.getLast().click();
     }

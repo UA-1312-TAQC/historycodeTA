@@ -35,7 +35,7 @@ public class TagsPage extends BaseEditorPage {
 
     public TagsModalComponent clickAddTag() {
         addTagButton.clickButton();
-        sleep(1000);
+        wait.until(driver -> getDisplayedModalRoot() != null);
         return new TagsModalComponent(driver, getDisplayedModalRoot());
     }
 
@@ -82,13 +82,13 @@ public class TagsPage extends BaseEditorPage {
 
     public TagsModalComponent editTableRow(TagsRowComponent row) {
         grid.editRow(row);
-        sleep(500);
+        wait.until(driver -> getDisplayedModalRoot() != null);
         return new TagsModalComponent(driver, getDisplayedModalRoot());
     }
 
     public DeleteItemModal deleteTableRow(TagsRowComponent row) {
         grid.deleteRow(row);
-        sleep(500);
+        wait.until(driver -> getDisplayedModalRoot() != null);
         return new DeleteItemModal(driver, getDisplayedModalRoot());
     }
 

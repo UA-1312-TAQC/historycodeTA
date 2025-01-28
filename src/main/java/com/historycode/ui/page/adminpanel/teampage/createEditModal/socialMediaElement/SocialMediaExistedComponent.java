@@ -1,4 +1,4 @@
-package com.historycode.ui.page.adminpanel.teampage.editModal.socialMediaElement;
+package com.historycode.ui.page.adminpanel.teampage.createEditModal.socialMediaElement;
 
 import com.historycode.ui.component.BaseComponent;
 import org.openqa.selenium.WebDriver;

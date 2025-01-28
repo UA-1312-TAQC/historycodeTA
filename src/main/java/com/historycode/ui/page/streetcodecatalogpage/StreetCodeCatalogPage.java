@@ -1,4 +1,4 @@
-package com.historycode.ui.page.streetcodespage;
+package com.historycode.ui.page.streetcodecatalogpage;
 
 import com.historycode.ui.page.BasePage;
 import com.historycode.ui.page.streetCodePage.StreetCodePage;
@@ -7,7 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class StreetCodesPage extends BasePage {
+public class StreetCodeCatalogPage extends BasePage {
 
     @FindBy(xpath = "//h1[@class='streetcodeCatalogHeading']")
     private WebElement streetCodesTitleNode;
@@ -21,7 +21,7 @@ public class StreetCodesPage extends BasePage {
     @Getter
     private final CatalogComponent streetCodesCatalogComponent;
 
-    public StreetCodesPage(WebDriver driver) {
+    public StreetCodeCatalogPage(WebDriver driver) {
         super(driver);
         streetCodesCatalogComponent = new CatalogComponent(driver, containerRootNode);
     }
@@ -38,7 +38,8 @@ public class StreetCodesPage extends BasePage {
         return streetsCodesCaptionNode.getText();
     }
 
-    public StreetCodePage clickCatalogItemByName(int index) {
+    public StreetCodePage clickCatalogItemByIndex(int index) {
+        waitUntilElementVisible(containerRootNode);
         streetCodesCatalogComponent.getItemComponents().get(index).getNameNode().click();
         return new StreetCodePage(driver);
     }

@@ -3,6 +3,7 @@ package com.historycode.ui.page.streetCodePage;
 import com.historycode.ui.elements.BreadcrumbsElement;
 import com.historycode.ui.elements.ScrollTopButtonElement;
 import com.historycode.ui.page.BasePage;
+import lombok.Getter;
 import com.historycode.ui.page.streetCodePage.components.*;
 import com.historycode.ui.page.streetCodePage.elememts.QuickDonateButtonElement;
 import org.openqa.selenium.WebDriver;
@@ -10,6 +11,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class StreetCodePage extends BasePage {
+    @Getter
     @FindBy(xpath = "//div[@class='card']")
     private WebElement mainCardNode;
 
@@ -46,6 +48,8 @@ public class StreetCodePage extends BasePage {
     @FindBy(xpath = "//div[@class='tickerContainer']")
     private WebElement runningLineNode;
 
+    @FindBy(xpath = ".//div[@class='player-wrapper']")
+    private WebElement videoNode;
 
     private BreadcrumbsElement breadcrumbs;
     private ScrollTopButtonElement scrollTopButton;
@@ -53,6 +57,7 @@ public class StreetCodePage extends BasePage {
     private MainCardComponent mainCard;
     private StreetCodeTextBlockComponent textBlock;
     private InterestingFactsComponent facts;
+    private InterestingFactsCardComponent factsCard;
     private ChronologyComponent timeline;
     private RelatedPersonasComponent relatedFigures;
     private SourcesComponent sources;
@@ -60,19 +65,10 @@ public class StreetCodePage extends BasePage {
     private PartnerComponent partners;
     private RunningLineComponent runningLine;
     private PageNavigationBarComponent verticalProgress;
+    private StreetCodeVideoComponent videoComponent;
 
     public StreetCodePage(WebDriver driver) {
         super(driver);
-    }
-
-    public StreetCodePage setMainCard() {
-        this.mainCard = new MainCardComponent(driver, mainCardNode);
-        return this;
-    }
-
-    public StreetCodePage setQuickDonateButton() {
-        this.quickDonateButton = new QuickDonateButtonElement(driver, quickDonateButtonNode);
-        return this;
     }
 
     public BreadcrumbsElement getBreadcrumbs() {
@@ -110,11 +106,24 @@ public class StreetCodePage extends BasePage {
         return textBlock;
     }
 
+    public StreetCodeVideoComponent getVideoBlock() {
+        if (videoComponent == null) {
+            videoComponent = new StreetCodeVideoComponent(driver, videoNode);
+        }
+        return videoComponent;
+    }
+
     public InterestingFactsComponent getFacts() {
         if (facts == null) {
             facts = new InterestingFactsComponent(driver, factsNode);
         }
         return facts;
+    }
+    public InterestingFactsCardComponent getFactsCard() {
+        if (factsCard == null) {
+            factsCard = new InterestingFactsCardComponent(driver, factsNode);
+        }
+        return factsCard;
     }
 
     public ChronologyComponent getTimeline() {
@@ -172,5 +181,10 @@ public class StreetCodePage extends BasePage {
 
     public void toggleProgressBar() {
         verticalProgress.toggleProgressBar();
+    }
+
+    public StreetCodePage scrollToInterestingFacts() {
+        scrollToElement(factsNode);
+        return this;
     }
 }

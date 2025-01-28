@@ -3,21 +3,28 @@ package com.historycode.ui.page.streetCodePage.components;
 import com.historycode.ui.component.BaseComponent;
 import com.historycode.ui.page.streetCodePage.modals.KeywordPersonasModal;
 import io.qameta.allure.Step;
+import lombok.Getter;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public class MainCardComponent extends BaseComponent {
+    @Getter
+    @FindBy(xpath = "//div[@class='ant-modal css-k7429z tagsModal']")
+    private WebElement modalContainer;
     @FindBy(xpath = ".//img[@class='streetcodeImgGrey']")
     private List<WebElement> photo;
 
     @FindBy(xpath = ".//div[@class='streetcodeIndex']")
     private WebElement catalogNumber;
 
+    @Getter
     @FindBy(xpath = ".//h2[@class='streetcodeTitle']")
     private WebElement name;
 
@@ -25,7 +32,7 @@ public class MainCardComponent extends BaseComponent {
     private WebElement lifeYears;
 
     @FindBy(xpath = ".//div[@class='tagContainer']//button")
-    private List<WebElement> keywords;
+    private List<WebElement> tagsNode;
 
     @FindBy(xpath = ".//p[@class='teaserBlock']")
     private WebElement teaserBlockNode;
@@ -36,13 +43,11 @@ public class MainCardComponent extends BaseComponent {
     @FindBy(xpath = ".//div[@class='leftSider']//ul[@class='slick-dots']")
     private WebElement paginationNode;
 
-    private final KeywordPersonasModal keywordPersonsModal;
-    private final PaginationComponent pagination;
+    private KeywordPersonasModal tagPersonsModal;
+    private PaginationComponent pagination;
 
     public MainCardComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        this.keywordPersonsModal = new KeywordPersonasModal(driver, rootElement);
-        this.pagination = new PaginationComponent(driver, paginationNode);
     }
 
     public List<String> getPersonPhotos() {
@@ -88,18 +93,10 @@ public class MainCardComponent extends BaseComponent {
         audioButton.click();
     }
 
-    public List<String> getKeywords() {
-        return keywords.stream()
+    public List<String> getTags() {
+        return tagsNode.stream()
                 .map(WebElement::getText)
                 .collect(Collectors.toList());
-    }
-
-    public void clickKeyword(String keyword) {
-        keywords.stream()
-                .filter(k -> k.getText().equals(keyword))
-                .findFirst()
-                .orElseThrow(() -> new NoSuchElementException("Keyword not found: " + keyword))
-                .click();
     }
 
     public void goToPhoto(int index) {
@@ -115,7 +112,7 @@ public class MainCardComponent extends BaseComponent {
     }
 
     public KeywordPersonasModal getKeywordModal() {
-        return keywordPersonsModal;
+        return tagPersonsModal;
     }
 
     public void toggleAudio() {
@@ -149,5 +146,62 @@ public class MainCardComponent extends BaseComponent {
         } catch (NoSuchElementException e) {
             return false;
         }
+    }
+
+    @Step("Get tag element")
+    public WebElement getTagElement(String keyword) {
+        return tagsNode.stream()
+                .filter(k -> k.getText().equals(keyword))
+                .findFirst()
+                .orElseThrow(NoSuchElementException::new);
+    }
+
+    @Step("Get tag border color")
+    public String getTagBorderColor(String tag) {
+        waitUntilElementVisible(getTagElement(tag));
+        return getTagElement(tag).getCssValue("border-color");
+    }
+
+    @Step("Get tag text color")
+    public String getTagTextColor(String tag) {
+        waitUntilElementVisible(getTagElement(tag));
+        return getTagElement(tag).getCssValue("color");
+    }
+
+    @Step("Hover over tag")
+    public void hoverOverTag(String tag) {
+        waitUntilElementVisible(getTagElement(tag));
+        actions.moveToElement(getTagElement(tag)).perform();
+        sleep(500);
+    }
+
+    @Step("Check if modal is visible")
+    public boolean isModalVisible() {
+        try {
+            WebElement modal = wait.until(ExpectedConditions.presenceOfElementLocated(
+                    By.xpath("//div[@class='ant-modal css-k7429z tagsModal']")
+            ));
+            return modal.isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public KeywordPersonasModal clickKeyword(String tag) {
+        WebElement tagElement = tagsNode.stream()
+                .filter(k -> k.getText().equals(tag))
+                .findFirst()
+                .orElseThrow(NoSuchElementException::new);
+
+        tagElement.click();
+
+        WebElement modal = wait.until(ExpectedConditions.presenceOfElementLocated(
+                By.xpath("//div[@class='ant-modal css-k7429z tagsModal']")
+        ));
+
+        waitUntilElementVisible(modal);
+        tagPersonsModal = new KeywordPersonasModal(driver, modal);
+        waitUntilElementVisible(tagPersonsModal.getPersonsCardsContainer());
+        return tagPersonsModal;
     }
 }

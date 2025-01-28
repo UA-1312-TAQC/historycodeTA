@@ -5,10 +5,14 @@ import com.historycode.ui.component.BurgerMenu.BurgerMenuComponent;
 import com.historycode.ui.component.footer.FooterComponent;
 import com.historycode.ui.component.header.HeaderComponent;
 import lombok.Getter;
-import lombok.extern.log4j.Log4j2;
-import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.*;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 import java.util.Objects;
 @Slf4j
@@ -28,22 +32,26 @@ public abstract class BasePage extends Base {
     private WebElement footerNode;
     @FindBy(xpath = "//div[contains(@class, 'rightPartContainer')]//div[contains(@class, 'drawerContainer')]//div")
     private WebElement burgerMenu;
+    @FindBy(xpath = "//div[@class='ant-drawer-body']")
+    private WebElement burgerMenuBody;
+    @Getter
+    @FindBy(xpath = "//div[@class='headerDrawerContainer']//a[@href='/catalog']")
+    private WebElement historyCodeBurgerButton;
 
     public BasePage(WebDriver driver) {
         super(driver);
         this.header = new HeaderComponent(driver, this.headerNode);
         this.footer = new FooterComponent(driver, this.footerNode);
-        this.burgerMenuComponent = new BurgerMenuComponent(driver, this.burgerMenu);
     }
 
     public boolean isBurgerMenuVisible() {
-        sleep(5000);
         return burgerMenu.isDisplayed();
     }
 
-    public void openBurgerMenu() {
-        sleep(5000);
+    public BurgerMenuComponent openBurgerMenu() {
         burgerMenu.click();
+        waitUntilElementVisible(burgerMenuBody);
+        return new BurgerMenuComponent(driver, burgerMenuBody);
     }
 
     public void waitForElementThenScrollUntilAllContentLoaded(WebElement elementToWaitFor) {
@@ -85,13 +93,23 @@ public abstract class BasePage extends Base {
         return ((Number) Objects.requireNonNull(threadJs.executeScript("return document.body.scrollHeight;"))).intValue();
     }
 
-
     private boolean isLoaderPresent() {
         try {
             return loaderIcon.isDisplayed();
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public void waitForPageToLoad(long timeoutInSeconds) {
+        new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds)).until((ExpectedCondition<Boolean>) wd ->
+                ((JavascriptExecutor) wd).executeScript("return document.readyState").equals("complete")
+        );
+    }
+
+    public Boolean isElementInvisible(WebElement element) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+        return wait.until(ExpectedConditions.invisibilityOf(element));
     }
 
     public void scrollUntilElementIsVisible(WebElement element) {

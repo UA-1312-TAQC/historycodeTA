@@ -2,7 +2,9 @@ package com.historycode.ui.page.adminpanel.teampage;
 
 import com.historycode.ui.component.BaseComponent;
 import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
-import com.historycode.ui.page.adminpanel.teampage.editModal.EditMemberModal;
+import com.historycode.ui.page.adminpanel.teampage.createEditModal.CreateEditMemberModal;
+import lombok.Getter;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,6 +15,9 @@ import java.util.List;
 public class TeamRowComponent extends BaseComponent {
     @FindBy(xpath = "./td[1]//div[@class='team-table-item-name']//p")
     protected WebElement lastFirstName;
+    @Getter
+    @FindBy(xpath = "./td[1]//div[@class='team-table-item-name']//span")
+    protected WebElement keyMemberRole;
     @FindBy(xpath = "./td[2]//div[@class='team-table-item-name']//p")
     protected List<WebElement> positions;
     @FindBy(xpath = "./td[3]//div[@class='team-table-item-name']//p")
@@ -25,9 +30,11 @@ public class TeamRowComponent extends BaseComponent {
     protected WebElement deleteAction;
     @FindBy(xpath = "./td[6]//span[contains(@class, 'edit')]")
     protected WebElement editAction;
-
+    @FindBy(xpath = "//h2[contains(text(),'Редагувати')]/ancestor::div[@class = 'ant-modal-content']")
+    protected WebElement editModalRoot;
     @FindBy(xpath = "//p[contains(text(),'видалити')]/ancestor::div[@class = 'ant-modal-content']")
     protected WebElement deleteModalRoot;
+
     private List<TeamSocialMediaComponent> socialMediaLinks;
     private List<String> positionTexts;
 
@@ -67,6 +74,7 @@ public class TeamRowComponent extends BaseComponent {
         return socialMediaLinks;
     }
 
+    @Step("Clicking delete button next to team member")
     public DeleteItemModal clickDelete() {
         actions.scrollToElement(lastFirstName).perform();
         deleteAction.click();
@@ -74,10 +82,10 @@ public class TeamRowComponent extends BaseComponent {
     }
 
 
-    //TODO check root element
-    public EditMemberModal clickEdit() {
+    public CreateEditMemberModal clickEdit() {
+        scrollToElement(editAction);
         editAction.click();
-        return new EditMemberModal(driver, rootElement);
+        return new CreateEditMemberModal(driver, editModalRoot);
     }
 
     @Override
