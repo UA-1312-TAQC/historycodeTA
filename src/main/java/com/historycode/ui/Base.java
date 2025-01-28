@@ -16,12 +16,12 @@ import org.slf4j.LoggerFactory;
 import java.time.Duration;
 
 public abstract class Base {
+    private static final int SCROLL_STABILIZATION_DELAY = 500;
+    private static final Logger logger = LoggerFactory.getLogger(Base.class);
     protected WebDriver driver;
     protected WebDriverWait wait;
     protected JavascriptExecutor threadJs;
     protected Actions actions;
-    private static final int SCROLL_STABILIZATION_DELAY = 500;
-    private static final Logger logger = LoggerFactory.getLogger(Base.class);
 
     public Base(WebDriver driver) {
         this.driver = driver;
@@ -54,11 +54,7 @@ public abstract class Base {
     }
 
     protected boolean isContentTruncatedOrOverflow(WebElement element) {
-        String script = "var element = arguments[0];" +
-                "var computedStyle = window.getComputedStyle(element);" +
-                "var isOverflowing = element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;" +
-                "var isTextOverflowing = computedStyle.overflow === 'hidden' || computedStyle.textOverflow === 'ellipsis' || computedStyle.whiteSpace === 'nowrap';" +
-                "return isOverflowing && !isTextOverflowing;";
+        String script = "var element = arguments[0];" + "var computedStyle = window.getComputedStyle(element);" + "var isOverflowing = element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;" + "var isTextOverflowing = computedStyle.overflow === 'hidden' || computedStyle.textOverflow === 'ellipsis' || computedStyle.whiteSpace === 'nowrap';" + "return isOverflowing && !isTextOverflowing;";
         Boolean isOverflowing = (Boolean) threadJs.executeScript(script, element);
         return isOverflowing != null && isOverflowing;
     }
