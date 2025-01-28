@@ -147,7 +147,7 @@ public class StreetCodeTests extends BaseTestRunner {
         boolean isCardInCenterOfBlock = streetCodePage
                 .getFacts()
                 .getCarousel()
-                .getElementCenterRelativeToBlock();
+                .isCardInCenterOfBlock();
 
         softAssert.assertTrue(isCardInCenterOfBlock);
 
