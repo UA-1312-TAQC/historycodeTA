@@ -94,7 +94,7 @@ public class StreetCodeTests extends BaseTestRunner {
 
         boolean isTextFitsOnOneScreen = streetCodePage
                 .getTextBlock()
-                .isTextFitsOnOneScreen();
+                .isTextFitsOneScreen();
 
         softAssert.assertTrue(isReadMoreDisplayed, "The 'Read More' button is not displayed");
         softAssert.assertTrue(isTextFitsOnOneScreen, "The text is not displayed on one screen");

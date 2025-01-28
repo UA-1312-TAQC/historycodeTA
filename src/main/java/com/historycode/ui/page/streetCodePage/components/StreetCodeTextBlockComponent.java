@@ -105,15 +105,16 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
     }
 
     @Step("Check if the text fits on one screen")
-    public boolean isTextFitsOnOneScreen() {
+    public boolean isTextFitsOneScreen() {
         Long viewportHeight;
         Long elementHeight;
 
         try {
             viewportHeight = (Long) threadJs.executeScript("return window.innerHeight;");
-            elementHeight = (Long) threadJs.executeScript("return arguments[0].getBoundingClientRect().height;", mainTextContent);
+            elementHeight = (Long) threadJs.executeScript("return arguments[0].getBoundingClientRect().height;",
+                    mainTextContent);
         } catch (Exception e) {
-            logger.error("Error during script execution: ", e);
+            logger.error("Error during script execution", e);
             return false;
         }
 
