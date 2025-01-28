@@ -3,28 +3,29 @@ package com.historycode.ui.page.streetCodePage.components;
 import com.historycode.ui.component.BaseComponent;
 import io.qameta.allure.Step;
 import org.openqa.selenium.support.FindBy;
-import java.util.List;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+
+import java.util.List;
 import java.util.ArrayList;
 
 
-public class StreetCodeTextBlockComponent extends BaseComponent { ;
+public class StreetCodeTextBlockComponent extends BaseComponent {
     @Getter
-    @FindBy(xpath = ".//div[@id='text']//div[@class='text']//p")
+    @FindBy(xpath = ".//div[@class='text']")
     private WebElement mainTextContent;
     @Getter
     @FindBy(xpath = ".//span[contains(@class,'readMore false')]")
     private WebElement readMoreButton;
     @Getter
-    @FindBy(xpath = "//span[contains(@class, 'readLess')]")
+    @FindBy(xpath = ".//span[contains(@class, 'readLess')]")
     private WebElement readLessButton;
     @Getter
-    @FindBy(xpath = "//div[@class='additionalText']")
+    @FindBy(xpath = ".//div[@class='additionalText']")
     private WebElement additionalText;
     @Getter
-    @FindBy(xpath = "//div[contains(@class,'additionalText')]//a")
+    @FindBy(xpath = ".//div[contains(@class,'additionalText')]//a")
     private List<WebElement> linkInAdditionalText;
     @Getter
     @FindBy(xpath = ".//div[@class='text']//p")
@@ -71,22 +72,26 @@ public class StreetCodeTextBlockComponent extends BaseComponent { ;
         return paragraphs.size();
     }
 
+    @Step("Check if the text is expanded")
     public boolean checkExpanded(int initialCount) {
         waitUntilElementVisible(paragraphs.getLast());
         int expandedNumberOfParagraph = getParagraphCount();
         return expandedNumberOfParagraph > initialCount;
     }
 
+    @Step("Check if the text is collapsed")
     public boolean checkCollapsed(int initialCount) {
         waitUntilElementVisible(paragraphs.getFirst());
         int collapsedCount = getParagraphCount();
         return collapsedCount == initialCount;
     }
 
+    @Step("Check if the additional text is displayed")
     public boolean isAdditionalTextDisplayed() {
         return additionalText.isDisplayed();
     }
 
+    @Step("Get links in the additional text")
     public List<String> getLinksInNewsContent() {
         List<String> links = new ArrayList<>();
 
@@ -99,30 +104,22 @@ public class StreetCodeTextBlockComponent extends BaseComponent { ;
         return links;
     }
 
-    @Step("Check if the last paragraph is visible in the parent")
-    public boolean isLastParagraphVisibleInParent() {
+    @Step("Check if the text fits on one screen")
+    public boolean isTextFitsOnOneScreen() {
+        Long viewportHeight;
+        Long elementHeight;
 
-        if (paragraphs.isEmpty()) {
-            return false;
-        }
-
-        WebElement lastParagraph = paragraphs.getLast();
-
-        Boolean isVisible;
         try {
-            isVisible = (Boolean) threadJs.executeScript(
-                    "var parent = arguments[0];" +
-                            "var elem = arguments[1];" +
-                            "var parentRect = parent.getBoundingClientRect();" +
-                            "var elemRect = elem.getBoundingClientRect();" +
-                            "return (elemRect.top >= parentRect.top && elemRect.bottom <= parentRect.bottom);",
-                    rootElement, lastParagraph);
-        } catch (Exception ex) {
-            logger.error("Error checking if the last paragraph is visible in the parent", ex);
+            viewportHeight = (Long) threadJs.executeScript("return window.innerHeight;");
+            elementHeight = (Long) threadJs.executeScript("return arguments[0].getBoundingClientRect().height;", mainTextContent);
+        } catch (Exception e) {
+            logger.error("Error during script execution: ", e);
             return false;
         }
 
-        return (isVisible != null) && isVisible;
+        return (viewportHeight != null)
+                && (elementHeight != null)
+                && (elementHeight <= viewportHeight);
     }
 
 }

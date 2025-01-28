@@ -88,15 +88,16 @@ public class StreetCodeTests extends BaseTestRunner {
         SoftAssert softAssert = new SoftAssert();
 
         boolean isReadMoreDisplayed = streetCodePage
+                .scrollToTextVideoBlock()
                 .getTextBlock()
                 .isReadMoreButtonDisplayed();
 
-        boolean isLastParagraphVisible = streetCodePage
+        boolean isTextFitsOnOneScreen = streetCodePage
                 .getTextBlock()
-                .isLastParagraphVisibleInParent();
+                .isTextFitsOnOneScreen();
 
         softAssert.assertTrue(isReadMoreDisplayed, "The 'Read More' button is not displayed");
-        softAssert.assertTrue(isLastParagraphVisible, "The last paragraph is not visible");
+        softAssert.assertTrue(isTextFitsOnOneScreen, "The text is not displayed on one screen");
 
         int paragraphFirstCount = streetCodePage
                 .getTextBlock()
@@ -132,6 +133,7 @@ public class StreetCodeTests extends BaseTestRunner {
     @Test(priority = 1)
     @Description("Verification if only one fact is displayed - it is located in the center of the block.")
     public void testWowFactsOneElementAlign() {
+
         navigateToStreetCodePage("/sergii-zhadan");
 
         SoftAssert softAssert = new SoftAssert();
@@ -142,7 +144,7 @@ public class StreetCodeTests extends BaseTestRunner {
                 .getCarousel()
                 .isOneCardPresent();
 
-        softAssert.assertTrue(isOneCard, "The carousel contains more than one cards");
+        Assert.assertTrue(isOneCard, "The carousel contains more than one cards");
 
         boolean isCardInCenterOfBlock = streetCodePage
                 .getFacts()
@@ -176,15 +178,13 @@ public class StreetCodeTests extends BaseTestRunner {
 
         navigateToStreetCodePage(addPath);
 
-        SoftAssert softAssert = new SoftAssert();
-
         int countFactCard = streetCodePage
                 .scrollToInterestingFacts()
                 .getFacts()
                 .getCarousel()
                 .getCardCount();
 
-        softAssert.assertTrue(countFactCard >= (3 + ADDITIONAL_CARD), "The carousel contains less than 3 cards.");
+        Assert.assertTrue(countFactCard >= (3 + ADDITIONAL_CARD), "The carousel contains less than 3 cards.");
 
         String currentCardTitle = streetCodePage
                 .getFacts()
@@ -203,10 +203,8 @@ public class StreetCodeTests extends BaseTestRunner {
                 .getCarousel()
                 .getCurrentNodeTitle();
 
-        softAssert.assertEquals(currentCardTitle, afterScrollCurrentCardTitle,
+        Assert.assertEquals(currentCardTitle, afterScrollCurrentCardTitle,
                 "The carousel is not scrolling in a loop.");
-
-        softAssert.assertAll();
     }
 
 }
