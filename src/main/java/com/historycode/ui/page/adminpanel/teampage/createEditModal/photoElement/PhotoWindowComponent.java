@@ -13,16 +13,16 @@ import java.time.Duration;
 
 public class PhotoWindowComponent extends BaseComponent {
 
-    @FindBy(xpath = "//a[contains(@class, 'ant-upload-list-item-thumbnail')]/img")
+    @FindBy(xpath = ".//a[contains(@class, 'ant-upload-list-item-thumbnail')]/img")
     private WebElement uploadedPhoto;
 
-    @FindBy(xpath = "//span[@role='img' and contains(@class, 'anticon-picture')]")
+    @FindBy(xpath = ".//span[@role='img' and contains(@class, 'anticon-picture')]")
     private WebElement placeholderIcon;
 
-    @FindBy(xpath = "//span[@role='img' and @aria-label='eye']")
+    @FindBy(xpath = ".//span[@role='img' and @aria-label='eye']")
     private WebElement previewButton;
 
-    @FindBy(xpath = "//button[contains(@class, 'ant-btn-icon-only') and @title='Remove file']")
+    @FindBy(xpath = ".//button[contains(@class, 'ant-btn-icon-only') and @title='Remove file']")
     private WebElement deleteButton;
 
     private final PhotoModalComponent photoModalComponent;
@@ -53,6 +53,11 @@ public class PhotoWindowComponent extends BaseComponent {
     public void clickPreviewButton() {
         previewButton.click();
         photoModalComponent.waitForModalToAppear();
+    }
+
+
+    public String getEncodedPhoto(){
+        return uploadedPhoto.getDomAttribute("src");
     }
 
     public void closePreviewModal() {

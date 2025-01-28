@@ -74,12 +74,15 @@ public class CreateEditMemberModal extends BaseEditModal {
     protected WebElement addSocialMediaButton;
 
     protected PhotoModalComponent photoModalComponent;
+
+    @FindBy(css = ".ant-upload-list-item-container")
+    protected WebElement photoWindowComponentRoot;
+
     protected PhotoWindowComponent photoWindowComponent;
 
     public CreateEditMemberModal(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
         //this.photoModalComponent = new PhotoModalComponent(driver, rootElement);
-        //this.photoWindowComponent = new PhotoWindowComponent(driver, rootElement);
     }
 
 
@@ -132,6 +135,22 @@ public class CreateEditMemberModal extends BaseEditModal {
         }
         return this;
     }
+
+
+    public PhotoWindowComponent getPhotoWindowComponent(){
+        if(photoWindowComponent == null){
+            return getRefreshedPhotoWindowComponent();
+        }
+        return this.photoWindowComponent;
+    }
+
+
+    public PhotoWindowComponent getRefreshedPhotoWindowComponent(){
+        this.photoWindowComponent = new PhotoWindowComponent(driver, photoWindowComponentRoot);
+        return this.photoWindowComponent;
+    }
+
+
 
     public boolean isKeyMemberChecked() {
         return getKeyMemberCheckbox().isChecked();
