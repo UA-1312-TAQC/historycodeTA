@@ -13,6 +13,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
 import java.sql.Date;
 import java.time.Duration;
 import java.util.NoSuchElementException;
@@ -114,10 +115,15 @@ public class EditNewsModal extends BaseEditModal {
     }
 
     public void clickUploadNewsPhoto(String filePath) {
+        File file = new File(filePath);
+        if (!file.exists()) {
+            throw new IllegalArgumentException("File does not exist: " + filePath);
+        }
         uploadNewsPhoto.click();
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement fileInput = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='ant-upload ant-upload-select']//input[@type='file']")));
         fileInput.sendKeys(filePath);
+        waitUntilPhotoIsUploaded();
     }
 
     public boolean isNewsPhotoPresent() {
