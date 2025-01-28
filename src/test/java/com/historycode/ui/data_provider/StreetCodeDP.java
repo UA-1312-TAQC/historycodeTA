@@ -1,5 +1,6 @@
 package com.historycode.ui.data_provider;
 
+import com.historycode.ui.data_provider.enums.SocialMedia;
 import org.testng.annotations.DataProvider;
 
 public class StreetCodeDP {
@@ -20,6 +21,16 @@ public class StreetCodeDP {
                 {"/sichovi-striltsi"},
                 {"/khrystyna-skachkivska-sushko"}
         };
+    }
+
+    @DataProvider(name = "socialMediaDataProvider")
+    public Object[][] socialMediaDataProvider() {
+        Object[] values = SocialMedia.values();
+        Object[][] res = new Object [values.length][];
+        for(int i = 0; i< values.length; i++){
+            res[i] = new Object[]{values[i]};
+        }
+        return res;
     }
 
     @DataProvider(name = "urlProviderForTextBlock")
