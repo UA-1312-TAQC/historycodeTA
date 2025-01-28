@@ -2,32 +2,18 @@ package com.historycode.ui.component.BurgerMenu;
 
 import com.historycode.ui.component.BaseComponent;
 import com.historycode.ui.page.HelpUsPage.HelpUsPage;
-import com.historycode.ui.page.adminpanel.partnerspage.PartnersPageAdminPanel;
 import com.historycode.ui.page.contactUs.ContactUsPage;
 import com.historycode.ui.page.homePage.HomePage;
 import com.historycode.ui.page.partnerPage.PartnerPage;
 import com.historycode.ui.page.privacyPolicyPage.PrivacyPolicyPage;
 import com.historycode.ui.page.streetcodecatalogpage.StreetCodeCatalogPage;
 import io.qameta.allure.Step;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
-import java.util.List;
 
 public class BurgerMenuComponent extends BaseComponent {
 
-    @FindBy(xpath = ".//div[contains(@class, 'drawerContainer')]")
-    private WebElement containerMenu;
-
-    @FindBy(xpath = ".//a[contains(@class, 'headerItem')]")
-    private List<WebElement> menuItems;
 
     @FindBy(xpath = ".//a[@class='headerItem' and text()='Головна']")
     WebElement mainPageNode;
@@ -45,14 +31,14 @@ public class BurgerMenuComponent extends BaseComponent {
     WebElement privacyPolicyNode;
 
     public BurgerMenuComponent(WebDriver driver, WebElement rootElement) {
-        super(driver);
-        PageFactory.initElements(new DefaultElementLocatorFactory(rootElement), this);
+        super(driver, rootElement);
     }
+
 
     @Step("Click on the 'Головна' button in the burger-menu")
     public HomePage goToHonePage() {
         mainPageNode.click();
-        return new HomePage (driver);
+        return new HomePage(driver);
     }
 
     @Step("Click on the 'History-коди' button in the burger-menu")
@@ -92,13 +78,4 @@ public class BurgerMenuComponent extends BaseComponent {
         return new PrivacyPolicyPage(driver);
     }
 
-    public void clickMenuItem(String itemName) {
-        WebElement menuItem = wait.until(ExpectedConditions.visibilityOfAllElements(menuItems))
-                .stream()
-                .filter(item -> item.getText().equalsIgnoreCase(itemName))
-                .findFirst()
-                .orElseThrow(() -> new NoSuchElementException("Menu item " + itemName + " not found"));
-        wait.until(ExpectedConditions.elementToBeClickable(menuItem));
-        menuItem.click();
-    }
 }
