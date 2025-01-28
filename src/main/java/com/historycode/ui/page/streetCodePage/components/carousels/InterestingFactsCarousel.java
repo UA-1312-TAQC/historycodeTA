@@ -77,36 +77,28 @@ public class InterestingFactsCarousel extends BaseCarousel {
     }
 
     private boolean isElementInCenterOfBlock(WebElement block, WebElement element) {
-        final int CENTER_ALIGNMENT_TOLERANCE = 10;
+        final double CENTER_ALIGNMENT_TOLERANCE = 10;
         double blockLeft, blockTop, blockWidth, blockHeight, elementLeft, elementTop, elementWidth, elementHeight;
         int scrollX, scrollY;
 
         try {
             blockLeft = ((Number) Objects.requireNonNull(threadJs
-                    .executeScript("return arguments[0].getBoundingClientRect().left;", block)))
-                    .doubleValue();
+                    .executeScript("return arguments[0].getBoundingClientRect().left;", block))).doubleValue();
             blockTop = ((Number) Objects.requireNonNull(threadJs
-                    .executeScript("return arguments[0].getBoundingClientRect().top;", block)))
-                    .doubleValue();
+                    .executeScript("return arguments[0].getBoundingClientRect().top;", block))).doubleValue();
             blockWidth = ((Number) Objects.requireNonNull(threadJs
-                    .executeScript("return arguments[0].getBoundingClientRect().width;", block)))
-                    .doubleValue();
+                    .executeScript("return arguments[0].getBoundingClientRect().width;", block))).doubleValue();
             blockHeight = ((Number) Objects.requireNonNull(threadJs
-                    .executeScript("return arguments[0].getBoundingClientRect().height;", block)))
-                    .doubleValue();
+                    .executeScript("return arguments[0].getBoundingClientRect().height;", block))).doubleValue();
 
             elementLeft = ((Number) Objects.requireNonNull(threadJs
-                    .executeScript("return arguments[0].getBoundingClientRect().left;", element)))
-                    .doubleValue();
+                    .executeScript("return arguments[0].getBoundingClientRect().left;", element))).doubleValue();
             elementTop = ((Number) Objects.requireNonNull(threadJs
-                    .executeScript("return arguments[0].getBoundingClientRect().top;", element)))
-                    .doubleValue();
+                    .executeScript("return arguments[0].getBoundingClientRect().top;", element))).doubleValue();
             elementWidth = ((Number) Objects.requireNonNull(threadJs
-                    .executeScript("return arguments[0].getBoundingClientRect().width;", element)))
-                    .doubleValue();
+                    .executeScript("return arguments[0].getBoundingClientRect().width;", element))).doubleValue();
             elementHeight = ((Number) Objects.requireNonNull(threadJs
-                    .executeScript("return arguments[0].getBoundingClientRect().height;", element)))
-                    .doubleValue();
+                    .executeScript("return arguments[0].getBoundingClientRect().height;", element))).doubleValue();
 
             scrollX = ((Long) Objects.requireNonNull(threadJs.executeScript("return window.scrollX;"))).intValue();
             scrollY = ((Long) Objects.requireNonNull(threadJs.executeScript("return window.scrollY;"))).intValue();
@@ -117,12 +109,12 @@ public class InterestingFactsCarousel extends BaseCarousel {
 
         double blockCenterX = blockLeft + blockWidth / 2 - scrollX;
         double blockCenterY = blockTop + blockHeight / 2 - scrollY;
+
         double elementCenterX = elementLeft + elementWidth / 2 - scrollX;
         double elementCenterY = elementTop + elementHeight / 2 - scrollY;
 
-        Point point = new Point((int) (elementCenterX - blockCenterX), (int) (elementCenterY - blockCenterY));
-
-        return Math.abs(point.x) <= CENTER_ALIGNMENT_TOLERANCE && Math.abs(point.y) <= CENTER_ALIGNMENT_TOLERANCE;
+        return Math.abs(elementCenterX - blockCenterX) <= CENTER_ALIGNMENT_TOLERANCE
+                && Math.abs(elementCenterY - blockCenterY) <= CENTER_ALIGNMENT_TOLERANCE;
     }
 
     //TODO: remove this
