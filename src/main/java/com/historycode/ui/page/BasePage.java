@@ -5,23 +5,26 @@ import com.historycode.ui.component.BurgerMenu.BurgerMenuComponent;
 import com.historycode.ui.component.footer.FooterComponent;
 import com.historycode.ui.component.header.HeaderComponent;
 import lombok.Getter;
-import org.openqa.selenium.*;
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-
 import java.util.Objects;
+
 @Slf4j
 @Getter
 public abstract class BasePage extends Base {
 
     protected HeaderComponent header;
     protected FooterComponent footer;
-    protected BurgerMenuComponent burgerMenuComponent;
+
 
     @FindBy(xpath = "//div[@id='loadingGif']")
     private WebElement loaderIcon;
@@ -30,10 +33,7 @@ public abstract class BasePage extends Base {
     private WebElement headerNode;
     @FindBy(xpath = "//div[@class='footerWrapper']")
     private WebElement footerNode;
-    @FindBy(xpath = "//div[contains(@class, 'rightPartContainer')]//div[contains(@class, 'drawerContainer')]//div")
-    private WebElement burgerMenu;
-    @FindBy(xpath = "//div[@class='ant-drawer-body']")
-    private WebElement burgerMenuBody;
+
     @Getter
     @FindBy(xpath = "//div[@class='headerDrawerContainer']//a[@href='/catalog']")
     private WebElement historyCodeBurgerButton;
@@ -44,14 +44,10 @@ public abstract class BasePage extends Base {
         this.footer = new FooterComponent(driver, this.footerNode);
     }
 
-    public boolean isBurgerMenuVisible() {
-        return burgerMenu.isDisplayed();
-    }
+
 
     public BurgerMenuComponent openBurgerMenu() {
-        burgerMenu.click();
-        waitUntilElementVisible(burgerMenuBody);
-        return new BurgerMenuComponent(driver, burgerMenuBody);
+        return header.clickBurgerMenuBtn();
     }
 
     public void waitForElementThenScrollUntilAllContentLoaded(WebElement elementToWaitFor) {
@@ -102,9 +98,7 @@ public abstract class BasePage extends Base {
     }
 
     public void waitForPageToLoad(long timeoutInSeconds) {
-        new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds)).until((ExpectedCondition<Boolean>) wd ->
-                ((JavascriptExecutor) wd).executeScript("return document.readyState").equals("complete")
-        );
+        new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds)).until((ExpectedCondition<Boolean>) wd -> ((JavascriptExecutor) wd).executeScript("return document.readyState").equals("complete"));
     }
 
     public Boolean isElementInvisible(WebElement element) {
@@ -115,8 +109,7 @@ public abstract class BasePage extends Base {
     public void scrollUntilElementIsVisible(WebElement element) {
         try {
             wait.until(driver -> {
-                ((JavascriptExecutor) driver).executeScript(
-                        "arguments[0].scrollIntoView({behavior: 'instant', block: 'center'});", element);
+                ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({behavior: 'instant', block: 'center'});", element);
                 return element.isDisplayed();
             });
             log.info("Element is now visible.");

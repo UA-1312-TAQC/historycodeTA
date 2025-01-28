@@ -1,7 +1,8 @@
 package com.historycode.ui.page.homePage;
 
 import com.historycode.ui.component.BaseComponent;
-import com.historycode.ui.page.HistoryCodePage.HistoryCodePage;
+
+import com.historycode.ui.page.streetcodecatalogpage.StreetCodeCatalogPage;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -56,10 +57,10 @@ public class PersonCardComponent extends BaseComponent {
         return personImage.getAttribute("src");
     }
 
-    public HistoryCodePage clickToHistoryCode() {
+    public StreetCodeCatalogPage clickToHistoryCode() {
             waitUntilElementVisible(toHistoryCodePage);
             toHistoryCodePage.click();
-            return new HistoryCodePage(driver);
+            return new StreetCodeCatalogPage(driver);
 
     }
 }
