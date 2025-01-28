@@ -85,15 +85,12 @@ public class InterestingFactsCarousel extends BaseCarousel {
             blockLeft = ((Number) Objects.requireNonNull(threadJs
                     .executeScript("return arguments[0].getBoundingClientRect().left;", block)))
                     .doubleValue();
-
             blockTop = ((Number) Objects.requireNonNull(threadJs
                     .executeScript("return arguments[0].getBoundingClientRect().top;", block)))
                     .doubleValue();
-
             blockWidth = ((Number) Objects.requireNonNull(threadJs
                     .executeScript("return arguments[0].getBoundingClientRect().width;", block)))
                     .doubleValue();
-
             blockHeight = ((Number) Objects.requireNonNull(threadJs
                     .executeScript("return arguments[0].getBoundingClientRect().height;", block)))
                     .doubleValue();
@@ -101,22 +98,18 @@ public class InterestingFactsCarousel extends BaseCarousel {
             elementLeft = ((Number) Objects.requireNonNull(threadJs
                     .executeScript("return arguments[0].getBoundingClientRect().left;", element)))
                     .doubleValue();
-
             elementTop = ((Number) Objects.requireNonNull(threadJs
                     .executeScript("return arguments[0].getBoundingClientRect().top;", element)))
                     .doubleValue();
-
             elementWidth = ((Number) Objects.requireNonNull(threadJs
                     .executeScript("return arguments[0].getBoundingClientRect().width;", element)))
                     .doubleValue();
-
             elementHeight = ((Number) Objects.requireNonNull(threadJs
                     .executeScript("return arguments[0].getBoundingClientRect().height;", element)))
                     .doubleValue();
 
             scrollX = ((Long) Objects.requireNonNull(threadJs.executeScript("return window.scrollX;"))).intValue();
             scrollY = ((Long) Objects.requireNonNull(threadJs.executeScript("return window.scrollY;"))).intValue();
-
         } catch (Exception e) {
             logger.error("Error getting center relative to block", e);
             throw e;
