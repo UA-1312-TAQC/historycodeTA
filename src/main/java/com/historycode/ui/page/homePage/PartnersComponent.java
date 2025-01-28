@@ -15,7 +15,6 @@ class PartnersComponent extends BaseComponent {
 
     public PartnersComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        PageFactory.initElements(new DefaultElementLocatorFactory(rootElement), this);
     }
 
     public String getLogoSrc() {

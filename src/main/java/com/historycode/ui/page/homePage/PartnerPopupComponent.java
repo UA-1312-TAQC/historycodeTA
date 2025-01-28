@@ -20,7 +20,6 @@ public class PartnerPopupComponent extends BaseComponent {
 
     public PartnerPopupComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        PageFactory.initElements(new DefaultElementLocatorFactory(rootElement), this);
     }
 
     public String getTitle() {
