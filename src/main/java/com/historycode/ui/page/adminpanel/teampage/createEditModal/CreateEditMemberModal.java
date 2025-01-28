@@ -34,11 +34,11 @@ public class CreateEditMemberModal extends BaseEditModal {
     @FindBy(xpath = ".//label[@for = 'name']/../..")
     protected WebElement nameInputRoot;
     protected InputElement nameInput;
-//TODO to rename
+
+//TODO to rename SocialMediaDropdownComponent
     @FindBy(xpath = ".//input[@aria-label='Позиції']/../..")
     protected WebElement positionsDropdownRoot;
     protected SocialMediaDropdownComponent positionsDropdown;
-    protected By SELECTED_POSITIONS_PATH = By.xpath("//div[@class='ant-select-selection-overflow']");
 
     @FindBy(xpath = ".//label[@for = 'description']/../..")
     protected WebElement descriptionTextareaElementRoot;
