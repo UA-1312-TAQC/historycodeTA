@@ -8,7 +8,7 @@ import io.qameta.allure.Issue;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class AddNewMemberButton extends TestRunnerWithAdmin {
+public class AddNewMemberButtonTest extends TestRunnerWithAdmin {
 
     @Issue("115")
     @Test

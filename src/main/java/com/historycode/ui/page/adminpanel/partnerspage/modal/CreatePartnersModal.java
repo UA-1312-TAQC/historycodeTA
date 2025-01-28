@@ -51,12 +51,13 @@ public class CreatePartnersModal extends BaseCreateModal {
     }
 
     public void clickSaveButton() {
-        sleep(1000);
+        sleep(2000);
         saveButton.click();
     }
 
     public void clickCloseButton() {
         waitUntilElementVisible(super.tooltipConfirmation);
+        sleep(2000);
         closeButton.click();
     }
 }

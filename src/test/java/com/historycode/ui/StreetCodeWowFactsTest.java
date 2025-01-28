@@ -39,7 +39,7 @@ public class StreetCodeWowFactsTest extends BaseTestRunner {
         homePage.getHistoryCodeBurgerButton().click();
 
         streetCodeCatalogPage.waitUntilElementVisible(streetCodeCatalogPage.getContainerRootNode());
-        streetCodeCatalogPage.clickCatalogItemByName(0);
+        streetCodeCatalogPage.clickCatalogItemByIndex(0);
 
         streetPage = new StreetCodePage(driver);
 

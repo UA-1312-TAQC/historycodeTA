@@ -1,4 +1,4 @@
-package com.historycode.ui;
+package com.historycode.ui.adminPanel.team;
 
 import com.historycode.ui.data_provider.enums.SocialMedia;
 import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;

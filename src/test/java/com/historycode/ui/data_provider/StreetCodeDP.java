@@ -3,9 +3,6 @@ package com.historycode.ui.data_provider;
 import com.historycode.ui.data_provider.enums.SocialMedia;
 import org.testng.annotations.DataProvider;
 
-import java.util.Arrays;
-import java.util.Iterator;
-
 public class StreetCodeDP {
     //TODO: change data
     @DataProvider(name = "urlTeaserSetProvider")
@@ -34,5 +31,13 @@ public class StreetCodeDP {
             res[i] = new Object[]{values[i]};
         }
         return res;
+    }
+
+    @DataProvider(name = "urlProviderForTextBlock")
+    public Object[][] urlProviderForTextBlock(){
+        return new Object[][]{
+                {"/roman-ratushnyi-seneka"},
+                {"/vasyl-stus"}
+        };
     }
 }

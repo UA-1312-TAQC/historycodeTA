@@ -1,12 +1,11 @@
 package com.historycode.ui.component.adminPanel.modalAdminPanel;
 
 import com.historycode.ui.component.BaseModal;
-import lombok.Getter;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-
 
 public class DeleteItemModal extends BaseModal {
     @FindBy(xpath = "./div[@class='ant-modal-header']//div[@class='ant-modal-title']")
@@ -46,6 +45,7 @@ public class DeleteItemModal extends BaseModal {
         return getConfirmationText().contains(expectedText);
     }
 
+    @Step("Clicking Ok button in the confirmation modal window")
     public void clickOkButton() {
         waitUntilElementClickable(ok);
         ok.click();
