@@ -27,6 +27,8 @@ public abstract class BaseCarousel extends BaseComponent {
     }
 
     public boolean hasArrows() {
+        waitUntilElementVisible(leftArrow);
+        waitUntilElementVisible(rightArrow);
         try {
             return leftArrow.isDisplayed() && rightArrow.isDisplayed();
         } catch (NoSuchElementException e) {

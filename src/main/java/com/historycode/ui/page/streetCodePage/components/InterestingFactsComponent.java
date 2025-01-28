@@ -67,18 +67,26 @@ public class InterestingFactsComponent extends BaseComponent {
         return carousel.getTotalSlides();
     }
 
-    public int getActiveWowFactsSlickDotIndex() {
-        return carousel.getActiveWowFactsSlickDotIndex();
-    }
-
-    public int getLastWowFactsSlickDotIndex() {
-        return carousel.getLastWowFactsSlickDotIndex();
-    }
-
-    public void clickWowFactsSlickDotByIndex(int index) {
-        carousel.clickWowFactsSlickDotByIndex(index);
+    public int getActiveWowFactsSlickSquareIndex() {
+        return carousel.getActiveWowFactsSlickSquareIndex();
     }
 
 
+    public int getLastWowFactsSlickSquareIndex() {
+        return carousel.getLastWowFactsSlickSquareIndex();
+    }
+
+    public int getLastSlideIndex() {
+        return carousel.getLastSlideIndex();
+    }
+
+    public void clickFactCardByIndex(int index) {
+        carousel.clickFactCardByIndex(index);
+    }
+
+    public void clickRandomWowFactsSlickSquare(){
+        carousel.clickRandomWowFactsSlickSquare();
+    }
 
 }
+

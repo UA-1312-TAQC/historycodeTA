@@ -1,7 +1,6 @@
 package com.historycode.ui.page.streetCodePage.components.carousels;
 
 import com.historycode.ui.page.streetCodePage.components.InterestingFactsCardComponent;
-import com.historycode.ui.page.streetCodePage.components.InterestingFactsComponent;
 import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -9,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import static java.lang.Thread.sleep;
@@ -17,15 +17,19 @@ public class InterestingFactsCarousel extends BaseCarousel {
     @FindBy(xpath = ".//div[contains(@class, 'slick-slide slick-cloned')]//div[@class='interestingFactSlide']")
     private List<WebElement> factCardNodes;
 
-    @FindBy(xpath = ".//div[contains(@class, 'slick-current')]//div[@class='interestingFactSlide']")
+    @FindBy(xpath = "//div[@id='wow-facts']//div[contains(@class, 'slick-slide')]")
+    List<WebElement> allCads;
+    @FindBy(xpath = ".//div[@class='interestingFactSlide']//div[contains(@class, 'slick-current')]")
     private WebElement factCardCurrentNode;
 
     @FindBy(xpath = "//div[@class ='slick-slide slick-active slick-center slick-current']")
     private WebElement activeCard;
+
     @FindBy(xpath = "//div[@id ='wow-facts']//ul[contains(@class, 'slick-dots')]/li/button")
-    private List<WebElement> allWowFactsSlickDots;
+    private List<WebElement> allWowFactsSlickSquare;
+    @Getter
     @FindBy(xpath = "//div[@id ='wow-facts']//ul[contains(@class, 'slick-dots')]/li[contains(@class, 'slick-active')]/button")
-    private WebElement activeWowFactsSlickDot;
+    private WebElement activeWowFactsSlickSquare;
     //TODO: remove this
     @FindBy(xpath = "//div[@id='wow-facts']//div[@class='interestingFactsContainer ']//button[@class='slick-arrow slick-next']")
     private WebElement nextButton;
@@ -67,17 +71,28 @@ public class InterestingFactsCarousel extends BaseCarousel {
         return Integer.parseInt(index);
     }
 
-    public int getActiveWowFactsSlickDotIndex() {
-        return Integer.parseInt(activeWowFactsSlickDot.getText().trim());
+    public int getLastSlideIndex() {
+        WebElement lastSlide = allCads.getLast();
+        return Integer.parseInt(lastSlide.getAttribute("data-index"));
     }
 
-    public int getLastWowFactsSlickDotIndex(){
-        return Integer.parseInt(allWowFactsSlickDots.get(allWowFactsSlickDots.size() - 1).getText().trim());
+    public int getActiveWowFactsSlickSquareIndex() {
+        return Integer.parseInt(activeWowFactsSlickSquare.getText().trim());
     }
 
-    public void clickWowFactsSlickDotByIndex(int index) {
-        allWowFactsSlickDots.get(index).click();
+    public int getLastWowFactsSlickSquareIndex() {
+        return Integer.parseInt(allWowFactsSlickSquare.get((allWowFactsSlickSquare.size() - 1)).getText().trim());
     }
 
+
+    public void clickFactCardByIndex(int index) {
+        allCads.get(index).click();
+    }
+
+    public void clickRandomWowFactsSlickSquare() {
+        Random random = new Random();
+        int randomIndex = random.nextInt(allWowFactsSlickSquare.size());
+        allWowFactsSlickSquare.get(randomIndex).click();
+    }
 
 }
