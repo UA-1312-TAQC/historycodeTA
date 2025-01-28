@@ -41,7 +41,7 @@ public class CreateNewsTest extends TestRunnerWithAdmin {
         editNewsModal.inputNewsLinkTranslit(createdLink);
         editNewsModal.inputNewsTextEditor(createdText);
         editNewsModal.inputNewsCreationDate(new Date(System.currentTimeMillis()));
-        
+
         editNewsModal.clickUploadNewsPhoto(imagePath);
         editNewsModal.waitUntilPhotoIsUploaded();
 

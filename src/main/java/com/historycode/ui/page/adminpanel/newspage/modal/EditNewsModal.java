@@ -2,14 +2,11 @@ package com.historycode.ui.page.adminpanel.newspage.modal;
 
 import com.historycode.ui.component.adminPanel.modalAdminPanel.BaseEditModal;
 import com.historycode.ui.elements.adminPanel.InputElement;
-import com.historycode.ui.elements.adminPanel.TextEditorButtonLocators;
-
+import com.historycode.ui.elements.adminPanel.TextEditorElements;
 import lombok.Getter;
 import lombok.Setter;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -18,8 +15,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.sql.Date;
 import java.time.Duration;
+import java.util.NoSuchElementException;
+import java.util.concurrent.TimeoutException;
 
 public class EditNewsModal extends BaseEditModal {
+
+    private TextEditorElements textEditorElements;
+
     @FindBy(xpath = "//label[@for = 'title']/../..")
     private WebElement newsTitleContainer;
     @Getter
@@ -52,27 +54,6 @@ public class EditNewsModal extends BaseEditModal {
     @Getter
     private final InputElement newsCreationDate;
 
-    @FindBy(xpath = TextEditorButtonLocators.BOLD_ICON)
-    private WebElement boldIcon;
-
-    @FindBy(xpath = TextEditorButtonLocators.ITALIC_ICON)
-    private WebElement italicIcon;
-
-    @FindBy(xpath = TextEditorButtonLocators.STRIKETHROUGH_ICON)
-    private WebElement strikethroughIcon;
-
-    @FindBy(xpath = TextEditorButtonLocators.UNDERLINE_ICON)
-    private WebElement underlineIcon;
-
-    @FindBy(xpath = TextEditorButtonLocators.CLEAR_TEXT_FORMAT_ICON)
-    private WebElement clearTextFormatIcon;
-
-    @FindBy(xpath = TextEditorButtonLocators.NUMBERED_LIST_ICON)
-    private WebElement numberedListIcon;
-
-    @FindBy(xpath = TextEditorButtonLocators.BULLETED_LIST_ICON)
-    private WebElement bulletedListIcon;
-
     @FindBy(xpath = "//button[span[text()='Зберегти']]")
     private WebElement saveButton;
 
@@ -90,6 +71,8 @@ public class EditNewsModal extends BaseEditModal {
         this.newsLinkTranslit = new InputElement(driver, newsLinkTranslitContainer);
         this.newsCreationDate = new InputElement(driver, newsCreationDateContainer);
         this.photoModalComponent = new PhotoModalComponent(driver, rootElement);
+
+        this.textEditorElements = new TextEditorElements(driver);
     }
 
     public void inputNewsTitle(String newsTitle) {
@@ -113,35 +96,7 @@ public class EditNewsModal extends BaseEditModal {
     }
 
     public void clickTextEditorButton(String button) {
-        WebElement buttonElement = null;
-        switch (button.toLowerCase()) {
-            case "bold":
-                buttonElement = boldIcon;
-                break;
-            case "italic":
-                buttonElement = italicIcon;
-                break;
-            case "strikethrough":
-                buttonElement = strikethroughIcon;
-                break;
-            case "underline":
-                buttonElement = underlineIcon;
-                break;
-            case "clear":
-                buttonElement = clearTextFormatIcon;
-                break;
-            case "numberedlist":
-                buttonElement = numberedListIcon;
-                break;
-            case "bulletedlist":
-                buttonElement = bulletedListIcon;
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown button: " + button);
-        }
-        if (buttonElement != null) {
-            buttonElement.click();
-        }
+        textEditorElements.clickTextEditorButton(button);
     }
 
     public void saveNews() {
@@ -190,15 +145,11 @@ public class EditNewsModal extends BaseEditModal {
         photoModalComponent.close();
     }
 
-    public boolean isPlaceholderClickable() {
-        try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            WebElement placeholderIcon = driver.findElement(By.xpath("//span[@role='img' and contains(@class, 'anticon-picture')]"));
-            wait.until(ExpectedConditions.elementToBeClickable(placeholderIcon));
-            return true;
-        } catch (TimeoutException e) {
-            return false;
-        }
+    public boolean isPlaceholderClickable() throws TimeoutException {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement placeholderIcon = driver.findElement(By.xpath("//span[@role='img' and contains(@class, 'anticon-picture')]"));
+        wait.until(ExpectedConditions.elementToBeClickable(placeholderIcon));
+        return true;
     }
 
     public boolean isPhotoUploaded() {
@@ -218,13 +169,17 @@ public class EditNewsModal extends BaseEditModal {
         deleteNewsPhoto.click();
     }
 
+public TextEditorElements getTextEditorElements() {
+        return textEditorElements;
+    }
+
     public String getNewsLinkTranslitErrorMessage() {
         try {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             wait.until(ExpectedConditions.visibilityOf(newsLinkTranslitErrorMessage));
             return newsLinkTranslitErrorMessage.getText();
         } catch (Exception e) {
-            return ""; // or throw a custom exception depending on your error handling strategy
+            return "";
         }
     }
 }

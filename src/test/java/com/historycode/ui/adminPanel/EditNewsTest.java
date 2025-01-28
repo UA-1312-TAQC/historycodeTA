@@ -23,7 +23,7 @@ public class EditNewsTest extends TestRunnerWithAdmin {
     private String editedTitle;
     private String editedLink;
     private String editedText;
-    private String imagePath = "src/test/resources/logo.png"; // Image path for comparison
+    private String imagePath = "src/test/resources/logo.png";
 
     @BeforeMethod
     public void setupForEditNews() throws InterruptedException {
@@ -69,18 +69,18 @@ public class EditNewsTest extends TestRunnerWithAdmin {
         editNewsModal.inputNewsLinkTranslit(editedLink);
         editNewsModal.inputNewsTextEditor(editedText);
 
-        editNewsModal.clickTextEditorButton("bold");
-        editNewsModal.clickTextEditorButton("italic");
-        editNewsModal.clickTextEditorButton("strikethrough");
-        editNewsModal.clickTextEditorButton("underline");
-        editNewsModal.clickTextEditorButton("clear");
-        editNewsModal.clickTextEditorButton("numberedlist");
-        editNewsModal.clickTextEditorButton("bulletedlist");
+        editNewsModal.getTextEditorElements().clickTextEditorButton("bold");
+        editNewsModal.getTextEditorElements().clickTextEditorButton("italic");
+        editNewsModal.getTextEditorElements().clickTextEditorButton("strikethrough");
+        editNewsModal.getTextEditorElements().clickTextEditorButton("underline");
+        editNewsModal.getTextEditorElements().clickTextEditorButton("clear");
+        editNewsModal.getTextEditorElements().clickTextEditorButton("numberedlist");
+        editNewsModal.getTextEditorElements().clickTextEditorButton("bulletedlist");
 
         editNewsModal.clickDeleteButton(); 
         editNewsModal.clickUploadNewsPhoto(imagePath);
 
-        editNewsModal.inputNewsCreationDate(new Date(System.currentTimeMillis() + 86400000)); // One day in the future
+        editNewsModal.inputNewsCreationDate(new Date(System.currentTimeMillis() + 86400000));
 
         editNewsModal.saveNews();
         editNewsModal.clickCloseButton();

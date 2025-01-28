@@ -43,6 +43,7 @@ public class DeleteNewsTest extends TestRunnerWithAdmin {
         editNewsModal.inputNewsCreationDate(new java.sql.Date(System.currentTimeMillis()));
         
         editNewsModal.clickUploadNewsPhoto(imagePath);
+        assertTrue(editNewsModal.isPhotoUploaded(), "Failed to upload news photo during setup");
         editNewsModal.saveNews();
     }
 
