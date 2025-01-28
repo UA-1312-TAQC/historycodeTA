@@ -21,6 +21,7 @@ public class DeleteNewsTest extends TestRunnerWithAdmin {
     private String createdTitle;
     private String createdLink;
     private String createdText;
+    private String imagePath = "src/test/resources/newsTest.png"; // Update this path if needed
 
     @BeforeMethod
     public void setupForDeleteNews() {
@@ -40,7 +41,8 @@ public class DeleteNewsTest extends TestRunnerWithAdmin {
         editNewsModal.inputNewsLinkTranslit(createdLink);
         editNewsModal.inputNewsTextEditor(createdText);
         editNewsModal.inputNewsCreationDate(new java.sql.Date(System.currentTimeMillis()));
-        editNewsModal.clickUploadNews();
+        
+        editNewsModal.clickUploadNewsPhoto(imagePath);
         editNewsModal.saveNews();
     }
 
@@ -48,18 +50,22 @@ public class DeleteNewsTest extends TestRunnerWithAdmin {
     @Issue("160")
     public void testDeleteNews() {
         NewsPageAdminPanel newsPage = new NewsPageAdminPanel(driver);
-
         NewsPageGridComponent newsGrid = newsPage.getNewsPageGridComponent();
+
         newsGrid.updateNewsRows(driver);
 
+        boolean newsDeleted = false;
         for (int i = 0; i < newsGrid.getRowCount(); i++) {
             NewsRowComponent newsToDelete = newsGrid.getRowById(i);
             if (newsToDelete.getName().getText().equals(createdTitle)) {
                 newsPage.deleteNewsByIndex(i).clickOkButton();
+                newsDeleted = true;
                 break;
             }
         }
 
+        assertTrue(newsDeleted, "The news was not found for deletion.");
+        
         newsGrid.updateNewsRows(driver);
         boolean newsExists = false;
         for (int i = 0; i < newsGrid.getRowCount(); i++) {
