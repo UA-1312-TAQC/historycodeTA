@@ -21,6 +21,7 @@ public class CreateNewsTest extends TestRunnerWithAdmin {
     private String createdTitle;
     private String createdLink;
     private String createdText;
+    private String imagePath = "src/test/resources/newsTest.png";
 
     @BeforeMethod
     public void setupForCreateNews() {
@@ -40,7 +41,10 @@ public class CreateNewsTest extends TestRunnerWithAdmin {
         editNewsModal.inputNewsLinkTranslit(createdLink);
         editNewsModal.inputNewsTextEditor(createdText);
         editNewsModal.inputNewsCreationDate(new Date(System.currentTimeMillis()));
-        editNewsModal.clickUploadNews();
+
+        editNewsModal.clickUploadNewsPhoto(imagePath);
+        editNewsModal.waitUntilPhotoIsUploaded();
+
         editNewsModal.saveNews();
     }
 
@@ -57,6 +61,10 @@ public class CreateNewsTest extends TestRunnerWithAdmin {
         assertEquals(createdNews.getName().getText(), createdTitle, "The title is not correct.");
         String expectedYear = String.valueOf(java.time.Year.now().getValue());
         assertTrue(createdNews.getDateOfCreation().getText().contains(expectedYear), "Date was not correct.");
+
+        String uploadedImageUrl = createdNews.getUploadedImageUrl(); 
+
+        assertTrue(uploadedImageUrl.contains(imagePath), "The uploaded image does not match the provided image.");
     }
 
     @AfterMethod

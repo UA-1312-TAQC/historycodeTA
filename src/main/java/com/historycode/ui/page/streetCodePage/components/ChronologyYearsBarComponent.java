@@ -23,12 +23,6 @@ public class ChronologyYearsBarComponent extends BaseComponent {
 
     public ChronologyYearsBarComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        PageFactory.initElements(driver, this);
-    }
-
-    public ChronologyYearsBarComponent(WebDriver driver) {
-        super(driver);
-        PageFactory.initElements(driver, this);
     }
 
     public WebElement getIdYearBox(int index) {

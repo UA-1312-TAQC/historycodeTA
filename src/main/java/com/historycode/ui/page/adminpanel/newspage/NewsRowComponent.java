@@ -43,4 +43,8 @@ public class NewsRowComponent extends BaseComponent {
         actionEdit.click();
         return new CreateEditNewsModal(driver, rootElement);
     }
+
+    public String getUploadedImageUrl() {
+        return picture.getDomAttribute("src");
+    }
 }
