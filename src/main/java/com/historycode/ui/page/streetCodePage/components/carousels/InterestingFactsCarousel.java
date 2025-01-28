@@ -71,25 +71,31 @@ public class InterestingFactsCarousel extends BaseCarousel {
         return Integer.parseInt(index);
     }
 
-    public int getLastSlideIndex() {
-        WebElement lastSlide = allCads.getLast();
-        return Integer.parseInt(lastSlide.getAttribute("data-index"));
-    }
-
-    public int getActiveWowFactsSlickSquareIndex() {
-        return Integer.parseInt(activeWowFactsSlickSquare.getText().trim());
-    }
-
-    public int getLastWowFactsSlickSquareIndex() {
+    public int getLastWowFactsSquareIndex() {
         return Integer.parseInt(allWowFactsSlickSquare.get((allWowFactsSlickSquare.size() - 1)).getText().trim());
     }
 
-
-    public void clickFactCardByIndex(int index) {
-        allCads.get(index).click();
+    public int getLastSlideIndex() {
+        WebElement lastSlide = allCads.get(allCads.size() - 1);
+        int lastIndex = Integer.parseInt(lastSlide.getAttribute("data-index"));
+        return (lastIndex / 2);
     }
 
-    public void clickRandomWowFactsSlickSquare() {
+    public void clickPreviousCard() {
+        int currentCardIndex = getCurrentCardIndex();
+        int previousCardIndex = currentCardIndex == 0 ? getLastSlideIndex() : (currentCardIndex - 1);
+
+        WebElement previousCard = allCads.get(previousCardIndex);
+        clickDynamicElement(previousCard);
+    }
+
+
+    public int getActiveWowFactsSquareIndex() {
+        return Integer.parseInt(activeWowFactsSlickSquare.getText().trim());
+    }
+
+
+    public void clickRandomWowFactsSquare() {
         Random random = new Random();
         int randomIndex = random.nextInt(allWowFactsSlickSquare.size());
         allWowFactsSlickSquare.get(randomIndex).click();

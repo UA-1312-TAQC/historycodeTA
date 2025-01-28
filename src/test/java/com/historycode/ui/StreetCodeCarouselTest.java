@@ -7,17 +7,43 @@ import com.historycode.ui.testrunners.BaseTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Step;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 public class StreetCodeCarouselTest extends BaseTestRunner {
     private StreetCodePage streetCodePage;
-    SoftAssert softAssert = new SoftAssert();
+    private SoftAssert softAssert;
+
+    @BeforeMethod
+    public void setUp() {
+        softAssert = new SoftAssert();
+    }
 
     @Step("Navigate to the 'StreetCode' page")
     private void navigateToStreetCodePage(String addUIUrl) {
         driver.navigate().to(testValueProvider.getBaseUIUrl() + addUIUrl);
         streetCodePage = new StreetCodePage(driver);
+    }
+
+    @Issue("89")
+    @Test(dataProvider = "urlProviderForTextBlock", dataProviderClass = StreetCodeDP.class)
+    @Description("Click on any navigation indicator under cards, verify that cards are changing.")
+    public void testStreetCodeClickPreviousCard(String addUIUrl) {
+        navigateToStreetCodePage(addUIUrl);
+
+        InterestingFactsComponent interestingFactsComponent = streetCodePage.getFacts();
+        interestingFactsComponent.waitUntilPageLouder();
+        streetCodePage.scrollToElement(interestingFactsComponent.getCarousel().getActiveWowFactsSlickSquare());
+
+        int cardIndexBeforeClick = interestingFactsComponent.getCurrentCardIndex();
+
+        interestingFactsComponent.clickPreviousCard();
+
+        int cardIndexAfterClick = interestingFactsComponent.getCurrentCardIndex();
+
+        softAssert.assertNotEquals(cardIndexBeforeClick,cardIndexAfterClick);
+        softAssert.assertAll();
     }
 
     @Issue("89")
@@ -33,11 +59,11 @@ public class StreetCodeCarouselTest extends BaseTestRunner {
         int cardIndexBeforeClick = interestingFactsComponent.getCurrentCardIndex();
         int cardExpectedIndex = cardIndexBeforeClick + 1;
 
-        int dotIndexBeforeClick = interestingFactsComponent.getActiveWowFactsSlickSquareIndex();
+        int dotIndexBeforeClick = interestingFactsComponent.getActiveWowFactsSquareIndex();
         int dotExpectedIndex = dotIndexBeforeClick + 1;
 
         interestingFactsComponent.clickNextSlide();
-        int dotIndexAfterClick = interestingFactsComponent.getActiveWowFactsSlickSquareIndex();
+        int dotIndexAfterClick = interestingFactsComponent.getActiveWowFactsSquareIndex();
         int cardIndexAfterClick = interestingFactsComponent.getCurrentCardIndex();
 
         softAssert.assertEquals(cardIndexAfterClick, cardExpectedIndex, "Card is not changing.");
@@ -57,16 +83,17 @@ public class StreetCodeCarouselTest extends BaseTestRunner {
         interestingFactsComponent.waitUntilPageLouder();
         streetCodePage.scrollToElement(interestingFactsComponent.getCarouselRoot());
 
-        int cardIndexBeforeClick = interestingFactsComponent.getCurrentCardIndex();
+        int dotExpectedIndex = interestingFactsComponent.getLastWowFactsSquareIndex();
 
-        int dotExpectedIndex = interestingFactsComponent.getLastWowFactsSlickSquareIndex();
+        int cardExpectedIndex = interestingFactsComponent.getLastSlideIndex();
 
         interestingFactsComponent.clickPreviousSlide();
+        interestingFactsComponent.sleep(2000);
 
-        int dotIndexAfterClick = interestingFactsComponent.getActiveWowFactsSlickSquareIndex();
+        int dotIndexAfterClick = interestingFactsComponent.getActiveWowFactsSquareIndex();
         int cardIndexAfterClick = interestingFactsComponent.getCurrentCardIndex();
 
-        softAssert.assertNotEquals(cardIndexBeforeClick, cardIndexAfterClick, "Card is not changing.");
+        softAssert.assertEquals(cardIndexAfterClick, cardExpectedIndex, "Card is not changing.");
         softAssert.assertEquals(dotExpectedIndex, dotIndexAfterClick, "Square is not changing.");
 
         softAssert.assertAll();
@@ -85,7 +112,7 @@ public class StreetCodeCarouselTest extends BaseTestRunner {
 
         int cardIndexBeforeClick = interestingFactsComponent.getCurrentCardIndex();
 
-        interestingFactsComponent.clickRandomWowFactsSlickSquare();
+        interestingFactsComponent.clickRandomWowFactsSquare();
 
         int cardIndexAfterClick = interestingFactsComponent.getCurrentCardIndex();
 
