@@ -19,7 +19,7 @@ public class CreatePartner extends TestRunnerWithAdmin {
     String testName = "SpongeBob";
     String testDescription = "Our optimistic and energetic sponge";
     String testLogo = "logo.webp";
-    String testMenuPageName = "Партнери";
+
 
     @Test
     @Epic("AdminPartners")
@@ -40,7 +40,7 @@ public class CreatePartner extends TestRunnerWithAdmin {
         createModal.clickCloseButton();
 
         PartnerPage basePage = new PartnerPage(driver);
-        basePage.openBurgerMenu().clickMenuItem(testMenuPageName);
+        basePage.openBurgerMenu().goToPartnerPage();
 
         basePage.scrollToEndOfPage();
         basePage.hoverOverPartner(testName, PartnerPage.PartnerType.NOT_KEY);
@@ -68,7 +68,7 @@ public class CreatePartner extends TestRunnerWithAdmin {
         createModal.clickCloseButton();
 
         PartnerPage basePage = new PartnerPage(driver);
-        basePage.openBurgerMenu().clickMenuItem(testMenuPageName);
+        basePage.openBurgerMenu().goToPartnerPage();
 
         basePage.scrollToElement(basePage.getConstantKeyPartners());
         basePage.hoverOverPartner(testName, PartnerPage.PartnerType.KEY);

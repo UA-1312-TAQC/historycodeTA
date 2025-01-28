@@ -13,13 +13,13 @@ import java.util.stream.Collectors;
 @Getter
 public class HomePage extends BasePage {
 
-    @FindBy(css = ".slick-slider.top-carousel")
+    @FindBy(xpath = "//div[contains(@class, 'top-carousel')]//div[contains(@class, 'slick-track')]")
     private WebElement topCarouselElement;
 
-    @FindBy(xpath = "//div[contains(@class, 'newsSliderContainer')]//div[contains(@class, 'slider-item-container')]")
+    @FindBy(xpath = "//div[contains(@class, 'newsSliderContainer')]//div[contains(@class, 'sliderClass')]")
     private WebElement newsCarouselElement;
 
-    @FindBy(xpath = "//div[@class='streetcodeSliderContainer']")
+    @FindBy(xpath = "//div[contains(@class, 'streetcodeSliderContent')]//div[contains(@class, 'slick-track')]")
     private WebElement personCarouselElement;
 
     @FindBy(xpath = "//div[@class='teamComponent']//div[@class='sliderClass']")
@@ -31,36 +31,67 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//div[contains(@class, 'mainPageBlockStaticBanner')]")
     private List<WebElement> staticBannerElements;
 
-    private final TopCarousel topCarousel;
-    private final TeamCardCarousel teamCarousel;
-    private final NewsCardCarousel newsCarousel;
-    private final PersonCardCarousel personsCarousel;
+    private TopCarousel topCarousel;
+    private TeamCardCarousel teamCarousel;
+    private NewsCardCarousel newsCarousel;
+    private PersonCardCarousel personsCarousel;
+    private List<PartnersComponent> partners;
+    private List<StaticBannerComponent> banners;
 
     public HomePage(WebDriver driver) {
         super(driver);
+    }
 
-        topCarousel = new TopCarousel(driver, topCarouselElement);
-        teamCarousel = new TeamCardCarousel(driver, teamCarouselElement);
-        newsCarousel = new NewsCardCarousel(driver, newsCarouselElement);
-        personsCarousel = new PersonCardCarousel(driver, personCarouselElement);
+    public TopCarousel getTopCarousel() {
+        if (topCarousel == null) {
+            topCarousel = new TopCarousel(driver, topCarouselElement);
+        }
+        return topCarousel;
+    }
+
+    public TeamCardCarousel getTeamCarousel() {
+        if (teamCarousel == null) {
+            teamCarousel = new TeamCardCarousel(driver, teamCarouselElement);
+        }
+        return teamCarousel;
+    }
+
+    public NewsCardCarousel getNewsCarousel() {
+        if (newsCarousel == null) {
+            newsCarousel = new NewsCardCarousel(driver, newsCarouselElement);
+        }
+        return newsCarousel;
+    }
+
+    public PersonCardCarousel getPersonsCarousel() {
+        if (personsCarousel == null) {
+            personsCarousel = new PersonCardCarousel(driver, personCarouselElement);
+        }
+        return personsCarousel;
     }
 
     public List<PartnersComponent> getPartners() {
-        return partnersElements.stream()
-                .map(e -> new PartnersComponent(driver, e))
-                .collect(Collectors.toList());
+        if (partners == null) {
+            partners = partnersElements.stream()
+                    .map(e -> new PartnersComponent(driver, e))
+                    .collect(Collectors.toList());
+        }
+        return partners;
     }
 
     public List<StaticBannerComponent> getBanners() {
-        return staticBannerElements.stream()
-                .map(e -> new StaticBannerComponent(driver, e))
-                .collect(Collectors.toList());
+        if (banners == null) {
+            banners = staticBannerElements.stream()
+                    .map(e -> new StaticBannerComponent(driver, e))
+                    .collect(Collectors.toList());
+        }
+        return banners;
     }
 
     public StreetCodePage clickPersonCardCarouselItem(int index) {
         scrollToElement(personCarouselElement);
         sleep(3000);
-        personsCarousel.getCarouselItems().get(index).clickMore();
+        getPersonsCarousel().getCarouselItems().get(index).clickMore();
         return new StreetCodePage(driver);
     }
 }

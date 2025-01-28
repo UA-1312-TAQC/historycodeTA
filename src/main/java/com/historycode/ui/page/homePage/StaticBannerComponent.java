@@ -20,7 +20,6 @@ public class StaticBannerComponent extends BaseComponent {
 
     public StaticBannerComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        PageFactory.initElements(new DefaultElementLocatorFactory(rootElement), this);
     }
 
     public String getTitle() {

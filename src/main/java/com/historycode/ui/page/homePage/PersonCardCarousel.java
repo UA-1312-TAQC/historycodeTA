@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class PersonCardCarousel extends CarouselComponent<PersonCardComponent> {
 
-    @FindBy(xpath = ".//div[@class = 'slick-slide']")
+    @FindBy(xpath = "//div[@class='streetcodeSliderComponent']//div[contains(@class, 'slick-slide') and not(contains(@class,'slick-cloned')) and not(@dir)]")
     private List<WebElement> itemElements;
 
     public PersonCardCarousel(WebDriver driver, WebElement rootElement) {
@@ -26,26 +26,15 @@ public class PersonCardCarousel extends CarouselComponent<PersonCardComponent> {
 
     }
 
-    public void swipeLeft() {
-        new Actions(driver)
-                .clickAndHold(rootElement)
-                .moveByOffset(-200, 0)
-                .release()
-                .perform();
-    }
-
-    public void swipeRight() {
-        new Actions(driver)
-                .clickAndHold(rootElement)
-                .moveByOffset(200, 0)
-                .release()
-                .perform();
-    }
-
     @Override
     public List<PersonCardComponent> getCarouselItems() {
         return itemElements.stream()
                 .map(el -> new PersonCardComponent(driver, el))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public PersonCardComponent getActiveSlideComponent() {
+        return new PersonCardComponent(driver, slickActive);
     }
 }
