@@ -7,15 +7,10 @@ import java.util.List;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.util.ArrayList;
 
 
-public class StreetCodeTextBlockComponent extends BaseComponent {
-    final String PARAGRAPHS_LOCATOR = ".//div[@class='text']//p";
-    final String LESS_BUTTON_LOCATOR = "//span[contains(@class, 'readLess')]";
-
+public class StreetCodeTextBlockComponent extends BaseComponent { ;
     @Getter
     @FindBy(xpath = ".//div[@id='text']//div[@class='text']//p")
     private WebElement mainTextContent;
@@ -23,7 +18,7 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
     @FindBy(xpath = ".//span[contains(@class,'readMore false')]")
     private WebElement readMoreButton;
     @Getter
-    @FindBy(xpath = LESS_BUTTON_LOCATOR)
+    @FindBy(xpath = "//span[contains(@class, 'readLess')]")
     private WebElement readLessButton;
     @Getter
     @FindBy(xpath = "//div[@class='additionalText']")
@@ -32,7 +27,7 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
     @FindBy(xpath = "//div[contains(@class,'additionalText')]//a")
     private List<WebElement> linkInAdditionalText;
     @Getter
-    @FindBy(xpath = PARAGRAPHS_LOCATOR)
+    @FindBy(xpath = ".//div[@class='text']//p")
     private List<WebElement> paragraphs;
 
     public StreetCodeTextBlockComponent(WebDriver driver, WebElement rootElement) {
@@ -51,46 +46,16 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
         return readLessButton.isDisplayed();
     }
 
-    @Step("The 'Трохи ще' button is displayed")
-    public boolean isMoreButtonDisplayed() {
-        try {
-            return readMoreButton.isDisplayed();
-        } catch (NoSuchElementException e) {
-            return false;
-        }
-    }
-
-    @Step("The 'Дещо менше' button is displayed")
-    public boolean isLessButtonDisplayed() {
-        try {
-            return rootElement.findElement(By.xpath(LESS_BUTTON_LOCATOR)).isDisplayed();
-        } catch (NoSuchElementException e) {
-            return false;
-        }
-    }
-
     @Step("Click the 'Трохи ще' button")
     public StreetCodeTextBlockComponent clickReadMoreButton() {
-        scrollToElement(readMoreButton);
+        scrollToElementJS(readMoreButton);
         clickDynamicElement(readMoreButton);
         return this;
     }
 
     @Step("Scroll and click the 'Дещо менше' button")
     public StreetCodeTextBlockComponent clickReadLessButton() {
-        scrollToElement(readLessButton);
-        clickDynamicElement(readLessButton);
-        return this;
-    }
-
-    @Step("Click the 'Трохи ще' button")
-    public StreetCodeTextBlockComponent clickMoreButton() {
-        clickDynamicElement(readMoreButton);
-        return this;
-    }
-
-    @Step("Click the 'Дещо менше' button")
-    public StreetCodeTextBlockComponent clickLessButton() {
+        scrollToElementJS(readLessButton);
         clickDynamicElement(readLessButton);
         return this;
     }
@@ -134,25 +99,6 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
         return links;
     }
 
-    @Step("Get expanded paragraph count")
-    public int getExpandedParagraphCount(int initialCount) {
-        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath(PARAGRAPHS_LOCATOR), initialCount));
-
-        List<WebElement> paragraphs = rootElement.findElements(By.xpath(PARAGRAPHS_LOCATOR));
-        return paragraphs.size();
-    }
-
-    @Step("Get collapsed paragraph count")
-    public boolean getCollapsedParagraphCount(int expectedCount) {
-        try {
-            wait.until(ExpectedConditions.numberOfElementsToBe(By.xpath(PARAGRAPHS_LOCATOR), expectedCount));
-            return true;
-        } catch (TimeoutException e) {
-            logger.error("Error getting collapsed paragraph count", e);
-            return false;
-        }
-    }
-
     @Step("Check if the last paragraph is visible in the parent")
     public boolean isLastParagraphVisibleInParent() {
 
@@ -177,12 +123,6 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
         }
 
         return (isVisible != null) && isVisible;
-    }
-
-    public StreetCodeTextBlockComponent scrollToLessButton() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(LESS_BUTTON_LOCATOR)));
-        scrollToElementAndWait(rootElement.findElement(By.xpath(LESS_BUTTON_LOCATOR)));
-        return this;
     }
 
 }

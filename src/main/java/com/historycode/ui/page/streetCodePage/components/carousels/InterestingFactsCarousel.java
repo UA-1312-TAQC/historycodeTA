@@ -71,7 +71,7 @@ public class InterestingFactsCarousel extends BaseCarousel {
     }
 
     @Step("Get a center of the element relative to the block.")
-    public Point getElementCenterRelativeToBlock() {
+    public boolean getElementCenterRelativeToBlock() {
         return getCenterRelativeToBlock(rootElement, oneCardNode);
     }
 

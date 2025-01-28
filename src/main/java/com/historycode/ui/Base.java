@@ -37,7 +37,8 @@ public abstract class Base {
         actions.moveToElement(element).perform();
     }
 
-    public void scrollToElementAndWait(WebElement element) {
+    @Step("Scroll to the element")
+    public void scrollToElementJS(WebElement element) {
         waitUntilElementVisible(element);
         try {
             threadJs.executeScript(
@@ -99,7 +100,8 @@ public abstract class Base {
         }
     }
 
-    public Point getCenterRelativeToBlock(WebElement block, WebElement element) {
+    public boolean getCenterRelativeToBlock(WebElement block, WebElement element) {
+        final int CENTER_ALIGNMENT_TOLERANCE = 10;
         double blockLeft, blockTop, blockWidth, blockHeight, elementLeft, elementTop, elementWidth, elementHeight;
         int scrollX, scrollY;
 
@@ -142,7 +144,9 @@ public abstract class Base {
         double elementCenterX = elementLeft + elementWidth / 2 - scrollX;
         double elementCenterY = elementTop + elementHeight / 2 - scrollY;
 
-        return new Point((int) (elementCenterX - blockCenterX), (int) (elementCenterY - blockCenterY));
+        Point point = new Point((int) (elementCenterX - blockCenterX), (int) (elementCenterY - blockCenterY));
+
+        return Math.abs(point.x) <= CENTER_ALIGNMENT_TOLERANCE && Math.abs(point.y) <= CENTER_ALIGNMENT_TOLERANCE;
     }
 
     public void sleep(long millisSeconds) {

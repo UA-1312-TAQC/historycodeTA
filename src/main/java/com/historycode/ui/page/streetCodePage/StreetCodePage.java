@@ -186,12 +186,12 @@ public class StreetCodePage extends BasePage {
     }
 
     public StreetCodePage scrollToInterestingFacts() {
-        scrollToElementAndWait(factsNode);
+        scrollToElementJS(factsNode);
         return this;
     }
 
     public StreetCodePage scrollToTextVideoBlock() {
-        scrollToElement(textBlockRoot);
+        scrollToElementJS(textBlockRoot);
         return this;
     }
 

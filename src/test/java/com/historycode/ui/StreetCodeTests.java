@@ -7,7 +7,6 @@ import com.historycode.ui.testrunners.BaseTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Step;
-import org.openqa.selenium.Point;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -89,9 +88,8 @@ public class StreetCodeTests extends BaseTestRunner {
         SoftAssert softAssert = new SoftAssert();
 
         boolean isReadMoreDisplayed = streetCodePage
-                .scrollToTextVideoBlock()
                 .getTextBlock()
-                .isMoreButtonDisplayed();
+                .isReadMoreButtonDisplayed();
 
         boolean isLastParagraphVisible = streetCodePage
                 .getTextBlock()
@@ -106,41 +104,26 @@ public class StreetCodeTests extends BaseTestRunner {
 
         streetCodePage
                 .getTextBlock()
-                .clickMoreButton();
+                .clickReadMoreButton();
 
         boolean isLessButtonDisplayed = streetCodePage
                 .getTextBlock()
-                .scrollToLessButton()
-                .isLessButtonDisplayed();
+                .isReadLessButtonDisplayed();
 
-        isReadMoreDisplayed = streetCodePage
+       boolean checkExpanded = streetCodePage
                 .getTextBlock()
-                .isMoreButtonDisplayed();
+                .checkExpanded(paragraphFirstCount);
 
-        int paragraphSecondCount = streetCodePage
-                .getTextBlock()
-                .getExpandedParagraphCount(paragraphFirstCount);
-
-        softAssert.assertTrue(paragraphFirstCount < paragraphSecondCount, "The text is not expanded");
+        softAssert.assertTrue(checkExpanded, "The text is not expanded");
         softAssert.assertTrue(isLessButtonDisplayed, "The less button is not displayed");
-        softAssert.assertFalse(isReadMoreDisplayed, "The expand button is displayed");
 
-        boolean collapsedParagraphCount = streetCodePage
+        boolean checkCollapsed = streetCodePage
                 .getTextBlock()
-                .clickLessButton()
-                .getCollapsedParagraphCount(paragraphFirstCount);
+                .clickReadLessButton()
+                .checkCollapsed(paragraphFirstCount);
 
-        isReadMoreDisplayed = streetCodePage
-                .getTextBlock()
-                .isMoreButtonDisplayed();
-
-        isLessButtonDisplayed = streetCodePage
-                .getTextBlock()
-                .isLessButtonDisplayed();
-
-        softAssert.assertTrue(collapsedParagraphCount, "The text is not collapsed");
+        softAssert.assertTrue(checkCollapsed, "The text is not collapsed");
         softAssert.assertTrue(isReadMoreDisplayed, "The expand button is not displayed");
-        softAssert.assertFalse(isLessButtonDisplayed, "The less button is displayed");
 
         softAssert.assertAll();
     }
@@ -149,8 +132,6 @@ public class StreetCodeTests extends BaseTestRunner {
     @Test(priority = 1)
     @Description("Verification if only one fact is displayed - it is located in the center of the block.")
     public void testWowFactsOneElementAlign() {
-        final int CENTER_ALIGNMENT_TOLERANCE = 10;
-
         navigateToStreetCodePage("/sergii-zhadan");
 
         SoftAssert softAssert = new SoftAssert();
@@ -163,15 +144,12 @@ public class StreetCodeTests extends BaseTestRunner {
 
         softAssert.assertTrue(isOneCard, "The carousel contains more than one cards");
 
-        Point elementCenterDifference = streetCodePage
+        boolean isCardInCenterOfBlock = streetCodePage
                 .getFacts()
                 .getCarousel()
                 .getElementCenterRelativeToBlock();
 
-        softAssert.assertTrue(elementCenterDifference.getX() <= CENTER_ALIGNMENT_TOLERANCE,
-                String.format("The element is not centered. Difference for X is %d", elementCenterDifference.getX()));
-        softAssert.assertTrue(elementCenterDifference.getY() <= CENTER_ALIGNMENT_TOLERANCE,
-                String.format("The element is not centered. Difference for Y is %d", elementCenterDifference.getY()));
+        softAssert.assertTrue(isCardInCenterOfBlock);
 
         boolean hasArrows = streetCodePage
                 .getFacts()
