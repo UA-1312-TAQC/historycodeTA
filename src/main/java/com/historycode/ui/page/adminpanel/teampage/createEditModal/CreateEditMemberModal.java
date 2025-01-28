@@ -34,7 +34,7 @@ public class CreateEditMemberModal extends BaseEditModal {
     @FindBy(xpath = ".//label[@for = 'name']/../..")
     protected WebElement nameInputRoot;
     protected InputElement nameInput;
-//TODO
+//TODO to rename
     @FindBy(xpath = ".//input[@aria-label='Позиції']/../..")
     protected WebElement positionsDropdownRoot;
     protected SocialMediaDropdownComponent positionsDropdown;
@@ -95,7 +95,7 @@ public class CreateEditMemberModal extends BaseEditModal {
         }
         return this.nameInput;
     }
-//TODO
+
     private SocialMediaDropdownComponent getPositionsDropdown(){
         if(positionsDropdown == null){
             this.positionsDropdown = new SocialMediaDropdownComponent(driver, positionsDropdownRoot);
@@ -147,15 +147,6 @@ public class CreateEditMemberModal extends BaseEditModal {
         return this;
     }
 
-//    public void setPositions(List<String> positions) {
-//        getPositionsDropdown().openDropdown();
-//        positionsDropdown.selectMultipleOptions(positions);
-//    }
-//
-//    public List<String> getSelectedPositions() {
-//        return getPositionsDropdown().getSelectedMultipleOptions();
-//    }
-
     public String getDescription() {
         return getDescriptionTextAreaElement().getInputValue();
     }
@@ -205,17 +196,20 @@ public class CreateEditMemberModal extends BaseEditModal {
         socialMediaDropdown.clickOptionByText(platform);
         return this;
     }
-//TODO
-    @Step("Choose positions {position} from the social media dropdown")
-    public CreateEditMemberModal addPosition(String position) {
+
+    @Step("Choose positions {positions} from the dropdown")
+    public CreateEditMemberModal addPositions(List<String> positions) {
         openPositionsDropdown();
-        positionsDropdown.clickOptionByText(position);
+        for (String position : positions) {
+            positionsDropdown.clickOptionByText(position);
+        }
         return this;
     }
 
     @Step("Add social media link {link}")
     public CreateEditMemberModal addSocialMediaLink(String link) {
         getSocialMediaInput().setInputField(link);
+        addSocialMediaButton.click();
         return this;
     }
 
