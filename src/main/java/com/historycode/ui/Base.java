@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.time.Duration;
 
 public abstract class Base {
@@ -35,7 +36,7 @@ public abstract class Base {
     }
 
     @Step("Scroll to the element")
-    public void scrollToElementJS(WebElement element) {
+    public void scrollToElementJs(WebElement element) {
         waitUntilElementVisible(element);
         try {
             threadJs.executeScript(
@@ -69,6 +70,7 @@ public abstract class Base {
         }
     }
 
+    @Step("Check if content is truncated or overflows")
     protected boolean isContentTruncatedOrOverflow(WebElement element) {
         String script = "var element = arguments[0];" +
                 "var computedStyle = window.getComputedStyle(element);" +
@@ -87,6 +89,7 @@ public abstract class Base {
         return isOverflowing != null && isOverflowing;
     }
 
+    @Step("Click on the element")
     protected void clickDynamicElement(WebElement element) {
         waitUntilElementVisible(element);
         try {

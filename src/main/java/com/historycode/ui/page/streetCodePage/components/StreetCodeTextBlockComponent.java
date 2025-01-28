@@ -49,14 +49,14 @@ public class StreetCodeTextBlockComponent extends BaseComponent {
 
     @Step("Click the 'Трохи ще' button")
     public StreetCodeTextBlockComponent clickReadMoreButton() {
-        scrollToElementJS(readMoreButton);
+        scrollToElementJs(readMoreButton);
         clickDynamicElement(readMoreButton);
         return this;
     }
 
     @Step("Scroll and click the 'Дещо менше' button")
     public StreetCodeTextBlockComponent clickReadLessButton() {
-        scrollToElementJS(readLessButton);
+        scrollToElementJs(readLessButton);
         clickDynamicElement(readLessButton);
         return this;
     }
