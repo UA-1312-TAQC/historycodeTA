@@ -18,7 +18,7 @@ public class CreatePartner extends TestRunnerWithAdmin {
 
     String testName = "SpongeBob";
     String testDescription = "Our optimistic and energetic sponge";
-    String testLogo = "logo.jpeg";
+    String testLogo = "logo.webp";
     String testMenuPageName = "Партнери";
 
     @Test
