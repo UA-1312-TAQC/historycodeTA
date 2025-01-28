@@ -41,7 +41,7 @@ public class TeamMemberCreationTest extends TestRunnerWithAdmin{
                 .closeEditMemberModal();
         if(res.getTeamPageGridComponent().findUserByName(teamMember) == null)
             res = res.clickLastPaginationItem();
-        TeamRowComponent targetTeamMember = res.getTeamPageGridComponent().findUserByName(teamMember);
+        targetTeamMember = res.getTeamPageGridComponent().findUserByName(teamMember);
         Assert.assertNotNull(targetTeamMember, String.format("User with name %s was not found after creation", teamMember));
     }
 
