@@ -30,15 +30,9 @@ public class ChronologyComponent extends BaseComponent {
         super(driver, rootElement);
         this.yearsBar = new ChronologyYearsBarComponent(driver, redTimeline);
         this.filmCardComponent = new ChronologyFilmCardComponent(driver, filmCardContainer);
-        PageFactory.initElements(driver, this);
     }
 
-    public ChronologyComponent(WebDriver driver) {
-        super(driver);
-        this.yearsBar = new ChronologyYearsBarComponent(driver, redTimeline);
-        this.filmCardComponent = new ChronologyFilmCardComponent(driver, filmCardContainer);
-        PageFactory.initElements(driver, this);
-    }
+
 
     public String getTitle() {
         scrollToElement(title);
