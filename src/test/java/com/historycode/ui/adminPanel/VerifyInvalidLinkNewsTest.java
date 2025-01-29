@@ -1,21 +1,22 @@
 package com.historycode.ui.adminPanel;
 
 import com.historycode.ui.page.adminpanel.newspage.NewsPageAdminPanel;
-import com.historycode.ui.page.adminpanel.newspage.modal.EditNewsModal;
+import com.historycode.ui.page.adminpanel.newspage.modal.CreateEditNewsModal;
 import com.historycode.ui.testrunners.TestRunnerWithAdmin;
-
 import io.qameta.allure.Issue;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
 
 public class VerifyInvalidLinkNewsTest extends TestRunnerWithAdmin {
 
+    private static final String EXPECTED_ERROR_MESSAGE = "Транслітерація має містити лише малі латинські літери, цифри та дефіс";
     private String newsTitle;
     private String newsText;
-    private EditNewsModal editNewsModal;
+    private CreateEditNewsModal editNewsModal;
 
     @BeforeMethod
     public void setupForCreateNews() {
@@ -33,22 +34,16 @@ public class VerifyInvalidLinkNewsTest extends TestRunnerWithAdmin {
         editNewsModal.inputNewsCreationDate(new java.sql.Date(System.currentTimeMillis()));
     }
 
-    private static final String EXPECTED_ERROR_MESSAGE = 
-        "Транслітерація має містити лише малі латинські літери, цифри та дефіс";
     @DataProvider(name = "invalidLinks")
     public Object[][] getInvalidLinks() {
-        return new Object[][] {
-            {"TESTLINK", "158.1"},
-            {"Тестлінк", "158.2"},
-            {"№\"?:*", "158.3"}
-        };
+        return new Object[][]{{"TESTLINK", "158.1"}, {"Тестлінк", "158.2"}, {"№\"?:*", "158.3"}};
     }
+
     @Test(dataProvider = "invalidLinks")
     @Issue("#{1}")
     public void testInvalidLink(String invalidLink, String issueId) {
         editNewsModal.inputNewsLinkTranslit(invalidLink);
         assertFalse(editNewsModal.isSaveButtonEnabled());
-        assertEquals(editNewsModal.getNewsLinkTranslitErrorMessage(), 
-            EXPECTED_ERROR_MESSAGE);
+        assertEquals(editNewsModal.getNewsLinkTranslitErrorMessage(), EXPECTED_ERROR_MESSAGE);
     }
 }

@@ -1,7 +1,7 @@
 package com.historycode.ui.page.adminpanel.teampage.createEditModal;
 
 import com.historycode.ui.component.adminPanel.dropDownAdminPanel.DropdownComponent;
-import com.historycode.ui.component.adminPanel.modalAdminPanel.BaseEditModal;
+import com.historycode.ui.component.adminPanel.modalAdminPanel.BaseCreateEditModal;
 import com.historycode.ui.elements.adminPanel.CheckboxElement;
 import com.historycode.ui.elements.adminPanel.InputElement;
 import com.historycode.ui.elements.adminPanel.TextAreaElement;
@@ -25,7 +25,7 @@ import java.util.List;
 
 
 @Getter
-public class CreateEditMemberModal extends BaseEditModal {
+public class CreateEditMemberModal extends BaseCreateEditModal {
 
     @FindBy(xpath = ".//label[contains(@class, 'ant-checkbox-wrapper ant-checkbox-wrapper-checked ant-checkbox-wrapper-in-form-item css-k7429z')]/../..")
     protected WebElement keyMemberCheckboxRoot;
@@ -210,6 +210,7 @@ public class CreateEditMemberModal extends BaseEditModal {
     @Step("Add social media link {link}")
     public CreateEditMemberModal addSocialMediaLink(String link) {
         getSocialMediaInput().setInputField(link);
+        addSocialMediaButton.click();
         return this;
     }
 
