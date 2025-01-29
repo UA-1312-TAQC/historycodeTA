@@ -45,22 +45,9 @@ public abstract class BaseCreateEditModal extends BaseModal {
         return tooltip.getText();
     }
 
-    public boolean isCloseButtonEnabled() { return closeButton.isEnabled(); }
-
-    public void clickCloseButton() {
-        waitUntilElementClickable(closeButton);
-        closeButton.click();
+    public boolean isCloseButtonEnabled() {
+        return closeButton.isEnabled();
     }
 
-    public boolean isSaveButtonEnabled() {
-        return saveButton.isEnabled();
-    }
-
-    public void clickSaveButton() {
-        if (isSaveButtonEnabled()) {
-            waitUntilElementClickable(saveButton);
-            saveButton.click();
-        }
-    }
 
 }

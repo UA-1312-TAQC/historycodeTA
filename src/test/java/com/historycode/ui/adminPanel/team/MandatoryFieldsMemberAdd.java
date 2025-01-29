@@ -43,7 +43,7 @@ public class MandatoryFieldsMemberAdd extends TestRunnerWithAdmin {
         Assert.assertNotNull(teamMember, String.format("The member %s is not found in the team grid", memberName));
 
         //Validate the success popup firstly
-        PopUpMessageComponent popUpMessageComponent = new PopUpMessageComponent(driver);
+        PopUpMessageComponent popUpMessageComponent = memberModal.getPopUpMessageComponent();
         Assert.assertTrue(popUpMessageComponent.isSuccessPopUpDisplayed(), "Success popup is not displayed.");
 
         //Then check the presence of the message

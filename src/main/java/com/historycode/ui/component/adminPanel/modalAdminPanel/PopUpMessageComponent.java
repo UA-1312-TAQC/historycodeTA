@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class PopUpMessageComponent extends BaseComponent {
@@ -18,8 +19,9 @@ public class PopUpMessageComponent extends BaseComponent {
     private static final String MESSAGE_PATH = ".//span[not(@role='img')]";
 
     public PopUpMessageComponent(WebDriver driver) {
-        super(driver);
+        super(driver,  driver.findElement(By.tagName("html")));
     }
+
 
     private boolean isPopUpDisplayed(WebElement popupElement) {
         try {
