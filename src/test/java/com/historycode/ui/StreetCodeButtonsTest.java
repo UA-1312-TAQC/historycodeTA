@@ -60,7 +60,7 @@ public class StreetCodeButtonsTest extends BaseTestRunner {
 
         softAssert.assertTrue(donateModal.isDonateButtonEnabled(), "Save button is not enabled, 2/2 mandatory actions taken");
 
-        donateModal.close();
+        donateModal.clickCloseButton();
         softAssert.assertAll();
     }
 
@@ -83,7 +83,7 @@ public class StreetCodeButtonsTest extends BaseTestRunner {
         streetCodePage = new StreetCodePage(driver);
         surveyModal = streetCodePage.getSurveyModal();
 
-        streetCodePage.getQuickDonateButton().clickDonateButton().close();
+        streetCodePage.getQuickDonateButton().clickDonateButton().clickCloseButton();
         streetCodePage.scrollUntilElementIsVisible(surveyModal.getRootElement());
         softAssert.assertTrue(surveyModal.isDisplayed());
 
