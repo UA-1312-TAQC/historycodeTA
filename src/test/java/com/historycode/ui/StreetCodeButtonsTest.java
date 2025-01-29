@@ -3,6 +3,7 @@ package com.historycode.ui;
 import com.historycode.ui.page.homePage.HomePage;
 import com.historycode.ui.page.streetCodePage.StreetCodePage;
 import com.historycode.ui.page.streetCodePage.modals.DonateModal;
+import com.historycode.ui.page.streetCodePage.modals.SurveyModal;
 import com.historycode.ui.testrunners.BaseTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -33,7 +34,6 @@ public class StreetCodeButtonsTest extends BaseTestRunner {
     @Epic("StreetCode page")
     @Description("Page UP button test")
     public void pageUpButtonTest() {
-        //todo: Vertical Progress is not working
         streetCodePage.getVerticalProgress().clickSection(2);
         softAssert.assertTrue(streetCodePage.getScrollTopButton().isButtonDisplayed(), "Scroll top button is not visible");
 
@@ -69,19 +69,23 @@ public class StreetCodeButtonsTest extends BaseTestRunner {
     @Epic("StreetCode page")
     @Description("Questionnaire modal Test")
     public void questionnaireTest() {
-        //todo: Scroll to the end of the page is not working
-        streetCodePage.scrollToEndOfPage();
-        softAssert.assertTrue(streetCodePage.getSurveyModal().isDisplayed());
-        streetCodePage.getSurveyModal().close();
+        SurveyModal surveyModal = streetCodePage.getSurveyModal();
+
+        streetCodePage.scrollUntilElementIsVisible(surveyModal.getRootElement());
+        softAssert.assertTrue(surveyModal.isDisplayed());
+        surveyModal.close();
 
         streetCodePage.scrollToTop();
-        streetCodePage.scrollToEndOfPage();
-        softAssert.assertFalse(streetCodePage.getSurveyModal().isDisplayed());
+        streetCodePage.waitForElementThenScrollUntilAllContentLoaded(surveyModal.getRootElement());
+        softAssert.assertFalse(surveyModal.isDisplayed());
 
         streetCodePage.refreshPage();
+        streetCodePage = new StreetCodePage(driver);
+        surveyModal = streetCodePage.getSurveyModal();
+
         streetCodePage.getQuickDonateButton().clickDonateButton().close();
-        streetCodePage.scrollToEndOfPage();
-        softAssert.assertTrue(streetCodePage.getSurveyModal().isDisplayed());
+        streetCodePage.scrollUntilElementIsVisible(surveyModal.getRootElement());
+        softAssert.assertTrue(surveyModal.isDisplayed());
 
         softAssert.assertAll();
     }
