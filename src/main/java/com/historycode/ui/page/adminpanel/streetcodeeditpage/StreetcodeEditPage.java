@@ -2,6 +2,7 @@ package com.historycode.ui.page.adminpanel.streetcodeeditpage;
 
 import com.historycode.ui.component.BaseModal;
 import com.historycode.ui.component.DropdownBase;
+import com.historycode.ui.component.HelpUs.PartnerModalComponent;
 import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
 import com.historycode.ui.component.streetcodeEditor.*;
 import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
@@ -180,6 +181,12 @@ public class StreetcodeEditPage extends BasePageAdminPanel {
     public DropdownBase getParntersDropdown() {
         WebElement partnersRootElement = driver.findElement(By.xpath("(//div[@class='ant-select-selector'])[5]"));
         return new DropdownBase(driver, partnersRootElement);
+    }
+
+    public PartnerModalComponent clickAddPartnerButton() {
+        waitForElementThenScrollUntilAllContentLoaded(addPartnersButton);
+        addPartnersButton.click();
+        return new PartnerModalComponent(driver);
     }
 
     /**

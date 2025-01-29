@@ -28,7 +28,7 @@ public class StreetCodePageTests extends BaseTestRunner {
         softAssert = new SoftAssert();
         HomePage homePage = new HomePage(driver);
         homePage.openBurgerMenu();
-        homePage.getBurgerMenuComponent().clickMenuItem("History-коди");
+        homePage.openBurgerMenu().goToStreetCodeCatalogPage();
 
         StreetCodeCatalogPage catalogPage = new StreetCodeCatalogPage(driver);
         streetCodePage = catalogPage.clickCatalogItemByIndex(0);

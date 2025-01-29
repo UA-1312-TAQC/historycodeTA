@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class TeamCardCarousel extends CarouselComponent<TeamCardComponent> {
-    @FindBy(css = "//div[contains(@class, 'teamComponent')]//div[contains(@class, 'teamItemSlider')]//div[contains(@class, 'itemTeam')]")
+    @FindBy(xpath = "//div[contains(@class, 'teamComponent')]//div[contains(@class, 'slick-slide') and not(contains(@class,'slick-cloned')) and not(@dir)]")
     private List<WebElement> itemElements;
 
     public TeamCardCarousel(WebDriver driver, WebElement rootElement) {
@@ -20,5 +20,10 @@ public class TeamCardCarousel extends CarouselComponent<TeamCardComponent> {
         return itemElements.stream()
                 .map(el -> new TeamCardComponent(driver, el))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public TeamCardComponent getActiveSlideComponent() {
+        return new TeamCardComponent(driver, slickActive);
     }
 }
