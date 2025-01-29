@@ -183,7 +183,7 @@ public class StreetcodeEditPage extends BasePageAdminPanel {
         return new DropdownBase(driver, connectionsRootElement);
     }
 
-    public DropdownBase getParntersDropdown() {
+    public DropdownBase getPartnersDropdown() {
         waitForElementThenScrollUntilAllContentLoaded(partnersRootElement);
         return new DropdownBase(driver, partnersRootElement);
     }
