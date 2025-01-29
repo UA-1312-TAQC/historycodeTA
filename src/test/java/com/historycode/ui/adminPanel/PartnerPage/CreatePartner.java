@@ -5,10 +5,7 @@ import com.historycode.ui.page.adminpanel.partnerspage.PartnersRowComponent;
 import com.historycode.ui.page.adminpanel.partnerspage.modal.CreatePartnersModal;
 import com.historycode.ui.page.partnerPage.PartnerPage;
 import com.historycode.ui.testrunners.TestRunnerWithAdmin;
-import io.qameta.allure.Description;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Issue;
-import io.qameta.allure.Story;
+import io.qameta.allure.*;
 import org.testng.Assert;
 
 import org.testng.annotations.AfterMethod;
@@ -18,7 +15,7 @@ public class CreatePartner extends TestRunnerWithAdmin {
 
     String testName = "SpongeBob";
     String testDescription = "Our optimistic and energetic sponge";
-    String testLogo = "logo.webp";
+    String testLogo = "uploadfiles/logo.webp";
 
 
     @Test
@@ -26,7 +23,7 @@ public class CreatePartner extends TestRunnerWithAdmin {
     @Issue("130")
     @Story("64")
     @Description("Verify that the admin can add a description to a partner's card")
-    public void createNotKeyPartner() {
+    public void addDescriptionNotKeyPartner() {
 
         CreatePartnersModal createModal = new PartnersPageAdminPanel(driver)
                 .getAdminMenuBar()
@@ -53,7 +50,7 @@ public class CreatePartner extends TestRunnerWithAdmin {
     @Issue("130")
     @Story("64")
     @Description("Verify that the admin can add a description to a Key partner's card")
-    public void createKeyPartner() {
+    public void addDescriptionKeyPartner() {
 
         CreatePartnersModal createModal = new PartnersPageAdminPanel(driver)
                 .getAdminMenuBar()
@@ -77,8 +74,8 @@ public class CreatePartner extends TestRunnerWithAdmin {
     }
 
     @AfterMethod
-    public void deletePartner() {
-        login();
+    public void cleanUp() {
+        driver.get(testValueProvider.getBaseUIUrl() + "/admin-panel");
         PartnersRowComponent newPartner = new PartnersPageAdminPanel(driver)
                 .getAdminMenuBar()
                 .goToPartnersPage()
@@ -86,7 +83,11 @@ public class CreatePartner extends TestRunnerWithAdmin {
                 .getPartnersPageGridComponent()
                 .findUserByName(testName);
 
-        newPartner.clickDelete().clickOkButton();
+        if (newPartner != null) {
+            newPartner.clickDelete().clickOkButton();
+            Allure.step(String.format("Партнер '%s' успішно видалений.", testName));
+        } else {
+            Allure.step(String.format("Партнер '%s' не знайдений у системі.", testName));
+        }
     }
-
 }
