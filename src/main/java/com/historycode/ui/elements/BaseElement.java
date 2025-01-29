@@ -10,10 +10,6 @@ public abstract class BaseElement extends Base {
 
     protected WebElement rootElement;
 
-    public BaseElement(WebDriver driver) {
-        super(driver);
-    }
-
     public BaseElement(WebDriver driver, WebElement rootElement) {
         super(driver);
         PageFactory.initElements(new DefaultElementLocatorFactory(rootElement), this);

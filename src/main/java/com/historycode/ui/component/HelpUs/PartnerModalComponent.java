@@ -27,10 +27,10 @@ public class PartnerModalComponent extends BaseComponent {
     @FindBy(css = "button[type='submit']")
     private WebElement submitButton;
 
-    public PartnerModalComponent(WebDriver driver) {
-        super(driver);
-        PageFactory.initElements(driver, this);
+    public PartnerModalComponent(WebDriver driver, WebElement rootElement) {
+        super(driver, rootElement);
     }
+
 
     public WebElement getPartnerModal() {
         waitUntilElementVisible(partnerModal);

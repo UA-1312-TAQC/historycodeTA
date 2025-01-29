@@ -6,8 +6,7 @@ import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-
-import java.util.NoSuchElementException;
+import org.openqa.selenium.NoSuchElementException;
 
 public abstract class BaseCarousel extends BaseComponent {
     @FindBy(xpath = ".//button[@class='slick-arrow slick-prev']")
@@ -31,6 +30,14 @@ public abstract class BaseCarousel extends BaseComponent {
         waitUntilElementVisible(rightArrow);
         try {
             return leftArrow.isDisplayed() && rightArrow.isDisplayed();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    public boolean hasPagination() {
+        try {
+            return paginationNode.isDisplayed();
         } catch (NoSuchElementException e) {
             return false;
         }

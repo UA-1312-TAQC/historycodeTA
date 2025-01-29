@@ -16,12 +16,11 @@ import org.slf4j.LoggerFactory;
 import java.time.Duration;
 
 public abstract class Base {
-    private static final int SCROLL_STABILIZATION_DELAY = 500;
-    private static final Logger logger = LoggerFactory.getLogger(Base.class);
     protected WebDriver driver;
     protected WebDriverWait wait;
     protected JavascriptExecutor threadJs;
     protected Actions actions;
+    protected static final Logger logger = LoggerFactory.getLogger(Base.class);
 
     public Base(WebDriver driver) {
         this.driver = driver;
@@ -34,6 +33,19 @@ public abstract class Base {
     @Step("Scroll to the element")
     public void scrollToElement(WebElement element) {
         actions.moveToElement(element).perform();
+    }
+
+    @Step("Scroll to the element")
+    public void scrollToElementJs(WebElement element) {
+        waitUntilElementVisible(element);
+        try {
+            threadJs.executeScript(
+                    "arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});", element);
+        } catch (Exception e) {
+            logger.error("Error scrolling to the element", e);
+            throw e;
+        }
+        waitUntilElementClickable(element);
     }
 
     @Step("Scroll to the middle of the page")
@@ -50,17 +62,42 @@ public abstract class Base {
     @Step("Scroll to the end of the page")
     public void scrollToEndOfPage() {
         sleep(1000);
-        threadJs.executeScript("window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });");
+        try {
+            threadJs.executeScript("window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });");
+        } catch (Exception e) {
+            logger.error("Error scrolling to to the end of the page", e);
+            throw e;
+        }
     }
 
+    @Step("Check if content is truncated or overflows")
     protected boolean isContentTruncatedOrOverflow(WebElement element) {
-        String script = "var element = arguments[0];" + "var computedStyle = window.getComputedStyle(element);" + "var isOverflowing = element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;" + "var isTextOverflowing = computedStyle.overflow === 'hidden' || computedStyle.textOverflow === 'ellipsis' || computedStyle.whiteSpace === 'nowrap';" + "return isOverflowing && !isTextOverflowing;";
-        Boolean isOverflowing = (Boolean) threadJs.executeScript(script, element);
+        String script = "var element = arguments[0];" +
+                "var computedStyle = window.getComputedStyle(element);" +
+                "var isOverflowing = element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;" +
+                "var isTextOverflowing = computedStyle.overflow === 'hidden' || computedStyle.textOverflow === 'ellipsis' || computedStyle.whiteSpace === 'nowrap';" +
+                "return isOverflowing && !isTextOverflowing;";
+
+        Boolean isOverflowing;
+
+        try {
+            isOverflowing = (Boolean) threadJs.executeScript(script, element);
+        } catch (Exception ex) {
+            logger.error("Error checking if content is truncated or overflowing", ex);
+            throw ex;
+        }
         return isOverflowing != null && isOverflowing;
     }
 
+    @Step("Click on the element")
     protected void clickDynamicElement(WebElement element) {
-        threadJs.executeScript("arguments[0].click();", element);
+        waitUntilElementVisible(element);
+        try {
+            threadJs.executeScript("arguments[0].click();", element);
+        } catch (Exception e) {
+            logger.error("Error clicking on element", e);
+            throw e;
+        }
     }
 
     public void sleep(long millisSeconds) {
@@ -86,6 +123,5 @@ public abstract class Base {
     public void waitUntilPageLouder() {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.tagName("body")));
     }
-
 
 }
