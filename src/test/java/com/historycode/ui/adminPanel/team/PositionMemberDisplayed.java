@@ -41,10 +41,6 @@ public class PositionMemberDisplayed extends TestRunnerWithAdmin {
                 .saveEditedMember()
                 .closeEditMemberModal();
 
-        driver.navigate().refresh();
-
-        memberModal = new TeamPageAdminPanel(driver);
-
         memberModal = memberModal.clickLastPaginationItem();
 
         memberModal.waitForRowToBeVisible(memberName);
