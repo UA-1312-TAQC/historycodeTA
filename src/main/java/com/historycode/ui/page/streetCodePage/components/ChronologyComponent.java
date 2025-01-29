@@ -6,6 +6,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChronologyComponent extends BaseComponent {
@@ -31,10 +32,16 @@ public class ChronologyComponent extends BaseComponent {
     private WebElement filmCardContainer;
 
     @Getter
+    @FindBy(xpath = ".//div[contains(@class, 'tickContainer')]//div[contains(@class, 'timelineYearTick')]")
+    private List<WebElement> yearsBoxNodes;
+
+    @Getter
     @FindBy(xpath = ".//div[@class=\"timelineItem\"]/../../..")
     private List<WebElement> filmCardNodes;
 
     private List<ChronologyFilmCardComponent> filmCardComponents;
+
+    private List<ChronologyYearsBarComponent> yearBoxComponents;
 
     public ChronologyComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
@@ -56,6 +63,16 @@ public class ChronologyComponent extends BaseComponent {
         return redTimeline;
     }
 
+    public List<ChronologyYearsBarComponent> getYearBoxes() {
+        if (yearBoxComponents == null) {
+            yearBoxComponents = new ArrayList<>();
+            for (WebElement element : yearsBoxNodes) {
+                yearBoxComponents.add(new ChronologyYearsBarComponent(driver, element));
+            }
+        }
+        return yearBoxComponents;
+    }
+
     public ChronologyYearsBarComponent getYearsBar() {
         scrollToElement(year);
         if (yearsBar == null) {
@@ -69,6 +86,16 @@ public class ChronologyComponent extends BaseComponent {
         scrollToElement(greyBox);
         wait.until(ExpectedConditions.visibilityOf(greyBox));
         return greyBox;
+    }
+
+    public  List<ChronologyFilmCardComponent> getFilmCard(){
+        if (filmCardComponents == null){
+            filmCardComponents = new ArrayList<>();
+            for(WebElement element: filmCardNodes){
+                filmCardComponents.add(new ChronologyFilmCardComponent(driver, element));
+            }
+        }
+        return filmCardComponents;
     }
 
     public ChronologyFilmCardComponent getFilmCardComponent() {
