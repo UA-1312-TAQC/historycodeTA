@@ -2,7 +2,7 @@ package com.historycode.ui.page.adminpanel.newspage;
 
 import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
 import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
-import com.historycode.ui.page.adminpanel.newspage.modal.EditNewsModal;
+import com.historycode.ui.page.adminpanel.newspage.modal.CreateEditNewsModal;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -25,13 +25,13 @@ public class NewsPageAdminPanel extends BasePageAdminPanel {
         return newsGridComponent;
     }
 
-    public EditNewsModal clickAddNewInfo() {
+    public CreateEditNewsModal clickAddNewInfo() {
         addNewInfo.click();
         waitUntilElementVisible(createEditModalNode);
-        return new EditNewsModal(driver, createEditModalNode);
+        return new CreateEditNewsModal(driver, createEditModalNode);
     }
 
-    public EditNewsModal editNewsByIndex(int index) {
+    public CreateEditNewsModal editNewsByIndex(int index) {
         NewsRowComponent newsInfoToEdit = newsGridComponent.getRowById(index);
         return newsInfoToEdit.clickEdit();
     }

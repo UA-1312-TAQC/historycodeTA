@@ -18,6 +18,9 @@ public class SocialMediaDropdownComponent extends BaseComponent {
     @FindBy(css="#logotype")
     private WebElement dropdownButton;
 
+    @FindBy(css="#rc_select_0")
+    private WebElement dropdownButtonPosition;
+
     @FindBy(css=".rc-virtual-list-holder-inner")
     private WebElement optionsContainer;
     @FindBy(css=".rc-virtual-list-holder .ant-select-item")
@@ -27,6 +30,8 @@ public class SocialMediaDropdownComponent extends BaseComponent {
     public void openDropdown() {
         dropdownButton.click();
     }
+
+    public void openDropdownPosition() {dropdownButtonPosition.click();}
 
     public void clickOptionByText(String optionText) {
         String dynamicXpath = String.format(OPTION_BY_TEXT_TEMPLATE, optionText);

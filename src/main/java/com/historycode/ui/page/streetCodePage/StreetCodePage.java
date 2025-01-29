@@ -11,6 +11,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+
 public class StreetCodePage extends BasePage {
     @Getter
     @FindBy(xpath = "//div[@class='card']")
@@ -51,9 +52,12 @@ public class StreetCodePage extends BasePage {
 
     @FindBy(xpath = ".//div[@class='player-wrapper']")
     private WebElement videoNode;
+
     @FindBy(xpath = "//div[@role='dialog' and contains(@class,'surveyModal')]")
     private WebElement surveyModalNode;
 
+    @FindBy(xpath = "//nav[@class='ant-breadcrumb breadcrumbContainer css-k7429z']")
+    private WebElement breadcrumbsContainerNode;
 
     private BreadcrumbsElement breadcrumbs;
     private ScrollTopButtonElement scrollTopButton;
@@ -78,14 +82,14 @@ public class StreetCodePage extends BasePage {
 
     public BreadcrumbsElement getBreadcrumbs() {
         if (breadcrumbs == null) {
-            breadcrumbs = new BreadcrumbsElement(driver);
+            breadcrumbs = new BreadcrumbsElement(driver, breadcrumbsContainerNode);
         }
         return breadcrumbs;
     }
 
     public ScrollTopButtonElement getScrollTopButton() {
         if (scrollTopButton == null) {
-            scrollTopButton = new ScrollTopButtonElement(driver);
+            scrollTopButton = new ScrollTopButtonElement(driver, scrollTopButtonNode);
         }
         return scrollTopButton;
     }
@@ -191,7 +195,12 @@ public class StreetCodePage extends BasePage {
     }
 
     public StreetCodePage scrollToInterestingFacts() {
-        scrollToElement(factsNode);
+        scrollToElementJs(factsNode);
+        return this;
+    }
+
+    public StreetCodePage scrollToTextVideoBlock() {
+        scrollToElementJs(textBlockRoot);
         return this;
     }
 
@@ -199,4 +208,5 @@ public class StreetCodePage extends BasePage {
         waitUntilElementVisible(surveyModalNode);
         return new SurveyModal(driver, surveyModalNode);
     }
+
 }

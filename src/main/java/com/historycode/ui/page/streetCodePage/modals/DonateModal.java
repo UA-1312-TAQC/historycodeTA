@@ -1,12 +1,12 @@
 package com.historycode.ui.page.streetCodePage.modals;
 
 import com.historycode.ui.component.BaseModal;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public class DonateModal extends BaseModal {
 
@@ -37,15 +37,12 @@ public class DonateModal extends BaseModal {
     @FindBy(xpath = ".//button[@class = 'donatesDonateBtn']")
     private WebElement donateButton;
 
-    public DonateModal(WebDriver driver, WebElement rootElement) {
-        super(driver, rootElement);
-    }
-
-    public void close() {
-        getCloseButton().click();
+    public DonateModal(WebDriver driver, WebElement rootModalElement) {
+        super(driver, rootModalElement);
     }
 
     public boolean isFirstTitleDisplayed() {
+        waitUntilElementVisible(firstTitle);
         return firstTitle.isDisplayed();
     }
 
@@ -76,8 +73,20 @@ public class DonateModal extends BaseModal {
         return amountInputCurrency.isDisplayed();
     }
 
-    public boolean isAgreeCheckboxDisplayed() {
-        return agreeCheckbox.isDisplayed();
+    public Boolean isAgreeCheckboxDisplayed() {
+        String script = """
+                return arguments[0].offsetParent !== null &&
+                       getComputedStyle(arguments[0]).display !== 'none' &&
+                       getComputedStyle(arguments[0]).visibility !== 'hidden' &&
+                       arguments[0].getBoundingClientRect().width > 0 &&
+                       arguments[0].getBoundingClientRect().height > 0;
+                """;
+        try {
+            return (Boolean) threadJs.executeScript(script, agreeCheckbox);
+        } catch (NoSuchElementException e) {
+            logger.error("The 'Agree' checkbox is not displayed");
+            return false;
+        }
     }
 
     public boolean isAgreeLabelDisplayed() {
@@ -111,4 +120,5 @@ public class DonateModal extends BaseModal {
         }
         throw new NoSuchElementException("Amount button with text '" + desiredAmount + "' not found");
     }
+
 }

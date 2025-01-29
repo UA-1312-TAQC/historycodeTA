@@ -138,6 +138,11 @@ public class StreetcodeEditPage extends BasePageAdminPanel {
     @FindBy(xpath = "//button[@name='Опублікувати']")
     private WebElement publishButton;
 
+    @FindBy(xpath = "(//div[@class='ant-select-selector'])[5]")
+    private WebElement partnersRootElement;
+
+    @FindBy(css = "div.ant-modal-content")
+    private WebElement partnersModalRoot;
 
     public StreetcodeEditPage(WebDriver driver) {
         super(driver);
@@ -178,15 +183,15 @@ public class StreetcodeEditPage extends BasePageAdminPanel {
         return new DropdownBase(driver, connectionsRootElement);
     }
 
-    public DropdownBase getParntersDropdown() {
-        WebElement partnersRootElement = driver.findElement(By.xpath("(//div[@class='ant-select-selector'])[5]"));
+    public DropdownBase getPartnersDropdown() {
+        waitForElementThenScrollUntilAllContentLoaded(partnersRootElement);
         return new DropdownBase(driver, partnersRootElement);
     }
 
     public PartnerModalComponent clickAddPartnerButton() {
-        waitForElementThenScrollUntilAllContentLoaded(addPartnersButton);
+        waitForElementThenScrollUntilAllContentLoaded(partnersRootElement);
         addPartnersButton.click();
-        return new PartnerModalComponent(driver);
+        return new PartnerModalComponent(driver, partnersRootElement);
     }
 
     /**

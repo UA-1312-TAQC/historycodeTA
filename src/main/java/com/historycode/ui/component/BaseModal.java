@@ -6,8 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 
-public abstract class BaseModal extends BaseComponent{
-
+public abstract class BaseModal extends BaseComponent {
     @Getter
     @FindBy(xpath = ".//button[@class='ant-modal-close']")
     private WebElement closeButton;
@@ -37,6 +36,22 @@ public abstract class BaseModal extends BaseComponent{
     public boolean isAttributeAbsent(WebElement element, String attributeName) {
         String attributeValue = element.getAttribute(attributeName);
         return attributeValue == null;
+    }
+
+    public boolean isSaveButtonEnabled() {
+        return saveButton.isEnabled();
+    }
+
+    public void clickCloseButton() {
+        waitUntilElementClickable(closeButton);
+        closeButton.click();
+    }
+
+    public void clickSaveButton() {
+        if (isSaveButtonEnabled()) {
+            waitUntilElementClickable(saveButton);
+            saveButton.click();
+        }
     }
 
 }

@@ -3,9 +3,10 @@ package com.historycode.ui.component.adminPanel.modalAdminPanel;
 import com.historycode.ui.component.BaseModal;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
-public abstract class BaseEditModal extends BaseModal {
+public abstract class BaseCreateEditModal extends BaseModal {
     @FindBy(xpath = ".//button[@class='ant-modal-close']/span")
     protected WebElement closeButton;
 
@@ -18,8 +19,13 @@ public abstract class BaseEditModal extends BaseModal {
     @FindBy(xpath = ".//div[@class='center']//button/span")
     protected WebElement saveButton;
 
-    public BaseEditModal(WebDriver driver, WebElement rootElement) {
+
+    @FindBy(xpath = "//div[@class = 'ant-message-notice-content']")
+    protected WebElement tooltipConfirmation;
+
+    public BaseCreateEditModal(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
+        this.actions = new Actions(driver);
     }
 
     public boolean isModalDisplayed() {
@@ -39,19 +45,9 @@ public abstract class BaseEditModal extends BaseModal {
         return tooltip.getText();
     }
 
-    public void clickCloseButton() {
-        waitUntilElementClickable(closeButton);
-        closeButton.click();
+    public boolean isCloseButtonEnabled() {
+        return closeButton.isEnabled();
     }
 
-    public boolean isSaveButtonEnabled() {
-        return saveButton.isEnabled();
-    }
 
-    public void clickSaveButton() {
-        if (isSaveButtonEnabled()) {
-            waitUntilElementClickable(saveButton);
-            saveButton.click();
-        }
-    }
 }
