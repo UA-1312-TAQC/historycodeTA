@@ -52,6 +52,9 @@ public class StreetCodePage extends BasePage {
     @FindBy(xpath = ".//div[@class='player-wrapper']")
     private WebElement videoNode;
 
+    @FindBy(xpath = "//nav[@class='ant-breadcrumb breadcrumbContainer css-k7429z']")
+    private WebElement breadcrumbsContainerNode;
+
     private BreadcrumbsElement breadcrumbs;
     private ScrollTopButtonElement scrollTopButton;
     private QuickDonateButtonElement quickDonateButton;
@@ -74,14 +77,14 @@ public class StreetCodePage extends BasePage {
 
     public BreadcrumbsElement getBreadcrumbs() {
         if (breadcrumbs == null) {
-            breadcrumbs = new BreadcrumbsElement(driver);
+            breadcrumbs = new BreadcrumbsElement(driver, breadcrumbsContainerNode);
         }
         return breadcrumbs;
     }
 
     public ScrollTopButtonElement getScrollTopButton() {
         if (scrollTopButton == null) {
-            scrollTopButton = new ScrollTopButtonElement(driver);
+            scrollTopButton = new ScrollTopButtonElement(driver, scrollTopButtonNode);
         }
         return scrollTopButton;
     }

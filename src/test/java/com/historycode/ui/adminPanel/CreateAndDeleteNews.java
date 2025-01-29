@@ -39,7 +39,7 @@ public class CreateAndDeleteNews extends TestRunnerWithAdmin {
         editNewsModal.inputNewsTextEditor("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
         editNewsModal.inputNewsCreationDate(new Date(System.currentTimeMillis()));
 
-        editNewsModal.clickUploadNews();
+
         editNewsModal.saveNews();
         editNewsModal.clickCloseButton();
     }
