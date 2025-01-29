@@ -94,7 +94,7 @@ public class ChronologyTestCase extends BaseTestRunner {
             softAssert.assertTrue(isSeparated, "Film card at index " + i + " is not properly separated!");
         }
 
-        for (int i = 0; i <= 16; i++) {
+        for (int i = 0; i <= chronologyComponent.getFilmCard().size(); i++){
             chronologyComponent.clickFilmCardByIndex(i);
             Map<String, String> filmCardData = filmCardComponent.getFilmCardData();
             logger.info("Film card data at index {}: {}", i, filmCardData);
@@ -116,12 +116,12 @@ public class ChronologyTestCase extends BaseTestRunner {
             chronologyComponent.clickFilmCardByIndex(i);
         }
         boolean result = true;
-        for (int i = 0; i <= 16; i++) {
+        for (int i = 0; i <= chronologyComponent.getFilmCard().size(); i++){
             chronologyComponent.clickFilmCardByIndex(i);
             chronologyComponent.getFilmCardByIndex(i);
             Map<String, String> card = filmCardComponent.getFilmCardData();
             for (Map.Entry<String, String> entry : card.entrySet()) {
-                result = result && (entry.getValue() != null) && (entry.getValue().length() > 0);// порівнює та витягує інформацію
+                result = result && (entry.getValue() != null) && (entry.getValue().length() > 0);
                 if (!result) {
                     System.out.println("Element is empty : " + entry.getKey());
                 }
@@ -158,7 +158,7 @@ public class ChronologyTestCase extends BaseTestRunner {
         }
         chronologyComponent.getFilmCardByIndex(0);
         filmCardComponent.descriptionsWithinLimit(400);
-        for (int i = 0; i <= 16; i++) {
+        for (int i = 0; i <= chronologyComponent.getFilmCard().size(); i++){
             chronologyComponent.clickFilmCardByIndex(i);
             chronologyComponent.getFilmCardByIndex(i);
             filmCardComponent.descriptionsWithinLimit(400);
@@ -201,7 +201,7 @@ public class ChronologyTestCase extends BaseTestRunner {
 
         chronologyComponent.getYearNodeByIndex(0);
         yearsBarComponent.yearsChronologicallySorted();
-        for (int i = 0; i <= 8; i++) {
+        for (int i = 0; i <= chronologyComponent.getYearBoxes().size(); i++) {
             chronologyComponent.clickYearBoxByIndex(i);
             chronologyComponent.getYearNodeByIndex(i);
             yearsBarComponent.yearsChronologicallySorted();
@@ -227,7 +227,7 @@ public class ChronologyTestCase extends BaseTestRunner {
         }
 
         chronologyComponent.getFilmCardByIndex(0);
-        for (int i = 0; i <= 16; i++) {
+        for (int i = 0; i <= chronologyComponent.getFilmCard().size(); i++){
             chronologyComponent.clickFilmCardByIndex(i);
             chronologyComponent.getFilmCardByIndex(i);
         }
@@ -253,16 +253,19 @@ public class ChronologyTestCase extends BaseTestRunner {
             chronologyComponent.clickFilmCardByIndex(i);
         }
         boolean isSorted = true;
-        for (int i = 0; i <= 15; i++) {
+
+        for (int i = 0; i <= chronologyComponent.getFilmCard().size(); i++) {
             chronologyComponent.clickFilmCardByIndex(i);
             chronologyComponent.getFilmCardByIndex(i);
             isSorted = isSorted && filmCardComponent.eventsChronologySorted();
         }
 
-        Assert.assertTrue(isSorted, "Events are not displayed in chronological order!");
+        Assert.assertTrue(isSorted, "Events are NOT sorted chronologically!");
     }
 
-    @Issue("91")
+
+
+        @Issue("91")
     @Test
     @Step("Сlicking on previous/next event - moves events cards and locates clicked one to the center.")
     public void testEventMovesToCenter() {
