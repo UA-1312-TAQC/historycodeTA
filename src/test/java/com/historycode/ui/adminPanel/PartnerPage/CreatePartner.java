@@ -5,18 +5,50 @@ import com.historycode.ui.page.adminpanel.partnerspage.PartnersRowComponent;
 import com.historycode.ui.page.adminpanel.partnerspage.modal.CreatePartnersModal;
 import com.historycode.ui.page.partnerPage.PartnerPage;
 import com.historycode.ui.testrunners.TestRunnerWithAdmin;
+import com.historycode.ui.utils.ImageLoader;
 import io.qameta.allure.*;
 import org.testng.Assert;
 
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 public class CreatePartner extends TestRunnerWithAdmin {
 
     String testName = "SpongeBob";
     String testDescription = "Our optimistic and energetic sponge";
     String testLogo = "uploadfiles/logo.webp";
+    String testLogoSrc = ImageLoader.getBase64FromFile(testLogo);;
 
+    @Test
+    @Epic("AdminPartners")
+    @Issue("127")
+    @Story("64")
+    @Description("Verify that admin can add new partner via \"Додати\" button in the \"Партнери\" block ")
+    public void CreateNotKeyPartner() {
+        SoftAssert softAssert = new SoftAssert();
+        CreatePartnersModal createModal = new PartnersPageAdminPanel(driver)
+                .getAdminMenuBar()
+                .goToPartnersPage()
+                .clickAddNewPartnersButton();
+
+        createModal.name.setInputField(testName);
+        createModal.logo.uploadLogo(testLogo);
+        createModal.clickSaveButton();
+        createModal.clickCloseButton();
+
+        PartnersRowComponent newPartner = new PartnersPageAdminPanel(driver)
+                .getAdminMenuBar()
+                .goToPartnersPage()
+                .clickLastPage()
+                .getPartnersPageGridComponent()
+                .findUserByName(testName);
+
+        softAssert.assertEquals(newPartner.getNameText(), testName);
+        softAssert.assertEquals(newPartner.getLogoSrc(), testLogoSrc);
+        //TODO Add a check if the object is created in the dropdown
+        softAssert.assertAll();
+    }
 
     @Test
     @Epic("AdminPartners")

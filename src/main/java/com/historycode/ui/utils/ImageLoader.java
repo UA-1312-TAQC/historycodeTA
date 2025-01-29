@@ -2,7 +2,11 @@ package com.historycode.ui.utils;
 
 import org.openqa.selenium.WebElement;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Base64;
 
 public class ImageLoader {
 
@@ -18,5 +22,18 @@ public class ImageLoader {
              throw new IllegalArgumentException("Image file does not exist: " + imagePath);
          }
         fileInputField.sendKeys(imagePath);
+    }
+
+    public static String getBase64FromFile(String resourcePath) {
+        File file = new File(BASE_PATH + resourcePath);
+        if (!file.exists()) {
+            return ("Файл не знайдено: " + resourcePath);
+        }
+        try {
+            byte[] fileContent = Files.readAllBytes(Paths.get(file.getAbsolutePath()));
+            return Base64.getEncoder().encodeToString(fileContent);
+        } catch (IOException e) {
+            throw new RuntimeException("Помилка читання файлу: ", e);
+        }
     }
 }

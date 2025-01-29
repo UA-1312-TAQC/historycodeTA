@@ -22,7 +22,7 @@ public class PartnersRowComponent extends BaseComponent {
     private WebElement link;
 
     @Getter
-    @FindBy(xpath = "./td[2]//a[@class = 'site-link']")
+    @FindBy(xpath = "./td[3]//img[@class = 'partners-table-logo']")
     private WebElement logo;
 
     @Getter
@@ -49,6 +49,10 @@ public class PartnersRowComponent extends BaseComponent {
 
     public String getNameText() {
         return name.getText();
+    }
+
+    public String getLogoSrc() {
+        return logo.getDomAttribute("src");
     }
 
     @Step("Click on the delete button next to partner item")

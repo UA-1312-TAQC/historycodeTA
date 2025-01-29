@@ -40,7 +40,7 @@ public class TestCase128 extends TestRunnerWithAdmin  {
                 .getPartnersPageGridComponent()
                 .findUserByName(testName);
 
-        softAssert.assertEquals(newPartner, null);
+        softAssert.assertNull(newPartner, "The object must not be created");
         softAssert.assertAll();
     }
 }
