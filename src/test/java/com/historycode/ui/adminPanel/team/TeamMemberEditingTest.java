@@ -159,16 +159,16 @@ public class TeamMemberEditingTest extends TestRunnerWithAdmin {
     @Story("95")
     @Epic("(Epic #5) Admin/other pages")
     @Description("Verify that the admin can edit the team member photo")
-    public void editPhotoTest() throws InterruptedException {
-        CreateEditMemberModal modal = null;
-        String resultPhoto = null;
+    public void editPhotoTest() {
+        CreateEditMemberModal modal;
+        String resultPhoto;
 
         targetTeamMember.clickEdit()
                 .loadPhoto("memberImage.jpg")
                 .saveEditedMember()
                 .closeEditMemberModalWithoutGridRefresh();
         modal = targetTeamMember.clickEdit();
-        Thread.sleep(5000);//TODO remove this
+        targetTeamMember.sleep(5000);
         resultPhoto = modal.getRefreshedPhotoWindowComponent()
                                     .getEncodedPhoto();
         modal.closeEditMemberModalWithoutGridRefresh();
