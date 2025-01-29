@@ -5,12 +5,15 @@ import lombok.Getter;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 public class ChronologyFilmCardComponent extends BaseComponent {
 
@@ -130,19 +133,20 @@ public class ChronologyFilmCardComponent extends BaseComponent {
         return expectedColor.equals(borderColor);
     }
 
-    public boolean eventsChronologySorted() {
-        LocalDate currentDate = dateFromText(dataCard.getText(), 0);
-        LocalDate nextDate = currentDate;
-
-        if (nextDate.isBefore(currentDate)) {
-            System.out.println("Events are not sorted chronologically.");
-            return false;
+    private String cleanDateText(String rawText) {
+        if (rawText.contains(".")) {
+            return rawText.substring(0, rawText.indexOf('.')).trim();
         }
-        return true;
+        return rawText.trim();
     }
 
     private LocalDate dateFromText(String text, int index) {
+        if (text == null || text.trim().isEmpty()) {
+            throw new IllegalArgumentException("Date text is null or empty at index: " + index);
+        }
+
         text = cleanDateText(text);
+
         if (text.matches("\\d{4}")) {
             return LocalDate.of(Integer.parseInt(text), 1, 1);
         } else if (text.matches("\\d{4}, (весна|літо|осінь|зима)")) {
@@ -190,10 +194,41 @@ public class ChronologyFilmCardComponent extends BaseComponent {
         };
     }
 
-    private String cleanDateText(String rawText) {
-        if (rawText.contains(".")) {
-            return rawText.substring(0, rawText.indexOf('.')).trim();
+    public boolean eventsChronologySorted() {
+        List<LocalDate> dates = getEventDates(wait);
+
+        if (dates.isEmpty()) {
+            throw new IllegalStateException("No valid dates found for events.");
         }
-        return rawText.trim();
+
+        return IntStream.range(0, dates.size() - 2)
+                .noneMatch(i -> {
+                    boolean isAfter = dates.get(i).isAfter(dates.get(i + 1));
+                    System.out.println(" i : " + dates.get(i) + "  i + 1 : " + dates.get(i + 1));
+                    if (isAfter) {
+                        System.err.println("Event at index " + i + " is after the event at index " + (i + 1));
+                    }
+                    return isAfter;
+                });
     }
-}
+
+        private List<LocalDate> getEventDates(WebDriverWait wait) {
+            List<LocalDate> dates = new ArrayList<>();
+            try {
+                String text = dataCard.getText().trim();
+                if (text.isEmpty()) {
+                    System.err.println("Empty date text found.");
+                } else {
+                    LocalDate date = dateFromText(text, 0);
+                    dates.add(date);
+                }
+
+            } catch (TimeoutException e) {
+                System.err.println("Timeout waiting for visibility of date element.");
+            } catch (IllegalArgumentException e) {
+                System.err.println("Error parsing date: " + e.getMessage());
+            }
+            return dates;
+        }
+    }
+
