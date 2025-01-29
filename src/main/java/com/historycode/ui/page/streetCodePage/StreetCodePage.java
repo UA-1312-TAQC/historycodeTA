@@ -10,6 +10,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+
 public class StreetCodePage extends BasePage {
     @Getter
     @FindBy(xpath = "//div[@class='card']")
@@ -119,6 +120,7 @@ public class StreetCodePage extends BasePage {
         }
         return facts;
     }
+
     public InterestingFactsCardComponent getFactsCard() {
         if (factsCard == null) {
             factsCard = new InterestingFactsCardComponent(driver, factsNode);
@@ -184,7 +186,13 @@ public class StreetCodePage extends BasePage {
     }
 
     public StreetCodePage scrollToInterestingFacts() {
-        scrollToElement(factsNode);
+        scrollToElementJs(factsNode);
         return this;
     }
+
+    public StreetCodePage scrollToTextVideoBlock() {
+        scrollToElementJs(textBlockRoot);
+        return this;
+    }
+
 }
