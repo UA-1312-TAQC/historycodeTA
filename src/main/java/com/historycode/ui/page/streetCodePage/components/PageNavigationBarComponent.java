@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class PageNavigationBarComponent extends BaseComponent {
@@ -23,25 +24,26 @@ public class PageNavigationBarComponent extends BaseComponent {
     }
 
     public void clickSection(int sectionNumber) {
+        toggleProgressBar();
         if(!isProgressBarVisible()) {
             toggleProgressBar();
         }
         if (sectionNumber > 0 && sectionNumber <= sectionNumbers.size()) {
             WebElement element = sectionNumbers.get(sectionNumber - 1);
-            actions.moveToElement(element).perform();
-            element.click();
+            waitUntilElementClickable(element);
+            actions.moveToElement(element).click().perform();
         } else {
             throw new IllegalArgumentException("Invalid section number");
         }
     }
 
     public void toggleProgressBar() {
-        hideButton.click();
+        actions.moveToElement(hideButton).click().perform();
         waitUntilElementClickable(sectionNumbers.getFirst());
     }
 
     public boolean isProgressBarVisible() {
-        return this.hideButton.getDomAttribute("class").contains("visible");
+        return Objects.requireNonNull(this.hideButton.getDomAttribute("class")).contains("visible");
     }
 
     public int getSectionsCount() {
