@@ -16,7 +16,7 @@ public class InterestingFactsComponent extends BaseComponent {
     private WebElement title;
 
     @Getter
-    @FindBy(xpath = ".//div[@class='interestingFactsContainer ']")
+    @FindBy(xpath = ".//div[contains(@class, 'interestingFactsContainer')]")
     private WebElement carouselRoot;
 
     @FindBy(xpath = ".//button[@class='slick-arrow slick-prev']")
@@ -69,4 +69,5 @@ public class InterestingFactsComponent extends BaseComponent {
     public int getTotalSlides() {
         return carousel.getTotalSlides();
     }
+
 }

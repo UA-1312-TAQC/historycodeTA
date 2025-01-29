@@ -1,6 +1,7 @@
 package com.historycode.ui.page.adminpanel;
 
 import com.historycode.ui.component.adminPanel.adminMenuBar.AdminMenuBarComponent;
+import com.historycode.ui.component.adminPanel.modalAdminPanel.PopUpMessageComponent;
 import com.historycode.ui.page.BasePage;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
@@ -17,5 +18,9 @@ public abstract class BasePageAdminPanel extends BasePage {
     public BasePageAdminPanel(WebDriver driver) {
         super(driver);
         adminMenuBar = new AdminMenuBarComponent(driver, adminMenuBarNode);
+    }
+
+    public PopUpMessageComponent getPopUpMessageComponent(){
+        return new PopUpMessageComponent(driver);
     }
 }

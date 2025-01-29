@@ -7,8 +7,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class BreadcrumbsElement extends BaseElement {
-    @FindBy(xpath = ".//nav[@class='ant-breadcrumb breadcrumbContainer css-k7429z']")
-    private WebElement breadcrumbsContainer;
 
     @FindBy(xpath = ".//a[@class='ant-breadcrumb-link activeLink']")
     private WebElement catalogLink;
@@ -16,9 +14,10 @@ public class BreadcrumbsElement extends BaseElement {
     @FindBy(xpath = ".//span[@class='ant-breadcrumb-link']")
     private WebElement currentPage;
 
-    public BreadcrumbsElement(WebDriver driver) {
-        super(driver);
+    public BreadcrumbsElement(WebDriver driver, WebElement rootElement) {
+        super(driver, rootElement);
     }
+
 
     public String getCurrentPageTitle() {
         return currentPage.getText();
@@ -43,10 +42,10 @@ public class BreadcrumbsElement extends BaseElement {
     }
 
     public String getBreadcrumbsPath() {
-        return breadcrumbsContainer.getText();
+        return rootElement.getText();
     }
 
     public boolean isBreadcrumbsDisplayed() {
-        return breadcrumbsContainer.isDisplayed();
+        return rootElement.isDisplayed();
     }
 }
