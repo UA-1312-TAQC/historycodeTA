@@ -11,6 +11,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TeamRowComponent extends BaseComponent {
@@ -21,7 +22,6 @@ public class TeamRowComponent extends BaseComponent {
     protected WebElement keyMemberRole;
     @FindBy(xpath = "./td[2]//div[@class='team-table-item-name']//p")
     protected WebElement position;
-    protected List<WebElement> positions;
     @FindBy(xpath = "./td[3]//div[@class='team-table-item-name']//p")
     protected WebElement description;
     @FindBy(xpath = "./td[4]//img")
@@ -48,20 +48,15 @@ public class TeamRowComponent extends BaseComponent {
         return lastFirstName.getText();
     }
 
-    public String getPosition() {
-        return position.getText();
-    }
-
     public List<String> getPositions() {
         if (positionTexts == null) {
             positionTexts = new ArrayList<>();
-            wait.until(ExpectedConditions.visibilityOfAllElements(positions));
-            for (WebElement positionElement : positions) {
-                String text = positionElement.getText().trim();
-                if (!text.isEmpty()) {
-                    positionTexts.add(text);
-                }
-            }
+
+            wait.until(ExpectedConditions.visibilityOf(position));
+
+            String text = position.getText().trim();
+            String[] splitText = text.split(" ");
+            positionTexts.addAll(Arrays.asList(splitText));
         }
         return positionTexts;
     }

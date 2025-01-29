@@ -6,9 +6,15 @@ import com.historycode.ui.page.adminpanel.teampage.TeamRowComponent;
 import com.historycode.ui.testrunners.TestRunnerWithAdmin;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
 import java.util.List;
 
 public class PositionMemberDisplayed extends TestRunnerWithAdmin {
@@ -16,12 +22,12 @@ public class PositionMemberDisplayed extends TestRunnerWithAdmin {
     @Issue("118")
     @Test
     @Description("Verify that the admin can add multiple positions from the dropdown list")
-    public void verifyAdminPanelPositionDisplayed() {
+    public void verifyAdminPanelPositionDisplayed() throws InterruptedException {
         String memberName = "John Wick";
         String photo = "memberImage.jpg";
         String socialMedia = "Youtube";
         String socialMediaLink = "https://www.youtube.com/";
-        List<String> positions = List.of("SMM", "Дизайнер");
+        List<String> positions = List.of("Дизайнер", "SMM");
 
         TeamPageAdminPanel memberModal = new HistoryCodesAdminPanelPage(driver)
                 .getAdminMenuBar()
@@ -39,12 +45,11 @@ public class PositionMemberDisplayed extends TestRunnerWithAdmin {
 
         memberModal = new TeamPageAdminPanel(driver);
 
-        TeamRowComponent teamMember = memberModal.getTeamPageGridComponent().findUserByName(memberName);
+        memberModal = memberModal.clickLastPaginationItem();
 
-        if (teamMember == null) {
-            memberModal = memberModal.clickLastPaginationItem();
-            teamMember = memberModal.getTeamPageGridComponent().findUserByName(memberName);
-        }
+        memberModal.waitForRowToBeVisible(memberName);
+
+        TeamRowComponent teamMember = memberModal.getTeamPageGridComponent().findUserByName(memberName);
 
         Assert.assertNotNull(teamMember, String.format("The member %s is not found in the team grid", memberName));
 
