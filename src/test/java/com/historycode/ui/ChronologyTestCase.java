@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.asserts.SoftAssert;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -94,7 +95,7 @@ public class ChronologyTestCase extends BaseTestRunner {
             softAssert.assertTrue(isSeparated, "Film card at index " + i + " is not properly separated!");
         }
 
-        for (int i = 0; i <= chronologyComponent.getFilmCard().size(); i++){
+        for (int i = 0; i < chronologyComponent.getFilmCard().size(); i++){
             chronologyComponent.clickFilmCardByIndex(i);
             Map<String, String> filmCardData = filmCardComponent.getFilmCardData();
             logger.info("Film card data at index {}: {}", i, filmCardData);
@@ -116,7 +117,7 @@ public class ChronologyTestCase extends BaseTestRunner {
             chronologyComponent.clickFilmCardByIndex(i);
         }
         boolean result = true;
-        for (int i = 0; i <= chronologyComponent.getFilmCard().size(); i++){
+        for (int i = 0; i < chronologyComponent.getFilmCard().size(); i++){
             chronologyComponent.clickFilmCardByIndex(i);
             chronologyComponent.getFilmCardByIndex(i);
             Map<String, String> card = filmCardComponent.getFilmCardData();
@@ -158,7 +159,7 @@ public class ChronologyTestCase extends BaseTestRunner {
         }
         chronologyComponent.getFilmCardByIndex(0);
         filmCardComponent.descriptionsWithinLimit(400);
-        for (int i = 0; i <= chronologyComponent.getFilmCard().size(); i++){
+        for (int i = 0; i < chronologyComponent.getFilmCard().size(); i++){
             chronologyComponent.clickFilmCardByIndex(i);
             chronologyComponent.getFilmCardByIndex(i);
             filmCardComponent.descriptionsWithinLimit(400);
@@ -201,7 +202,7 @@ public class ChronologyTestCase extends BaseTestRunner {
 
         chronologyComponent.getYearNodeByIndex(0);
         yearsBarComponent.yearsChronologicallySorted();
-        for (int i = 0; i <= chronologyComponent.getYearBoxes().size(); i++) {
+        for (int i = 0; i < chronologyComponent.getYearBoxes().size(); i++) {
             chronologyComponent.clickYearBoxByIndex(i);
             chronologyComponent.getYearNodeByIndex(i);
             yearsBarComponent.yearsChronologicallySorted();
@@ -227,7 +228,7 @@ public class ChronologyTestCase extends BaseTestRunner {
         }
 
         chronologyComponent.getFilmCardByIndex(0);
-        for (int i = 0; i <= chronologyComponent.getFilmCard().size(); i++){
+        for (int i = 0; i < chronologyComponent.getFilmCard().size(); i++){
             chronologyComponent.clickFilmCardByIndex(i);
             chronologyComponent.getFilmCardByIndex(i);
         }
@@ -254,7 +255,7 @@ public class ChronologyTestCase extends BaseTestRunner {
         }
         boolean isSorted = true;
 
-        for (int i = 0; i <= chronologyComponent.getFilmCard().size(); i++) {
+        for (int i = 0; i < chronologyComponent.getFilmCard().size(); i++) {
             chronologyComponent.clickFilmCardByIndex(i);
             chronologyComponent.getFilmCardByIndex(i);
             isSorted = isSorted && filmCardComponent.eventsChronologySorted();
