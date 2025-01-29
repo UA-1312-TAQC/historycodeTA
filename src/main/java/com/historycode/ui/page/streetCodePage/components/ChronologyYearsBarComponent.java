@@ -5,157 +5,148 @@ import lombok.Getter;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 @Getter
 public class ChronologyYearsBarComponent extends BaseComponent {
 
-
-    @FindBy(xpath = "//div[contains(@class, 'timeline-swiper')]")
+    @FindBy(xpath = ".//div[contains(@class, 'timeline-swiper')]")
     private WebElement redTimeline;
 
     @Getter
-    @FindBy(xpath = "//div[contains(@id, 'timeline')]//div[contains(@class, 'timeSpanContainer')]//span")
-    private List<WebElement> yearsNode;
+    @FindBy(xpath = ".//div[contains(@class, 'timeSpanContainer')]//span")
+    private WebElement yearNode;
 
 //    @Getter - Селектор з виключенням помилки 1997 рік
 //    @FindBy(xpath = "//div[contains(@id, 'timeline')]//div[contains(@class, 'timeSpanContainer')]//div[contains(@class, 'swiper-slide')][not(contains(@class, 'swiperEdgeBtn'))]//span")
-//    private List<WebElement> yearsNode;
+//    private WebElement yearsNode;
 
     @Getter
-    @FindBy(xpath = "//div[contains(@class, 'tickContainer')]//div[contains(@class, 'timelineYearTick')]")
-    private List<WebElement> selectedYearBoxContainer;
+    @FindBy(xpath = ".//div[contains(@class, 'tickContainer')]//div[contains(@class, 'timelineYearTick')]")
+    private WebElement selectedYearBoxContainer;
 
     @Getter
-    @FindBy(xpath = "//div[contains(@class, 'tickContainer')]")
-    private List<WebElement> activeYearBox;
+    @FindBy(xpath = ".//div[contains(@class, 'tickContainer')]")
+    private WebElement activeYearBox;
 
     public ChronologyYearsBarComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
 
-
-    public WebElement getRedTimeLine() {
-        scrollToElement(redTimeline);
-        wait.until(ExpectedConditions.visibilityOf(redTimeline));
-        return redTimeline;
-    }
-
-    public List<String> getVisibleYears() {
-        return yearsNode.stream()
-                .map(WebElement::getText)
-                .collect(Collectors.toList());
-    }
-
-    public WebElement getSelectedYearBoxByIndex(int index) {
-        if (index < 0 || index >= selectedYearBoxContainer.size()) {
+        public WebElement getRedTimeline() {
+            scrollToElement(redTimeline);
+            wait.until(ExpectedConditions.visibilityOf(redTimeline));
+            return redTimeline;
         }
 
-        WebElement yearBox = selectedYearBoxContainer.get(index);
-        scrollToElement(yearBox);
-        wait.until(ExpectedConditions.visibilityOf(yearBox));
-        return yearBox;
-    }
-
-    public void clickYearBoxByIndex(int index) {
-        WebElement yearBox = getSelectedYearBoxByIndex(index);
-        wait.until(ExpectedConditions.elementToBeClickable(yearBox));
-        threadJs.executeScript("arguments[0].click();", yearBox);
-    }
-
-    public boolean isYearBoxLarger(int index) {
-
-        scrollToElement(redTimeline);
-        wait.until(ExpectedConditions.visibilityOf(redTimeline));
-
-        WebElement selectedBox = selectedYearBoxContainer.get(index);
-
-        Dimension selectedBoxSize = selectedBox.getSize();
-
-        System.out.println("+++selectedBox.getSize() = " + selectedBox.getSize() +
-                "  selectedBox.getCssValue height = " + selectedBox.getCssValue("height"));
-        for (WebElement current : selectedYearBoxContainer) {
-            System.out.println("current text = " + current.getText()
-                    + "  current.getSize() = " + current.getSize()
-                    + "  current.getCssValue height = " + current.getCssValue("height"));
+        public List<String> getVisibleYears() {
+            return rootElement.findElements(By.xpath(".//div[contains(@class, 'timeSpanContainer')]//span"))
+                    .stream()
+                    .map(WebElement::getText)
+                    .collect(Collectors.toList());
         }
 
-        return selectedYearBoxContainer.stream()
-                .allMatch(box -> {
-                    Dimension otherBoxSize = box.getSize();
-                    return selectedBoxSize.getHeight() >= otherBoxSize.getHeight() &&
-                            selectedBoxSize.getWidth() >= otherBoxSize.getWidth();
-                });
+        public WebElement getSelectedYearBox() {
+            scrollToElement(selectedYearBoxContainer);
+            wait.until(ExpectedConditions.visibilityOf(selectedYearBoxContainer));
+            return selectedYearBoxContainer;
+        }
 
-    }
-
-    public String getActiveYearBoxText() {
+    public void clickYearBox() {
         try {
-            WebElement yearsNode = activeYearBox.stream()
-                    .filter(box -> box.getAttribute("class").contains("active"))
-                    .findFirst()
-                    .orElseThrow(() -> new NoSuchElementException("No active year box found!"));
+            wait.until(ExpectedConditions.visibilityOf(selectedYearBoxContainer));
+            scrollToElement(selectedYearBoxContainer);
+            wait.until(ExpectedConditions.elementToBeClickable(selectedYearBoxContainer));
 
-            System.out.println("Active year box found with text: " + yearsNode.getText());
+            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", selectedYearBoxContainer);
 
-            return yearsNode.getText();
-        } catch (Exception e) {
-            System.err.println("Error while retrieving active year box text: " + e.getMessage());
-            throw e;
+            System.out.println("Successfully clicked on the active year box.");
+        } catch (TimeoutException e) {
+            throw new IllegalStateException("Timeout: The selected year box is not clickable.", e);
+        } catch (JavascriptException e) {
+            throw new IllegalStateException("JavaScript execution failed while clicking on the year box.", e);
         }
     }
 
-    private boolean yearsChronologicallySorted() {
+        public boolean isYearBoxLarger() {
+            scrollToElement(redTimeline);
+            wait.until(ExpectedConditions.visibilityOf(redTimeline));
 
-        List<Integer> parsedYears = new ArrayList<>();
-        for (WebElement element : yearsNode) {
-            System.out.println(" : " + element.getText());
-        }
-        List<WebElement> visibleYears = yearsNode.stream()
-                .filter(WebElement::isDisplayed)
-                .toList();
-        System.out.println("Visible years count: " + visibleYears.size());
+            Dimension selectedBoxSize = selectedYearBoxContainer.getSize();
 
-        for (WebElement yearElement : visibleYears) {
-            String yearText = yearElement.getText().trim();
-            if (yearText.isEmpty()) {
-                System.err.println("Empty year text found. Skipping this element.");
-                continue;
+            System.out.println("+++ Selected box size: " + selectedBoxSize +
+                    " | Height: " + selectedYearBoxContainer.getCssValue("height"));
+
+            List<WebElement> yearBoxes = rootElement.findElements(By.xpath(".//div[contains(@class, 'timelineYearTick')]"));
+
+            for (WebElement current : yearBoxes) {
+                System.out.println("Current box text: " + current.getText() +
+                        " | Size: " + current.getSize() +
+                        " | Height: " + current.getCssValue("height"));
             }
+
+            return yearBoxes.stream()
+                    .allMatch(box -> {
+                        Dimension otherBoxSize = box.getSize();
+                        return selectedBoxSize.getHeight() >= otherBoxSize.getHeight() &&
+                                selectedBoxSize.getWidth() >= otherBoxSize.getWidth();
+                    });
+        }
+
+        public String getActiveYearBoxText() {
             try {
-                int year = Integer.parseInt(yearText);
-                parsedYears.add(year);
-            } catch (NumberFormatException e) {
-                System.err.println("Invalid year format: " + yearText);
+                wait.until(ExpectedConditions.visibilityOf(activeYearBox));
+                String activeYearText = activeYearBox.getText();
+                System.out.println("Active year box found: " + activeYearText);
+                return activeYearText;
+            } catch (Exception e) {
+                System.err.println("Error while retrieving active year box text: " + e.getMessage());
+                throw e;
             }
         }
-        for (int i = 0; i < parsedYears.size() - 1; i++) {
-            if (parsedYears.get(i) > parsedYears.get(i + 1)) {
-                System.err.println("Years are not sorted chronologically: " + parsedYears);
+
+        public boolean yearsChronologicallySorted() {
+            List<Integer> parsedYears = new ArrayList<>();
+
+            List<WebElement> yearElements = rootElement.findElements(By.xpath(".//span"));
+            System.out.println("Found year elements: " + yearElements.size());
+
+            for (WebElement yearElement : yearElements) {
+                String yearText = yearElement.getText().trim();
+
+                if (yearText.isEmpty()) {
+                    System.err.println("Empty year text. Skipping...");
+                    continue;
+                }
+
+                try {
+                    int year = Integer.parseInt(yearText);
+                    parsedYears.add(year);
+                    System.out.println("Parsed year: " + year);
+                } catch (NumberFormatException e) {
+                    System.err.println("Invalid year format: " + yearText);
+                }
+            }
+
+            if (parsedYears.isEmpty()) {
+                System.err.println("No valid years found for chronological sorting check.");
                 return false;
             }
-        }
 
-        System.out.println("Years are sorted chronologically: " + parsedYears);
-        return true;
-    }
+            for (int i = 0; i < parsedYears.size() - 1; i++) {
+                if (parsedYears.get(i) > parsedYears.get(i + 1)) {
+                    System.err.println("Years are NOT sorted chronologically: " + parsedYears);
+                    return false;
+                }
+            }
 
-    public void verifyCarouselChronology() {
-        int currentIndex = 4;
-        int firstIndex = 0;
-        int lastIndex = 8;
+            System.out.println("Years ARE sorted chronologically: " + parsedYears);
+            return true;
 
-        while (currentIndex > firstIndex) {
-            clickYearBoxByIndex(currentIndex - 1);
-            currentIndex--;
-        }
-
-        while (currentIndex < lastIndex) {
-            clickYearBoxByIndex(currentIndex + 1);
-            currentIndex++;
-            yearsChronologicallySorted();
         }
     }
-}
+
