@@ -73,7 +73,7 @@ public class StreetCodePage extends BasePage {
 
     public StreetCodePage(WebDriver driver) {
         super(driver);
-        waitUntilElementVisible(mainCardNode);
+        waitForPageToLoad(10);
     }
 
     public BreadcrumbsElement getBreadcrumbs() {
@@ -176,6 +176,7 @@ public class StreetCodePage extends BasePage {
 
     public PageNavigationBarComponent getVerticalProgress() {
         if (verticalProgress == null) {
+            waitUntilElementClickable(verticalProgressNode);
             verticalProgress = new PageNavigationBarComponent(driver, verticalProgressNode);
         }
         return verticalProgress;
