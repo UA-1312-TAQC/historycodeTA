@@ -1,6 +1,7 @@
 package com.historycode.ui;
 
 import com.historycode.ui.data_provider.StreetCodeDP;
+import com.historycode.ui.page.homePage.HomePage;
 import com.historycode.ui.page.streetCodePage.StreetCodePage;
 import com.historycode.ui.page.streetCodePage.modals.DonateModal;
 import com.historycode.ui.testrunners.BaseTestRunner;
@@ -25,12 +26,20 @@ public class StreetCodeTests extends BaseTestRunner {
         streetCodePage = new StreetCodePage(driver);
     }
 
-    @Issue("73")
-    @Test(dataProvider = "urlTeaserSetProvider", dataProviderClass = StreetCodeDP.class, priority = 1)
-    @Description("Verification of the teaser text Length")
-    public void testTeaserTextLength(String addPath) {
+    @Step("Navigate to the 'StreetCode' page")
+    private void navigateToStreetCodePageFromHomePage(int index) {
+        new HomePage(driver)
+                .openBurgerMenu()
+                .goToStreetCodeCatalogPage()
+                .clickCatalogItemByIndex(index);
+    }
 
-        navigateToStreetCodePage(addPath);
+    @Issue("73")
+    @Test(dataProvider = "indexTeaserSetProvider", dataProviderClass = StreetCodeDP.class, priority = 1)
+    @Description("Verification of the teaser text Length")
+    public void testTeaserTextLength(int index) {
+
+        navigateToStreetCodePageFromHomePage(index);
 
         int teaserParagraphCount = streetCodePage
                 .getMainCard()
@@ -81,11 +90,9 @@ public class StreetCodeTests extends BaseTestRunner {
     @Issue("80")
     @Test(priority = 1)
     @Description("Verification if working 'Трохи ще' button and 'Дещо менше' if there is more text available on the page")
-    public void testCheckExpandButton() throws InterruptedException {
+    public void testCheckExpandButton() {
 
         navigateToStreetCodePage("/roman-ratushnyi-seneka");
-
-        SoftAssert softAssert = new SoftAssert();
 
         boolean isReadMoreDisplayed = streetCodePage
                 .scrollToTextVideoBlock()
@@ -96,8 +103,8 @@ public class StreetCodeTests extends BaseTestRunner {
                 .getTextBlock()
                 .isTextFitsOneScreen();
 
-        softAssert.assertTrue(isReadMoreDisplayed, "The 'Read More' button is not displayed");
-        softAssert.assertTrue(isTextFitsOnOneScreen, "The text is not displayed on one screen");
+        Assert.assertTrue(isReadMoreDisplayed, "The 'Read More' button is not displayed");
+        Assert.assertTrue(isTextFitsOnOneScreen, "The text is not displayed on one screen");
 
         int paragraphFirstCount = streetCodePage
                 .getTextBlock()
@@ -111,22 +118,24 @@ public class StreetCodeTests extends BaseTestRunner {
                 .getTextBlock()
                 .isReadLessButtonDisplayed();
 
-       boolean checkExpanded = streetCodePage
+        boolean checkExpanded = streetCodePage
                 .getTextBlock()
                 .checkExpanded(paragraphFirstCount);
 
-        softAssert.assertTrue(checkExpanded, "The text is not expanded");
-        softAssert.assertTrue(isLessButtonDisplayed, "The less button is not displayed");
+        Assert.assertTrue(checkExpanded, "The text is not expanded");
+        Assert.assertTrue(isLessButtonDisplayed, "The less button is not displayed");
 
         boolean checkCollapsed = streetCodePage
                 .getTextBlock()
                 .clickReadLessButton()
                 .checkCollapsed(paragraphFirstCount);
 
-        softAssert.assertTrue(checkCollapsed, "The text is not collapsed");
-        softAssert.assertTrue(isReadMoreDisplayed, "The expand button is not displayed");
+        isReadMoreDisplayed = streetCodePage
+                .getTextBlock()
+                .isReadMoreButtonDisplayed();
 
-        softAssert.assertAll();
+        Assert.assertTrue(checkCollapsed, "The text is not collapsed");
+        Assert.assertTrue(isReadMoreDisplayed, "The expand button is not displayed");
     }
 
     @Issue("86")
@@ -136,8 +145,6 @@ public class StreetCodeTests extends BaseTestRunner {
 
         navigateToStreetCodePage("/sergii-zhadan");
 
-        SoftAssert softAssert = new SoftAssert();
-
         boolean isOneCard = streetCodePage
                 .scrollToInterestingFacts()
                 .getFacts()
@@ -145,6 +152,8 @@ public class StreetCodeTests extends BaseTestRunner {
                 .isOneCardPresent();
 
         Assert.assertTrue(isOneCard, "The carousel contains more than one cards");
+
+        SoftAssert softAssert = new SoftAssert();
 
         boolean isCardInCenterOfBlock = streetCodePage
                 .getFacts()
