@@ -37,7 +37,7 @@ public class OpenModalAddPartner extends TestRunnerWithAdmin {
                 .getHistoryCodesAdminPanelGridComponent()
                 .getRowByNum(0)
                 .clickEdit()
-                .getParntersDropdown();
+                .getPartnersDropdown();
 
 
         historyPage.selectOption(4,0,0);
