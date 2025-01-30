@@ -3,7 +3,7 @@ package com.historycode.ui.adminPanel;
 import com.historycode.ui.page.adminpanel.newspage.NewsPageAdminPanel;
 import com.historycode.ui.page.adminpanel.newspage.NewsPageGridComponent;
 import com.historycode.ui.page.adminpanel.newspage.NewsRowComponent;
-import com.historycode.ui.page.adminpanel.newspage.modal.EditNewsModal;
+import com.historycode.ui.page.adminpanel.newspage.modal.CreateEditNewsModal;
 import com.historycode.ui.testrunners.TestRunnerWithAdmin;
 
 import io.qameta.allure.Issue;
@@ -21,6 +21,7 @@ public class CreateNewsWithFutureDateTest extends TestRunnerWithAdmin {
     private String createdTitle;
     private String createdLink;
     private String createdText;
+    private String imagePath = "src/test/resources/newsTest.png"; 
 
     final long ONE_DAY_IN_MILLIS = 24 * 60 * 60 * 1000L;
 
@@ -34,17 +35,21 @@ public class CreateNewsWithFutureDateTest extends TestRunnerWithAdmin {
         createdLink = "test-link-" + n;
         createdText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras et commodo ex. Pellentesque id sagittis ex. Morbi tincidunt volutpat ante, ut elementum turpis pulvinar et.";
 
-        
         driver.get(testValueProvider.getBaseUIUrl() + "/admin-panel/news");
         NewsPageAdminPanel newsPage = new NewsPageAdminPanel(driver);
 
-        EditNewsModal editNewsModal = newsPage.clickAddNewInfo();
+        CreateEditNewsModal editNewsModal = newsPage.clickAddNewInfo();
         editNewsModal.inputNewsTitle(createdTitle);
         editNewsModal.inputNewsLinkTranslit(createdLink);
         editNewsModal.inputNewsTextEditor(createdText);
         Date futureDate = new Date(System.currentTimeMillis() + ONE_DAY_IN_MILLIS);
         editNewsModal.inputNewsCreationDate(futureDate);
-        editNewsModal.clickUploadNews();
+
+        // Upload the photo
+        editNewsModal.clickUploadNewsPhoto(imagePath);
+        editNewsModal.waitUntilPhotoIsUploaded();
+
+        // Save the news
         editNewsModal.saveNews();
     }
 
@@ -59,11 +64,15 @@ public class CreateNewsWithFutureDateTest extends TestRunnerWithAdmin {
         NewsRowComponent createdNews = newsGrid.getRowById(0);
         assertNotNull(createdNews, "Created news should exist.");
         assertEquals(createdNews.getName().getText(), createdTitle, "The title is not correct.");
+
         Date expectedDate = new Date(System.currentTimeMillis() + ONE_DAY_IN_MILLIS);
         String expectedDateString = new java.text.SimpleDateFormat("yyyy-MM-dd").format(expectedDate);
         assertTrue(createdNews.getDateOfCreation().getText().contains(expectedDateString), "Future date was not set correctly");
 
         assertFalse(createdNews.getDateOfCreation().getText().contains("published"), "The news should not be published yet.");
+
+        String uploadedImageUrl = createdNews.getUploadedImageUrl(); 
+        assertTrue(uploadedImageUrl.contains(imagePath), "The uploaded image does not match the provided image.");
     }
 
     @AfterMethod

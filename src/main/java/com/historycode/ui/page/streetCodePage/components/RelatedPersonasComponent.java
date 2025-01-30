@@ -39,11 +39,11 @@ public class RelatedPersonasComponent extends BaseComponent {
     }
 
     public void clickNextSlide() {
-        carousel.clickNext();
+        carousel.clickNextArrow();
     }
 
     public void clickPreviousSlide() {
-        carousel.clickPrevious();
+        carousel.clickPreviousArrow();
     }
 
     public void clickPersonCard(int index) {

@@ -2,7 +2,7 @@ package com.historycode.ui.page.adminpanel.jobspage;
 
 import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
 import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
-import com.historycode.ui.page.adminpanel.jobspage.modal.EditJobModal;
+import com.historycode.ui.page.adminpanel.jobspage.modal.CreateEditJobModal;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -29,10 +29,10 @@ public class JobsPageAdminPanel extends BasePageAdminPanel {
         jobsPageGridComponent = new JobsPageGridComponent(driver, gridRootElement);
     }
 
-    public EditJobModal clickEditJobById(int id) {
+    public CreateEditJobModal clickEditJobById(int id) {
         JobsRowComponent jobToEdit = jobsPageGridComponent.getRowById(id);
         jobToEdit.clickEdit();
-        return new EditJobModal(driver, editModalRootElement);
+        return new CreateEditJobModal(driver, editModalRootElement);
     }
 
     public DeleteItemModal clickDeleteJobById(int id) {
@@ -41,9 +41,9 @@ public class JobsPageAdminPanel extends BasePageAdminPanel {
         return new DeleteItemModal(driver, deleteModalRootElement);
     }
 
-    public EditJobModal clickAddNewJobButton() {
+    public CreateEditJobModal clickAddNewJobButton() {
         addNewJobButton.click();
-        return new EditJobModal(driver, editModalRootElement);
+        return new CreateEditJobModal(driver, editModalRootElement);
     }
 
     public JobsPageAdminPanel clickNextPage() {

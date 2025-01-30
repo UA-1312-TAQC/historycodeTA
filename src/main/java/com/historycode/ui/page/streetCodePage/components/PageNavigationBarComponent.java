@@ -6,32 +6,44 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class PageNavigationBarComponent extends BaseComponent {
-    @FindBy(xpath = ".//div[@class='progressBarPopupContent']/div/span")
+    @FindBy(xpath = ".//div[@class='progressBarPopupContent']/div[span]")
     private List<WebElement> sectionNumbers;
 
-    @FindBy(xpath = ".//div[@class='progressBarPopupContainer']")
+    @FindBy(xpath = "./div")
     private WebElement hideButton;
+
+    @FindBy(xpath = ".//div[@class='progressBarPopupContent']")
+    private WebElement progressBar;
 
     public PageNavigationBarComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
 
     public void clickSection(int sectionNumber) {
+        toggleProgressBar();
+        if(!isProgressBarVisible()) {
+            toggleProgressBar();
+        }
         if (sectionNumber > 0 && sectionNumber <= sectionNumbers.size()) {
-            sectionNumbers.get(sectionNumber - 1).click();
+            WebElement element = sectionNumbers.get(sectionNumber - 1);
+            waitUntilElementClickable(element);
+            actions.moveToElement(element).click().perform();
         } else {
             throw new IllegalArgumentException("Invalid section number");
         }
     }
 
     public void toggleProgressBar() {
-        hideButton.click();
+        actions.moveToElement(hideButton).click().perform();
+        waitUntilElementClickable(sectionNumbers.getFirst());
     }
 
     public boolean isProgressBarVisible() {
-        return sectionNumbers.get(0).isDisplayed();
+        return Objects.requireNonNull(this.hideButton.getDomAttribute("class")).contains("visible");
     }
 
     public int getSectionsCount() {

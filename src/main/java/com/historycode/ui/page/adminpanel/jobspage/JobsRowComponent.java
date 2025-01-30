@@ -3,7 +3,7 @@ package com.historycode.ui.page.adminpanel.jobspage;
 import com.historycode.ui.component.BaseComponent;
 import com.historycode.ui.component.adminPanel.dropDownAdminPanel.DropdownComponent;
 import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
-import com.historycode.ui.page.adminpanel.jobspage.modal.EditJobModal;
+import com.historycode.ui.page.adminpanel.jobspage.modal.CreateEditJobModal;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -46,9 +46,9 @@ public class JobsRowComponent extends BaseComponent {
         dropdownStatus.clickOptionByText(status);
     }
 
-    public EditJobModal clickEdit() {
+    public CreateEditJobModal clickEdit() {
         editAction.click();
-        return new EditJobModal(driver, rootElement);
+        return new CreateEditJobModal(driver, rootElement);
     }
 
     public DeleteItemModal clickDelete() {
