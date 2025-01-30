@@ -38,7 +38,6 @@ public class StreetCodeWowFactsTest extends BaseTestRunner {
         homePage.openBurgerMenu();
         homePage.getHistoryCodeBurgerButton().click();
 
-        streetCodeCatalogPage.waitUntilElementVisible(streetCodeCatalogPage.getContainerRootNode());
         streetCodeCatalogPage.clickCatalogItemByIndex(0);
 
         streetPage = new StreetCodePage(driver);

@@ -15,9 +15,9 @@ public class StreetCodeCatalogPage extends BasePage {
     @FindBy(xpath = "//p[@class='streetcodeCatalogCaption']")
     private WebElement streetsCodesCaptionNode;
 
-    @Getter
     @FindBy(xpath = "//div[@class='steetcodeCatalogContainer']")
     private WebElement containerRootNode;
+
     @Getter
     private final CatalogComponent streetCodesCatalogComponent;
 
@@ -26,12 +26,8 @@ public class StreetCodeCatalogPage extends BasePage {
         streetCodesCatalogComponent = new CatalogComponent(driver, containerRootNode);
     }
 
-    public WebElement getStreetCodesTitleElement() {
+    public WebElement getStreetCodesTitle() {
         return streetCodesTitleNode;
-    }
-
-    public String getStreetCodesTitle() {
-        return streetCodesTitleNode.getText();
     }
 
     public String getStreetsCodesCaption() {
@@ -45,7 +41,10 @@ public class StreetCodeCatalogPage extends BasePage {
         streetCodesCatalogComponent.getItemComponents().get(index).getNameNode().click();
         return new StreetCodePage(driver);
     }
-    public void scrollDownStreetCodes() {
-        waitForElementThenScrollUntilAllContentLoaded(getContainerRootNode());
+
+    public void clickOnCatalogComponent(int index) {
+        CatalogComponent catalogComponent = getStreetCodesCatalogComponent();
+        waitUntilElementVisible(containerRootNode);
+        catalogComponent.clickCatalogElement(index);
     }
 }
