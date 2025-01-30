@@ -8,7 +8,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.NoSuchElementException;
 
-
 public abstract class BaseCarousel extends BaseComponent {
     @FindBy(xpath = ".//button[@class='slick-arrow slick-prev']")
     protected WebElement leftArrow;
@@ -27,6 +26,8 @@ public abstract class BaseCarousel extends BaseComponent {
     }
 
     public boolean hasArrows() {
+        waitUntilElementVisible(leftArrow);
+        waitUntilElementVisible(rightArrow);
         try {
             return leftArrow.isDisplayed() && rightArrow.isDisplayed();
         } catch (NoSuchElementException e) {
@@ -42,14 +43,14 @@ public abstract class BaseCarousel extends BaseComponent {
         }
     }
 
-    public BaseCarousel clickNext() {
+    public BaseCarousel clickNextArrow() {
         if (hasArrows()) {
             rightArrow.click();
         }
         return this;
     }
 
-    public BaseCarousel clickPrevious() {
+    public BaseCarousel clickPreviousArrow() {
         if (hasArrows()) {
             leftArrow.click();
         }

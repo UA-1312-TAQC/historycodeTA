@@ -198,4 +198,14 @@ public class StreetCodePage extends BasePage {
         return this;
     }
 
+    public StreetCodePage scrollToWowFactCarousel(){
+        scrollToElement(facts.getCarouselRoot());
+        return this;
+    }
+
+    public StreetCodePage scrollToWowFactSquare() {
+        scrollToElement(facts.getCarousel().getActiveWowFactsSquare());
+        return this;
+    }
+
 }
