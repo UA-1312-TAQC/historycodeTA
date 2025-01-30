@@ -14,6 +14,11 @@ import org.testng.asserts.SoftAssert;
 public class StreetCodeCarouselTest extends BaseTestRunner {
     private StreetCodePage streetCodePage;
     private SoftAssert softAssert;
+    private int cardExpectedIndex;
+    private int cardIndexAfterClick;
+    private int squareExpectedIndex;
+
+    private int squareIndexAfterClick;
 
     @BeforeMethod
     public void setUp() {
@@ -36,13 +41,13 @@ public class StreetCodeCarouselTest extends BaseTestRunner {
         interestingFactsComponent.waitUntilPageLouder();
         streetCodePage.scrollToElement(interestingFactsComponent.getCarousel().getActiveWowFactsSlickSquare());
 
-        int cardIndexBeforeClick = interestingFactsComponent.getCurrentCardIndex();
+        cardExpectedIndex = interestingFactsComponent.getPreviousCardIndex();
 
         interestingFactsComponent.clickPreviousCard();
 
-        int cardIndexAfterClick = interestingFactsComponent.getCurrentCardIndex();
+        cardIndexAfterClick = interestingFactsComponent.getCurrentCardIndex();
 
-        softAssert.assertNotEquals(cardIndexBeforeClick,cardIndexAfterClick);
+        softAssert.assertEquals(cardIndexAfterClick, cardExpectedIndex, "Card is not changing.");
         softAssert.assertAll();
     }
 
@@ -56,18 +61,16 @@ public class StreetCodeCarouselTest extends BaseTestRunner {
         interestingFactsComponent.waitUntilPageLouder();
         streetCodePage.scrollToElement(interestingFactsComponent.getCarouselRoot());
 
-        int cardIndexBeforeClick = interestingFactsComponent.getCurrentCardIndex();
-        int cardExpectedIndex = cardIndexBeforeClick + 1;
-
-        int dotIndexBeforeClick = interestingFactsComponent.getActiveWowFactsSquareIndex();
-        int dotExpectedIndex = dotIndexBeforeClick + 1;
+        cardExpectedIndex = interestingFactsComponent.getNextCardIndex();
+        squareExpectedIndex = interestingFactsComponent.getNextWowFactsSquareIndex();
 
         interestingFactsComponent.clickNextSlide();
-        int dotIndexAfterClick = interestingFactsComponent.getActiveWowFactsSquareIndex();
-        int cardIndexAfterClick = interestingFactsComponent.getCurrentCardIndex();
+
+        squareIndexAfterClick = interestingFactsComponent.getActiveWowFactsSquareIndex();
+        cardIndexAfterClick = interestingFactsComponent.getCurrentCardIndex();
 
         softAssert.assertEquals(cardIndexAfterClick, cardExpectedIndex, "Card is not changing.");
-        softAssert.assertEquals(dotExpectedIndex, dotIndexAfterClick, "Square is not changing.");
+        softAssert.assertEquals(squareExpectedIndex, squareIndexAfterClick, "Square is not changing.");
 
         softAssert.assertAll();
     }
@@ -83,18 +86,17 @@ public class StreetCodeCarouselTest extends BaseTestRunner {
         interestingFactsComponent.waitUntilPageLouder();
         streetCodePage.scrollToElement(interestingFactsComponent.getCarouselRoot());
 
-        int dotExpectedIndex = interestingFactsComponent.getLastWowFactsSquareIndex();
+        squareExpectedIndex = interestingFactsComponent.getPreviousSquareIndex();
 
-        int cardExpectedIndex = interestingFactsComponent.getLastSlideIndex();
+        cardExpectedIndex = interestingFactsComponent.getPreviousCardIndex();
 
         interestingFactsComponent.clickPreviousSlide();
-        interestingFactsComponent.sleep(2000);
 
-        int dotIndexAfterClick = interestingFactsComponent.getActiveWowFactsSquareIndex();
-        int cardIndexAfterClick = interestingFactsComponent.getCurrentCardIndex();
+        squareIndexAfterClick = interestingFactsComponent.getActiveWowFactsSquareIndex();
+        cardIndexAfterClick = interestingFactsComponent.getCurrentCardIndex();
 
         softAssert.assertEquals(cardIndexAfterClick, cardExpectedIndex, "Card is not changing.");
-        softAssert.assertEquals(dotExpectedIndex, dotIndexAfterClick, "Square is not changing.");
+        softAssert.assertEquals(squareExpectedIndex, squareIndexAfterClick, "Square is not changing.");
 
         softAssert.assertAll();
     }
@@ -114,7 +116,7 @@ public class StreetCodeCarouselTest extends BaseTestRunner {
 
         interestingFactsComponent.clickRandomWowFactsSquare();
 
-        int cardIndexAfterClick = interestingFactsComponent.getCurrentCardIndex();
+        cardIndexAfterClick = interestingFactsComponent.getCurrentCardIndex();
 
         softAssert.assertNotEquals(cardIndexBeforeClick, cardIndexAfterClick, "Card is not changing.");
 

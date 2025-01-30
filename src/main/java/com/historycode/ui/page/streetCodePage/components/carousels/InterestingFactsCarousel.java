@@ -149,40 +149,55 @@ public class InterestingFactsCarousel extends BaseCarousel {
         }
     }
 
-
     public int getCurrentCardIndex() {
         String index = activeCard.getAttribute("data-index");
         return Integer.parseInt(index);
+    }
+
+    public int getLastCardIndex() {
+        WebElement lastSlide = allCads.get(allCads.size() - 1);
+        int lastIndex = Integer.parseInt(lastSlide.getAttribute("data-index"));
+        return (lastIndex / 2);
+    }
+
+    public int getPreviousCardIndex() {
+        int currentCardIndex = getCurrentCardIndex();
+        return currentCardIndex == 0 ? getLastCardIndex() : (currentCardIndex - 1);
+    }
+
+    public void clickPreviousCard() {
+        int previousCardIndex = getPreviousCardIndex();
+        WebElement previousCard = allCads.get(previousCardIndex);
+        clickDynamicElement(previousCard);
     }
 
     public int getLastWowFactsSquareIndex() {
         return Integer.parseInt(allWowFactsSlickSquare.get((allWowFactsSlickSquare.size() - 1)).getText().trim());
     }
 
-    public int getLastSlideIndex() {
-        WebElement lastSlide = allCads.get(allCads.size() - 1);
-        int lastIndex = Integer.parseInt(lastSlide.getAttribute("data-index"));
-        return (lastIndex / 2);
+    public int getPreviousSquareIndex() {
+        int currentSquareIndex = Integer.parseInt(allWowFactsSlickSquare.get(getCurrentCardIndex()).getText().trim());
+        return currentSquareIndex == 0 ? getLastWowFactsSquareIndex() : (currentSquareIndex - 1);
     }
-
-    public void clickPreviousCard() {
-        int currentCardIndex = getCurrentCardIndex();
-        int previousCardIndex = currentCardIndex == 0 ? getLastSlideIndex() : (currentCardIndex - 1);
-
-        WebElement previousCard = allCads.get(previousCardIndex);
-        clickDynamicElement(previousCard);
-    }
-
 
     public int getActiveWowFactsSquareIndex() {
         return Integer.parseInt(activeWowFactsSlickSquare.getText().trim());
     }
 
-
     public void clickRandomWowFactsSquare() {
         Random random = new Random();
         int randomIndex = random.nextInt(allWowFactsSlickSquare.size());
         allWowFactsSlickSquare.get(randomIndex).click();
+    }
+
+    public int getNextCardIndex() {
+        int currentCardIndex = getCurrentCardIndex();
+        return currentCardIndex + 1;
+    }
+
+    public int getNextWowFactsSquareIndex() {
+        int activeWowFactsSquareIndex = getActiveWowFactsSquareIndex();
+        return activeWowFactsSquareIndex + 1;
     }
 
 }
