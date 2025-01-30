@@ -6,38 +6,34 @@ import com.historycode.ui.page.streetCodePage.components.ChronologyComponent;
 import com.historycode.ui.page.streetCodePage.components.ChronologyFilmCardComponent;
 import com.historycode.ui.page.streetCodePage.components.ChronologyYearsBarComponent;
 import com.historycode.ui.testrunners.BaseTestRunner;
+import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
-import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.asserts.SoftAssert;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
 public class ChronologyTestCase extends BaseTestRunner {
 
-    SoftAssert softAssert;
     private static final Logger logger = LoggerFactory.getLogger(ChronologyTestCase.class);
     protected StreetCodePage streetCodePage;
+    SoftAssert softAssert;
 
     @BeforeMethod
     public void openStreetCodePage() {
-        streetCodePage = new HomePage(driver)
-                .openBurgerMenu()
-                .goToStreetCodeCatalogPage()
-                .clickCatalogItemByIndex(0);
+        streetCodePage = new HomePage(driver).openBurgerMenu().goToStreetCodeCatalogPage().clickCatalogItemByIndex(0);
         softAssert = new SoftAssert();
     }
 
     @Issue("91")
     @Test
-    @Step("Verify the title 'Хронологія' is displayed.")
+    @Description("Verify the title 'Хронологія' is displayed.")
     public void testChronologyDisplayed() {
         ChronologyComponent chronologyComponent = streetCodePage.getTimeline();
         WebElement titleElement = chronologyComponent.getTitleElement();
@@ -51,7 +47,7 @@ public class ChronologyTestCase extends BaseTestRunner {
 
     @Issue("91")
     @Test
-    @Step("Verify that a red timeline is displayed and a grey square is visible under each year in a timeline.")
+    @Description("Verify that a red timeline is displayed and a grey square is visible under each year in a timeline.")
     public void testChronologyTimelineIsDisplayed() {
         ChronologyComponent chronologyComponent = streetCodePage.getTimeline();
         WebElement redTimeline = chronologyComponent.getRedTimeline();
@@ -68,7 +64,7 @@ public class ChronologyTestCase extends BaseTestRunner {
 
     @Issue("91")
     @Test
-    @Step("Verify that the selected year box is bigger than the others.")
+    @Description("Verify that the selected year box is bigger than the others.")
     public void testSelectedYearBoxSize() {
         ChronologyComponent chronologyComponent = streetCodePage.getTimeline();
         ChronologyYearsBarComponent yearsBar = chronologyComponent.getYearsBar();
@@ -81,7 +77,7 @@ public class ChronologyTestCase extends BaseTestRunner {
 
     @Issue("91")
     @Test
-    @Step("Verify each event is located separately as an element of a camera film.")
+    @Description("Verify each event is located separately as an element of a camera film.")
     public void testEachEventIsLocatedSeparately() {
         ChronologyComponent chronologyComponent = streetCodePage.getTimeline();
         ChronologyFilmCardComponent filmCardComponent = chronologyComponent.getFilmCardComponent();
@@ -95,7 +91,7 @@ public class ChronologyTestCase extends BaseTestRunner {
             softAssert.assertTrue(isSeparated, "Film card at index " + i + " is not properly separated!");
         }
 
-        for (int i = 0; i < chronologyComponent.getFilmCard().size(); i++){
+        for (int i = 0; i < chronologyComponent.getFilmCard().size(); i++) {
             chronologyComponent.clickFilmCardByIndex(i);
             Map<String, String> filmCardData = filmCardComponent.getFilmCardData();
             logger.info("Film card data at index {}: {}", i, filmCardData);
@@ -108,7 +104,7 @@ public class ChronologyTestCase extends BaseTestRunner {
 
     @Issue("91")
     @Test
-    @Step("Verify each event contains: a period of time (date, season), Title, and Main Text.")
+    @Description("Verify each event contains: a period of time (date, season), Title, and Main Text.")
     public void testEventsComplete() {
         ChronologyComponent chronologyComponent = streetCodePage.getTimeline();
         ChronologyFilmCardComponent filmCardComponent = chronologyComponent.getFilmCardComponent();
@@ -117,7 +113,7 @@ public class ChronologyTestCase extends BaseTestRunner {
             chronologyComponent.clickFilmCardByIndex(i);
         }
         boolean result = true;
-        for (int i = 0; i < chronologyComponent.getFilmCard().size(); i++){
+        for (int i = 0; i < chronologyComponent.getFilmCard().size(); i++) {
             chronologyComponent.clickFilmCardByIndex(i);
             chronologyComponent.getFilmCardByIndex(i);
             Map<String, String> card = filmCardComponent.getFilmCardData();
@@ -132,7 +128,7 @@ public class ChronologyTestCase extends BaseTestRunner {
 
     @Issue("91")
     @Test
-    @Step("Verify that clicking on another square leads to a scroll of a camera film to another event in the selected timeline.")
+    @Description("Verify that clicking on another square leads to a scroll of a camera film to another event in the selected timeline.")
     public void testClickFilmCard() {
         ChronologyComponent chronologyComponent = streetCodePage.getTimeline();
         ChronologyYearsBarComponent yearsBar = chronologyComponent.getYearsBar();
@@ -149,7 +145,7 @@ public class ChronologyTestCase extends BaseTestRunner {
 
     @Issue("91")
     @Test
-    @Step("Verify that no more than 400 symbols (including spaces) are on each card.")
+    @Description("Verify that no more than 400 symbols (including spaces) are on each card.")
     public void testDescriptionLength() {
         ChronologyComponent chronologyComponent = streetCodePage.getTimeline();
         ChronologyFilmCardComponent filmCardComponent = chronologyComponent.getFilmCardComponent();
@@ -159,7 +155,7 @@ public class ChronologyTestCase extends BaseTestRunner {
         }
         chronologyComponent.getFilmCardByIndex(0);
         filmCardComponent.descriptionsWithinLimit(400);
-        for (int i = 0; i < chronologyComponent.getFilmCard().size(); i++){
+        for (int i = 0; i < chronologyComponent.getFilmCard().size(); i++) {
             chronologyComponent.clickFilmCardByIndex(i);
             chronologyComponent.getFilmCardByIndex(i);
             filmCardComponent.descriptionsWithinLimit(400);
@@ -171,27 +167,22 @@ public class ChronologyTestCase extends BaseTestRunner {
 
     @Issue("91")
     @Test
-    @Step("Verify images for the background are a set of 3 default images.")
+    @Description("Verify images for the background are a set of 3 default images.")
     public void testDefaultBackgroundImages() {
         ChronologyComponent chronologyComponent = streetCodePage.getTimeline();
         ChronologyFilmCardComponent filmCardComponent = chronologyComponent.getFilmCardComponent();
 
         List<String> actualImageUrls = filmCardComponent.getBackgroundImageUrls();
-        List<String> defaultImageUrls = List.of(
-                "https://frontend.historycode.online/assets/6e65d6e008ddb4e343bd.webp",
-                "https://frontend.historycode.online/assets/3a1f24a900dfca1fed4e.webp",
-                "https://frontend.historycode.online/assets/6e65d6e008ddb4e343bd.webp"
-        );
+        List<String> defaultImageUrls = List.of("https://frontend.historycode.online/assets/6e65d6e008ddb4e343bd.webp", "https://frontend.historycode.online/assets/3a1f24a900dfca1fed4e.webp", "https://frontend.historycode.online/assets/6e65d6e008ddb4e343bd.webp");
 
         for (String actualUrl : actualImageUrls) {
-            Assert.assertTrue(defaultImageUrls.contains(actualUrl),
-                    "Background image URL not part of the default set: " + actualUrl);
+            Assert.assertTrue(defaultImageUrls.contains(actualUrl), "Background image URL not part of the default set: " + actualUrl);
         }
     }
 
     @Issue("91")
     @Test
-    @Step("Verify events are displayed from oldest to newest, from left to right.")
+    @Description("Verify events are displayed from oldest to newest, from left to right.")
     public void testEventsChronologySortedWithoutConversion() {
         ChronologyComponent chronologyComponent = streetCodePage.getTimeline();
         ChronologyYearsBarComponent yearsBarComponent = chronologyComponent.getYearsBar();
@@ -215,9 +206,7 @@ public class ChronologyTestCase extends BaseTestRunner {
 
     @Issue("91")
     @Test
-    @Step(" Verify camera film reacts to a scroll and moves accordingly" +
-            "Scroll right moves the camera film to the newest events ->" +
-            "Scroll left moves the camera film to the oldest events <-")
+    @Description(" Verify camera film reacts to a scroll and moves accordingly" + "Scroll right moves the camera film to the newest events ->" + "Scroll left moves the camera film to the oldest events <-")
     public void testNavigationFilmCard() {
         ChronologyComponent chronologyComponent = streetCodePage.getTimeline();
         ChronologyFilmCardComponent filmCardComponent = chronologyComponent.getFilmCardComponent();
@@ -228,7 +217,7 @@ public class ChronologyTestCase extends BaseTestRunner {
         }
 
         chronologyComponent.getFilmCardByIndex(0);
-        for (int i = 0; i < chronologyComponent.getFilmCard().size(); i++){
+        for (int i = 0; i < chronologyComponent.getFilmCard().size(); i++) {
             chronologyComponent.clickFilmCardByIndex(i);
             chronologyComponent.getFilmCardByIndex(i);
         }
@@ -239,13 +228,7 @@ public class ChronologyTestCase extends BaseTestRunner {
 
     @Issue("91")
     @Test
-    @Step("Verify the ordering of events:\n" +
-            "\n" +
-            "the beginning of the year is considered as the 1st of January\n" +
-            "\n" +
-            "the beginning of the season is considered the first day of its first month,\n" +
-            "\n" +
-            "the beginning of the month is considered the first day of this month")
+    @Description("Verify the ordering of events:\n" + "\n" + "the beginning of the year is considered as the 1st of January\n" + "\n" + "the beginning of the season is considered the first day of its first month,\n" + "\n" + "the beginning of the month is considered the first day of this month")
     public void testTimelineNavigationAndSorting() {
         ChronologyComponent chronologyComponent = streetCodePage.getTimeline();
         ChronologyFilmCardComponent filmCardComponent = chronologyComponent.getFilmCardComponent();
@@ -265,10 +248,9 @@ public class ChronologyTestCase extends BaseTestRunner {
     }
 
 
-
-        @Issue("91")
+    @Issue("91")
     @Test
-    @Step("Сlicking on previous/next event - moves events cards and locates clicked one to the center.")
+    @Description("Сlicking on previous/next event - moves events cards and locates clicked one to the center.")
     public void testEventMovesToCenter() {
 
         ChronologyComponent chronologyComponent = streetCodePage.getTimeline();
@@ -286,7 +268,7 @@ public class ChronologyTestCase extends BaseTestRunner {
 
     @Issue("91")
     @Test
-    @Step("Verify the central event has a white outline.")
+    @Description("Verify the central event has a white outline.")
     public void testCentralEventHasSpecificBorderColor() {
         ChronologyComponent chronologyComponent = streetCodePage.getTimeline();
         ChronologyFilmCardComponent filmCardComponent = chronologyComponent.getFilmCardComponent();
@@ -297,19 +279,8 @@ public class ChronologyTestCase extends BaseTestRunner {
 
         String expectedBorderColor = "#d9d9d9";
         boolean hasCorrectBorder = filmCardComponent.borderColor(expectedBorderColor);
-        softAssert.assertTrue(hasCorrectBorder,
-                "The film card at index " + targetIndex + " does not have the correct border color!");
+        softAssert.assertTrue(hasCorrectBorder, "The film card at index " + targetIndex + " does not have the correct border color!");
 
-            softAssert.assertAll();
-        }
+        softAssert.assertAll();
     }
-
-
-
-
-
-
-
-
-
-
+}
