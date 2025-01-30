@@ -32,7 +32,7 @@ public class InterestingFactsCarousel extends BaseCarousel {
     private List<WebElement> allWowFactsSlickSquare;
     @Getter
     @FindBy(xpath = "//div[@id ='wow-facts']//ul[contains(@class, 'slick-dots')]/li[contains(@class, 'slick-active')]/button")
-    private WebElement activeWowFactsSlickSquare;
+    private WebElement activeWowFactsSquare;
     //TODO: remove this
     @FindBy(xpath = ".//button[@class='slick-arrow slick-next']")
     private WebElement nextButtonNode;
@@ -181,7 +181,7 @@ public class InterestingFactsCarousel extends BaseCarousel {
     }
 
     public int getActiveWowFactsSquareIndex() {
-        return Integer.parseInt(activeWowFactsSlickSquare.getText().trim());
+        return Integer.parseInt(activeWowFactsSquare.getText().trim());
     }
 
     public void clickRandomWowFactsSquare() {
@@ -192,12 +192,14 @@ public class InterestingFactsCarousel extends BaseCarousel {
 
     public int getNextCardIndex() {
         int currentCardIndex = getCurrentCardIndex();
-        return currentCardIndex + 1;
+        int lastIndex = getLastCardIndex();
+        return currentCardIndex >= lastIndex ? 0 : currentCardIndex + 1;
     }
 
     public int getNextWowFactsSquareIndex() {
         int activeWowFactsSquareIndex = getActiveWowFactsSquareIndex();
-        return activeWowFactsSquareIndex + 1;
+        int lastIndex = getLastWowFactsSquareIndex();
+        return activeWowFactsSquareIndex >= lastIndex ? 0 : activeWowFactsSquareIndex + 1;
     }
 
 }

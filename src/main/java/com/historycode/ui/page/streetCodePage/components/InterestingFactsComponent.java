@@ -16,7 +16,7 @@ public class InterestingFactsComponent extends BaseComponent {
     private WebElement title;
 
     @Getter
-    @FindBy(xpath = ".//div[@class='interestingFactsContainer ']")
+    @FindBy(xpath = ".//div[@class='interestingFactsContainer']")
     private WebElement carouselRoot;
 
     @Getter
@@ -79,7 +79,6 @@ public class InterestingFactsComponent extends BaseComponent {
     public int getPreviousSquareIndex() {
         return carousel.getPreviousSquareIndex();
     }
-
 
     public int getPreviousCardIndex() {
         return carousel.getPreviousCardIndex();

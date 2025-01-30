@@ -7,6 +7,7 @@ import com.historycode.ui.testrunners.BaseTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Step;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -39,7 +40,7 @@ public class StreetCodeCarouselTest extends BaseTestRunner {
 
         InterestingFactsComponent interestingFactsComponent = streetCodePage.getFacts();
         interestingFactsComponent.waitUntilPageLouder();
-        streetCodePage.scrollToElement(interestingFactsComponent.getCarousel().getActiveWowFactsSlickSquare());
+        streetCodePage.scrollToWowFactCarousel();
 
         cardExpectedIndex = interestingFactsComponent.getPreviousCardIndex();
 
@@ -59,7 +60,7 @@ public class StreetCodeCarouselTest extends BaseTestRunner {
 
         InterestingFactsComponent interestingFactsComponent = streetCodePage.getFacts();
         interestingFactsComponent.waitUntilPageLouder();
-        streetCodePage.scrollToElement(interestingFactsComponent.getCarouselRoot());
+        streetCodePage.scrollToWowFactCarousel();
 
         cardExpectedIndex = interestingFactsComponent.getNextCardIndex();
         squareExpectedIndex = interestingFactsComponent.getNextWowFactsSquareIndex();
@@ -84,7 +85,7 @@ public class StreetCodeCarouselTest extends BaseTestRunner {
 
         InterestingFactsComponent interestingFactsComponent = streetCodePage.getFacts();
         interestingFactsComponent.waitUntilPageLouder();
-        streetCodePage.scrollToElement(interestingFactsComponent.getCarouselRoot());
+        streetCodePage.scrollToWowFactCarousel();
 
         squareExpectedIndex = interestingFactsComponent.getPreviousSquareIndex();
 
@@ -110,7 +111,7 @@ public class StreetCodeCarouselTest extends BaseTestRunner {
 
         InterestingFactsComponent interestingFactsComponent = streetCodePage.getFacts();
         interestingFactsComponent.waitUntilPageLouder();
-        streetCodePage.scrollToElement(interestingFactsComponent.getCarousel().getActiveWowFactsSlickSquare());
+        streetCodePage.scrollToWowFactSquare();
 
         int cardIndexBeforeClick = interestingFactsComponent.getCurrentCardIndex();
 
@@ -118,9 +119,7 @@ public class StreetCodeCarouselTest extends BaseTestRunner {
 
         cardIndexAfterClick = interestingFactsComponent.getCurrentCardIndex();
 
-        softAssert.assertNotEquals(cardIndexBeforeClick, cardIndexAfterClick, "Card is not changing.");
-
-        softAssert.assertAll();
+        Assert.assertNotEquals(cardIndexBeforeClick, cardIndexAfterClick, "Card is not changing.");
     }
 
 }
