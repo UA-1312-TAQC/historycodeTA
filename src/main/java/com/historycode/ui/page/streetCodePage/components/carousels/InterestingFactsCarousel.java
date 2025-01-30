@@ -75,6 +75,7 @@ public class InterestingFactsCarousel extends BaseCarousel {
     @Step("Click the 'Next' button.")
     public InterestingFactsCarousel clickNextButton() {
         clickDynamicElement(nextButtonNode);
+        sleep(1000);
         return this;
     }
 
