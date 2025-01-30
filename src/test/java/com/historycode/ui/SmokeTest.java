@@ -34,4 +34,11 @@ public class SmokeTest extends BaseTestRunner {
                 .clickCatalog();
         Assert.assertTrue(Objects.requireNonNull(driver.getCurrentUrl()).contains("/catalog"), "Navigation to catalog failed");
     }
+
+    @Test
+    public void testOpenPreviousPageBMenu(){
+        new HomePage(driver).openBurgerMenu().goToStreetCodeCatalogPage();
+
+        Assert.assertTrue(Objects.requireNonNull(driver.getCurrentUrl()).contains("/catalog"), "Navigation to catalog failed");
+    }
 }

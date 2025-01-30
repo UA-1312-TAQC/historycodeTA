@@ -1,7 +1,7 @@
 package com.historycode.ui.page.adminpanel.teampage.createEditModal;
 
 import com.historycode.ui.component.adminPanel.dropDownAdminPanel.DropdownComponent;
-import com.historycode.ui.component.adminPanel.modalAdminPanel.BaseEditModal;
+import com.historycode.ui.component.adminPanel.modalAdminPanel.BaseCreateEditModal;
 import com.historycode.ui.elements.adminPanel.CheckboxElement;
 import com.historycode.ui.elements.adminPanel.InputElement;
 import com.historycode.ui.elements.adminPanel.TextAreaElement;
@@ -25,7 +25,7 @@ import java.util.List;
 
 
 @Getter
-public class CreateEditMemberModal extends BaseEditModal {
+public class CreateEditMemberModal extends BaseCreateEditModal {
 
     @FindBy(xpath = ".//label[contains(@class, 'ant-checkbox-wrapper ant-checkbox-wrapper-checked ant-checkbox-wrapper-in-form-item css-k7429z')]/../..")
     protected WebElement keyMemberCheckboxRoot;
@@ -35,10 +35,10 @@ public class CreateEditMemberModal extends BaseEditModal {
     protected WebElement nameInputRoot;
     protected InputElement nameInput;
 
-    @FindBy(xpath = ".//label[normalize-space(text())='Позиції']/../..")
+//TODO to rename SocialMediaDropdownComponent
+    @FindBy(xpath = ".//input[@aria-label='Позиції']/../..")
     protected WebElement positionsDropdownRoot;
-    protected DropdownComponent positionsDropdown;
-    protected By SELECTED_POSITIONS_PATH = By.xpath("//div[@class='ant-select-selection-overflow']");
+    protected SocialMediaDropdownComponent positionsDropdown;
 
     @FindBy(xpath = ".//label[@for = 'description']/../..")
     protected WebElement descriptionTextareaElementRoot;
@@ -85,7 +85,6 @@ public class CreateEditMemberModal extends BaseEditModal {
         //this.photoModalComponent = new PhotoModalComponent(driver, rootElement);
     }
 
-
     private CheckboxElement getKeyMemberCheckbox(){
         if(keyMemberCheckbox == null){
             this.keyMemberCheckbox = new CheckboxElement(driver, keyMemberCheckboxRoot);
@@ -100,12 +99,13 @@ public class CreateEditMemberModal extends BaseEditModal {
         return this.nameInput;
     }
 
-    private DropdownComponent getPositionsDropdown(){
+    private SocialMediaDropdownComponent getPositionsDropdown(){
         if(positionsDropdown == null){
-            this.positionsDropdown = new DropdownComponent(driver, positionsDropdownRoot);
+            this.positionsDropdown = new SocialMediaDropdownComponent(driver, positionsDropdownRoot);
         }
         return this.positionsDropdown;
     }
+
     private TextAreaElement getDescriptionTextAreaElement(){
         if(descriptionTextAreaElement == null){
             this.descriptionTextAreaElement = new TextAreaElement(driver, descriptionTextareaElementRoot);
@@ -166,15 +166,6 @@ public class CreateEditMemberModal extends BaseEditModal {
         return this;
     }
 
-    public void setPositions(List<String> positions) {
-        getPositionsDropdown().openDropdown();
-        positionsDropdown.selectMultipleOptions(positions);
-    }
-
-    public List<String> getSelectedPositions() {
-        return getPositionsDropdown().getSelectedMultipleOptions();
-    }
-
     public String getDescription() {
         return getDescriptionTextAreaElement().getInputValue();
     }
@@ -218,7 +209,6 @@ public class CreateEditMemberModal extends BaseEditModal {
         return !photoWindowComponent.isPlaceholderClickable();
     }
 
-
     @Step("Choose social media {platform} from the social media dropdown")
     public CreateEditMemberModal addSocialMedia(String platform) {
         openSocialMediaDropdown();
@@ -226,9 +216,19 @@ public class CreateEditMemberModal extends BaseEditModal {
         return this;
     }
 
+    @Step("Choose positions {positions} from the dropdown")
+    public CreateEditMemberModal addPositions(List<String> positions) {
+        openPositionsDropdown();
+        for (String position : positions) {
+            positionsDropdown.clickOptionByText(position);
+        }
+        return this;
+    }
+
     @Step("Add social media link {link}")
     public CreateEditMemberModal addSocialMediaLink(String link) {
         getSocialMediaInput().setInputField(link);
+        addSocialMediaButton.click();
         return this;
     }
 
@@ -297,5 +297,9 @@ public class CreateEditMemberModal extends BaseEditModal {
 
     public void openSocialMediaDropdown(){
         getSocialMediaDropdown().openDropdown();
+    }
+
+    public void openPositionsDropdown(){
+        getPositionsDropdown().openDropdownPosition();
     }
 }

@@ -8,8 +8,10 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TeamRowComponent extends BaseComponent {
@@ -19,7 +21,7 @@ public class TeamRowComponent extends BaseComponent {
     @FindBy(xpath = "./td[1]//div[@class='team-table-item-name']//span")
     protected WebElement keyMemberRole;
     @FindBy(xpath = "./td[2]//div[@class='team-table-item-name']//p")
-    protected List<WebElement> positions;
+    protected WebElement position;
     @FindBy(xpath = "./td[3]//div[@class='team-table-item-name']//p")
     protected WebElement description;
     @FindBy(xpath = "./td[4]//img")
@@ -49,9 +51,12 @@ public class TeamRowComponent extends BaseComponent {
     public List<String> getPositions() {
         if (positionTexts == null) {
             positionTexts = new ArrayList<>();
-            for (WebElement positionElement : positions) {
-                positionTexts.add(positionElement.getText());
-            }
+
+            wait.until(ExpectedConditions.visibilityOf(position));
+
+            String text = position.getText().trim();
+            String[] splitText = text.split(" ");
+            positionTexts.addAll(Arrays.asList(splitText));
         }
         return positionTexts;
     }

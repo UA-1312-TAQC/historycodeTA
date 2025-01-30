@@ -16,14 +16,8 @@ public class InterestingFactsComponent extends BaseComponent {
     private WebElement title;
 
     @Getter
-    @FindBy(xpath = ".//div[@class='interestingFactsContainer ']")
+    @FindBy(xpath = ".//div[@class='interestingFactsContainer']")
     private WebElement carouselRoot;
-
-    @FindBy(xpath = ".//button[@class='slick-arrow slick-prev']")
-    protected WebElement leftArrow;
-
-    @FindBy(xpath = ".//button[@class='slick-arrow slick-next']")
-    protected WebElement rightArrow;
 
     @Getter
     private final InterestingFactsModal interestingFactsModal;
@@ -45,11 +39,11 @@ public class InterestingFactsComponent extends BaseComponent {
     }
 
     public void clickNextSlide() {
-        rightArrow.click();
+        carousel.clickNextArrow();
     }
 
     public void clickPreviousSlide() {
-        leftArrow.click();
+        carousel.clickPreviousArrow();
     }
 
     public void clickFactCard(int index) {
@@ -66,7 +60,42 @@ public class InterestingFactsComponent extends BaseComponent {
         return carousel.getCurrentSlideIndex();
     }
 
+    public int getCurrentCardIndex() {
+        return carousel.getCurrentCardIndex();
+    }
+
+    public int getNextCardIndex() {
+        return carousel.getNextCardIndex();
+    }
+
     public int getTotalSlides() {
         return carousel.getTotalSlides();
     }
+
+    public int getActiveWowFactsSquareIndex() {
+        return carousel.getActiveWowFactsSquareIndex();
+    }
+
+    public int getPreviousSquareIndex() {
+        return carousel.getPreviousSquareIndex();
+    }
+
+    public int getPreviousCardIndex() {
+        return carousel.getPreviousCardIndex();
+    }
+
+    public int getNextWowFactsSquareIndex() {
+        return carousel.getNextWowFactsSquareIndex();
+    }
+
+    public void clickPreviousCard() {
+        carousel.clickPreviousCard();
+    }
+
+    public void clickRandomWowFactsSquare() {
+        carousel.clickRandomWowFactsSquare();
+    }
+
+
 }
+

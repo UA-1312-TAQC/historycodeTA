@@ -31,12 +31,15 @@ public class HelpUsPage extends BasePage {
     @FindBy(xpath = "//button[contains(@class, 'withSvg')]")
     private WebElement copyUahAccountButton;
 
+    @FindBy(css = "div.ant-modal-content")
+    private WebElement partnerModalRoot;
+
     public HelpUsPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
 
         this.donatesBlockComponent = new DonatesBlockComponent(driver, donatesBlockRoot);
-        this.partnerModalComponent = new PartnerModalComponent(driver);
+        this.partnerModalComponent = new PartnerModalComponent(driver, partnerModalRoot);
     }
 
     public String getHelpUsLabelText() {

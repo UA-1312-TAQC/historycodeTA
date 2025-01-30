@@ -3,12 +3,14 @@ package com.historycode.ui.page.streetCodePage;
 import com.historycode.ui.elements.BreadcrumbsElement;
 import com.historycode.ui.elements.ScrollTopButtonElement;
 import com.historycode.ui.page.BasePage;
-import lombok.Getter;
 import com.historycode.ui.page.streetCodePage.components.*;
 import com.historycode.ui.page.streetCodePage.elememts.QuickDonateButtonElement;
+import com.historycode.ui.page.streetCodePage.modals.SurveyModal;
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
 
 public class StreetCodePage extends BasePage {
     @Getter
@@ -51,6 +53,12 @@ public class StreetCodePage extends BasePage {
     @FindBy(xpath = ".//div[@class='player-wrapper']")
     private WebElement videoNode;
 
+    @FindBy(xpath = "//div[@role='dialog' and contains(@class,'surveyModal')]")
+    private WebElement surveyModalNode;
+
+    @FindBy(xpath = "//nav[@class='ant-breadcrumb breadcrumbContainer css-k7429z']")
+    private WebElement breadcrumbsContainerNode;
+
     private BreadcrumbsElement breadcrumbs;
     private ScrollTopButtonElement scrollTopButton;
     private QuickDonateButtonElement quickDonateButton;
@@ -69,18 +77,19 @@ public class StreetCodePage extends BasePage {
 
     public StreetCodePage(WebDriver driver) {
         super(driver);
+        waitForPageToLoad(10);
     }
 
     public BreadcrumbsElement getBreadcrumbs() {
         if (breadcrumbs == null) {
-            breadcrumbs = new BreadcrumbsElement(driver);
+            breadcrumbs = new BreadcrumbsElement(driver, breadcrumbsContainerNode);
         }
         return breadcrumbs;
     }
 
     public ScrollTopButtonElement getScrollTopButton() {
         if (scrollTopButton == null) {
-            scrollTopButton = new ScrollTopButtonElement(driver);
+            scrollTopButton = new ScrollTopButtonElement(driver, scrollTopButtonNode);
         }
         return scrollTopButton;
     }
@@ -119,6 +128,7 @@ public class StreetCodePage extends BasePage {
         }
         return facts;
     }
+
     public InterestingFactsCardComponent getFactsCard() {
         if (factsCard == null) {
             factsCard = new InterestingFactsCardComponent(driver, factsNode);
@@ -170,6 +180,7 @@ public class StreetCodePage extends BasePage {
 
     public PageNavigationBarComponent getVerticalProgress() {
         if (verticalProgress == null) {
+            waitUntilElementClickable(verticalProgressNode);
             verticalProgress = new PageNavigationBarComponent(driver, verticalProgressNode);
         }
         return verticalProgress;
@@ -184,7 +195,28 @@ public class StreetCodePage extends BasePage {
     }
 
     public StreetCodePage scrollToInterestingFacts() {
-        scrollToElement(factsNode);
+        scrollToElementJs(factsNode);
         return this;
     }
+
+    public StreetCodePage scrollToTextVideoBlock() {
+        scrollToElementJs(textBlockRoot);
+        return this;
+    }
+
+    public SurveyModal getSurveyModal() {
+        waitUntilElementVisible(surveyModalNode);
+        return new SurveyModal(driver, surveyModalNode);
+    }
+
+    public StreetCodePage scrollToWowFactCarousel(){
+        scrollToElement(facts.getCarouselRoot());
+        return this;
+    }
+
+    public StreetCodePage scrollToWowFactSquare() {
+        scrollToElement(facts.getCarousel().getActiveWowFactsSquare());
+        return this;
+    }
+
 }

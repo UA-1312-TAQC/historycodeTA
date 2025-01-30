@@ -1,14 +1,14 @@
 package com.historycode.ui.adminPanel.PartnerPage;
 
+import com.historycode.ui.component.DropdownBase;
 import com.historycode.ui.component.HelpUs.PartnerModalComponent;
 import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
-import com.historycode.ui.page.adminpanel.streetcodeeditpage.StreetcodeEditPage;
 import com.historycode.ui.testrunners.TestRunnerWithAdmin;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
+
 
 public class OpenModalAddPartner extends TestRunnerWithAdmin {
 
@@ -25,6 +25,23 @@ public class OpenModalAddPartner extends TestRunnerWithAdmin {
                 .clickAddPartnerButton();
 
         Assert.assertTrue(historyPage.getPartnerModal().isDisplayed(), "Modal window is not displayed");
+
+    }
+
+    @Test
+    @Issue("124")
+    @Description("Verify that the admin can add an existing partner")
+    public void addExistingPartner() {
+
+        DropdownBase historyPage = new HistoryCodesAdminPanelPage(driver)
+                .getHistoryCodesAdminPanelGridComponent()
+                .getRowByNum(0)
+                .clickEdit()
+                .getPartnersDropdown();
+
+
+        historyPage.selectOption(4,0,0);
+        Assert.assertFalse(historyPage.getChosenElements().isEmpty(), "Chosen element is not displayed");
 
     }
 }

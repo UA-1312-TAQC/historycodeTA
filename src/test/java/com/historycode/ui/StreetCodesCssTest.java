@@ -54,10 +54,10 @@ public class StreetCodesCssTest extends BaseTestRunner {
         SoftAssert softAssert = new SoftAssert();
 
         log.info("Verifying CSS properties for the title element");
-        verifyCssProperties(softAssert, streetCodesPage.getStreetCodesTitleElement(), TITLE_CSS_EXPECTATIONS, "Title");
+        verifyCssProperties(softAssert, streetCodesPage.getStreetCodesTitle(), TITLE_CSS_EXPECTATIONS, "Title");
 
         streetCodesPage
-                .scrollDownStreetCodes();
+                .scrollToEndOfPage();
 
         List<CatalogItemComponent> catalogItems = streetCodesPage
                 .getStreetCodesCatalogComponent()

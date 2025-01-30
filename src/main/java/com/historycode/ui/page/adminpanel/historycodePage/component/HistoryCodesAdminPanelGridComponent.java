@@ -20,9 +20,12 @@ public class HistoryCodesAdminPanelGridComponent extends BaseGridComponent {
     @FindBy(xpath = ".//thead//th")
     private List<WebElement> headerElementsNode;
 
+    @FindBy(xpath = "//div[@class='loadingWrapper']")
+    private WebElement loaderElement;
+
     public HistoryCodesAdminPanelGridComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        waitUntilElementVisible(getRootPaginationNode());
+        waitUntilElementInvisible(loaderElement);
         initHeaderItems();
         initRows(driver);
 
@@ -60,7 +63,6 @@ public class HistoryCodesAdminPanelGridComponent extends BaseGridComponent {
 
     @Step("Get history codes row by num on admin page")
     public HistoryCodesAdminPanelRowComponent getRowByNum(int num) {
-
         return rowElements.get(num);
     }
 

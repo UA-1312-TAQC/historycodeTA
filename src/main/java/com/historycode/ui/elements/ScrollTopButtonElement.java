@@ -5,18 +5,17 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class ScrollTopButtonElement extends BaseElement {
-    @FindBy(xpath = ".//div[@class='scrollToTopBtnContainer']")
-    private WebElement scrollButton;
 
-    public ScrollTopButtonElement(WebDriver driver) {
-        super(driver);
+    public ScrollTopButtonElement(WebDriver driver, WebElement rootElement) {
+        super(driver, rootElement);
     }
+
 
     public void clickScrollTop() {
-        scrollButton.click();
+        rootElement.click();
     }
 
-    public void isButtonDisplayed() {
-        scrollButton.isDisplayed();
+    public boolean isButtonDisplayed() {
+        return rootElement.isDisplayed();
     }
 }
