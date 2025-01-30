@@ -3,9 +3,10 @@ package com.historycode.ui.page.streetCodePage;
 import com.historycode.ui.elements.BreadcrumbsElement;
 import com.historycode.ui.elements.ScrollTopButtonElement;
 import com.historycode.ui.page.BasePage;
-import lombok.Getter;
 import com.historycode.ui.page.streetCodePage.components.*;
 import com.historycode.ui.page.streetCodePage.elememts.QuickDonateButtonElement;
+import com.historycode.ui.page.streetCodePage.modals.SurveyModal;
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -52,6 +53,9 @@ public class StreetCodePage extends BasePage {
     @FindBy(xpath = ".//div[@class='player-wrapper']")
     private WebElement videoNode;
 
+    @FindBy(xpath = "//div[@role='dialog' and contains(@class,'surveyModal')]")
+    private WebElement surveyModalNode;
+
     @FindBy(xpath = "//nav[@class='ant-breadcrumb breadcrumbContainer css-k7429z']")
     private WebElement breadcrumbsContainerNode;
 
@@ -73,6 +77,7 @@ public class StreetCodePage extends BasePage {
 
     public StreetCodePage(WebDriver driver) {
         super(driver);
+        waitForPageToLoad(10);
     }
 
     public BreadcrumbsElement getBreadcrumbs() {
@@ -175,6 +180,7 @@ public class StreetCodePage extends BasePage {
 
     public PageNavigationBarComponent getVerticalProgress() {
         if (verticalProgress == null) {
+            waitUntilElementClickable(verticalProgressNode);
             verticalProgress = new PageNavigationBarComponent(driver, verticalProgressNode);
         }
         return verticalProgress;
@@ -196,6 +202,11 @@ public class StreetCodePage extends BasePage {
     public StreetCodePage scrollToTextVideoBlock() {
         scrollToElementJs(textBlockRoot);
         return this;
+    }
+
+    public SurveyModal getSurveyModal() {
+        waitUntilElementVisible(surveyModalNode);
+        return new SurveyModal(driver, surveyModalNode);
     }
 
     public StreetCodePage scrollToWowFactCarousel(){

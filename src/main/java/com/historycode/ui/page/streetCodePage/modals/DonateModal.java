@@ -9,6 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import java.util.List;
 
 public class DonateModal extends BaseModal {
+
     @FindBy(xpath = ".//div[@class = 'donatesModalContent']/h1")
     private WebElement firstTitle;
 
@@ -96,9 +97,28 @@ public class DonateModal extends BaseModal {
         return donateButton.isDisplayed();
     }
 
+    public boolean isDonateButtonEnabled() {
+        return donateButton.isEnabled();
+    }
+
     public DonateModal clickDonateButton() {
         donateButton.click();
         return this;
+    }
+
+    public void clickAgreeCheckbox() {
+        agreeCheckbox.click();
+    }
+
+    public void clickAmountButton(int money) {
+        String desiredAmount = money + "₴";
+        for (WebElement amount : amountButtons) {
+            if (amount.getText().equals(desiredAmount)) {
+                amount.click();
+                return;
+            }
+        }
+        throw new NoSuchElementException("Amount button with text '" + desiredAmount + "' not found");
     }
 
 }
