@@ -215,7 +215,7 @@ public class StreetCodePage extends BasePage {
     }
 
     public StreetCodePage scrollToWowFactSquare() {
-        scrollToElement(facts.getCarousel().getActiveWowFactsSquare());
+        scrollToElement(facts.getCarouselSquares().getActiveWowFactsSquare());
         return this;
     }
 
