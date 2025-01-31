@@ -27,10 +27,10 @@ public class InterestingFactsComponent extends BaseComponent {
     @Getter
     private final InterestingFactsCarouselSquares carouselSquares;
 
-    public InterestingFactsComponent(WebDriver driver, WebElement rootElement, InterestingFactsCarouselSquares carouselSquares) {
+    public InterestingFactsComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
         this.carousel = new InterestingFactsCarousel(driver, carouselRoot);
-        this.carouselSquares = carouselSquares;
+        this.carouselSquares = new InterestingFactsCarouselSquares(driver, carouselRoot);;
         this.interestingFactsModal = new InterestingFactsModal(driver, rootElement);
     }
 
