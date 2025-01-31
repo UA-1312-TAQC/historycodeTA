@@ -16,12 +16,12 @@ public class PartnersPageGridComponent extends BaseGridComponent {
     @Getter
     private List<PartnersRowComponent> partnersRowComponents;
 
-    @FindBy(xpath = "//tbody//tr")
+    @FindBy(xpath = "./tbody//tr")
     protected List<WebElement> partnerRowNodes;
 
     public PartnersPageGridComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        sleep(3000); // Потрібно зачикати поки сторінка завантажиться
+        waitUntilAllElementsVisible(partnerRowNodes);
         this.partnersRowComponents = initializePartnersRowComponents(driver, partnerRowNodes);
     }
 
@@ -43,10 +43,6 @@ public class PartnersPageGridComponent extends BaseGridComponent {
 
     public PartnersRowComponent getRowById(int id) {
         return partnersRowComponents.get(id);
-    }
-
-    public int getRowCount() {
-        return partnersRowComponents.size();
     }
 
     public void clickNextPage() {

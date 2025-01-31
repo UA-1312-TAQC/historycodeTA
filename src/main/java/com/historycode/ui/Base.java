@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
+import java.util.List;
 
 public abstract class Base {
     private static final int SCROLL_STABILIZATION_DELAY = 500;
@@ -83,8 +84,8 @@ public abstract class Base {
         wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
-    public void waitUntilPageLouder() {
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.tagName("body")));
+    public void waitUntilAllElementsVisible(List<WebElement> elements) {
+        wait.until(ExpectedConditions.visibilityOfAllElements(elements));
     }
 
 
