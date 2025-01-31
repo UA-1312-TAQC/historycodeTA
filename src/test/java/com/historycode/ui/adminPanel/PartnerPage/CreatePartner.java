@@ -35,7 +35,7 @@ public class CreatePartner extends TestAdminPartnerPage {
 
         softAssert.assertEquals(newPartner.getNameText(), testName);
         softAssert.assertEquals(newPartner.getLogoSrc(), testLogoSrc);
-        //TODO Add a check if the object is created in the dropdown
+
         softAssert.assertAll();
     }
 

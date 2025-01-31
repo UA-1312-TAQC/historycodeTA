@@ -1,5 +1,6 @@
 package com.historycode.ui.utils;
 
+import org.aspectj.util.FileUtil;
 import org.openqa.selenium.WebElement;
 
 import java.io.File;
@@ -7,10 +8,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Base64;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ImageLoader {
 
-    static final String BASE_PATH = "src/test/resources/";
+    private static final String BASE_PATH = "src/test/resources/";
+    private static final Logger logger = Logger.getLogger(FileUtil.class.getName());
 
     public static void loadImageUsingRelativePath(String imageFileName, WebElement fileInputField){
         String absolutePath = Paths.get(BASE_PATH + imageFileName).toAbsolutePath().toString();
@@ -27,14 +31,16 @@ public class ImageLoader {
     public static String getBase64FromFile(String resourcePath) {
         File file = new File(BASE_PATH + resourcePath);
         if (!file.exists()) {
-            return ("Файл не знайдено: " + resourcePath); // TODO Замінити на логер
+            logger.log(Level.WARNING, "Файл не знайдено: {0}", resourcePath);
+            return null; // Або викинути виняток
         }
+
         try {
-            byte[] fileContent = Files.readAllBytes(Paths.get(file.getAbsolutePath()));
+            byte[] fileContent = Files.readAllBytes(file.toPath());
             return Base64.getEncoder().encodeToString(fileContent);
         } catch (IOException e) {
-            // TODO Добавити логер
-            throw new RuntimeException("Помилка читання файлу: ", e);
+            logger.log(Level.SEVERE, "Помилка читання файлу: " + resourcePath, e);
+            return null;
         }
     }
 }
