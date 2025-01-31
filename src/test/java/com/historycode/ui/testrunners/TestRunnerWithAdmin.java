@@ -1,5 +1,7 @@
 package com.historycode.ui.testrunners;
 
+import com.historycode.ui.page.adminpanel.partnerspage.PartnersPageAdminPanel;
+import com.historycode.ui.page.adminpanel.partnerspage.modal.CreatePartnersModal;
 import org.openqa.selenium.html5.LocalStorage;
 import org.openqa.selenium.html5.WebStorage;
 import org.openqa.selenium.remote.Augmenter;

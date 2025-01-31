@@ -33,7 +33,7 @@ public class PartnersPageGridComponent extends BaseGridComponent {
         return components;
     }
 
-    public PartnersRowComponent findUserByName(String name){
+    public PartnersRowComponent findPartnerByName(String name){
         for(PartnersRowComponent item: getPartnersRowComponents()){
             if(item.getNameText().equals(name))
                 return item;

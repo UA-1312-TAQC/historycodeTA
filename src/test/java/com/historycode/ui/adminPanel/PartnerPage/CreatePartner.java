@@ -4,45 +4,34 @@ import com.historycode.ui.page.adminpanel.partnerspage.PartnersPageAdminPanel;
 import com.historycode.ui.page.adminpanel.partnerspage.PartnersRowComponent;
 import com.historycode.ui.page.adminpanel.partnerspage.modal.CreatePartnersModal;
 import com.historycode.ui.page.partnerPage.PartnerPage;
-import com.historycode.ui.testrunners.TestRunnerWithAdmin;
-import com.historycode.ui.utils.ImageLoader;
-import io.qameta.allure.*;
-import org.testng.Assert;
 
+import io.qameta.allure.*;
+
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-public class CreatePartner extends TestRunnerWithAdmin {
-
-    String testName = "SpongeBob";
-    String testDescription = "Our optimistic and energetic sponge";
-    String testLogo = "uploadfiles/logo.webp";
-    String testLogoSrc = ImageLoader.getBase64FromFile(testLogo);;
+public class CreatePartner extends TestAdminPartnerPage {
 
     @Test
     @Epic("AdminPartners")
     @Issue("127")
     @Story("64")
-    @Description("Verify that admin can add new partner via \"Додати\" button in the \"Партнери\" block ")
+    @Description("Verify that admin can add new partner via 'Додати' button in the 'Партнери' block ")
     public void CreateNotKeyPartner() {
         SoftAssert softAssert = new SoftAssert();
-        CreatePartnersModal createModal = new PartnersPageAdminPanel(driver)
-                .getAdminMenuBar()
-                .goToPartnersPage()
-                .clickAddNewPartnersButton();
 
+        CreatePartnersModal createModal = openCreateModal();
         createModal.name.setInputField(testName);
         createModal.logo.uploadLogo(testLogo);
         createModal.clickSaveButton();
         createModal.clickCloseButton();
 
         PartnersRowComponent newPartner = new PartnersPageAdminPanel(driver)
-                .getAdminMenuBar()
-                .goToPartnersPage()
                 .clickLastPage()
                 .getPartnersPageGridComponent()
-                .findUserByName(testName);
+                .findPartnerByName(testName);
 
         softAssert.assertEquals(newPartner.getNameText(), testName);
         softAssert.assertEquals(newPartner.getLogoSrc(), testLogoSrc);
@@ -56,12 +45,7 @@ public class CreatePartner extends TestRunnerWithAdmin {
     @Story("64")
     @Description("Verify that the admin can add a description to a partner's card")
     public void addDescriptionNotKeyPartner() {
-
-        CreatePartnersModal createModal = new PartnersPageAdminPanel(driver)
-                .getAdminMenuBar()
-                .goToPartnersPage()
-                .clickAddNewPartnersButton();
-
+        CreatePartnersModal createModal = openCreateModal();
         createModal.name.setInputField(testName);
         createModal.description.setInputField(testDescription);
         createModal.logo.uploadLogo(testLogo);
@@ -70,7 +54,6 @@ public class CreatePartner extends TestRunnerWithAdmin {
 
         PartnerPage basePage = new PartnerPage(driver);
         basePage.openBurgerMenu().goToPartnerPage();
-
         basePage.scrollToEndOfPage();
         basePage.hoverOverPartner(testName, PartnerPage.PartnerType.NOT_KEY);
 
@@ -83,12 +66,7 @@ public class CreatePartner extends TestRunnerWithAdmin {
     @Story("64")
     @Description("Verify that the admin can add a description to a Key partner's card")
     public void addDescriptionKeyPartner() {
-
-        CreatePartnersModal createModal = new PartnersPageAdminPanel(driver)
-                .getAdminMenuBar()
-                .goToPartnersPage()
-                .clickAddNewPartnersButton();
-
+        CreatePartnersModal createModal = openCreateModal();
         createModal.keyPartner.check();
         createModal.name.setInputField(testName);
         createModal.description.setInputField(testDescription);
@@ -98,7 +76,6 @@ public class CreatePartner extends TestRunnerWithAdmin {
 
         PartnerPage basePage = new PartnerPage(driver);
         basePage.openBurgerMenu().goToPartnerPage();
-
         basePage.scrollToElement(basePage.getConstantKeyPartners());
         basePage.hoverOverPartner(testName, PartnerPage.PartnerType.KEY);
 
@@ -113,7 +90,7 @@ public class CreatePartner extends TestRunnerWithAdmin {
                 .goToPartnersPage()
                 .clickLastPage()
                 .getPartnersPageGridComponent()
-                .findUserByName(testName);
+                .findPartnerByName(testName);
 
         if (newPartner != null) {
             newPartner.clickDelete().clickOkButton();

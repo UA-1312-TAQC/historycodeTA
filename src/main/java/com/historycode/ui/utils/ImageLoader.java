@@ -27,12 +27,13 @@ public class ImageLoader {
     public static String getBase64FromFile(String resourcePath) {
         File file = new File(BASE_PATH + resourcePath);
         if (!file.exists()) {
-            return ("Файл не знайдено: " + resourcePath);
+            return ("Файл не знайдено: " + resourcePath); // TODO Замінити на логер
         }
         try {
             byte[] fileContent = Files.readAllBytes(Paths.get(file.getAbsolutePath()));
             return Base64.getEncoder().encodeToString(fileContent);
         } catch (IOException e) {
+            // TODO Добавити логер
             throw new RuntimeException("Помилка читання файлу: ", e);
         }
     }
