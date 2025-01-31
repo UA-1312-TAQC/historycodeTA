@@ -32,9 +32,8 @@ public class ImageLoader {
         File file = new File(BASE_PATH + resourcePath);
         if (!file.exists()) {
             logger.log(Level.WARNING, "Файл не знайдено: {0}", resourcePath);
-            return null; // Або викинути виняток
+            return null;
         }
-
         try {
             byte[] fileContent = Files.readAllBytes(file.toPath());
             return Base64.getEncoder().encodeToString(fileContent);
