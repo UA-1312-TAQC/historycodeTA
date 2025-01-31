@@ -1,5 +1,6 @@
 package com.historycode.ui.adminPanel.team;
 
+import com.historycode.ui.data_provider.enums.SocialMedia;
 import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
 import com.historycode.ui.page.adminpanel.teampage.TeamPageAdminPanel;
 import com.historycode.ui.page.adminpanel.teampage.TeamRowComponent;
@@ -29,8 +30,8 @@ public class TeamMemberDeleteTest extends TestRunnerWithAdmin {
                 .clickAddNewMemberButton()
                 .setName(teamMemberName)
                 .loadPhoto("TeamMemberImage.png")
-                .addSocialMedia("LinkedIn")
-                .addSocialMediaLink("https://ua.linkedin.com/")
+                .addSocialMedia(SocialMedia.LINKEDIN.getName())
+                .addSocialMediaLink(SocialMedia.LINKEDIN.getValidLink())
                 .saveEditedMember()
                 .closeEditMemberModal();
         if(res.getTeamPageGridComponent().findUserByName(teamMemberName) == null)

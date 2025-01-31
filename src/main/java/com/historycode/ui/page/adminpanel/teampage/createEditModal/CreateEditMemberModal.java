@@ -271,15 +271,16 @@ public class CreateEditMemberModal extends BaseCreateEditModal {
 
     @Step("Close the modal window")
     public TeamPageAdminPanel closeEditMemberModal() {
-        actions.moveToElement(closeButton).perform();
-        waitUntilElementClickable(closeButton);
-        clickCloseButton();
-        wait.until(ExpectedConditions.invisibilityOf(closeButton));
+        closeModal();
         return new TeamPageAdminPanel(driver);
     }
 
     @Step("Close the modal window")
     public void closeEditMemberModalWithoutGridRefresh() {
+        closeModal();
+    }
+
+    private void closeModal(){
         actions.moveToElement(closeButton).perform();
         waitUntilElementClickable(closeButton);
         clickCloseButton();
