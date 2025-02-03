@@ -4,7 +4,6 @@ import com.historycode.ui.data_provider.enums.SocialMedia;
 import org.testng.annotations.DataProvider;
 
 public class StreetCodeDP {
-    //TODO: change data
     @DataProvider(name = "urlTeaserSetProvider")
     public Object[][] urlTeaserSetProvider() {
         return new Object[][]{
@@ -12,6 +11,13 @@ public class StreetCodeDP {
                 {"/khrystyna-skachkivska-sushko"},
                 {"/braty-chyzhevski"},
                 {"/ivan-mazepa"}
+        };
+    }
+
+    @DataProvider(name = "indexTeaserSetProvider")
+    public Object[][] indexTeaserSetProvider() {
+        return new Object[][]{
+                {0}, {1}, {7}, {9}, {10}
         };
     }
 

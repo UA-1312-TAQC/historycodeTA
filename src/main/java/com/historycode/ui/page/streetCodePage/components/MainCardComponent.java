@@ -204,4 +204,8 @@ public class MainCardComponent extends BaseComponent {
         waitUntilElementVisible(tagPersonsModal.getPersonsCardsContainer());
         return tagPersonsModal;
     }
+
+    public boolean isNameVisible() {
+        return name.isDisplayed();
+    }
 }

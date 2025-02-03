@@ -27,11 +27,11 @@ public class ArtGalleryComponent extends BaseComponent {
     }
 
     public void nextSlide() {
-        carousel.clickNext();
+        carousel.clickNextArrow();
     }
 
     public void previousSlide() {
-        carousel.clickPrevious();
+        carousel.clickPreviousArrow();
     }
 
     public List<ArtGalleryCardComponent> getArtCards() {
