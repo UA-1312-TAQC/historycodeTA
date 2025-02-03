@@ -15,7 +15,7 @@ public class ContextsModalComponent extends ModalComponent {
 
     @Step("Enter '{name}' Into The Context Name Input.")
     public ContextsModalComponent enterContext(String name) {
-        inputComponent.setInput(name);
+        inputComponent.setInputField(name);
         return new ContextsModalComponent(driver, rootElement);
     }
 

@@ -15,7 +15,7 @@ public class CategoriesModalComponent extends ModalComponent {
 
     @Step("Enter '{name}' Into The Category Name Input.")
     public CategoriesModalComponent enterCategory(String name) {
-        inputComponent.setInput(name);
+        inputComponent.setInputField(name);
         return new CategoriesModalComponent(driver, rootElement);
     }
 
