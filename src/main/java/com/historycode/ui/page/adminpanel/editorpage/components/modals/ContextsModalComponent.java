@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class ContextsModalComponent extends ModalComponent {
+
     @FindBy(xpath = ".//div[@class='center']/h2")
     private WebElement title;
 

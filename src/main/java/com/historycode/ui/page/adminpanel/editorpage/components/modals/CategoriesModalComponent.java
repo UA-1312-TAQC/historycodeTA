@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class CategoriesModalComponent extends ModalComponent {
+
     @FindBy(xpath = ".//div[@class='ant-modal-title']")
     private WebElement title;
 

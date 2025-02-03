@@ -37,7 +37,6 @@ public abstract class BaseEditorPage extends BasePageAdminPanel {
         return rootAddButton;
     }
 
-
     public CategoriesPage moveToCategories() {
         sections.clickCategories();
         sleep(1000);
