@@ -43,6 +43,7 @@ public class BurgerMenuComponent extends BaseComponent {
 
     @Step("Click on the 'History-коди' button in the burger-menu")
     public StreetCodeCatalogPage goToStreetCodeCatalogPage() {
+        waitUntilElementVisible(historyCodesNode);
         historyCodesNode.click();
         return new StreetCodeCatalogPage(driver);
     }
