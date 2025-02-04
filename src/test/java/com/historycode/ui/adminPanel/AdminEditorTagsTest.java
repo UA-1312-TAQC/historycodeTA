@@ -52,7 +52,7 @@ public class AdminEditorTagsTest extends TestRunnerWithAdmin {
         int lengthOfNewName = 60;
         tagsModalComponent.enterTag(TAG_PREFIX + RandomStringUtils.randomAlphanumeric(lengthOfNewName));
 
-        softAssert.assertTrue(tagsModalComponent.getInputComponent().getInputText().length() <= characterLimit, "Header length limit is valid = 50");
+        softAssert.assertTrue(tagsModalComponent.getInputComponent().getInputValue().length() <= characterLimit, "Header length limit is valid = 50");
 
         lengthOfNewName = 10;
         this.newTag = TAG_PREFIX + RandomStringUtils.randomAlphanumeric(lengthOfNewName);
