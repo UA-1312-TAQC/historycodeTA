@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class PositionsGridComponent extends GridComponent {
+
     List<PositionsRowComponent> rows;
 
     public PositionsGridComponent(WebDriver driver, WebElement rootElement) {
@@ -114,5 +115,6 @@ public class PositionsGridComponent extends GridComponent {
         pagination.clickPaginationItem(index);
         return new PositionsGridComponent(driver, rootElement);
     }
+
     //TODO Update edit/deleteRow methods to return modals
 }

@@ -16,7 +16,7 @@ public class PositionsModalComponent extends ModalComponent {
 
     @Step("Enter '{name}' Into The Position Name Input.")
     public PositionsModalComponent enterPosition(String name) {
-        inputComponent.setInput(name);
+        inputComponent.setInputField(name);
         return new PositionsModalComponent(driver, rootElement);
     }
 
