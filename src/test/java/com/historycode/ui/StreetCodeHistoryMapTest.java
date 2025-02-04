@@ -37,35 +37,30 @@ public class StreetCodeHistoryMapTest extends BaseTestRunner {
     @Test
     @Description("Verify that all map elements are present and can be used")
     public void testElements() {
+        SoftAssert softAssert = new SoftAssert();
+
         HistoryMapComponent historyMapComponent = new StreetCodePage(driver)
                 .getHistoryMapComponent();
 
-        historyMapComponent
-                .getMapTitleText()
-        ;
-        Assert.assertTrue(historyMapComponent.isStreetsCheckboxSelected(), "'Streets' checkbox was not selected!");
-        historyMapComponent
-                .clickStreetsCheckbox();
+        historyMapComponent.getMapTitleText();
 
-        Assert.assertFalse(historyMapComponent.isStreetsCheckboxSelected(), "'Streets' checkbox is selected!");
+        softAssert.assertTrue(historyMapComponent.isStreetsCheckboxSelected(), "'Streets' checkbox was not selected!");
 
-        historyMapComponent
-                .clickHistoryCodesCheckbox();
+        historyMapComponent.clickStreetsCheckbox();
+        softAssert.assertFalse(historyMapComponent.isStreetsCheckboxSelected(), "'Streets' checkbox is still selected after clicking!");
 
-        Assert.assertTrue(historyMapComponent.isHistoryCodesCheckboxSelected(), "'History Codes' checkbox was not selected!");
+        historyMapComponent.clickHistoryCodesCheckbox();
+        softAssert.assertTrue(historyMapComponent.isHistoryCodesCheckboxSelected(), "'History Codes' checkbox was not selected!");
 
-        historyMapComponent
-                .clickInfoButton();
-        Assert.assertTrue(historyMapComponent.isPopOverDisplayed(), "'Pop over' was not displayed!");
+        historyMapComponent.clickInfoButton();
+        softAssert.assertTrue(historyMapComponent.isPopOverDisplayed(), "'Pop over' was not displayed!");
 
-        historyMapComponent
-                .getPopOverText();
-        historyMapComponent
-                .clickZoomIn();
-        historyMapComponent
-                .clickZoomIn();
-        historyMapComponent
-                .clickZoomOut();
+        historyMapComponent.getPopOverText();
+
+        historyMapComponent.clickZoomIn();
+        historyMapComponent.clickZoomIn();
+        historyMapComponent.clickZoomOut();
+
+        softAssert.assertAll();
     }
-
 }
