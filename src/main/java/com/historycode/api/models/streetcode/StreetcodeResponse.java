@@ -1,9 +1,8 @@
-package com.historycode.api.models.Streetcode;
+package com.historycode.api.models.streetcode;
 
 import com.historycode.api.models.tag.TagResponse;
 import lombok.Data;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 

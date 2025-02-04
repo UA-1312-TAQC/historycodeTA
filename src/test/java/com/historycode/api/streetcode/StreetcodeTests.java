@@ -1,7 +1,7 @@
 package com.historycode.api.streetcode;
 
 import com.historycode.api.clients.StreetcodeClient;
-import com.historycode.api.models.Streetcode.GetAllResponse;
+import com.historycode.api.models.streetcode.GetAllResponse;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;

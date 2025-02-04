@@ -6,6 +6,6 @@ import java.util.List;
 
 @Data
 public class GetAllTagResponse {
-    int totalAmount;
-    List<TagResponse> tags;
+    private int totalAmount;
+    private List<TagResponse> tags;
 }

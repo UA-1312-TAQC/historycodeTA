@@ -24,6 +24,8 @@ public class StreetcodeClient extends BaseClient {
     public Response getAll(int page, int amount) {
         return preparedRequest()
                 .when()
-                .get(resourceUrl+"/GetAll?page=" + page + "&amount=" + amount);
+                .queryParam("page", page)
+                .queryParam("amount", amount)
+                .get(resourceUrl + "/GetAll");
     }
 }

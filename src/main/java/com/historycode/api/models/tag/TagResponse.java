@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class TagResponse {
-    public int id;
-    public String title;
+    private int id;
+    private String title;
 }
