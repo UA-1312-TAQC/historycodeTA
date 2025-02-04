@@ -28,11 +28,6 @@ public class InterestingFactsCarousel extends BaseCarousel {
     @FindBy(xpath = "//div[@class ='slick-slide slick-active slick-center slick-current']")
     private WebElement activeCard;
 
-    @FindBy(xpath = "//div[@id ='wow-facts']//ul[contains(@class, 'slick-dots')]/li/button")
-    private List<WebElement> allWowFactsSlickSquare;
-    @Getter
-    @FindBy(xpath = "//div[@id ='wow-facts']//ul[contains(@class, 'slick-dots')]/li[contains(@class, 'slick-active')]/button")
-    private WebElement activeWowFactsSquare;
     //TODO: remove this
     @FindBy(xpath = ".//button[@class='slick-arrow slick-next']")
     private WebElement nextButtonNode;
@@ -172,35 +167,10 @@ public class InterestingFactsCarousel extends BaseCarousel {
         clickDynamicElement(previousCard);
     }
 
-    public int getLastWowFactsSquareIndex() {
-        return Integer.parseInt(allWowFactsSlickSquare.get((allWowFactsSlickSquare.size() - 1)).getText().trim());
-    }
-
-    public int getPreviousSquareIndex() {
-        int currentSquareIndex = Integer.parseInt(allWowFactsSlickSquare.get(getCurrentCardIndex()).getText().trim());
-        return currentSquareIndex == 0 ? getLastWowFactsSquareIndex() : (currentSquareIndex - 1);
-    }
-
-    public int getActiveWowFactsSquareIndex() {
-        return Integer.parseInt(activeWowFactsSquare.getText().trim());
-    }
-
-    public void clickRandomWowFactsSquare() {
-        Random random = new Random();
-        int randomIndex = random.nextInt(allWowFactsSlickSquare.size());
-        allWowFactsSlickSquare.get(randomIndex).click();
-    }
-
     public int getNextCardIndex() {
         int currentCardIndex = getCurrentCardIndex();
         int lastIndex = getLastCardIndex();
         return currentCardIndex >= lastIndex ? 0 : currentCardIndex + 1;
-    }
-
-    public int getNextWowFactsSquareIndex() {
-        int activeWowFactsSquareIndex = getActiveWowFactsSquareIndex();
-        int lastIndex = getLastWowFactsSquareIndex();
-        return activeWowFactsSquareIndex >= lastIndex ? 0 : activeWowFactsSquareIndex + 1;
     }
 
 }
