@@ -8,20 +8,20 @@ import java.util.List;
 
 @Data
 public class StreetcodeResponse {
-    public int id;
-    public int index;
-    public String title;
-    public String dateString;
-    public String alias;
-    public String transliterationUrl;
-    public int status;
-    public Date eventStartOrPersonBirthDate;
-    public Date eventEndOrPersonDeathDate;
-    public int viewCount;
-    public Date createdAt;
-    public Date updatedAt;
-    public String createdBy;
-    public List<TagResponse> tags;
-    public String teaser;
-    public int streetcodeType;
+    private int id;
+    private int index;
+    private String title;
+    private String dateString;
+    private String alias;
+    private String transliterationUrl;
+    private int status;
+    private Date eventStartOrPersonBirthDate;
+    private Date eventEndOrPersonDeathDate;
+    private int viewCount;
+    private Date createdAt;
+    private Date updatedAt;
+    private String createdBy;
+    private List<TagResponse> tags;
+    private String teaser;
+    private int streetcodeType;
 }
