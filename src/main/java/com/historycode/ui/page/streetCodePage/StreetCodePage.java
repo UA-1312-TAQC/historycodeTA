@@ -59,6 +59,10 @@ public class StreetCodePage extends BasePage {
     @FindBy(xpath = "//nav[@class='ant-breadcrumb breadcrumbContainer css-k7429z']")
     private WebElement breadcrumbsContainerNode;
 
+    @Getter
+    @FindBy(xpath = ".//div[contains(@class, 'mapContainer')]")
+    private WebElement mapRootElement;
+
     private BreadcrumbsElement breadcrumbs;
     private ScrollTopButtonElement scrollTopButton;
     private QuickDonateButtonElement quickDonateButton;
@@ -74,6 +78,7 @@ public class StreetCodePage extends BasePage {
     private RunningLineComponent runningLine;
     private PageNavigationBarComponent verticalProgress;
     private StreetCodeVideoComponent videoComponent;
+    private HistoryMapComponent historyMapComponent;
 
     public StreetCodePage(WebDriver driver) {
         super(driver);
@@ -184,6 +189,13 @@ public class StreetCodePage extends BasePage {
             verticalProgress = new PageNavigationBarComponent(driver, verticalProgressNode);
         }
         return verticalProgress;
+    }
+
+    public HistoryMapComponent getHistoryMapComponent() {
+        if (historyMapComponent == null) {
+            historyMapComponent = new HistoryMapComponent(driver, mapRootElement);
+        }
+        return historyMapComponent;
     }
 
     public void scrollToTop() {
