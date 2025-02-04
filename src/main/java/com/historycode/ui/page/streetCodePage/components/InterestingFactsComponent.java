@@ -17,7 +17,7 @@ public class InterestingFactsComponent extends BaseComponent {
     private WebElement title;
 
     @Getter
-    @FindBy(xpath = ".//div[@class='interestingFactsContainer']")
+    @FindBy(xpath = ".//div[@class='interestingFactsContainer ']")
     private WebElement carouselRoot;
 
     @Getter
