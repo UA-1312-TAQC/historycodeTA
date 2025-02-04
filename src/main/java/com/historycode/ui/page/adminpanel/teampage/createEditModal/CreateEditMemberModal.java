@@ -228,7 +228,6 @@ public class CreateEditMemberModal extends BaseCreateEditModal {
     @Step("Add social media link {link}")
     public CreateEditMemberModal addSocialMediaLink(String link) {
         getSocialMediaInput().setInputField(link);
-        addSocialMediaButton.click();
         return this;
     }
 
