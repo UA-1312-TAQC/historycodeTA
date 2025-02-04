@@ -53,7 +53,7 @@ public class StreetCodeHistoryMapTest extends BaseTestRunner {
         softAssert.assertTrue(historyMapComponent.isHistoryCodesCheckboxSelected(), "'History Codes' checkbox was not selected!");
 
         historyMapComponent.clickInfoButton();
-        softAssert.assertTrue(historyMapComponent.isPopOverDisplayed(), "'Pop over' was not displayed!");
+        softAssert.assertTrue(historyMapComponent.isPopOverDisplayed(), "'Popover' was not displayed!");
 
         historyMapComponent.getPopOverText();
 
