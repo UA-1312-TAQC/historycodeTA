@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
 
 public class GridComponent extends BaseGridComponent {
 
+    @FindBy(xpath = "//div[@id='loadingGif']")
+    public WebElement loading;
     @FindBy(xpath = "//tbody//tr")
     public List<WebElement> rowElements;
     @FindBy(xpath = "//thead//th")
@@ -25,6 +27,7 @@ public class GridComponent extends BaseGridComponent {
 
     public GridComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
+        waitUntilElementInvisible(loading);
         headerItems = new ArrayList<>();
         pagination = new PaginationAdminPanelComponent(driver, rootPagination);
         initHeaderItems();
