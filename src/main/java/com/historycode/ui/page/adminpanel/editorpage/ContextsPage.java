@@ -8,6 +8,7 @@ import com.historycode.ui.page.adminpanel.editorpage.components.modals.ContextsM
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.ContextsRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.elements.AddButtonElement;
 import io.qameta.allure.Step;
+import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,6 +19,7 @@ import java.util.List;
 
 public class ContextsPage extends BaseEditorPage {
 
+    @Getter
     @FindBy(xpath = "//div[contains(@class, 'ant-table-wrapper')]")
     private WebElement rootGrid;
 

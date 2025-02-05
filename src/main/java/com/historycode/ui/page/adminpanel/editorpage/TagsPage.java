@@ -15,6 +15,7 @@ import java.util.List;
 
 public class TagsPage extends BaseEditorPage {
 
+    @Getter
     @FindBy(xpath = "//div[contains(@class, 'ant-table-wrapper')]")
     private WebElement rootGrid;
 

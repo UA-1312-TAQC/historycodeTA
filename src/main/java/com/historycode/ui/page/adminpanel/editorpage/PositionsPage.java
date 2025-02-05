@@ -7,6 +7,7 @@ import com.historycode.ui.page.adminpanel.editorpage.components.rows.ContextsRow
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.PositionsRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.elements.AddButtonElement;
 import io.qameta.allure.Step;
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -15,6 +16,7 @@ import java.util.List;
 
 public class PositionsPage extends BaseEditorPage {
 
+    @Getter
     @FindBy(xpath = "//div[contains(@class, 'ant-table-wrapper')]")
     private WebElement rootGrid;
 

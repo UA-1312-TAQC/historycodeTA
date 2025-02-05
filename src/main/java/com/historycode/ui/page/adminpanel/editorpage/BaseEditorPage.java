@@ -2,6 +2,7 @@ package com.historycode.ui.page.adminpanel.editorpage;
 
 import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
 import com.historycode.ui.page.adminpanel.editorpage.components.SectionsComponent;
+import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,9 +15,11 @@ public abstract class BaseEditorPage extends BasePageAdminPanel {
 
     @FindBy(xpath = "//div[@class='ant-tabs-content-holder']//div[@class='container-justify-end']")
     private List<WebElement> rootAddButtonAll;
+    @Getter
     @FindBy(xpath = "//div[@class='ant-tabs-nav-list']")
     private WebElement rootSections;
 
+    @Getter
     private WebElement rootAddButton;
     private SectionsComponent sections;
 
@@ -31,10 +34,6 @@ public abstract class BaseEditorPage extends BasePageAdminPanel {
                 .filter(WebElement::isDisplayed)
                 .findFirst()
                 .orElseThrow(() -> new NoSuchElementException("No visible element found"));
-    }
-
-    public WebElement getRootAddButton() {
-        return rootAddButton;
     }
 
     public CategoriesPage moveToCategories() {
