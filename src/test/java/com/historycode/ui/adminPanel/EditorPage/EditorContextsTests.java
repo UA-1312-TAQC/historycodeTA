@@ -13,7 +13,7 @@ import org.testng.annotations.Test;
 import java.util.Arrays;
 import java.util.List;
 
-public class AdminPanelEditorPageTest extends TestRunnerWithAdminEditor {
+public class EditorContextsTests extends TestRunnerWithAdminEditor {
 
     @Test
     @Issue("110")
