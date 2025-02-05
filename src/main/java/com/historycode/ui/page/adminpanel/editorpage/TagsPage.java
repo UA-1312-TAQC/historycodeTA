@@ -17,7 +17,7 @@ public class TagsPage extends BaseEditorPage {
 
     @Getter
     @FindBy(xpath = "//div[contains(@class, 'ant-table-wrapper')]")
-    private WebElement rootGrid;
+    private WebElement gridNode;
 
     private AddButtonElement addTagButton;
     @Getter
@@ -25,8 +25,8 @@ public class TagsPage extends BaseEditorPage {
 
     public TagsPage(WebDriver driver) {
         super(driver);
-        addTagButton = new AddButtonElement(driver, getRootAddButton());
-        grid = new TagsGridComponent(driver, rootGrid);
+        addTagButton = new AddButtonElement(driver, getAddButtonNode());
+        grid = new TagsGridComponent(driver, gridNode);
     }
 
     @Step("Check Tags Grid Is Displayed Correctly.")

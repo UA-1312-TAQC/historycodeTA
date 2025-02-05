@@ -14,23 +14,23 @@ import java.util.NoSuchElementException;
 public abstract class BaseEditorPage extends BasePageAdminPanel {
 
     @FindBy(xpath = "//div[@class='ant-tabs-content-holder']//div[@class='container-justify-end']")
-    private List<WebElement> rootAddButtonAll;
+    private List<WebElement> addButtonsNodes;
     @Getter
     @FindBy(xpath = "//div[@class='ant-tabs-nav-list']")
-    private WebElement rootSections;
+    private WebElement sectionsNode;
 
     @Getter
-    private WebElement rootAddButton;
+    private WebElement addButtonNode;
     private SectionsComponent sections;
 
     public BaseEditorPage(WebDriver driver) {
         super(driver);
-        setRootAddButton();
-        sections = new SectionsComponent(driver, rootSections);
+        setAddButtonNode();
+        sections = new SectionsComponent(driver, sectionsNode);
     }
 
-    public void setRootAddButton() {
-        rootAddButton = rootAddButtonAll.stream()
+    public void setAddButtonNode() {
+        addButtonNode = addButtonsNodes.stream()
                 .filter(WebElement::isDisplayed)
                 .findFirst()
                 .orElseThrow(() -> new NoSuchElementException("No visible element found"));

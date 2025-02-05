@@ -33,7 +33,7 @@ public class CategoriesGridComponent extends GridComponent {
     }
 
     public void initRows(WebDriver driver) {
-        for (WebElement rowElement : rowElements) {
+        for (WebElement rowElement : rowNodes) {
             if (rowElement.isDisplayed()) {
                 rows.add(new CategoriesRowComponent(driver, rowElement));
             }

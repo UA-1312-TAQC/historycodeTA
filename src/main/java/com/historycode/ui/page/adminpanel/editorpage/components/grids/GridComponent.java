@@ -16,11 +16,11 @@ public class GridComponent extends BaseGridComponent {
     @FindBy(xpath = "//div[@id='loadingGif']")
     public WebElement loading;
     @FindBy(xpath = "//tbody//tr")
-    public List<WebElement> rowElements;
+    public List<WebElement> rowNodes;
     @FindBy(xpath = "//thead//th")
-    private List<WebElement> headerItemsAll;
+    private List<WebElement> headerItemsNodes;
     @FindBy(xpath = "//div[@class='underTableElement']")
-    private WebElement rootPagination;
+    private WebElement paginationNode;
 
     private List<WebElement> headerItems;
     protected PaginationAdminPanelComponent pagination;
@@ -29,7 +29,7 @@ public class GridComponent extends BaseGridComponent {
         super(driver, rootElement);
         waitUntilElementInvisible(loading);
         headerItems = new ArrayList<>();
-        pagination = new PaginationAdminPanelComponent(driver, rootPagination);
+        pagination = new PaginationAdminPanelComponent(driver, paginationNode);
         initHeaderItems();
         System.out.println("Grid was created");
     }
@@ -43,7 +43,7 @@ public class GridComponent extends BaseGridComponent {
     }
 
     private void initHeaderItems() {
-        for (WebElement item : headerItemsAll) {
+        for (WebElement item : headerItemsNodes) {
             if (item.isDisplayed()) {
                 headerItems.add(item);
             }

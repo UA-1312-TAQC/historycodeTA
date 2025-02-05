@@ -1,19 +1,15 @@
 package com.historycode.ui.page.adminpanel.editorpage;
 
-import com.historycode.ui.Base;
 import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
-import com.historycode.ui.page.BasePage;
 import com.historycode.ui.page.adminpanel.editorpage.components.grids.ContextsGridComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.ContextsModalComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.ContextsRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.elements.AddButtonElement;
 import io.qameta.allure.Step;
 import lombok.Getter;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
@@ -21,15 +17,15 @@ public class ContextsPage extends BaseEditorPage {
 
     @Getter
     @FindBy(xpath = "//div[contains(@class, 'ant-table-wrapper')]")
-    private WebElement rootGrid;
+    private WebElement gridNode;
 
     private AddButtonElement addContextButton;
     private ContextsGridComponent grid;
 
     public ContextsPage(WebDriver driver) {
         super(driver);
-        addContextButton = new AddButtonElement(driver, getRootAddButton());
-        grid = new ContextsGridComponent(driver, rootGrid);
+        addContextButton = new AddButtonElement(driver, getAddButtonNode());
+        grid = new ContextsGridComponent(driver, gridNode);
     }
 
     @Step("Check Contexts Grid Is Displayed Correctly.")
