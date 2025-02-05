@@ -1,10 +1,8 @@
-package com.historycode.ui.adminPanel;
+package com.historycode.ui.adminPanel.EditorPage;
 
 import com.historycode.ui.page.adminpanel.editorpage.CategoriesPage;
 import com.historycode.ui.page.adminpanel.editorpage.ContextsPage;
 import com.historycode.ui.page.adminpanel.editorpage.TagsPage;
-import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
-import com.historycode.ui.testrunners.TestRunnerWithAdmin;
 import com.historycode.ui.testrunners.TestRunnerWithAdminEditor;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Issue;
