@@ -25,6 +25,7 @@ public class AddButtonElement extends BaseComponent {
         button.click();
     }
 
+    @Step("Get Add Button text as String.")
     public String getButtonText() {
         return label.getText();
     }
