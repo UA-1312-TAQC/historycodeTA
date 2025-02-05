@@ -1,12 +1,14 @@
 package com.historycode.ui.page.adminpanel.editorpage.components.modals;
 
 import io.qameta.allure.Step;
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class TagsModalComponent extends ModalComponent {
 
+    @Getter
     @FindBy(xpath = ".//div[@class='ant-modal-title']")
     private WebElement title;
 
@@ -29,10 +31,6 @@ public class TagsModalComponent extends ModalComponent {
     @Step("Check Tag Modal is Displayed.")
     public boolean isExist() {
         return closeButton.isDisplayed() && title.isDisplayed() && saveButton.isDisplayed();
-    }
-
-    public WebElement getTitle() {
-        return title;
     }
 
     public String getTitleString() {

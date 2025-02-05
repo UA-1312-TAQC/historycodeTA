@@ -10,8 +10,10 @@ import org.openqa.selenium.support.FindBy;
 
 public class ModalComponent extends BaseComponent {
 
+    @Getter
     @FindBy(xpath = "./button[@aria-label='Close']")
     protected WebElement closeButton;
+    @Getter
     @FindBy(xpath = ".//div[@class='center']//button")
     protected WebElement saveButton;
 
@@ -27,14 +29,6 @@ public class ModalComponent extends BaseComponent {
     public void close() {
         closeButton.click();
         waitUntilElementInvisible(closeButton);
-    }
-
-    public WebElement getCloseButton() {
-        return closeButton;
-    }
-
-    public WebElement getSaveButton() {
-        return saveButton;
     }
 
     public String getSaveButtonTitleString() {
