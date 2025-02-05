@@ -13,33 +13,19 @@ import org.testng.annotations.Test;
 import java.util.Arrays;
 import java.util.List;
 
-public class EditorContextsTests extends TestRunnerWithAdminEditor {
+public class EditorTagsTests extends TestRunnerWithAdminEditor {
 
     @Test
-    @Issue("110")
+    @Issue("104")
     @Epic("(Epic#5) Admin/Other pages")
-    @Description("Verify that a new context can be created in the admin panel editor")
-    public void verifyOpenAddContextModal() {
+    @Description("Verify that tag list is displayed")
+    public void verifyTagGridIsCorrectDisplayed() {
 
-        boolean actual = new CategoriesPage(driver)
-                .moveToContexts()
-                .clickAddContext()
-                .isExist();
-        Assert.assertTrue(actual);
-
-    }
-
-    @Test
-    @Issue("106")
-    @Epic("(Epic#5) Admin/Other pages")
-    @Description("Verify that context list is displayed")
-    public void verifyContextGridIsCorrectDisplayed() {
-
-        ContextsPage contextsPage = new CategoriesPage(driver)
-                .moveToContexts();
+        TagsPage tagsPage = new CategoriesPage(driver)
+                .moveToTags();
         List<String> expectedGridHeaders = Arrays.asList("Назва", "Дії");
-        List<String> actualGridHeaders = contextsPage.getTableHeadersString();
-        boolean actual = contextsPage.isGridDisplayed();
+        List<String> actualGridHeaders = tagsPage.getTableHeadersString();
+        boolean actual = tagsPage.isGridDisplayed();
         Assert.assertEquals(expectedGridHeaders, actualGridHeaders,
                 "Current headers and expected are not same.");
         Assert.assertTrue(actual,
