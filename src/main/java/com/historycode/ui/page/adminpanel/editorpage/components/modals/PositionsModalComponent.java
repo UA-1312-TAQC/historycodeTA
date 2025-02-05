@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class PositionsModalComponent extends ModalComponent {
+public class PositionsModalComponent extends BaseCreateEditModalComponent {
 
     @Getter
     @FindBy(xpath = ".//div[@class='ant-modal-title']")

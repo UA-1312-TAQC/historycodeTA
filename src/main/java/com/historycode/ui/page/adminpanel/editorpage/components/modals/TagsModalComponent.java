@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class TagsModalComponent extends ModalComponent {
+public class TagsModalComponent extends BaseCreateEditModalComponent {
 
     @Getter
     @FindBy(xpath = ".//div[@class='ant-modal-title']")

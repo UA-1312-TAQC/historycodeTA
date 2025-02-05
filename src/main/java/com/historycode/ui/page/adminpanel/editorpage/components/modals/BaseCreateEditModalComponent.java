@@ -8,7 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class ModalComponent extends BaseComponent {
+public class BaseCreateEditModalComponent extends BaseComponent {
 
     @Getter
     @FindBy(xpath = "./button[@aria-label='Close']")
@@ -20,7 +20,7 @@ public class ModalComponent extends BaseComponent {
     @Getter
     protected InputElement inputComponent;
 
-    public ModalComponent(WebDriver driver, WebElement rootElement) {
+    public BaseCreateEditModalComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
         inputComponent = new InputElement(driver, rootElement);
     }
