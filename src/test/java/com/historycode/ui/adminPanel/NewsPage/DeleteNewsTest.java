@@ -3,7 +3,7 @@ package com.historycode.ui.adminPanel.NewsPage;
 import com.historycode.ui.page.adminpanel.newspage.NewsPageAdminPanel;
 import com.historycode.ui.page.adminpanel.newspage.NewsPageGridComponent;
 import com.historycode.ui.page.adminpanel.newspage.NewsRowComponent;
-import com.historycode.ui.page.adminpanel.newspage.modal.EditNewsModal;
+import com.historycode.ui.page.adminpanel.newspage.modal.CreateEditNewsModal;
 import com.historycode.ui.testrunners.TestRunnerWithAdmin;
 
 import io.qameta.allure.Issue;
@@ -36,7 +36,7 @@ public class DeleteNewsTest extends TestRunnerWithAdmin {
         driver.get(testValueProvider.getBaseUIUrl() + "/admin-panel/news");
         NewsPageAdminPanel newsPage = new NewsPageAdminPanel(driver);
 
-        EditNewsModal editNewsModal = newsPage.clickAddNewInfo();
+        CreateEditNewsModal editNewsModal = newsPage.clickAddNewInfo();
         editNewsModal.inputNewsTitle(createdTitle);
         editNewsModal.inputNewsLinkTranslit(createdLink);
         editNewsModal.inputNewsTextEditor(createdText);

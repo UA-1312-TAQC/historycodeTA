@@ -16,14 +16,13 @@ public class TagsModalComponent extends ModalComponent {
 
     @Step("Enter '{name}' Into The Tag Name Input.")
     public TagsModalComponent enterTag(String name) {
-        inputComponent.setInput(name);
+        inputComponent.setInputField(name);
         return new TagsModalComponent(driver, rootElement);
     }
 
     @Step("Set another '{name}' Into The Tag Name Input.")
     public TagsModalComponent setTag(String name) {
-        inputComponent.clearInput();
-        inputComponent.setInput(name);
+        inputComponent.setInputField(name);
         return new TagsModalComponent(driver, rootElement);
     }
 

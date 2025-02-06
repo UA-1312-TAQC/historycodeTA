@@ -5,9 +5,11 @@ import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
 import com.historycode.ui.page.adminpanel.teampage.createEditModal.CreateEditMemberModal;
 import io.qameta.allure.Step;
 import lombok.Getter;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.time.LocalTime;
 
@@ -44,6 +46,11 @@ public class TeamPageAdminPanel extends BasePageAdminPanel {
         addNewMemberButton.click();
         waitUntilElementVisible(createEditModalNode);
         return new CreateEditMemberModal(driver, createEditModalNode);
+    }
+
+    public void waitForRowToBeVisible(String name) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//tr[contains(., '" + name + "')]")));
     }
 
     public CreateEditMemberModal editMemberByIndex(int index) {

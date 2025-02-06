@@ -56,7 +56,7 @@ public class WowfactsTest extends TestRunnerWithAdmin {
         streetcodeEditPage.getWowFactsModal().getImageDescription().sendKeys("Фото події");
         streetcodeEditPage.getWowFactsModal().isSymbolsLeftImgDesc("10 / 200");
 
-        streetcodeEditPage.getWowFactsModal().getSaveButton().click();
+        streetcodeEditPage.getWowFactsModal().clickSaveButton();
         Assert.assertTrue(streetcodeEditPage.isElementInvisible(streetcodeEditPage.getModalRootElement()));
 
         List<String> expectedWowFacts = Arrays.asList(
@@ -80,7 +80,7 @@ public class WowfactsTest extends TestRunnerWithAdmin {
         titleElement.sendKeys(Keys.BACK_SPACE);
         streetcodeEditPage.getWowFactsModal().getTitle().sendKeys("Виступ в Житомирі");
 
-        streetcodeEditPage.getWowFactsModal().getSaveButton().click();
+        streetcodeEditPage.getWowFactsModal().clickSaveButton();
         Assert.assertTrue(streetcodeEditPage.isElementInvisible(streetcodeEditPage.getModalRootElement()));
 
         List<String> newexpectedWowFacts = Arrays.asList(

@@ -1,6 +1,6 @@
 package com.historycode.ui.page.adminpanel.newspage.modal;
 
-import com.historycode.ui.component.adminPanel.modalAdminPanel.BaseEditModal;
+import com.historycode.ui.component.adminPanel.modalAdminPanel.BaseCreateEditModal;
 import com.historycode.ui.elements.adminPanel.InputElement;
 import com.historycode.ui.elements.adminPanel.TextEditorElements;
 import lombok.Getter;
@@ -19,7 +19,7 @@ import java.time.Duration;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeoutException;
 
-public class EditNewsModal extends BaseEditModal {
+public class CreateEditNewsModal extends BaseCreateEditModal {
 
     private TextEditorElements textEditorElements;
 
@@ -66,7 +66,7 @@ public class EditNewsModal extends BaseEditModal {
 
     protected PhotoModalComponent photoModalComponent;
 
-    public EditNewsModal(WebDriver driver, WebElement rootElement) {
+    public CreateEditNewsModal(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
         this.newsTitle = new InputElement(driver, newsTitleContainer);
         this.newsLinkTranslit = new InputElement(driver, newsLinkTranslitContainer);

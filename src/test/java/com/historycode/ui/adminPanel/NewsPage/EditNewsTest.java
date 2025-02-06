@@ -3,7 +3,7 @@ package com.historycode.ui.adminPanel.NewsPage;
 import com.historycode.ui.page.adminpanel.newspage.NewsPageAdminPanel;
 import com.historycode.ui.page.adminpanel.newspage.NewsPageGridComponent;
 import com.historycode.ui.page.adminpanel.newspage.NewsRowComponent;
-import com.historycode.ui.page.adminpanel.newspage.modal.EditNewsModal;
+import com.historycode.ui.page.adminpanel.newspage.modal.CreateEditNewsModal;
 import com.historycode.ui.testrunners.TestRunnerWithAdmin;
 import io.qameta.allure.Issue;
 import org.testng.annotations.AfterMethod;
@@ -38,7 +38,7 @@ public class EditNewsTest extends TestRunnerWithAdmin {
         driver.get(testValueProvider.getBaseUIUrl() + "/admin-panel/news");
         NewsPageAdminPanel newsPage = new NewsPageAdminPanel(driver);
 
-        EditNewsModal editNewsModal = newsPage.clickAddNewInfo();
+        CreateEditNewsModal editNewsModal = newsPage.clickAddNewInfo();
         editNewsModal.inputNewsTitle(originalTitle);
         editNewsModal.inputNewsLinkTranslit(originalLink);
         editNewsModal.inputNewsTextEditor(originalText);
@@ -59,7 +59,7 @@ public class EditNewsTest extends TestRunnerWithAdmin {
         NewsRowComponent newsToEdit = newsGrid.getRowById(0);
         assertNotNull(newsToEdit, "News should exist before editing.");
 
-        EditNewsModal editNewsModal = newsPage.editNewsByIndex(0);
+        CreateEditNewsModal editNewsModal = newsPage.editNewsByIndex(0);
 
         editedTitle = "Edited Test News Title";
         editedLink = "edited-test-link";

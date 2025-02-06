@@ -1,6 +1,7 @@
 package com.historycode.ui.component.HelpUs;
 
 import com.historycode.ui.Base;
+import com.historycode.ui.component.BaseComponent;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,7 +9,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 @Getter
-public class PartnerModalComponent extends Base {
+public class PartnerModalComponent extends BaseComponent {
+
 
     @FindBy(css = "div.ant-modal-content")
     private WebElement partnerModal;
@@ -25,12 +27,13 @@ public class PartnerModalComponent extends Base {
     @FindBy(css = "button[type='submit']")
     private WebElement submitButton;
 
-    public PartnerModalComponent(WebDriver driver) {
-        super(driver);
-        PageFactory.initElements(driver, this);
+    public PartnerModalComponent(WebDriver driver, WebElement rootElement) {
+        super(driver, rootElement);
     }
 
+
     public WebElement getPartnerModal() {
+        waitUntilElementVisible(partnerModal);
         return partnerModal;
     }
 

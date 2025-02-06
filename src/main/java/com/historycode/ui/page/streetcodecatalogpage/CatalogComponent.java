@@ -51,4 +51,16 @@ public class CatalogComponent extends BaseComponent {
     public String getCatalogDescriptions(int index) {
         return getCatalogDescriptions().get(index);
     }
+
+    public WebElement getCatalogElement(int index) {
+        if (index >= 0 && index < catalogElements.size()) {
+            return catalogElements.get(index);
+        }
+        throw new IndexOutOfBoundsException("Invalid index: " + index);
+    }
+
+    public void clickCatalogElement(int index) {
+        getCatalogElement(index).click();
+
+    }
 }

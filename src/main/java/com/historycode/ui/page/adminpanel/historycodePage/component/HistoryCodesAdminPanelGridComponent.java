@@ -2,6 +2,7 @@ package com.historycode.ui.page.adminpanel.historycodePage.component;
 
 
 import com.historycode.ui.component.adminPanel.gridAdminPanel.BaseGridComponent;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -19,10 +20,15 @@ public class HistoryCodesAdminPanelGridComponent extends BaseGridComponent {
     @FindBy(xpath = ".//thead//th")
     private List<WebElement> headerElementsNode;
 
+    @FindBy(xpath = "//div[@class='loadingWrapper']")
+    private WebElement loaderElement;
+
     public HistoryCodesAdminPanelGridComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
+        waitUntilElementInvisible(loaderElement);
         initHeaderItems();
         initRows(driver);
+
     }
 
     private void initHeaderItems() {
@@ -55,6 +61,7 @@ public class HistoryCodesAdminPanelGridComponent extends BaseGridComponent {
         return titles;
     }
 
+    @Step("Get history codes row by num on admin page")
     public HistoryCodesAdminPanelRowComponent getRowByNum(int num) {
         return rowElements.get(num);
     }

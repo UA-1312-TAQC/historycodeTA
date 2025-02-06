@@ -1,6 +1,9 @@
 package com.historycode.ui.page.homePage;
 
 import com.historycode.ui.component.BaseComponent;
+
+import com.historycode.ui.page.streetcodecatalogpage.StreetCodeCatalogPage;
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,24 +12,26 @@ import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
 
 public class PersonCardComponent extends BaseComponent {
 
-    @FindBy(xpath = "//div[contains(@class, 'streetcodeSliderContainer')]//p[contains(@class, 'cardTextContainerTitle')]")
+    @FindBy(xpath = ".//p[contains(@class, 'cardTextContainerTitle')]")
     private WebElement personName;
 
-    @FindBy(xpath = "//div[contains(@class, 'streetcodeSliderContainer')]//p[contains(@class, 'cardTextContainerSubTitle')]")
+    @FindBy(xpath = ".//p[contains(@class, 'cardTextContainerSubTitle')]")
     private WebElement category;
 
-    @FindBy(xpath = "//div[contains(@class, 'streetcodeSliderContainer')]//p[contains(@class, 'cardTextContainerText')]")
+    @FindBy(xpath = ".//p[contains(@class, 'cardTextContainerText')]")
     private WebElement description;
 
     @FindBy(xpath = ".//a[@class = 'cardTextContainerButton']")
     private WebElement moreLink;
 
-    @FindBy(xpath = "//div[contains(@class, 'streetcodeSliderContainer')]//img")
+    @FindBy(xpath = ".//img")
     private WebElement personImage;
+    @Getter
+    @FindBy(xpath = ".//a[contains(@class, 'cardTextContainerButton')]")
+    private WebElement toHistoryCodePage;
 
     public PersonCardComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        PageFactory.initElements(new DefaultElementLocatorFactory(rootElement), this);
     }
 
     public String getPersonName() {
@@ -34,6 +39,9 @@ public class PersonCardComponent extends BaseComponent {
     }
 
     public String getCategory() {
+        if (category == null || !category.isDisplayed()) {
+            return null;
+        }
         return category.getText().trim();
     }
 
@@ -47,5 +55,12 @@ public class PersonCardComponent extends BaseComponent {
 
     public String getImageSrc() {
         return personImage.getAttribute("src");
+    }
+
+    public StreetCodeCatalogPage clickToHistoryCode() {
+            waitUntilElementVisible(toHistoryCodePage);
+            toHistoryCodePage.click();
+            return new StreetCodeCatalogPage(driver);
+
     }
 }

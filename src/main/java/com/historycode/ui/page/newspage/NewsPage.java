@@ -3,56 +3,50 @@ package com.historycode.ui.page.newspage;
 import com.historycode.ui.page.BasePage;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
-import java.util.List;
 
-@Getter
 public class NewsPage extends BasePage {
-    private final NewsArticleComponent newsArticleComponent;
 
-    private final RelatedNewsComponent relatedNewsComponent;
-    private final NavigationComponent navigationComponent;
+    @Getter
+    @FindBy(xpath = "//div[@class='NewsHeader']")
+    private WebElement newsHeaderRoot;
 
-    public NewsPage(WebDriver driver, NewsArticleComponent newsArticleComponent, RelatedNewsComponent relatedNewsComponent, NavigationComponent navigationComponent) {
+    @FindBy(xpath = "//div[@class='newsWithImageWrapper']")
+    private WebElement newsTextAndImageNode;
+    @FindBy(xpath = "//div[@class='newsLinks']")
+    private WebElement newsLinksNode;
+    @FindBy(xpath = "//div[@class='randomNewsBlock']")
+    private WebElement readAlsoBlockNode;
+
+    private NewsArticleComponent newsArticleComponent;
+    private NavigationComponent navigationComponent;
+    private RelatedNewsComponent relatedNewsComponent;
+
+    public NewsPage(WebDriver driver) {
         super(driver);
-        this.newsArticleComponent = newsArticleComponent;
-        this.relatedNewsComponent = relatedNewsComponent;
-        this.navigationComponent = navigationComponent;
     }
 
-    public String getNewsTitle() {
-        return newsArticleComponent.getNewsTitle();
+    public NewsArticleComponent getNewsArticleComponent() {
+        if (newsArticleComponent == null) {
+            newsArticleComponent = new NewsArticleComponent(driver, newsTextAndImageNode);
+        }
+        return newsArticleComponent;
     }
 
-    public String getPublicationDate() {
-        return newsArticleComponent.getPublicationDate();
+    public NavigationComponent getNavigationComponent() {
+        if (navigationComponent == null) {
+            navigationComponent = new NavigationComponent(driver, newsLinksNode);
+        }
+        return navigationComponent;
     }
 
-    public String getNewsContent() {
-        return newsArticleComponent.getNewsContent();
+    public RelatedNewsComponent getRelatedNewsComponent() {
+        if (relatedNewsComponent == null) {
+            relatedNewsComponent = new RelatedNewsComponent(driver, readAlsoBlockNode);
+        }
+        return relatedNewsComponent;
     }
 
-    public boolean isNewsImageVisible() {
-        return newsArticleComponent.isNewsImageVisible();
-    }
-
-    public List<String> checkLinksInNewsContent() {
-        return newsArticleComponent.getLinksInNewsContent();
-    }
-
-    public boolean isPreviousButtonEnabled() {
-        return navigationComponent.isPreviousNewsLinkEnabled();
-    }
-
-    public boolean isNextButtonEnabled() {
-        return navigationComponent.isNextNewsLinkEnabled();
-    }
-
-    public String getRelatedNewsTitle() {
-        return relatedNewsComponent.getRelatedNewsTitle();
-    }
-
-    public boolean isRelatedNewsVisible() {
-        return relatedNewsComponent.isRelatedNewsButtonEnabled();
-    }
 }

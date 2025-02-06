@@ -10,7 +10,7 @@ import org.openqa.selenium.support.FindBy;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
+
 public class NewsArticleComponent extends BaseComponent {
     @FindBy(xpath = "//h1")
     private WebElement newsTitle;
@@ -31,50 +31,33 @@ public class NewsArticleComponent extends BaseComponent {
         super(driver, rootElement);
     }
 
-
     public String getNewsTitle() {
-        try {
-            return newsTitle.getText();
-        } catch (NoSuchElementException e) {
-            return "News title is not visible";
-        }
+        waitUntilElementVisible(newsTitle);
+        return newsTitle.getText();
     }
 
     public String getPublicationDate() {
-        try {
-            return publicationDate.getText();
-        } catch (NoSuchElementException e) {
-            return "News publication date is not visible";
-        }
+        waitUntilElementVisible(publicationDate);
+        return publicationDate.getText();
     }
 
     public String getNewsContent() {
-        try {
-            return newsContent.getText();
-        } catch (NoSuchElementException e) {
-            return "News content is not visible";
-        }
+        waitUntilElementVisible(newsContent);
+        return newsContent.getText();
     }
 
     public boolean isNewsImageVisible() {
-        try {
-            return newsImage.isDisplayed();
-        } catch (NoSuchElementException e) {
-            return false;
-        }
+        return newsImage.isDisplayed();
     }
 
     public List<String> getLinksInNewsContent() {
         List<String> links = new ArrayList<>();
-        try {
-            for (WebElement link : linkInNewsContent) {
-                String url = link.getDomAttribute("href");
-                if (url != null && !url.isEmpty()) {
-                    links.add(url);
-                }
+
+        for (WebElement link : linkInNewsContent) {
+            String url = link.getDomAttribute("href");
+            if (url != null && !url.isEmpty()) {
+                links.add(url);
             }
-        } catch (NoSuchElementException e) {
-            System.out.println("No links found");
         }
         return links;
     }
