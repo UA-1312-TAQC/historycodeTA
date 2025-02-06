@@ -1,10 +1,12 @@
 package com.historycode.ui.adminPanel.EditorPage;
 
+import com.beust.ah.A;
 import com.historycode.ui.page.adminpanel.editorpage.CategoriesPage;
 import com.historycode.ui.testrunners.TestRunnerWithAdminEditor;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Issue;
 import jdk.jfr.Description;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class EditorCategoriesTests extends TestRunnerWithAdminEditor {
@@ -17,15 +19,28 @@ public class EditorCategoriesTests extends TestRunnerWithAdminEditor {
     @Description("Verify admin can create new category")
     public void verifyAdminCanCreateCategory() {
 
-        new CategoriesPage(driver)
+        CategoriesPage categoriesPage = new CategoriesPage(driver);
+        boolean actual = false;
+
+        categoriesPage
                 .clickAddCategory()
                 .enterCategory(TEST_CATEGORY)
                 .save()
                 .close();
 
-        //ToDo Add Pagination
-        //ToDo Add Search in grids
-        //ToDo Add Assert is new category exists
+        while (!actual && categoriesPage.tableHasNextPage()) {
+            if (categoriesPage.getTableRowByTitle(TEST_CATEGORY) == null) {
+                categoriesPage.clickNextPage();
+            } else {
+                actual = true;
+            }
+        }
+
+        Assert.assertTrue(actual,
+                "New category is not created.");
+
+        //ToDo Add Photo uploading
+        //ToDo Check will it work or not)
     }
 
     //ToDo Add After Class method to delete new category

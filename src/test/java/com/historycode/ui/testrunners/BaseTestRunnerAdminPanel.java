@@ -17,8 +17,8 @@ import java.time.Duration;
 
 public class BaseTestRunnerAdminPanel {
 
-    protected static TestValueProvider testValueProvider;
     protected WebDriver driver;
+    protected static TestValueProvider testValueProvider;
 
     @BeforeSuite
     public void beforeSuite() {
@@ -34,7 +34,7 @@ public class BaseTestRunnerAdminPanel {
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(testValueProvider.getImplicitlyWait()));
-
+        driver.get(testValueProvider.getBaseUIUrl());
         moveToAdminPanel();
     }
 
@@ -50,7 +50,7 @@ public class BaseTestRunnerAdminPanel {
 
     @Step("Quit driver.")
     @AfterClass(alwaysRun = true)
-    public void afterMethod() {
+    public void afterClass() {
         if (driver != null) {
             driver.quit();
         }

@@ -26,7 +26,7 @@ public class EditorTagsTests extends TestRunnerWithAdminEditor {
         List<String> expectedGridHeaders = Arrays.asList("Назва", "Дії");
         List<String> actualGridHeaders = tagsPage.getTableHeadersString();
         boolean actual = tagsPage.isGridDisplayed();
-        Assert.assertEquals(expectedGridHeaders, actualGridHeaders,
+        Assert.assertEquals(actualGridHeaders, expectedGridHeaders,
                 "Current headers and expected are not same.");
         Assert.assertTrue(actual,
                 "Current rows are not displayed or are displayed incorrectly.");

@@ -1,5 +1,6 @@
 package com.historycode.ui.testrunners;
 
+import com.historycode.ui.page.adminpanel.editorpage.components.rows.RowComponent;
 import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
 import io.qameta.allure.Step;
 import org.testng.annotations.AfterMethod;
