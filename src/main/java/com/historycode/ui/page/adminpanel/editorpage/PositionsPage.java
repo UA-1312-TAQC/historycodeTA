@@ -132,4 +132,8 @@ public class PositionsPage extends BaseEditorPage {
         grid.clickPaginationItem(index);
         return new PositionsPage(driver);
     }
+
+    public boolean tableHasNextPage() {
+        return grid.tableHasNextPage();
+    }
 }

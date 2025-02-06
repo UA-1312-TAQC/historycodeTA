@@ -133,4 +133,8 @@ public class TagsPage extends BaseEditorPage {
         grid.clickPaginationItem(index);
         return new TagsPage(driver);
     }
+
+    public boolean tableHasNextPage() {
+        return grid.tableHasNextPage();
+    }
 }

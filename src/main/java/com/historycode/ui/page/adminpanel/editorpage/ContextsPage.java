@@ -132,6 +132,10 @@ public class ContextsPage extends BaseEditorPage {
         grid.clickPaginationItem(index);
         return new ContextsPage(driver);
     }
+
+    public boolean tableHasNextPage() {
+        return grid.tableHasNextPage();
+    }
 }
 
 //    public DeleteItemModal deleteTableRow(ContextsRowComponent row) {

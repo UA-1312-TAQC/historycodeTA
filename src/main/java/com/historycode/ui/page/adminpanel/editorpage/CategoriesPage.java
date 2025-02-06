@@ -136,4 +136,8 @@ public class CategoriesPage extends BaseEditorPage {
         grid.clickPaginationItem(index);
         grid = new CategoriesGridComponent(driver, gridNode);
     }
+
+    public boolean tableHasNextPage() {
+        return grid.tableHasNextPage();
+    }
 }

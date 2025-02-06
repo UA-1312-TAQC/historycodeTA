@@ -7,6 +7,7 @@ import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,11 +30,10 @@ public class GridComponent extends BaseGridComponent {
 
     public GridComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        waitUntilElementInvisible(loading);
+        sleep(5000);
         headerItems = new ArrayList<>();
         pagination = new PaginationAdminPanelComponent(driver, paginationNode);
         initHeaderItems();
-        System.out.println("Grid was created");
     }
 
     private void initHeaderItems() {
@@ -92,6 +92,11 @@ public class GridComponent extends BaseGridComponent {
         pagination.clickPaginationItem(index);
         waitUntilElementInvisible(loading);
         return createInstance();
+    }
+
+    @Step("Grid checks if the table has next page.")
+    public boolean tableHasNextPage() {
+        return pagination.hasNextPage();
     }
 
     protected GridComponent createInstance() {
