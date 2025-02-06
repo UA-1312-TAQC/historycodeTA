@@ -21,7 +21,7 @@ public class DeleteNewsTest extends TestRunnerWithAdmin {
     private String createdTitle;
     private String createdLink;
     private String createdText;
-    private String imagePath = "src/test/resources/newsTest.png"; // Update this path if needed
+    private String imagePath = "src/test/resources/newsTest.png";
 
     @BeforeMethod
     public void setupForDeleteNews() {

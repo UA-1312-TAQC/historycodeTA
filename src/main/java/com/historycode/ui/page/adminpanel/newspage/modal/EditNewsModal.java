@@ -113,7 +113,7 @@ public class EditNewsModal extends BaseEditModal {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.invisibilityOf(closeButton));
     }
-
+    
     public void clickUploadNewsPhoto(String filePath) {
         File file = new File(filePath);
         if (!file.exists()) {
