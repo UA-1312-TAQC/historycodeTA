@@ -1,4 +1,4 @@
-package com.historycode.api.streetcode;
+package com.historycode.api.testRunners;
 
 import com.historycode.TestValueProvider;
 import org.testng.annotations.BeforeSuite;
