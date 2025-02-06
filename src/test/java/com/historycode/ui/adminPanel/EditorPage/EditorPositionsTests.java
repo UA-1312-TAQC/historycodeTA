@@ -13,6 +13,7 @@ public class EditorPositionsTests extends TestRunnerWithAdminEditor {
 
     private final String TEST_POSITION = "testPosition23";
     private final String TEST_POSITION_NEW = "testPosition32";
+    private final String TEST_POSITION_VALID = "testPositionValid";
     private final String TEST_POSITION_TOO_LONG = "testPositionAddingWithATooLongNameMoreThan50Symbols";
 
     @Test
@@ -50,6 +51,22 @@ public class EditorPositionsTests extends TestRunnerWithAdminEditor {
 
         //ToDo Update modals error messages
         //ToDo Check whether expected message is the same on web page
+    }
+
+    @Test
+    @Issue("112")
+    @Epic("(Epic#5) Admin/Other pages")
+    @Description("Verify that the admin can add a new position with valid data")
+    public void verifyAdminCanAddNewValidPosition() {
+
+        new CategoriesPage(driver)
+                .moveToPositions()
+                .clickAddPosition()
+                .enterPosition(TEST_POSITION_VALID)
+                .save()
+                .close();
+
+        //ToDo Add searching of position in grids and assertation of it name
     }
 
     //ToDo Add Before Class method to add new position than move back to Base Admin Page and move to the editor
