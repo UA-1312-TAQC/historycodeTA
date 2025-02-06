@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -70,5 +71,11 @@ public abstract class BaseEditorPage extends BasePageAdminPanel {
                 .orElse(null);
     }
 
+    @Override
+    public void scrollToElement(WebElement element) {
+        wait.until(ExpectedConditions.visibilityOf(element));
+        threadJs.executeScript("arguments[0].scrollIntoView({block: 'center', inline: 'center'});", element);
+        wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
     //TODO Add pagination component
 }
