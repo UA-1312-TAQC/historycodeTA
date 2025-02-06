@@ -21,7 +21,7 @@ public class NewsTest extends ApiTestRunner {
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(response.getStatusCode(), 200);
         GetAllNewsResponse getAllNewsResponse = response.body().as(GetAllNewsResponse.class);
-        softAssert.assertFalse(getAllNewsResponse.getNews() == null || getAllNewsResponse.getNews().isEmpty(), "The news ");
+        softAssert.assertFalse(getAllNewsResponse.getNews() == null || getAllNewsResponse.getNews().isEmpty(), "The news is not present in the response body");
         softAssert.assertAll();
     }
 
