@@ -28,4 +28,5 @@ public class EditorCategoriesTests extends TestRunnerWithAdminEditor {
         //ToDo Add Assert is new category exists
     }
 
+    //ToDo Add After Class method to delete new category
 }
