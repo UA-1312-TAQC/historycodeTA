@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ContextsGridComponent extends GridComponent {
+
     List<ContextsRowComponent> rows;
 
     public ContextsGridComponent(WebDriver driver, WebElement rootElement) {
@@ -114,5 +115,6 @@ public class ContextsGridComponent extends GridComponent {
         pagination.clickPaginationItem(index);
         return new ContextsGridComponent(driver, rootElement);
     }
+
     //TODO Update edit/deleteRow methods to return modals
 }

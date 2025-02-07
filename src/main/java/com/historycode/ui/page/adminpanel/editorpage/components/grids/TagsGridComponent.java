@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class TagsGridComponent extends GridComponent {
+
     List<TagsRowComponent> rows;
 
     public TagsGridComponent(WebDriver driver, WebElement rootElement) {
@@ -114,5 +115,6 @@ public class TagsGridComponent extends GridComponent {
         pagination.clickPaginationItem(index);
         return new TagsGridComponent(driver, rootElement);
     }
+
     //TODO Update edit/deleteRow methods to return modals
 }

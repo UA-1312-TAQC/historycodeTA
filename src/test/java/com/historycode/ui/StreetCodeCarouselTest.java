@@ -18,7 +18,6 @@ public class StreetCodeCarouselTest extends BaseTestRunner {
     private int cardExpectedIndex;
     private int cardIndexAfterClick;
     private int squareExpectedIndex;
-
     private int squareIndexAfterClick;
 
     @BeforeMethod

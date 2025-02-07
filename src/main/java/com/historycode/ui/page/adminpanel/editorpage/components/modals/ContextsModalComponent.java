@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class ContextsModalComponent extends ModalComponent {
+
     @FindBy(xpath = ".//div[@class='center']/h2")
     private WebElement title;
 
@@ -15,7 +16,7 @@ public class ContextsModalComponent extends ModalComponent {
 
     @Step("Enter '{name}' Into The Context Name Input.")
     public ContextsModalComponent enterContext(String name) {
-        inputComponent.setInput(name);
+        inputComponent.setInputField(name);
         return new ContextsModalComponent(driver, rootElement);
     }
 

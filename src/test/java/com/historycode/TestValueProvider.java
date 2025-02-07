@@ -45,5 +45,8 @@ public class TestValueProvider {
         return  properties != null ? properties.getProperty("profileDir") : System.getenv("profileDir");
     }
 
+    public String getBaseAPIUrl(){
+        return  properties != null ? properties.getProperty("base.api.url") : System.getenv("base.api.url");
+    }
 
 }
