@@ -15,7 +15,11 @@ public class PartnerPage extends BasePage {
 
     private static final String LOGO_XPATH = ".//img";
     private static final String DESCRIPTION_XPATH = ".//div[@class='description']/p";
+    private static final String LOGOPREFIX = "data:image/webp;base64,";
+    private static final int logoNecessaryWidth = 350;
+    private static final int logoNecessaryLength = 106;
 
+    @Getter
     @FindBy(xpath = "//div[@class='otherPartnersBlock']/div[@class='partnersItem']")
     protected List<WebElement> notKeyPartners;
 
@@ -41,6 +45,22 @@ public class PartnerPage extends BasePage {
         List<WebElement> partners = type == PartnerType.KEY ? keyPartners : notKeyPartners;
         WebElement logo = findLogo(partners, alt);
         hoverOverLogo(logo);
+    }
+
+    public String getLogoSrc(String alt, PartnerType type) {
+        List<WebElement> partners = type == PartnerType.KEY ? keyPartners : notKeyPartners;
+        String logoSrc = findLogo(partners, alt).getDomAttribute("src");
+        if (logoSrc.startsWith(LOGOPREFIX)) {
+            return logoSrc.substring(LOGOPREFIX.length());
+        }
+        return logoSrc;
+    }
+
+    public Boolean isGoodLogoSize(String alt, PartnerType type) {
+        List<WebElement> partners = type == PartnerType.KEY ? keyPartners : notKeyPartners;
+        WebElement logo = findLogo(partners, alt);
+        return logo.getSize().getWidth() >= logoNecessaryWidth &&
+                logo.getSize().getHeight() >= logoNecessaryLength;
     }
 
     public String getPopoverDescription() {

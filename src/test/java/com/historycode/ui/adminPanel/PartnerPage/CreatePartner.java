@@ -75,10 +75,57 @@ public class CreatePartner extends TestAdminPartnerPage {
 
         PartnerPage basePage = new PartnerPage(driver);
         basePage.openBurgerMenu().goToPartnerPage();
-        basePage.scrollToElement(basePage.getConstantKeyPartners());
+        basePage.scrollToElementJs(basePage.getNotKeyPartners().getFirst());
         basePage.hoverOverPartner(testName, PartnerPage.PartnerType.KEY);
 
         Assert.assertEquals(basePage.getPopoverDescription(), testDescription);
+    }
+
+    @Test
+    @Epic("AdminPartners")
+    @Issue("131")
+    @Story("64")
+    @Description("Verify that the admin can add logo as an image to a partner's card")
+    public void addLogoNotKeyPartner() {
+        CreatePartnersModal createModal = openCreateModal();
+        createModal.name.setInputField(testName);
+        createModal.logo.uploadLogo(testLogo);
+        createModal.clickSaveButton();
+        createModal.clickCloseButton();
+
+        PartnerPage basePage = new PartnerPage(driver);
+        basePage.openBurgerMenu().goToPartnerPage();
+        basePage.scrollToEndOfPage();
+
+        Assert.assertEquals(basePage.getLogoSrc(testName, PartnerPage.PartnerType.NOT_KEY), testLogoSrc,
+                        "Img code base64 don't match");
+    }
+
+    @Test
+    @Epic("AdminPartners")
+    @Issue("131")
+    @Story("64")
+    @Description("Verify that the admin can add logo as an image to a partner's card")
+    public void addLogoKeyPartner() {
+        SoftAssert softAssert = new SoftAssert();
+
+        CreatePartnersModal createModal = openCreateModal();
+        createModal.keyPartner.check();
+        createModal.name.setInputField(testName);
+        createModal.logo.uploadLogo(testLogo);
+        createModal.clickSaveButton();
+        createModal.clickCloseButton();
+
+        PartnerPage basePage = new PartnerPage(driver);
+        basePage.openBurgerMenu().goToPartnerPage();
+        basePage.scrollToElementJs(basePage.getNotKeyPartners().getFirst());
+
+        softAssert.assertEquals(basePage.getLogoSrc(testName, PartnerPage.PartnerType.KEY), testLogoSrc,
+                "Img code base64 don't match");
+        softAssert.assertTrue(basePage.isGoodLogoSize(testName, PartnerPage.PartnerType.KEY),
+                "The image size doesn't match the mockup");
+        softAssert.assertAll();
+
     }
 
     @AfterMethod

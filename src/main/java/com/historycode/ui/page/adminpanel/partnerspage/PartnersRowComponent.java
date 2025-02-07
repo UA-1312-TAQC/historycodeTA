@@ -13,7 +13,7 @@ import java.util.List;
 
 public class PartnersRowComponent extends BaseComponent {
 
-    String LOGOPREFIX = "data:image/webp;base64,";
+    private static final String LOGOPREFIX = "data:image/webp;base64,";
 
     @Getter
     @FindBy(xpath = "./td[1]//div[@class='partner-table-item-name']//p")
