@@ -13,6 +13,8 @@ import java.util.List;
 
 public class PartnersRowComponent extends BaseComponent {
 
+    String LOGOPREFIX = "data:image/webp;base64,";
+
     @Getter
     @FindBy(xpath = "./td[1]//div[@class='partner-table-item-name']//p")
     private WebElement name;
@@ -52,7 +54,11 @@ public class PartnersRowComponent extends BaseComponent {
     }
 
     public String getLogoSrc() {
-        return logo.getDomAttribute("src");
+        String logoSrc = logo.getDomAttribute("src");
+        if (logoSrc.startsWith(LOGOPREFIX)) {
+            return logoSrc.substring(LOGOPREFIX.length());
+        }
+        return logoSrc;
     }
 
     @Step("Click on the delete button next to partner item")

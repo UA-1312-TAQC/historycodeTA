@@ -16,12 +16,12 @@ public class PartnersPageGridComponent extends BaseGridComponent {
     @Getter
     private List<PartnersRowComponent> partnersRowComponents;
 
-    @FindBy(xpath = "./tbody//tr")
+    @FindBy(xpath = "//tbody//tr")
     protected List<WebElement> partnerRowNodes;
 
     public PartnersPageGridComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        sleep(2000);
+        sleep(1000);
         this.partnersRowComponents = initializePartnersRowComponents(driver, partnerRowNodes);
     }
 

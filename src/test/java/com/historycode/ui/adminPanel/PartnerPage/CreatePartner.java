@@ -35,7 +35,6 @@ public class CreatePartner extends TestAdminPartnerPage {
 
         softAssert.assertEquals(newPartner.getNameText(), testName);
         softAssert.assertEquals(newPartner.getLogoSrc(), testLogoSrc);
-
         softAssert.assertAll();
     }
 
