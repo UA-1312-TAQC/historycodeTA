@@ -44,7 +44,7 @@ public class PartnerPage extends BasePage {
     }
 
     public String getPopoverDescription() {
-        waitUntilElementVisible(popoverContainer);
+        waitUntilElementVisible(popoverContainer.findElement(By.xpath(DESCRIPTION_XPATH)));
         WebElement description = popoverContainer.findElement(By.xpath(DESCRIPTION_XPATH));
         return description.getText();
     }

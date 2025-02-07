@@ -95,6 +95,7 @@ public class CreatePartner extends TestAdminPartnerPage {
         if (newPartner != null) {
             newPartner.clickDelete().clickOkButton();
             Allure.step(String.format("Партнер '%s' успішно видалений.", testName));
+            
         } else {
             Allure.step(String.format("Партнер '%s' не знайдений у системі.", testName));
         }

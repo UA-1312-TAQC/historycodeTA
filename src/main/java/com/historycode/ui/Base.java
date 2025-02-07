@@ -125,6 +125,10 @@ public abstract class Base {
         wait.until(ExpectedConditions.visibilityOfAllElements(elements));
     }
 
+    public void waitUntilPageLouder() {
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.tagName("body")));
+    }
+
     public void refreshPage() {
         driver.navigate().refresh();
     }
