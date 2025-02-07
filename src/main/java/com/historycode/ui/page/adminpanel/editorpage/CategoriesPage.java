@@ -4,9 +4,9 @@ import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
 import com.historycode.ui.page.adminpanel.editorpage.components.grids.CategoriesGridComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.CategoriesModalComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.CategoriesRowComponent;
-import com.historycode.ui.page.adminpanel.editorpage.components.rows.ContextsRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.elements.AddButtonElement;
 import io.qameta.allure.Step;
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -15,16 +15,17 @@ import java.util.List;
 
 public class CategoriesPage extends BaseEditorPage {
 
+    @Getter
     @FindBy(xpath = "//div[contains(@class, 'ant-table-wrapper')]")
-    private WebElement rootGrid;
+    private WebElement gridNode;
 
     private AddButtonElement addCategoryButton;
     private CategoriesGridComponent grid;
 
     public CategoriesPage(WebDriver driver) {
         super(driver);
-        addCategoryButton = new AddButtonElement(driver, getRootAddButton());
-        grid = new CategoriesGridComponent(driver, rootGrid);
+        addCategoryButton = new AddButtonElement(driver, getAddButtonNode());
+        grid = new CategoriesGridComponent(driver, gridNode);
     }
 
     @Step("Check Categories Grid Is Displayed Correctly.")
@@ -113,26 +114,30 @@ public class CategoriesPage extends BaseEditorPage {
 
     public void clickNextPage() {
         grid.clickNextPage();
-        grid = new CategoriesGridComponent(driver, rootGrid);
+        grid = new CategoriesGridComponent(driver, gridNode);
     }
 
     public void clickPrevPage() {
         grid.clickPrevPage();
-        grid = new CategoriesGridComponent(driver, rootGrid);
+        grid = new CategoriesGridComponent(driver, gridNode);
     }
 
     public void clickPrevFivePages() {
         grid.clickPrevFivePages();
-        grid = new CategoriesGridComponent(driver, rootGrid);
+        grid = new CategoriesGridComponent(driver, gridNode);
     }
 
     public void clickNextFivePages() {
         grid.clickNextFivePages();
-        grid = new CategoriesGridComponent(driver, rootGrid);
+        grid = new CategoriesGridComponent(driver, gridNode);
     }
 
     public void clickPaginationItem(int index) {
         grid.clickPaginationItem(index);
-        grid = new CategoriesGridComponent(driver, rootGrid);
+        grid = new CategoriesGridComponent(driver, gridNode);
+    }
+
+    public boolean tableHasNextPage() {
+        return grid.tableHasNextPage();
     }
 }

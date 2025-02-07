@@ -13,40 +13,40 @@ public class NewsPage extends BasePage {
     @FindBy(xpath = "//div[@class='NewsHeader']")
     private WebElement newsHeaderRoot;
 
+    @FindBy(xpath = "//div[@class='newsWithImageWrapper']")
+    private WebElement newsTextAndImageNode;
+    @FindBy(xpath = "//div[@class='newsLinks']")
+    private WebElement newsLinksNode;
+    @FindBy(xpath = "//div[@class='randomNewsBlock']")
+    private WebElement readAlsoBlockNode;
+
+    private NewsArticleComponent newsArticleComponent;
+    private NavigationComponent navigationComponent;
+    private RelatedNewsComponent relatedNewsComponent;
+
     public NewsPage(WebDriver driver) {
         super(driver);
     }
 
-//    public String getPublicationDate() {
-//        return newsArticleComponent.getPublicationDate();
-//    }
-//
-//    public String getNewsContent() {
-//        return newsArticleComponent.getNewsContent();
-//    }
-//
-//    public boolean isNewsImageVisible() {
-//        return newsArticleComponent.isNewsImageVisible();
-//    }
-//
-//    public List<String> checkLinksInNewsContent() {
-//        return newsArticleComponent.getLinksInNewsContent();
-//    }
-
-    public boolean isPreviousButtonEnabled() {
-        return false;
+    public NewsArticleComponent getNewsArticleComponent() {
+        if (newsArticleComponent == null) {
+            newsArticleComponent = new NewsArticleComponent(driver, newsTextAndImageNode);
+        }
+        return newsArticleComponent;
     }
 
-    public boolean isNextButtonEnabled() {
-        return false;
+    public NavigationComponent getNavigationComponent() {
+        if (navigationComponent == null) {
+            navigationComponent = new NavigationComponent(driver, newsLinksNode);
+        }
+        return navigationComponent;
     }
 
-    public String getRelatedNewsTitle() {
-        return "";
-    }
-
-    public boolean isRelatedNewsVisible() {
-        return false;
+    public RelatedNewsComponent getRelatedNewsComponent() {
+        if (relatedNewsComponent == null) {
+            relatedNewsComponent = new RelatedNewsComponent(driver, readAlsoBlockNode);
+        }
+        return relatedNewsComponent;
     }
 
 }

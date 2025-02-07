@@ -2,6 +2,7 @@ package com.historycode.ui.page.streetCodePage.components;
 
 import com.historycode.ui.component.BaseComponent;
 import com.historycode.ui.page.streetCodePage.components.carousels.InterestingFactsCarousel;
+import com.historycode.ui.page.streetCodePage.components.carousels.InterestingFactsCarouselSquares;
 import com.historycode.ui.page.streetCodePage.modals.InterestingFactsModal;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
@@ -16,17 +17,20 @@ public class InterestingFactsComponent extends BaseComponent {
     private WebElement title;
 
     @Getter
-    @FindBy(xpath = ".//div[@class='interestingFactsContainer']")
+    @FindBy(xpath = ".//div[@class='interestingFactsContainer ']")
     private WebElement carouselRoot;
 
     @Getter
     private final InterestingFactsModal interestingFactsModal;
     @Getter
     private final InterestingFactsCarousel carousel;
+    @Getter
+    private final InterestingFactsCarouselSquares carouselSquares;
 
     public InterestingFactsComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
         this.carousel = new InterestingFactsCarousel(driver, carouselRoot);
+        this.carouselSquares = new InterestingFactsCarouselSquares(driver, carouselRoot);;
         this.interestingFactsModal = new InterestingFactsModal(driver, rootElement);
     }
 
@@ -73,11 +77,11 @@ public class InterestingFactsComponent extends BaseComponent {
     }
 
     public int getActiveWowFactsSquareIndex() {
-        return carousel.getActiveWowFactsSquareIndex();
+        return carouselSquares.getActiveWowFactsSquareIndex();
     }
 
     public int getPreviousSquareIndex() {
-        return carousel.getPreviousSquareIndex();
+        return carouselSquares.getPreviousSquareIndex();
     }
 
     public int getPreviousCardIndex() {
@@ -85,7 +89,7 @@ public class InterestingFactsComponent extends BaseComponent {
     }
 
     public int getNextWowFactsSquareIndex() {
-        return carousel.getNextWowFactsSquareIndex();
+        return carouselSquares.getNextWowFactsSquareIndex();
     }
 
     public void clickPreviousCard() {
@@ -93,9 +97,8 @@ public class InterestingFactsComponent extends BaseComponent {
     }
 
     public void clickRandomWowFactsSquare() {
-        carousel.clickRandomWowFactsSquare();
+        carouselSquares.clickRandomWowFactsSquare();
     }
-
 
 }
 
