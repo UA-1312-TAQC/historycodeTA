@@ -3,10 +3,10 @@ package com.historycode.ui.page.adminpanel.editorpage;
 import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
 import com.historycode.ui.page.adminpanel.editorpage.components.grids.PositionsGridComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.PositionsModalComponent;
-import com.historycode.ui.page.adminpanel.editorpage.components.rows.ContextsRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.PositionsRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.elements.AddButtonElement;
 import io.qameta.allure.Step;
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -15,16 +15,17 @@ import java.util.List;
 
 public class PositionsPage extends BaseEditorPage {
 
+    @Getter
     @FindBy(xpath = "//div[contains(@class, 'ant-table-wrapper')]")
-    private WebElement rootGrid;
+    private WebElement gridNode;
 
     private AddButtonElement addPositionButton;
     private PositionsGridComponent grid;
 
     public PositionsPage(WebDriver driver) {
         super(driver);
-        addPositionButton = new AddButtonElement(driver, getRootAddButton());
-        grid = new PositionsGridComponent(driver, rootGrid);
+        addPositionButton = new AddButtonElement(driver, getAddButtonNode());
+        grid = new PositionsGridComponent(driver, gridNode);
     }
 
     @Step("Check Positions Grid Is Displayed Correctly.")
@@ -79,7 +80,7 @@ public class PositionsPage extends BaseEditorPage {
         return addPositionButton.getButtonText();
     }
 
-    public PositionsModalComponent editTableRow(PositionsRowComponent row) throws InterruptedException {
+    public PositionsModalComponent editTableRow(PositionsRowComponent row) {
         grid.editRow(row);
         wait.until(driver -> getDisplayedModalRoot() != null);
         return new PositionsModalComponent(driver, getDisplayedModalRoot());
@@ -130,5 +131,9 @@ public class PositionsPage extends BaseEditorPage {
     public PositionsPage clickPaginationItem(int index) {
         grid.clickPaginationItem(index);
         return new PositionsPage(driver);
+    }
+
+    public boolean tableHasNextPage() {
+        return grid.tableHasNextPage();
     }
 }

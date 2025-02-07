@@ -6,8 +6,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class PositionsModalComponent extends ModalComponent {
+public class PositionsModalComponent extends BaseCreateEditModalComponent {
 
+    @Getter
     @FindBy(xpath = ".//div[@class='ant-modal-title']")
     private WebElement title;
 
@@ -28,10 +29,6 @@ public class PositionsModalComponent extends ModalComponent {
     @Step("Check Position Modal is Displayed.")
     public boolean isExist() {
         return closeButton.isDisplayed() && title.isDisplayed() && saveButton.isDisplayed();
-    }
-
-    public WebElement getTitle() {
-        return title;
     }
 
     public String getTitleString() {
