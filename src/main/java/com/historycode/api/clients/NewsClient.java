@@ -1,14 +1,8 @@
-package com.historycode.api.clients.adminPanel;
+package com.historycode.api.clients;
 
-import com.historycode.api.clients.BaseClient;
-import com.historycode.api.models.adminPanel.news.News;
-import com.historycode.api.models.adminPanel.news.NewsRequestBody;
+import com.historycode.api.models.news.NewsRequestBody;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 
 public class NewsClient extends BaseClient {
 
@@ -19,10 +13,6 @@ public class NewsClient extends BaseClient {
     }
 
     public NewsClient(String baseUrl, ContentType contentType) {
-        super(baseUrl, contentType);
-    }
-
-    public NewsClient(String baseUrl, String contentType) {
         super(baseUrl, contentType);
     }
 

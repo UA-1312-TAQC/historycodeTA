@@ -1,4 +1,4 @@
-package com.historycode.api.models.adminPanel.news;
+package com.historycode.api.models.news;
 
 import lombok.Data;
 
