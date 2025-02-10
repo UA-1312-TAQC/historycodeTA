@@ -32,4 +32,16 @@ public class NewsClient extends BaseClient {
                 .queryParam("amount", amount)
                 .get(resourceUrl + "/GetAll");
     }
+
+    public Response getById(int id) {
+        return preparedRequest()
+                .when()
+                .get(resourceUrl + "/GetById/" + id);
+    }
+
+    public Response getByUrl(String url) {
+        return preparedRequest()
+                .when()
+                .get(resourceUrl + "/GetByUrl/" + url);
+    }
 }
