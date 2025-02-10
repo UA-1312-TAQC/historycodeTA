@@ -1,4 +1,4 @@
-package com.historycode.api.models.adminPanel.news;
+package com.historycode.api.models.img;
 
 import lombok.Getter;
 import lombok.ToString;

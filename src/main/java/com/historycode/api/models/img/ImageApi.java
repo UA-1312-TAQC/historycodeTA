@@ -1,10 +1,9 @@
-package com.historycode.api.models.adminPanel.news;
+package com.historycode.api.models.img;
 
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Data;
 
-@Getter
-public class NewsImage {
+@Data
+public class ImageApi {
     private int id;
     private String blobName;
     private String base64;
