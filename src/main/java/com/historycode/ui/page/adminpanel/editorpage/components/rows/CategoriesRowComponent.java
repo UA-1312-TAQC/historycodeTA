@@ -1,16 +1,20 @@
 package com.historycode.ui.page.adminpanel.editorpage.components.rows;
 
 import io.qameta.allure.Step;
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class CategoriesRowComponent extends RowComponent {
 
+    @Getter
     @FindBy(xpath = "./td[@class='ant-table-cell'][3]//span[contains(@class, 'anticon-delete')]//*[name()='svg']")
     private WebElement deleteAction;
+    @Getter
     @FindBy(xpath = ".//td[@class='ant-table-cell'][3]//span[contains(@class, 'anticon-edit')]//*[name()='svg']")
     private WebElement editAction;
+    @Getter
     @FindBy(xpath = ".//td[@class='ant-table-cell'][2]//img")
     private WebElement picture;
 
@@ -29,17 +33,5 @@ public class CategoriesRowComponent extends RowComponent {
 
     public void clickDelete() {
         deleteAction.click();
-    }
-
-    public WebElement getPicture() {
-        return picture;
-    }
-
-    public WebElement getEditAction(){
-        return editAction;
-    }
-
-    public WebElement getDeleteAction() {
-        return deleteAction;
     }
 }

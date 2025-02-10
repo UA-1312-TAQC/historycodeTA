@@ -2,12 +2,11 @@ package com.historycode.ui.page.newspage;
 
 import com.historycode.ui.component.BaseComponent;
 import lombok.Getter;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-@Getter
+
 public class RelatedNewsComponent extends BaseComponent {
 
     @FindBy(xpath = "//div[contains(@class,'randomNewsTitleAndButton')]")
@@ -21,19 +20,18 @@ public class RelatedNewsComponent extends BaseComponent {
     }
 
     public String getRelatedNewsTitle() {
-        try {
-            return relatedNewsTitle.getText();
-        } catch (NoSuchElementException e) {
-            return "Related news title is not visible";
-        }
+        waitUntilElementVisible(relatedNewsTitle);
+        return relatedNewsTitle.getText();
     }
 
-    public boolean isRelatedNewsButtonEnabled() {
-        try {
-            return relatedNewsButton.isEnabled();
-        } catch (NoSuchElementException e) {
-            return false;
-        }
+    public boolean isRelatedNewsButtonDisplay() {
+        waitUntilElementVisible(relatedNewsButton);
+        return relatedNewsButton.isDisplayed();
     }
 
+    public void clickRelatedNewsButton(){
+        if (isRelatedNewsButtonDisplay()){
+            relatedNewsButton.click();
+        }
+    }
 }

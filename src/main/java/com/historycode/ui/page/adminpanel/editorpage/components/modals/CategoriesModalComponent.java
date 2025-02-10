@@ -1,11 +1,14 @@
 package com.historycode.ui.page.adminpanel.editorpage.components.modals;
 
 import io.qameta.allure.Step;
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class CategoriesModalComponent extends ModalComponent {
+public class CategoriesModalComponent extends BaseCreateEditModalComponent {
+
+    @Getter
     @FindBy(xpath = ".//div[@class='ant-modal-title']")
     private WebElement title;
 
@@ -15,17 +18,13 @@ public class CategoriesModalComponent extends ModalComponent {
 
     @Step("Enter '{name}' Into The Category Name Input.")
     public CategoriesModalComponent enterCategory(String name) {
-        inputComponent.setInput(name);
+        inputComponent.setInputField(name);
         return new CategoriesModalComponent(driver, rootElement);
     }
 
     @Step("Check Category Modal is Displayed.")
     public boolean isExist() {
         return closeButton.isDisplayed() && title.isDisplayed() && saveButton.isDisplayed();
-    }
-
-    public WebElement getTitle() {
-        return title;
     }
 
     public String getTitleString() {

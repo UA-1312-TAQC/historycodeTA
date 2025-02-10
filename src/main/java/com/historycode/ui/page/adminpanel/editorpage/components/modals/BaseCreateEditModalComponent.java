@@ -1,26 +1,28 @@
 package com.historycode.ui.page.adminpanel.editorpage.components.modals;
 
 import com.historycode.ui.component.BaseComponent;
-import com.historycode.ui.page.adminpanel.editorpage.elements.ModalInputElement;
+import com.historycode.ui.elements.adminPanel.InputElement;
 import io.qameta.allure.Step;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class ModalComponent extends BaseComponent {
+public class BaseCreateEditModalComponent extends BaseComponent {
 
+    @Getter
     @FindBy(xpath = "./button[@aria-label='Close']")
     protected WebElement closeButton;
+    @Getter
     @FindBy(xpath = ".//div[@class='center']//button")
     protected WebElement saveButton;
 
     @Getter
-    protected ModalInputElement inputComponent;
+    protected InputElement inputComponent;
 
-    public ModalComponent(WebDriver driver, WebElement rootElement) {
+    public BaseCreateEditModalComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        inputComponent = new ModalInputElement(driver, rootElement);
+        inputComponent = new InputElement(driver, rootElement);
     }
 
     @Step("Close Modal With 'X'")
@@ -29,19 +31,9 @@ public class ModalComponent extends BaseComponent {
         waitUntilElementInvisible(closeButton);
     }
 
-    public WebElement getCloseButton() {
-        return closeButton;
-    }
-
-    public WebElement getSaveButton() {
-        return saveButton;
-    }
-
     public String getSaveButtonTitleString() {
         return saveButton.getText();
     }
 
-    public String getInputTitleString() {
-        return inputComponent.getLabelString();
-    }
+    //TODO Check correctness of new InputField root
 }

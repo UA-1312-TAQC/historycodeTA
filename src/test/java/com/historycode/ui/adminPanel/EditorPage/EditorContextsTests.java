@@ -1,10 +1,8 @@
-package com.historycode.ui.adminPanel;
+package com.historycode.ui.adminPanel.EditorPage;
 
 import com.historycode.ui.page.adminpanel.editorpage.CategoriesPage;
 import com.historycode.ui.page.adminpanel.editorpage.ContextsPage;
 import com.historycode.ui.page.adminpanel.editorpage.TagsPage;
-import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
-import com.historycode.ui.testrunners.TestRunnerWithAdmin;
 import com.historycode.ui.testrunners.TestRunnerWithAdminEditor;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Issue;
@@ -15,7 +13,7 @@ import org.testng.annotations.Test;
 import java.util.Arrays;
 import java.util.List;
 
-public class AdminPanelEditorPageTest extends TestRunnerWithAdminEditor {
+public class EditorContextsTests extends TestRunnerWithAdminEditor {
 
     @Test
     @Issue("110")
@@ -49,21 +47,4 @@ public class AdminPanelEditorPageTest extends TestRunnerWithAdminEditor {
 
     }
 
-    @Test
-    @Issue("104")
-    @Epic("(Epic#5) Admin/Other pages")
-    @Description("Verify that tag list is displayed")
-    public void verifyTagGridIsCorrectDisplayed() {
-
-        TagsPage tagsPage = new CategoriesPage(driver)
-                .moveToTags();
-        List<String> expectedGridHeaders = Arrays.asList("Назва", "Дії");
-        List<String> actualGridHeaders = tagsPage.getTableHeadersString();
-        boolean actual = tagsPage.isGridDisplayed();
-        Assert.assertEquals(expectedGridHeaders, actualGridHeaders,
-                "Current headers and expected are not same.");
-        Assert.assertTrue(actual,
-                "Current rows are not displayed or are displayed incorrectly.");
-
-    }
 }

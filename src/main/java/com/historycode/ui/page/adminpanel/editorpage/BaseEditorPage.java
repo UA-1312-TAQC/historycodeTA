@@ -2,10 +2,12 @@ package com.historycode.ui.page.adminpanel.editorpage;
 
 import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
 import com.historycode.ui.page.adminpanel.editorpage.components.SectionsComponent;
+import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -13,30 +15,27 @@ import java.util.NoSuchElementException;
 public abstract class BaseEditorPage extends BasePageAdminPanel {
 
     @FindBy(xpath = "//div[@class='ant-tabs-content-holder']//div[@class='container-justify-end']")
-    private List<WebElement> rootAddButtonAll;
+    private List<WebElement> addButtonsNodes;
+    @Getter
     @FindBy(xpath = "//div[@class='ant-tabs-nav-list']")
-    private WebElement rootSections;
+    private WebElement sectionsNode;
 
-    private WebElement rootAddButton;
+    @Getter
+    private WebElement addButtonNode;
     private SectionsComponent sections;
 
     public BaseEditorPage(WebDriver driver) {
         super(driver);
-        setRootAddButton();
-        sections = new SectionsComponent(driver, rootSections);
+        setAddButtonNode();
+        sections = new SectionsComponent(driver, sectionsNode);
     }
 
-    public void setRootAddButton() {
-        rootAddButton = rootAddButtonAll.stream()
+    public void setAddButtonNode() {
+        addButtonNode = addButtonsNodes.stream()
                 .filter(WebElement::isDisplayed)
                 .findFirst()
                 .orElseThrow(() -> new NoSuchElementException("No visible element found"));
     }
-
-    public WebElement getRootAddButton() {
-        return rootAddButton;
-    }
-
 
     public CategoriesPage moveToCategories() {
         sections.clickCategories();
@@ -72,5 +71,11 @@ public abstract class BaseEditorPage extends BasePageAdminPanel {
                 .orElse(null);
     }
 
+    @Override
+    public void scrollToElement(WebElement element) {
+        wait.until(ExpectedConditions.visibilityOf(element));
+        threadJs.executeScript("arguments[0].scrollIntoView({block: 'center', inline: 'center'});", element);
+        wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
     //TODO Add pagination component
 }
