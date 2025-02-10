@@ -42,6 +42,6 @@ public class NewsClient extends BaseClient {
     public Response getByUrl(String url) {
         return preparedRequest()
                 .when()
-                .get(resourceUrl + "/GetByUrl/" + url);
+                .get(resourceUrl + "/GetByUrl/" + java.net.URLEncoder.encode(url, java.nio.charset.StandardCharsets.UTF_8));
     }
 }
