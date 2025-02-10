@@ -1,7 +1,7 @@
 package com.historycode.api.models.adminPanel.news;
 
+import com.historycode.api.models.img.ImageApi;
 import lombok.Getter;
-import lombok.ToString;
 
 import java.util.Date;
 
@@ -12,7 +12,7 @@ public class News {
     private String text;
     private String imageId;
     private String url;
-    private NewsImage image;
+    private ImageApi imageApi;
     private Date creationDate;
 
     @Override
@@ -23,7 +23,7 @@ public class News {
                 ",\n text='" + text + '\'' +
                 ",\n imageId='" + imageId + '\'' +
                 ",\n url='" + url + '\'' +
-                ",\n image=" + image +
+                ",\n image=" + imageApi +
                 ",\n creationDate=" + creationDate +
                 '}';
     }
