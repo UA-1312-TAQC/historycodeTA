@@ -10,6 +10,7 @@ import com.historycode.ui.page.adminpanel.teampage.createEditModal.photoElement.
 import com.historycode.ui.page.adminpanel.teampage.createEditModal.photoElement.PhotoWindowComponent;
 import com.historycode.ui.page.adminpanel.teampage.createEditModal.socialMediaElement.SocialMediaExistedComponent;
 import com.historycode.ui.utils.ImageLoader;
+import com.historycode.ui.utils.customExpectedConditions.StalenessOfElementLocatedBy;
 import io.qameta.allure.Step;
 import lombok.Getter;
 import org.openqa.selenium.By;
@@ -26,6 +27,10 @@ import java.util.List;
 
 @Getter
 public class CreateEditMemberModal extends BaseCreateEditModal {
+
+    protected String PHOTO_ACTIONS_COMPONENT_ROOT_CSS = "span.ant-upload-list-item-actions";
+
+    protected String MESSAGE_SUCCESS_CSS = ".ant-message-top .ant-message-success";
 
     @FindBy(xpath = ".//label[contains(@class, 'ant-checkbox-wrapper ant-checkbox-wrapper-checked ant-checkbox-wrapper-in-form-item css-k7429z')]/../..")
     protected WebElement keyMemberCheckboxRoot;
@@ -202,6 +207,15 @@ public class CreateEditMemberModal extends BaseCreateEditModal {
     @Step("Loading image {imageName} as a team member photo")
     public CreateEditMemberModal loadPhoto(String imageName){
         ImageLoader.loadImageUsingRelativePath(imageName, photoInputField);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(PHOTO_ACTIONS_COMPONENT_ROOT_CSS)));
+        return this;
+    }
+
+    @Step("Loading image {imageName} to replace an existing team member photo")
+    public CreateEditMemberModal updatePhoto(String imageName){
+        ImageLoader.loadImageUsingRelativePath(imageName, photoInputField);
+        //wait.until(new StalenessOfElementLocatedBy(By.cssSelector(PHOTO_ACTIONS_COMPONENT_ROOT_CSS)));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(PHOTO_ACTIONS_COMPONENT_ROOT_CSS)));
         return this;
     }
 
@@ -264,6 +278,13 @@ public class CreateEditMemberModal extends BaseCreateEditModal {
 
     @Step("Click the 'Зберегти' button")
     public CreateEditMemberModal saveEditedMember() {
+        clickSaveButton();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(MESSAGE_SUCCESS_CSS)));
+        return this;
+    }
+
+    @Step("Click the 'Зберегти' button")
+    public CreateEditMemberModal saveEditedMemberWithoutWaitingForSuccessMessage() {
         clickSaveButton();
         return this;
     }

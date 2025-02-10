@@ -12,11 +12,11 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import java.time.Duration;
 
 @Slf4j
-public class CustomExpectedConditions implements ExpectedCondition<Boolean> {
+public class StalenessOfElementLocatedBy implements ExpectedCondition<Boolean> {
 
-    String locator;
+    By locator;
 
-    public CustomExpectedConditions(String locator) {
+    public StalenessOfElementLocatedBy(By locator) {
         this.locator = locator;
     }
 
@@ -27,7 +27,7 @@ public class CustomExpectedConditions implements ExpectedCondition<Boolean> {
         log.debug("Implicit wait " + timeout);
         try {
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
-            driver.findElement(By.cssSelector(this.locator));
+            driver.findElement(this.locator);
         } catch (StaleElementReferenceException | NoSuchElementException ex) {
             log.debug("Expected condition is true: " + ex.getClass() + " is thrown");
             return true;

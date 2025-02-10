@@ -95,7 +95,7 @@ public class TeamMemberEditingTest extends TestRunnerWithAdmin {
         targetTeamMember
                 .clickEdit()
                 .setName("")
-                .saveEditedMember()
+                .saveEditedMemberWithoutWaitingForSuccessMessage()
                 .closeEditMemberModalWithoutGridRefresh();
         CreateEditMemberModal res = targetTeamMember.clickEdit();
         String actual = res.getName();
@@ -166,11 +166,10 @@ public class TeamMemberEditingTest extends TestRunnerWithAdmin {
         String resultPhoto;
 
         targetTeamMember.clickEdit()
-                .loadPhoto("memberImage.jpg")
+                .updatePhoto("memberImage.jpg")
                 .saveEditedMember()
                 .closeEditMemberModalWithoutGridRefresh();
         modal = targetTeamMember.clickEdit();
-        targetTeamMember.sleep(5000);
         resultPhoto = modal.getRefreshedPhotoWindowComponent()
                                     .getEncodedPhoto();
         modal.closeEditMemberModalWithoutGridRefresh();
