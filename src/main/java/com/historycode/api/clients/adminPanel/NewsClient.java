@@ -1,6 +1,7 @@
 package com.historycode.api.clients.adminPanel;
 
 import com.historycode.api.clients.BaseClient;
+import com.historycode.api.models.adminPanel.news.NewsRequestBody;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
@@ -31,5 +32,12 @@ public class NewsClient extends BaseClient {
                 .queryParam("page", page)
                 .queryParam("amount", amount)
                 .get(resourceUrl + "/GetAll");
+    }
+
+    public Response post(NewsRequestBody news) {
+        return preparedRequest()
+                .when()
+                .body(news)
+                .post(resourceUrl + "/Create");
     }
 }
