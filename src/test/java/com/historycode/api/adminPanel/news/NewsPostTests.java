@@ -113,7 +113,6 @@ public class NewsPostTests extends ApiTestRunner {
         newsRequestBody.setCreationDate(DateTimeFormatter.ISO_INSTANT.withZone(ZoneOffset.UTC).format(Instant.now()));
     }
 
-    @Test
     @Step("Creating a new image for a request")
     private int createNewImg() {
         ImageClient imageClient = new ImageClient(testValueProvider.getBaseAPIUrl());
