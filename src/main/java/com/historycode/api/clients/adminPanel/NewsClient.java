@@ -1,6 +1,7 @@
 package com.historycode.api.clients.adminPanel;
 
 import com.historycode.api.clients.BaseClient;
+import com.historycode.api.models.adminPanel.news.NewsRequestBody;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
@@ -23,8 +24,9 @@ public class NewsClient extends BaseClient {
     public Response getAll() {
         return preparedRequest()
                 .when()
-                .get(resourceUrl+"/GetAll");
+                .get(resourceUrl + "/GetAll");
     }
+
     public Response getAll(int page, int amount) {
         return preparedRequest()
                 .when()
@@ -32,4 +34,18 @@ public class NewsClient extends BaseClient {
                 .queryParam("amount", amount)
                 .get(resourceUrl + "/GetAll");
     }
+
+    public Response create(NewsRequestBody newNews) {
+        return preparedRequest()
+                .body(newNews)
+                .when()
+                .post(resourceUrl + "/Create");
+    }
+
+    public Response delete(int newsId) {
+        return preparedRequest()
+                .when()
+                .delete(resourceUrl + "/Delete/" + newsId);
+    }
+
 }
