@@ -1,15 +1,15 @@
 package com.historycode.api.streetcode;
 
-import com.historycode.api.clients.StreetcodeClient;
 import com.historycode.api.clients.TagClient;
 import com.historycode.api.models.tag.TagRequestBody;
 import com.historycode.api.models.tag.TagResponse;
+import com.historycode.api.testRunners.ApiTestRunner;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-public class TagTests extends ApiTestRunner{
+public class TagTests extends ApiTestRunner {
     TagClient client;
 
 
