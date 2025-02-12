@@ -410,7 +410,7 @@ public class NewsTests extends ApiTestRunner {
         client.setToken(null);
         Response deleteResponse = client.delete(newsResponse.getId());
 
-        Assert.assertEquals(deleteResponse.getStatusCode(), 400);
+        Assert.assertEquals(deleteResponse.getStatusCode(), 401);
     }
 
     private String generateString(int length) {
