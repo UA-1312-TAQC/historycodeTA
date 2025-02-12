@@ -24,8 +24,9 @@ public class NewsClient extends BaseClient {
     public Response getAll() {
         return preparedRequest()
                 .when()
-                .get(resourceUrl+"/GetAll");
+                .get(resourceUrl + "/GetAll");
     }
+
     public Response getAll(int page, int amount) {
         return preparedRequest()
                 .when()
@@ -39,5 +40,11 @@ public class NewsClient extends BaseClient {
                 .when()
                 .body(news)
                 .post(resourceUrl + "/Create");
+    }
+
+    public Response delete(int newsId) {
+        return preparedRequest()
+                .when()
+                .delete(resourceUrl + "/Delete/" + newsId);
     }
 }

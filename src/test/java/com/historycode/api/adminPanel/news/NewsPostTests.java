@@ -40,6 +40,7 @@ public class NewsPostTests extends ApiTestRunner {
     public void testCreateNewsWithAllRequiredData() {
         Response response = client.post(newsRequestBody);
         Assert.assertEquals(response.getStatusCode(), 200, "News was not created");
+        client.delete(response.getBody().jsonPath().getInt("id"));
     }
 
     @Test
