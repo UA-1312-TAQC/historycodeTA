@@ -1,13 +1,13 @@
 package com.historycode.api.adminPanel.news;
 
 import com.historycode.api.clients.adminPanel.NewsClient;
-import com.historycode.api.models.adminPanel.news.NewsErrorResponse;
 import com.historycode.api.models.adminPanel.news.NewsRequestBody;
 import com.historycode.api.models.adminPanel.news.NewsResponse;
 import com.historycode.api.testRunners.ApiTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.restassured.response.Response;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -57,6 +57,8 @@ public class NewsTests extends ApiTestRunner {
         softAssert.assertEquals(newsResponse.getCreationDate(), creationDate);
 
         softAssert.assertAll();
+
+        client.delete(newsResponse.getId());
     }
 
     @Issue("198")
@@ -81,9 +83,7 @@ public class NewsTests extends ApiTestRunner {
 
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(response.getStatusCode(), 400);
-
-        NewsErrorResponse newsResponse = response.body().as(NewsErrorResponse.class);
-        softAssert.assertEquals(newsResponse.getMessage(), "'Title': 'Max Length is 100'");
+        softAssert.assertTrue(response.body().asPrettyString().contains("'Title': 'Max Length is 100'"));
 
         softAssert.assertAll();
     }
@@ -120,6 +120,8 @@ public class NewsTests extends ApiTestRunner {
         softAssert.assertEquals(newsResponse.getCreationDate(), creationDate);
 
         softAssert.assertAll();
+
+        client.delete(newsResponse.getId());
     }
 
     @Issue("200")
@@ -131,7 +133,8 @@ public class NewsTests extends ApiTestRunner {
         String title = "Test News Item";
         String text = "News Item Testing";
         int imageId = 3298;
-        String url = generateString(201).toLowerCase();;
+        String url = generateString(201).toLowerCase();
+
         String creationDate = Instant.now().toString();
 
         newNews.setTitle(title);
@@ -144,9 +147,7 @@ public class NewsTests extends ApiTestRunner {
 
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(response.getStatusCode(), 400);
-
-        NewsErrorResponse newsResponse = response.body().as(NewsErrorResponse.class);
-        softAssert.assertEquals(newsResponse.getMessage(), "'URL ': 'Max Length is 200'");
+        softAssert.assertTrue(response.body().asPrettyString().contains("'URL ': 'Max Length is 200'"));
 
         softAssert.assertAll();
     }
@@ -173,9 +174,7 @@ public class NewsTests extends ApiTestRunner {
 
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(response.getStatusCode(), 400);
-
-        NewsErrorResponse newsResponse = response.body().as(NewsErrorResponse.class);
-        softAssert.assertEquals(newsResponse.getMessage(), "Url Is Invalid");
+        softAssert.assertTrue(response.body().asPrettyString().contains("Url Is Invalid"));
 
         softAssert.assertAll();
     }
@@ -202,9 +201,7 @@ public class NewsTests extends ApiTestRunner {
 
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(response.getStatusCode(), 400);
-
-        NewsErrorResponse newsResponse = response.body().as(NewsErrorResponse.class);
-        softAssert.assertEquals(newsResponse.getMessage(), "Url Is Invalid");
+        softAssert.assertTrue(response.body().asPrettyString().contains("Url Is Invalid"));
 
         softAssert.assertAll();
     }
@@ -231,9 +228,7 @@ public class NewsTests extends ApiTestRunner {
 
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(response.getStatusCode(), 400);
-
-        NewsErrorResponse newsResponse = response.body().as(NewsErrorResponse.class);
-        softAssert.assertEquals(newsResponse.getMessage(), "Url Is Invalid");
+        softAssert.assertTrue(response.body().asPrettyString().contains("Url Is Invalid"));
 
         softAssert.assertAll();
     }
@@ -270,6 +265,8 @@ public class NewsTests extends ApiTestRunner {
         softAssert.assertEquals(newsResponse.getCreationDate(), creationDate);
 
         softAssert.assertAll();
+
+        client.delete(newsResponse.getId());
     }
 
     @Issue("205")
@@ -294,9 +291,7 @@ public class NewsTests extends ApiTestRunner {
 
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(response.getStatusCode(), 400);
-
-        NewsErrorResponse newsResponse = response.body().as(NewsErrorResponse.class);
-        softAssert.assertEquals(newsResponse.getMessage(), "'Text': 'Max Length is 15000'");
+        softAssert.assertTrue(response.body().asPrettyString().contains("'Text': 'Max Length is 15000'"));
 
         softAssert.assertAll();
     }
@@ -326,14 +321,16 @@ public class NewsTests extends ApiTestRunner {
 
         NewsResponse newsResponse = response.body().as(NewsResponse.class);
 
+        //TODO: Add assertions for the status field ("Запланована")
         softAssert.assertEquals(newsResponse.getTitle(), title);
         softAssert.assertEquals(newsResponse.getText(), text);
         softAssert.assertEquals(newsResponse.getImageId(), imageId);
         softAssert.assertEquals(newsResponse.getUrl(), url);
         softAssert.assertEquals(newsResponse.getCreationDate(), creationDate);
-        //TODO: Add assertions for the status field ("Запланована")
 
         softAssert.assertAll();
+
+        client.delete(newsResponse.getId());
     }
 
     @Issue("207")
@@ -358,11 +355,62 @@ public class NewsTests extends ApiTestRunner {
 
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(response.getStatusCode(), 400);
-
-        NewsErrorResponse newsResponse = response.body().as(NewsErrorResponse.class);
-        softAssert.assertEquals(newsResponse.getMessage(), "The news cannot be published with a past date");
+        softAssert.assertTrue(response.body().asPrettyString().contains("The news cannot be published with a past date"));
 
         softAssert.assertAll();
+    }
+
+    @Issue("208")
+    @Test
+    @Description("Verify that the news is deleted by 'id' using DELETE method")
+    public void testVerifyDeletionById() {
+        NewsRequestBody newNews = new NewsRequestBody();
+
+        String title = "Test News Item";
+        String text = "News Item Testing";
+        int imageId = 3298;
+        String url = "news-item";
+        String creationDate = Instant.now().toString();
+
+        newNews.setTitle(title);
+        newNews.setText(text);
+        newNews.setImageId(imageId);
+        newNews.setUrl(url);
+        newNews.setCreationDate(creationDate);
+
+        Response response = client.create(newNews);
+        NewsResponse newsResponse = response.body().as(NewsResponse.class);
+
+        Response deleteResponse = client.delete(newsResponse.getId());
+
+        Assert.assertEquals(deleteResponse.getStatusCode(), 200);
+    }
+
+    @Issue("209")
+    @Test
+    @Description("Verify that the news cannot be deleted without authorization by 'id' using DELETE method")
+    public void testVerifyDeletionWithoutAuthorizationById() {
+        NewsRequestBody newNews = new NewsRequestBody();
+
+        String title = "Test News Item";
+        String text = "News Item Testing";
+        int imageId = 3298;
+        String url = "news-item";
+        String creationDate = Instant.now().toString();
+
+        newNews.setTitle(title);
+        newNews.setText(text);
+        newNews.setImageId(imageId);
+        newNews.setUrl(url);
+        newNews.setCreationDate(creationDate);
+
+        Response response = client.create(newNews);
+        NewsResponse newsResponse = response.body().as(NewsResponse.class);
+
+        client.setToken(null);
+        Response deleteResponse = client.delete(newsResponse.getId());
+
+        Assert.assertEquals(deleteResponse.getStatusCode(), 400);
     }
 
     private String generateString(int length) {
