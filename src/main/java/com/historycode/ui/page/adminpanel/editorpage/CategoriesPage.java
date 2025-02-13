@@ -15,10 +15,6 @@ import java.util.List;
 
 public class CategoriesPage extends BaseEditorPage {
 
-    @Getter
-    @FindBy(xpath = "//div[contains(@class, 'ant-table-wrapper')]")
-    private WebElement gridNode;
-
     private AddButtonElement addCategoryButton;
     private CategoriesGridComponent grid;
 
@@ -112,29 +108,34 @@ public class CategoriesPage extends BaseEditorPage {
         return grid.getRowTitleString(row);
     }
 
-    public void clickNextPage() {
+    public CategoriesPage clickNextPage() {
         grid.clickNextPage();
-        grid = new CategoriesGridComponent(driver, gridNode);
+        sleep(1000); //ToDo Change it to better solution
+        return new CategoriesPage(driver);
     }
 
-    public void clickPrevPage() {
+    public CategoriesPage clickPrevPage() {
         grid.clickPrevPage();
-        grid = new CategoriesGridComponent(driver, gridNode);
+        sleep(1000); //ToDo Change it to better solution
+        return new CategoriesPage(driver);
     }
 
-    public void clickPrevFivePages() {
+    public CategoriesPage clickPrevFivePages() {
         grid.clickPrevFivePages();
-        grid = new CategoriesGridComponent(driver, gridNode);
+        sleep(1000); //ToDo Change it to better solution
+        return new CategoriesPage(driver);
     }
 
-    public void clickNextFivePages() {
+    public CategoriesPage clickNextFivePages() {
         grid.clickNextFivePages();
-        grid = new CategoriesGridComponent(driver, gridNode);
+        sleep(1000); //ToDo Change it to better solution
+        return new CategoriesPage(driver);
     }
 
-    public void clickPaginationItem(int index) {
+    public CategoriesPage clickPaginationItem(int index) {
         grid.clickPaginationItem(index);
-        grid = new CategoriesGridComponent(driver, gridNode);
+        sleep(1000); //ToDo Change it to better solution
+        return new CategoriesPage(driver);
     }
 
     public boolean tableHasNextPage() {

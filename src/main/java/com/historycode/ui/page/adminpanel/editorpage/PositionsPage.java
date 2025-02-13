@@ -15,10 +15,6 @@ import java.util.List;
 
 public class PositionsPage extends BaseEditorPage {
 
-    @Getter
-    @FindBy(xpath = "//div[contains(@class, 'ant-table-wrapper')]")
-    private WebElement gridNode;
-
     private AddButtonElement addPositionButton;
     private PositionsGridComponent grid;
 
@@ -110,26 +106,31 @@ public class PositionsPage extends BaseEditorPage {
 
     public PositionsPage clickNextPage() {
         grid.clickNextPage();
+        sleep(1000); //ToDo Change it to better solution
         return new PositionsPage(driver);
     }
 
     public PositionsPage clickPrevPage() {
         grid.clickPrevPage();
+        sleep(1000); //ToDo Change it to better solution
         return new PositionsPage(driver);
     }
 
     public PositionsPage clickPrevFivePages() {
         grid.clickPrevFivePages();
+        sleep(1000); //ToDo Change it to better solution
         return new PositionsPage(driver);
     }
 
     public PositionsPage clickNextFivePages() {
         grid.clickNextFivePages();
+        sleep(1000); //ToDo Change it to better solution
         return new PositionsPage(driver);
     }
 
     public PositionsPage clickPaginationItem(int index) {
         grid.clickPaginationItem(index);
+        sleep(1000); //ToDo Change it to better solution
         return new PositionsPage(driver);
     }
 
