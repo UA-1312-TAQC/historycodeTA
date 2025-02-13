@@ -2,39 +2,44 @@ package com.historycode.ui.page.adminpanel.editorpage;
 
 import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
 import com.historycode.ui.page.adminpanel.editorpage.components.SectionsComponent;
+import com.historycode.ui.utils.customExpectedConditions.CustomExpectedConditions;
+import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 
 public abstract class BaseEditorPage extends BasePageAdminPanel {
 
-    @FindBy(xpath = "//div[@class='ant-tabs-content-holder']//div[@class='container-justify-end']")
-    private List<WebElement> rootAddButtonAll;
-    @FindBy(xpath = "//div[@class='ant-tabs-nav-list']")
-    private WebElement rootSections;
+    @Getter
+    private final String LOADING_GIF_XPATH = "//div[@id='loadingGif']";
 
-    private WebElement rootAddButton;
+    @FindBy(xpath = "//div[@class='ant-tabs-content-holder']//div[@class='container-justify-end']")
+    private List<WebElement> addButtonsNodes;
+    @Getter
+    @FindBy(xpath = "//div[@class='ant-tabs-nav-list']")
+    private WebElement sectionsNode;
+
+    @Getter
+    private WebElement addButtonNode;
     private SectionsComponent sections;
 
     public BaseEditorPage(WebDriver driver) {
         super(driver);
-        setRootAddButton();
-        sections = new SectionsComponent(driver, rootSections);
+        wait.until(CustomExpectedConditions.stalenessOfElementLocatedBy(By.xpath(getLOADING_GIF_XPATH())));
+        setAddButtonNode();
+        sections = new SectionsComponent(driver, sectionsNode);
     }
 
-    public void setRootAddButton() {
-        rootAddButton = rootAddButtonAll.stream()
+    public void setAddButtonNode() {
+        addButtonNode = addButtonsNodes.stream()
                 .filter(WebElement::isDisplayed)
                 .findFirst()
                 .orElseThrow(() -> new NoSuchElementException("No visible element found"));
-    }
-
-    public WebElement getRootAddButton() {
-        return rootAddButton;
     }
 
     public CategoriesPage moveToCategories() {
@@ -53,6 +58,9 @@ public abstract class BaseEditorPage extends BasePageAdminPanel {
         sections.clickPositions();
         sleep(1000);
         return new PositionsPage(driver);
+
+        //ToDo Add waiter until new Position Page be fully loaded
+        //ToDo Remove sleep
     }
 
     public ContextsPage moveToContexts() {
@@ -71,5 +79,11 @@ public abstract class BaseEditorPage extends BasePageAdminPanel {
                 .orElse(null);
     }
 
+    @Override
+    public void scrollToElement(WebElement element) {
+        wait.until(ExpectedConditions.visibilityOf(element));
+        threadJs.executeScript("arguments[0].scrollIntoView({block: 'center', inline: 'center'});", element);
+        wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
     //TODO Add pagination component
 }

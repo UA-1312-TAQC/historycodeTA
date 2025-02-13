@@ -2,6 +2,7 @@ package com.historycode.ui.page.adminpanel.editorpage.components.grids;
 
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.TagsRowComponent;
 import io.qameta.allure.Step;
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -11,6 +12,7 @@ import java.util.stream.Collectors;
 
 public class TagsGridComponent extends GridComponent {
 
+    @Getter
     List<TagsRowComponent> rows;
 
     public TagsGridComponent(WebDriver driver, WebElement rootElement) {
@@ -19,12 +21,20 @@ public class TagsGridComponent extends GridComponent {
         initRows(driver);
     }
 
-    @Step("Check Tags Grid Components Are Displayed Correctly.")
+    public void initRows(WebDriver driver) {
+        for (WebElement rowElement : rowNodes) {
+            if (rowElement.isDisplayed()) {
+                rows.add(new TagsRowComponent(driver, rowElement));
+            }
+        }
+    }
+
+    @Step("Grid checks that displayed correctly.")
     public boolean isDisplayed() {
         return (isHeadersDisplayed() && isRowsDisplayed());
     }
 
-    @Step("Check Tags Rows Are Displayed Correctly.")
+    @Step("Grid checks that it's rows are displayed.")
     public boolean isRowsDisplayed() {
         for (TagsRowComponent row : rows) {
             if (!row.isExist()) { return false; }
@@ -32,14 +42,7 @@ public class TagsGridComponent extends GridComponent {
         return true;
     }
 
-    public void initRows(WebDriver driver) {
-        for (WebElement rowElement : rowElements) {
-            if (rowElement.isDisplayed()) {
-                rows.add(new TagsRowComponent(driver, rowElement));
-            }
-        }
-    }
-
+    @Step("Grid returns rows titles as list of strings.")
     public List<String> getRowsTitles(){
         List<String> titles = new ArrayList<>();
         for (TagsRowComponent row : rows){
@@ -48,45 +51,50 @@ public class TagsGridComponent extends GridComponent {
         return titles;
     }
 
-    public List<TagsRowComponent> getRows() {
-        return rows;
-    }
-
+    @Step("Grid returns row by number: {num}.")
     public TagsRowComponent getRowByNum(int num) {
         return rows.get(num);
     }
 
+    @Step("Grid returns row by it's title: '{title}'.")
     public TagsRowComponent getRowByTitle(String title) {
         return rows.stream().filter(row -> row.getTitleString().equals(title))
                 .findFirst().orElse(null);
     }
 
+    @Step("Grid returns row where is the '{part}' in the title.")
     public List<TagsRowComponent> getRowsByTitlePart(String part) {
         return rows.stream()
                 .filter(row -> row.getTitleString().contains(part))
                 .collect(Collectors.toList());
     }
 
-    public WebElement getRowEditAction(TagsRowComponent row) {
-        return row.getEditAction();
-    }
-
-    public WebElement getRowDeleteAction(TagsRowComponent row) {
-        return row.getDeleteAction();
-    }
-
+    @Step("Grid takes Row and returns it's title as string.")
     public String getRowTitleString(TagsRowComponent row){
         return row.getTitleString();
     }
 
+    @Step("Grid takes Row and returns it's title web element.")
     public WebElement getRowTitle(TagsRowComponent row){
         return row.getTitle();
     }
 
+    @Step("Grid takes Row and returns it's edit web element.")
+    public WebElement getRowEditAction(TagsRowComponent row) {
+        return row.getEditAction();
+    }
+
+    @Step("Grid takes Row and returns it's delete web element.")
+    public WebElement getRowDeleteAction(TagsRowComponent row) {
+        return row.getDeleteAction();
+    }
+
+    @Step("Grid takes Row and calls it's click edit method.")
     public void editRow(TagsRowComponent row) {
         row.clickEdit();
     }
 
+    @Step("Grid takes Row and calls it's click delete method.")
     public void deleteRow(TagsRowComponent row) {
         row.clickDelete();
     }
@@ -115,6 +123,4 @@ public class TagsGridComponent extends GridComponent {
         pagination.clickPaginationItem(index);
         return new TagsGridComponent(driver, rootElement);
     }
-
-    //TODO Update edit/deleteRow methods to return modals
 }
