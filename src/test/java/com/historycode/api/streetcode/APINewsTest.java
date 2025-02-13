@@ -39,7 +39,6 @@ public class APINewsTest extends ApiTestRunner {
             softAssert.assertNotNull(news.getText(), "Key 'text' is missing in the response for news");
             softAssert.assertNotNull(news.getCreationDate(), "Key 'creationDate' is missing in the response for news");
 
-            // Отримання об'єкта NewsImage
             NewsImage image = news.getImage();
             if (image != null) {
                 softAssert.assertNotNull(image.getId(), "Key 'image.id' is missing in the response for news");
