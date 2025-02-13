@@ -11,17 +11,19 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public class GridComponent extends BaseGridComponent {
 
-    @FindBy(xpath = "//div[@id='loadingGif']")
-    public WebElement loading;
     @FindBy(xpath = "//tbody//tr")
     public List<WebElement> rowNodes;
     @FindBy(xpath = "//thead//th")
     private List<WebElement> headerItemsNodes;
     @FindBy(xpath = "//div[@class='underTableElement']")
+    private List<WebElement> paginationNodes;
+
+    @Getter
     private WebElement paginationNode;
 
     @Getter
@@ -30,10 +32,10 @@ public class GridComponent extends BaseGridComponent {
 
     public GridComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        sleep(5000);
         headerItems = new ArrayList<>();
-        pagination = new PaginationAdminPanelComponent(driver, paginationNode);
         initHeaderItems();
+        setPaginationNode();
+        pagination = new PaginationAdminPanelComponent(driver, getPaginationNode());
     }
 
     private void initHeaderItems() {
@@ -42,6 +44,13 @@ public class GridComponent extends BaseGridComponent {
                 headerItems.add(item);
             }
         }
+    }
+
+    private void setPaginationNode() {
+        this.paginationNode = paginationNodes.stream()
+                .filter(WebElement::isDisplayed)
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException("No visible element found"));
     }
 
     @Step("Check Grid Headers Are Displayed.")
@@ -59,54 +68,9 @@ public class GridComponent extends BaseGridComponent {
                 .collect(Collectors.toList());
     }
 
-    @Step("Click On The Next Page Pictogram.")
-    public GridComponent clickNextPage() {
-        pagination.clickNextPage();
-        waitUntilElementInvisible(loading);
-        return createInstance();
-    }
-
-    @Step("Click On The Previous Page Pictogram.")
-    public GridComponent clickPrevPage() {
-        pagination.clickPrevPage();
-        waitUntilElementInvisible(loading);
-        return createInstance();
-    }
-
-    @Step("Click On The Previous Five Pages Pictogram.")
-    public GridComponent clickPrevFivePages() {
-        pagination.clickPrevFivePages();
-        waitUntilElementInvisible(loading);
-        return createInstance();
-    }
-
-    @Step("Click On The Next Five Pages Pictogram.")
-    public GridComponent clickNextFivePages() {
-        pagination.clickNextFivePages();
-        waitUntilElementInvisible(loading);
-        return createInstance();
-    }
-
-    @Step("Click On The Page #{index} Pictogram.")
-    public GridComponent clickPaginationItem(int index) {
-        pagination.clickPaginationItem(index);
-        waitUntilElementInvisible(loading);
-        return createInstance();
-    }
-
     @Step("Grid checks if the table has next page.")
     public boolean tableHasNextPage() {
         return pagination.hasNextPage();
     }
 
-    protected GridComponent createInstance() {
-        try {
-            return this
-                    .getClass()
-                    .getDeclaredConstructor(WebDriver.class, WebElement.class)
-                    .newInstance(driver, rootElement);
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to create instance of " + this.getClass().getSimpleName(), e);
-        }
-    }
 }

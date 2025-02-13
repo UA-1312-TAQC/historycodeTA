@@ -98,4 +98,30 @@ public class PositionsGridComponent extends GridComponent {
     public void deleteRow(PositionsRowComponent row) {
         row.clickDelete();
     }
+
+    public PositionsGridComponent clickNextPage() {
+        pagination.clickNextPage();
+        return new PositionsGridComponent(driver, rootElement);
+    }
+
+    public PositionsGridComponent clickPrevPage() {
+        pagination.clickPrevPage();
+        return new PositionsGridComponent(driver, rootElement);
+    }
+
+    public PositionsGridComponent clickPrevFivePages() {
+        pagination.clickPrevFivePages();
+        return new PositionsGridComponent(driver, rootElement);
+    }
+
+    public PositionsGridComponent clickNextFivePages() {
+        pagination.clickNextFivePages();
+        return new PositionsGridComponent(driver, rootElement);
+    }
+
+    public PositionsGridComponent clickPaginationItem(int index) {
+        pagination.clickPaginationItem(index);
+        return new PositionsGridComponent(driver, rootElement);
+    }
+
 }

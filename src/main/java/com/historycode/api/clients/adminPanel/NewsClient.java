@@ -1,6 +1,7 @@
 package com.historycode.api.clients.adminPanel;
 
 import com.historycode.api.clients.BaseClient;
+import com.historycode.api.models.adminPanel.news.NewsRequestBody;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
@@ -23,8 +24,9 @@ public class NewsClient extends BaseClient {
     public Response getAll() {
         return preparedRequest()
                 .when()
-                .get(resourceUrl+"/GetAll");
+                .get(resourceUrl + "/GetAll");
     }
+
     public Response getAll(int page, int amount) {
         return preparedRequest()
                 .when()
@@ -43,5 +45,18 @@ public class NewsClient extends BaseClient {
         return preparedRequest()
                 .when()
                 .get(resourceUrl + "/GetByUrl/" + java.net.URLEncoder.encode(url, java.nio.charset.StandardCharsets.UTF_8));
+    }
+  
+    public Response post(NewsRequestBody news) {
+        return preparedRequest()
+                .when()
+                .body(news)
+                .post(resourceUrl + "/Create");
+    }
+
+    public Response delete(int newsId) {
+        return preparedRequest()
+                .when()
+                .delete(resourceUrl + "/Delete/" + newsId);
     }
 }
