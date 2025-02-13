@@ -1,15 +1,17 @@
 package com.historycode.api.streetcode;
 
 import com.historycode.api.clients.NewsClient;
-
+import com.historycode.api.models.adminPanel.news.GetAllNewsResponse;
+import com.historycode.api.models.adminPanel.news.ImageDetails;
+import com.historycode.api.models.adminPanel.news.News;
+import com.historycode.api.models.adminPanel.news.NewsImage;
+import com.historycode.api.testRunners.ApiTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-
-import static org.testng.Assert.*;
 
 public class APINewsTest extends ApiTestRunner {
     private NewsClient newsClient;
@@ -27,25 +29,35 @@ public class APINewsTest extends ApiTestRunner {
         SoftAssert softAssert = new SoftAssert();
 
         softAssert.assertEquals(response.getStatusCode(), 200, "Response status is not 200 OK");
+        GetAllNewsResponse getAllResponse = response.body().as(GetAllNewsResponse.class);
+        softAssert.assertTrue(getAllResponse.getTotalAmount() > 0, "Total amount of news is 0");
 
-        softAssert.assertTrue(response.getContentType().contains("application/json"), "Response is not in JSON format");
+        for (News news : getAllResponse.getNews()) {
+            softAssert.assertNotNull(news.getId(), "Key 'id' is missing in the response for news");
+            softAssert.assertNotNull(news.getTitle(), "Key 'title' is missing in the response for news");
+            softAssert.assertNotNull(news.getText(), "Key 'text' is missing in the response for news");
+            softAssert.assertNotNull(news.getCreationDate(), "Key 'creationDate' is missing in the response for news");
 
-        softAssert.assertNotNull(response.jsonPath().get("id"), "Key 'id' is missing in the response");
-        softAssert.assertNotNull(response.jsonPath().get("title"), "Key 'title' is missing in the response");
-        softAssert.assertNotNull(response.jsonPath().get("text"), "Key 'text' is missing in the response");
-        softAssert.assertNotNull(response.jsonPath().get("creationDate"), "Key 'creationDate' is missing in the response");
+            // Отримання об'єкта NewsImage
+            NewsImage image = news.getImage();
+            if (image != null) {
+                softAssert.assertNotNull(image.getId(), "Key 'image.id' is missing in the response for news");
+                softAssert.assertNotNull(image.getBlobName(), "Key 'image.blobName' is missing in the response for news");
+                softAssert.assertNotNull(image.getMimeType(), "Key 'image.mimeType' is missing in the response for news");
 
-        softAssert.assertNotNull(response.jsonPath().get("image.id"), "Key 'image.id' is missing in the response");
-        softAssert.assertNotNull(response.jsonPath().get("image.blobName"), "Key 'image.blobName' is missing in the response");
-        softAssert.assertNotNull(response.jsonPath().get("image.mimeType"), "Key 'image.mimeType' is missing in the response");
+                ImageDetails imageDetails = image.getImageDetails();
+                if (imageDetails != null) {
+                    softAssert.assertNotNull(imageDetails.getId(), "Key 'imageDetails.id' is missing in the response for news");
+                    softAssert.assertNotNull(imageDetails.getTitle(), "Key 'imageDetails.title' is missing in the response for news");
+                    softAssert.assertNotNull(imageDetails.getAlt(), "Key 'imageDetails.alt' is missing in the response for news");
+                }
+            }
+        }
 
-        softAssert.assertNotNull(response.jsonPath().get("image.imageDetails.id"), "Key 'image.imageDetails.id' is missing in the response");
-        softAssert.assertNotNull(response.jsonPath().get("image.imageDetails.title"), "Key 'image.imageDetails.title' is missing in the response");
-        softAssert.assertNotNull(response.jsonPath().get("image.imageDetails.alt"), "Key 'image.imageDetails.alt' is missing in the response");
+        System.out.println("Parsed Response: " + getAllResponse);
 
-        System.out.println("Response: " + response.asString());
         softAssert.assertAll();
     }
-
 }
+
 
