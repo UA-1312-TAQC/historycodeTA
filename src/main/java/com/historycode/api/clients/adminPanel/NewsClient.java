@@ -35,6 +35,18 @@ public class NewsClient extends BaseClient {
                 .get(resourceUrl + "/GetAll");
     }
 
+    public Response getById(int id) {
+        return preparedRequest()
+                .when()
+                .get(resourceUrl + "/GetById/" + id);
+    }
+
+    public Response getByUrl(String url) {
+        return preparedRequest()
+                .when()
+                .get(resourceUrl + "/GetByUrl/" + java.net.URLEncoder.encode(url, java.nio.charset.StandardCharsets.UTF_8));
+    }
+  
     public Response post(NewsRequestBody news) {
         return preparedRequest()
                 .when()
