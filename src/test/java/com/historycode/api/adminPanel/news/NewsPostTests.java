@@ -48,10 +48,9 @@ public class NewsPostTests extends ApiTestRunner {
     @Epic("(Epic#5) Admin/Other pages")
     @Description("Verify that the news cannot be created if the mandatory field 'title' is empty")
     public void testCreateNewsFailsWhenTitleIsEmpty() {
-        String title = newsRequestBody.getTitle();
-        newsRequestBody.setTitle(null);
-        Response response = client.post(newsRequestBody);
-        newsRequestBody.setTitle(title);
+        NewsRequestBody temp = newsRequestBody;
+        temp.setTitle(null);
+        Response response = client.post(temp);
         Assert.assertEquals(response.getStatusCode(), 400);
     }
 
@@ -60,10 +59,9 @@ public class NewsPostTests extends ApiTestRunner {
     @Epic("(Epic#5) Admin/Other pages")
     @Description("Verify that the news cannot be created if the mandatory field 'text' is empty")
     public void testCreateNewsFailsWhenTextIsEmpty() {
-        String text = newsRequestBody.getText();
-        newsRequestBody.setText(null);
-        Response response = client.post(newsRequestBody);
-        newsRequestBody.setText(text);
+        NewsRequestBody temp = newsRequestBody;
+        temp.setText(null);
+        Response response = client.post(temp);
         Assert.assertEquals(response.getStatusCode(), 400);
     }
 
@@ -72,10 +70,9 @@ public class NewsPostTests extends ApiTestRunner {
     @Epic("(Epic#5) Admin/Other pages")
     @Description("Verify that the news cannot be created if the mandatory field 'imageId' is empty using POST method")
     public void testCreateNewsFailsWhenImageIdIsEmpty() {
-        int imageId = newsRequestBody.getImageId();
-        newsRequestBody.setImageId(0);
-        Response response = client.post(newsRequestBody);
-        newsRequestBody.setImageId(imageId);
+        NewsRequestBody temp = newsRequestBody;
+        temp.setImageId(0);
+        Response response = client.post(temp);
         Assert.assertEquals(response.getStatusCode(), 400);
     }
 
@@ -84,10 +81,9 @@ public class NewsPostTests extends ApiTestRunner {
     @Epic("(Epic#5) Admin/Other pages")
     @Description("Verify that the news cannot be created if the mandatory field 'url' is empty using POST method")
     public void testCreateNewsFailsWhenUrlIsEmpty() {
-        String url = newsRequestBody.getUrl();
-        newsRequestBody.setUrl(null);
-        Response response = client.post(newsRequestBody);
-        newsRequestBody.setUrl(url);
+        NewsRequestBody temp = newsRequestBody;
+        temp.setUrl(null);
+        Response response = client.post(temp);
         Assert.assertEquals(response.getStatusCode(), 400);
     }
 
@@ -96,10 +92,9 @@ public class NewsPostTests extends ApiTestRunner {
     @Epic("(Epic#5) Admin/Other pages")
     @Description("Verify that the news cannot be created if the mandatory field 'creationDate' is empty using POST method")
     public void testCreateNewsFailsWhenCreationDateIsEmpty() {
-        String creationDate = newsRequestBody.getCreationDate();
-        newsRequestBody.setCreationDate(null);
-        Response response = client.post(newsRequestBody);
-        newsRequestBody.setCreationDate(creationDate);
+        NewsRequestBody temp = newsRequestBody;
+        temp.setCreationDate(null);
+        Response response = client.post(temp);
         Assert.assertEquals(response.getStatusCode(), 400);
     }
 
