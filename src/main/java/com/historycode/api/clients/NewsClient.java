@@ -1,6 +1,5 @@
-package com.historycode.api.clients.adminPanel;
+package com.historycode.api.clients;
 
-import com.historycode.api.clients.BaseClient;
 import com.historycode.api.models.adminPanel.news.NewsRequestBody;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -47,7 +46,7 @@ public class NewsClient extends BaseClient {
                 .get(resourceUrl + "/GetByUrl/" + java.net.URLEncoder.encode(url, java.nio.charset.StandardCharsets.UTF_8));
     }
   
-    public Response post(NewsRequestBody news) {
+    public Response create(NewsRequestBody news) {
         return preparedRequest()
                 .when()
                 .body(news)
