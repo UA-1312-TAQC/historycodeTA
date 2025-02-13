@@ -47,5 +47,6 @@ public class StreetcodeTest extends ApiTestRunner {
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertFalse(streetcodeResponse.getTitle().isEmpty(), "The streetcode name is empty");
         softAssert.assertFalse(streetcodeResponse.getCreatedBy().isEmpty(), "The streetcode author field is empty");
+        softAssert.assertAll();
     }
 }
