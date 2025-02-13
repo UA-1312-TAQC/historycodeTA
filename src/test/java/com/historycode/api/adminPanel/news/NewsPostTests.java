@@ -1,7 +1,7 @@
 package com.historycode.api.adminPanel.news;
 
 import com.historycode.api.clients.ImageClient;
-import com.historycode.api.clients.adminPanel.NewsClient;
+import com.historycode.api.clients.NewsClient;
 import com.historycode.api.models.adminPanel.news.NewsRequestBody;
 import com.historycode.api.models.img.ImageRequest;
 import com.historycode.api.testRunners.ApiTestRunner;
@@ -38,7 +38,7 @@ public class NewsPostTests extends ApiTestRunner {
     @Epic("(Epic#5) Admin/Other pages")
     @Description("Verify if the news is created with all required data using POST method")
     public void testCreateNewsWithAllRequiredData() {
-        Response response = client.post(newsRequestBody);
+        Response response = client.create(newsRequestBody);
         Assert.assertEquals(response.getStatusCode(), 200, "News was not created");
         client.delete(response.getBody().jsonPath().getInt("id"));
     }
@@ -50,7 +50,7 @@ public class NewsPostTests extends ApiTestRunner {
     public void testCreateNewsFailsWhenTitleIsEmpty() {
         NewsRequestBody temp = newsRequestBody;
         temp.setTitle(null);
-        Response response = client.post(temp);
+        Response response = client.create(temp);
         Assert.assertEquals(response.getStatusCode(), 400);
     }
 
@@ -61,7 +61,7 @@ public class NewsPostTests extends ApiTestRunner {
     public void testCreateNewsFailsWhenTextIsEmpty() {
         NewsRequestBody temp = newsRequestBody;
         temp.setText(null);
-        Response response = client.post(temp);
+        Response response = client.create(temp);
         Assert.assertEquals(response.getStatusCode(), 400);
     }
 
@@ -72,7 +72,7 @@ public class NewsPostTests extends ApiTestRunner {
     public void testCreateNewsFailsWhenImageIdIsEmpty() {
         NewsRequestBody temp = newsRequestBody;
         temp.setImageId(0);
-        Response response = client.post(temp);
+        Response response = client.create(temp);
         Assert.assertEquals(response.getStatusCode(), 400);
     }
 
@@ -83,7 +83,7 @@ public class NewsPostTests extends ApiTestRunner {
     public void testCreateNewsFailsWhenUrlIsEmpty() {
         NewsRequestBody temp = newsRequestBody;
         temp.setUrl(null);
-        Response response = client.post(temp);
+        Response response = client.create(temp);
         Assert.assertEquals(response.getStatusCode(), 400);
     }
 
@@ -94,7 +94,7 @@ public class NewsPostTests extends ApiTestRunner {
     public void testCreateNewsFailsWhenCreationDateIsEmpty() {
         NewsRequestBody temp = newsRequestBody;
         temp.setCreationDate(null);
-        Response response = client.post(temp);
+        Response response = client.create(temp);
         Assert.assertEquals(response.getStatusCode(), 400);
     }
 

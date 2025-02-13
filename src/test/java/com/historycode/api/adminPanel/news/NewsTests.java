@@ -1,6 +1,6 @@
 package com.historycode.api.adminPanel.news;
 
-import com.historycode.api.clients.adminPanel.NewsClient;
+import com.historycode.api.clients.NewsClient;
 import com.historycode.api.models.adminPanel.news.NewsRequestBody;
 import com.historycode.api.models.adminPanel.news.NewsResponse;
 import com.historycode.api.testRunners.ApiTestRunner;

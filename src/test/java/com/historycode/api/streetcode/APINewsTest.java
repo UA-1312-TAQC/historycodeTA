@@ -2,6 +2,7 @@ package com.historycode.api.streetcode;
 
 import com.historycode.api.clients.NewsClient;
 
+import com.historycode.api.testRunners.ApiTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.restassured.response.Response;
@@ -23,7 +24,7 @@ public class APINewsTest extends ApiTestRunner {
     @Test
     @Description("Verify if all news are displayed using GET method.")
     public void testGetAllNews() {
-        Response response = newsClient.getAllNews();
+        Response response = newsClient.getAll();
         SoftAssert softAssert = new SoftAssert();
 
         softAssert.assertEquals(response.getStatusCode(), 200, "Response status is not 200 OK");
