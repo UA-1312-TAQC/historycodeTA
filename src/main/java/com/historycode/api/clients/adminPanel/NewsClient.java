@@ -35,10 +35,10 @@ public class NewsClient extends BaseClient {
                 .get(resourceUrl + "/GetAll");
     }
 
-    public Response create(NewsRequestBody newNews) {
+    public Response post(NewsRequestBody news) {
         return preparedRequest()
-                .body(newNews)
                 .when()
+                .body(news)
                 .post(resourceUrl + "/Create");
     }
 
@@ -47,5 +47,4 @@ public class NewsClient extends BaseClient {
                 .when()
                 .delete(resourceUrl + "/Delete/" + newsId);
     }
-
 }
