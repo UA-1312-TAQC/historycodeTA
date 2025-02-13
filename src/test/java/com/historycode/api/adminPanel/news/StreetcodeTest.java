@@ -20,7 +20,7 @@ public class StreetcodeTest extends ApiTestRunner {
     }
 
     @Test(dataProvider = "streetcodeStatusDataProvider",  dataProviderClass = StreetcodeDataProvider.class)
-    public void streetCodeFilterTest(Status status){
+    public void streetcodeFilterTest(Status status){
         Response response = client.getAll(status.getQueryParameter());
         Assert.assertEquals(response.getStatusCode(), 200);
         GetAllResponse getAllResponse = response.body().as( GetAllResponse.class);
@@ -31,5 +31,17 @@ public class StreetcodeTest extends ApiTestRunner {
                     String.format("Streetcode with id %d has status id %d but must have status id %d",streetcode.getId(), streetcode.getStatus(), status.getCode()));
         }
         softAssert.assertAll();
+    }
+
+    @Test
+    public void streetcodePageTest(){
+        int validStreetcodeIndex = 1;
+        Response response = client.getByIndex(validStreetcodeIndex);
+        Assert.assertEquals(response.getStatusCode(), 200);
+        StreetcodeResponse streetcodeResponse = response.body().as(StreetcodeResponse.class);
+        Assert.assertEquals(streetcodeResponse.getIndex(), validStreetcodeIndex);
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertFalse(streetcodeResponse.getTitle().isEmpty(), "The streetcode name is empty");
+        softAssert.assertFalse(streetcodeResponse.getCreatedBy().isEmpty(), "The streetcode author field is empty");
     }
 }

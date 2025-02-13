@@ -35,4 +35,11 @@ public class StreetcodeClient extends BaseClient {
                 .queryParam("Filter", filter)
                 .get(resourceUrl + "/GetAll");
     }
+
+    public Response getByIndex(int index) {
+        return preparedRequest()
+                .when()
+                .pathParam("index", index)
+                .get(resourceUrl + "/GetByIndex/{index}");
+    }
 }
