@@ -2,6 +2,10 @@ package com.historycode.api.streetcode;
 
 import com.historycode.api.clients.NewsClient;
 
+import com.historycode.api.models.adminPanel.news.GetAllNewsResponse;
+import com.historycode.api.models.adminPanel.news.ImageDetails;
+import com.historycode.api.models.adminPanel.news.News;
+import com.historycode.api.models.adminPanel.news.NewsImage;
 import com.historycode.api.testRunners.ApiTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;

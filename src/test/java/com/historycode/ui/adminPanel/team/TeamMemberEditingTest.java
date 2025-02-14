@@ -4,6 +4,7 @@ import com.historycode.ui.data_provider.enums.SocialMedia;
 import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
 import com.historycode.ui.page.adminpanel.teampage.TeamRowComponent;
 import com.historycode.ui.page.adminpanel.teampage.createEditModal.CreateEditMemberModal;
+import com.historycode.ui.page.adminpanel.teampage.createEditModal.photoElement.PhotoModalComponent;
 import com.historycode.ui.testrunners.TestRunnerWithAdmin;
 import com.historycode.utils.ImageProcessor;
 import io.qameta.allure.Description;
@@ -170,8 +171,9 @@ public class TeamMemberEditingTest extends TestRunnerWithAdmin {
                 .saveEditedMember()
                 .closeEditMemberModalWithoutGridRefresh();
         modal = targetTeamMember.clickEdit();
-        resultPhoto = modal.getRefreshedPhotoWindowComponent()
-                                    .getEncodedPhoto();
+        PhotoModalComponent previewPhotoModal =  modal.getPhotoWindowComponent().clickPreviewButton();
+        resultPhoto = previewPhotoModal.getEncodedPhoto();
+        previewPhotoModal.close();
         modal.closeEditMemberModalWithoutGridRefresh();
         log.debug(ImageProcessor.clearStringMetadata(resultPhoto));
         log.debug(ImageProcessor.encodeImage("src/test/resources/memberImage.jpg"));

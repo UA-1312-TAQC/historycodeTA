@@ -1,6 +1,7 @@
 package com.historycode.ui.page.adminpanel.teampage.createEditModal.photoElement;
 
 import com.historycode.ui.component.BaseComponent;
+
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -25,11 +26,11 @@ public class PhotoWindowComponent extends BaseComponent {
     @FindBy(xpath = ".//button[contains(@class, 'ant-btn-icon-only') and @title='Remove file']")
     private WebElement deleteButton;
 
-    private final PhotoModalComponent photoModalComponent;
+    @FindBy(xpath = "//div[@class='modal-item-image']/ancestor::div[@class='ant-modal-content']")
+    private WebElement photoModalComponentRoot;
 
     public PhotoWindowComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        this.photoModalComponent = new PhotoModalComponent(driver, rootElement);
     }
 
     public boolean isPhotoUploaded() {
@@ -50,18 +51,16 @@ public class PhotoWindowComponent extends BaseComponent {
         }
     }
 
-    public void clickPreviewButton() {
+    public PhotoModalComponent clickPreviewButton() {
+        actions.moveToElement(previewButton).perform();
         previewButton.click();
-        photoModalComponent.waitForModalToAppear();
+        waitUntilElementVisible(photoModalComponentRoot);
+        return new PhotoModalComponent(driver, photoModalComponentRoot);
     }
 
 
     public String getEncodedPhoto(){
         return uploadedPhoto.getDomAttribute("src");
-    }
-
-    public void closePreviewModal() {
-        photoModalComponent.close();
     }
 
     public void clickDeleteButton() {

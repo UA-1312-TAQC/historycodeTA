@@ -83,6 +83,9 @@ public class CreateEditMemberModal extends BaseCreateEditModal {
     @FindBy(css = ".ant-upload-list-item-container")
     protected WebElement photoWindowComponentRoot;
 
+    @FindBy(xpath = ".//a[@title='Preview file']")
+    protected WebElement PreviewFile;
+
     protected PhotoWindowComponent photoWindowComponent;
 
     public CreateEditMemberModal(WebDriver driver, WebElement rootElement) {
@@ -216,6 +219,7 @@ public class CreateEditMemberModal extends BaseCreateEditModal {
         ImageLoader.loadImageUsingRelativePath(imageName, photoInputField);
         //wait.until(new StalenessOfElementLocatedBy(By.cssSelector(PHOTO_ACTIONS_COMPONENT_ROOT_CSS)));
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(PHOTO_ACTIONS_COMPONENT_ROOT_CSS)));
+        sleep(3000);
         return this;
     }
 
@@ -323,4 +327,15 @@ public class CreateEditMemberModal extends BaseCreateEditModal {
     public void openPositionsDropdown(){
         getPositionsDropdown().openDropdownPosition();
     }
+    public void clickPreviewFile(){
+        actions.moveToElement(PreviewFile).perform();
+        PreviewFile.click();
+    }
+
+    public String getEncodedPreviewPhoto() {
+        clickPreviewFile();
+        return driver.findElement(By.xpath("//img[@alt='uploaded']")).getDomAttribute("src");
+    }
+
+
 }
