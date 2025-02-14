@@ -28,13 +28,9 @@ public class BaseTestRunnerWithAdmin extends BaseTestRunner{
 
     @BeforeClass
     public void BeforeClass() {
+        driver.get(testValueProvider.getBaseUIUrl());
         setAccessToken();
     }
-    @AfterClass
-    public void AfterClass() {
-        removeAccessToken();
-    }
-
     @BeforeMethod
     public void beforeMethod() {
         if (driver == null){
@@ -42,4 +38,11 @@ public class BaseTestRunnerWithAdmin extends BaseTestRunner{
         }
         driver.get(testValueProvider.getBaseUIUrl() + "/admin-panel");
     }
+
+    @AfterClass
+    public void AfterClass() {
+        removeAccessToken();
+    }
+
+
 }

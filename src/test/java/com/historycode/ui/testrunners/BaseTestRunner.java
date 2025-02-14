@@ -26,9 +26,9 @@ public class BaseTestRunner {
     public void initDriver() {
         ChromeOptions options = new ChromeOptions();
 
-        options.addArguments("--disable-notifications");
-        options.addArguments("--disable-popup-blocking");
-        options.addArguments("--headless");
+//        options.addArguments("--disable-notifications");
+//        options.addArguments("--disable-popup-blocking");
+//        options.addArguments("--headless");
 
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();

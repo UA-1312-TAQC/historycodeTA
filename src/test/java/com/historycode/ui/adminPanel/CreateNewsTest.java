@@ -24,7 +24,7 @@ public class CreateNewsTest extends BaseTestRunnerWithAdmin {
     private String imagePath = "src/test/resources/newsTest.png";
 
     @BeforeMethod
-    public void setupForCreateNews() {
+    public void beforeMethod() {
         
 
         Random rand = new Random();
