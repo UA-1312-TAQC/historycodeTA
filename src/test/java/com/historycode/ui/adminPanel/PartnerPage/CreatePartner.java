@@ -128,6 +128,27 @@ public class CreatePartner extends TestAdminPartnerPage {
 
     }
 
+    @Test
+    @Epic("AdminPartners")
+    @Issue("132")
+    @Story("64")
+    @Description("Verify that the admin can add only one logo as an image to a partner's card")
+    public void addOnlyOneLogo() {
+        CreatePartnersModal createModal = openCreateModal();
+        createModal.name.setInputField(testName);
+        createModal.logo.uploadLogo(testLogo);
+        createModal.logo.uploadLogo(testLogoNew);
+        createModal.clickSaveButton();
+        createModal.clickCloseButton();
+
+        PartnersRowComponent newPartner = new PartnersPageAdminPanel(driver)
+                .clickLastPage()
+                .getPartnersPageGridComponent()
+                .findPartnerByName(testName);
+
+        Assert.assertEquals(newPartner.getLogoSrc(), testLogoNewSrc);
+    }
+
     @AfterMethod
     public void cleanUp() {
         driver.get(testValueProvider.getBaseUIUrl() + "/admin-panel");

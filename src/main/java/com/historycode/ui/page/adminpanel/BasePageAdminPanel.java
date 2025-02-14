@@ -17,7 +17,6 @@ public abstract class BasePageAdminPanel extends BasePage {
 
     public BasePageAdminPanel(WebDriver driver) {
         super(driver);
-        sleep(2000);
         adminMenuBar = new AdminMenuBarComponent(driver, adminMenuBarNode);
     }
 
