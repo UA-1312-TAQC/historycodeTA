@@ -80,7 +80,11 @@ public class PaginationAdminPanelComponent extends BaseComponent {
 
     private boolean isPaginationButtonEnabled(WebElement button) {
         try {
-            return button.isDisplayed() && button.isEnabled();
+            if (button.isDisplayed()) {
+                String ariaDisabled = button.getAttribute("aria-disabled");
+                return !"true".equalsIgnoreCase(ariaDisabled) && button.isEnabled();
+            }
+            return false;
         } catch (Exception e) {
             return false;
         }
