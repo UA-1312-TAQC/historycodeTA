@@ -103,4 +103,24 @@ public class CategoriesGridComponent extends GridComponent {
     public void deleteRow(CategoriesRowComponent row) {
         row.clickDelete();
     }
+
+    public void clickNextPage() {
+        pagination.clickNextPage();
+    }
+
+    public void clickPrevPage() {
+        pagination.clickPrevPage();
+    }
+
+    public void clickPrevFivePages() {
+        pagination.clickPrevFivePages();
+    }
+
+    public void clickNextFivePages() {
+        pagination.clickNextFivePages();
+    }
+
+    public void clickPaginationItem(int index) {
+        pagination.clickPaginationItem(index);
+    }
 }

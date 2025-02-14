@@ -98,4 +98,29 @@ public class TagsGridComponent extends GridComponent {
     public void deleteRow(TagsRowComponent row) {
         row.clickDelete();
     }
+
+    public TagsGridComponent clickNextPage() {
+        pagination.clickNextPage();
+        return new TagsGridComponent(driver, rootElement);
+    }
+
+    public TagsGridComponent clickPrevPage() {
+        pagination.clickPrevPage();
+        return new TagsGridComponent(driver, rootElement);
+    }
+
+    public TagsGridComponent clickPrevFivePages() {
+        pagination.clickPrevFivePages();
+        return new TagsGridComponent(driver, rootElement);
+    }
+
+    public TagsGridComponent clickNextFivePages() {
+        pagination.clickNextFivePages();
+        return new TagsGridComponent(driver, rootElement);
+    }
+
+    public TagsGridComponent clickPaginationItem(int index) {
+        pagination.clickPaginationItem(index);
+        return new TagsGridComponent(driver, rootElement);
+    }
 }

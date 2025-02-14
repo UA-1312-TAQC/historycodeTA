@@ -98,4 +98,29 @@ public class ContextsGridComponent extends GridComponent {
     public void deleteRow(ContextsRowComponent row) {
         row.clickDelete();
     }
+
+    public ContextsGridComponent clickNextPage() {
+        pagination.clickNextPage();
+        return new ContextsGridComponent(driver, rootElement);
+    }
+
+    public ContextsGridComponent clickPrevPage() {
+        pagination.clickPrevPage();
+        return new ContextsGridComponent(driver, rootElement);
+    }
+
+    public ContextsGridComponent clickPrevFivePages() {
+        pagination.clickPrevFivePages();
+        return new ContextsGridComponent(driver, rootElement);
+    }
+
+    public ContextsGridComponent clickNextFivePages() {
+        pagination.clickNextFivePages();
+        return new ContextsGridComponent(driver, rootElement);
+    }
+
+    public ContextsGridComponent clickPaginationItem(int index) {
+        pagination.clickPaginationItem(index);
+        return new ContextsGridComponent(driver, rootElement);
+    }
 }

@@ -15,10 +15,6 @@ import java.util.List;
 
 public class TagsPage extends BaseEditorPage {
 
-    @Getter
-    @FindBy(xpath = "//div[contains(@class, 'ant-table-wrapper')]")
-    private WebElement gridNode;
-
     private AddButtonElement addTagButton;
     @Getter
     private TagsGridComponent grid;
@@ -111,26 +107,31 @@ public class TagsPage extends BaseEditorPage {
 
     public TagsPage clickNextPage() {
         grid.clickNextPage();
+        sleep(1000); //ToDo Change it to better solution
         return new TagsPage(driver);
     }
 
     public TagsPage clickPrevPage() {
         grid.clickPrevPage();
+        sleep(1000); //ToDo Change it to better solution
         return new TagsPage(driver);
     }
 
     public TagsPage clickPrevFivePages() {
         grid.clickPrevFivePages();
+        sleep(1000); //ToDo Change it to better solution
         return new TagsPage(driver);
     }
 
     public TagsPage clickNextFivePages() {
         grid.clickNextFivePages();
+        sleep(1000); //ToDo Change it to better solution
         return new TagsPage(driver);
     }
 
     public TagsPage clickPaginationItem(int index) {
         grid.clickPaginationItem(index);
+        sleep(1000); //ToDo Change it to better solution
         return new TagsPage(driver);
     }
 
