@@ -1,16 +1,16 @@
 package com.historycode.ui.adminPanel;
 
 import com.historycode.ui.page.adminpanel.editorpage.CategoriesPage;
-import com.historycode.ui.testrunners.TestRunnerWithAdmin;
+import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
  /*
-public class DeletePositionEditor extends TestRunnerWithAdmin {
+public class DeletePositionEditor extends BaseTestRunnerWithAdmin {
     @BeforeMethod
     public void setupForDeleteJob() {
-        login();
+        
         driver.get(testValueProvider.getBaseUIUrl() + "/admin-panel/editor");
         CategoriesPage categoriesPage = new CategoriesPage(driver);
         categoriesPage.moveToPositions()

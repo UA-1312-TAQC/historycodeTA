@@ -10,6 +10,7 @@ import com.historycode.ui.page.adminpanel.teampage.createEditModal.photoElement.
 import com.historycode.ui.page.adminpanel.teampage.createEditModal.photoElement.PhotoWindowComponent;
 import com.historycode.ui.page.adminpanel.teampage.createEditModal.socialMediaElement.SocialMediaExistedComponent;
 import com.historycode.ui.utils.ImageLoader;
+import com.historycode.ui.utils.customExpectedConditions.StalenessOfElementLocatedBy;
 import io.qameta.allure.Step;
 import lombok.Getter;
 import org.openqa.selenium.By;
@@ -26,6 +27,10 @@ import java.util.List;
 
 @Getter
 public class CreateEditMemberModal extends BaseCreateEditModal {
+
+    protected String PHOTO_ACTIONS_COMPONENT_ROOT_CSS = "span.ant-upload-list-item-actions";
+
+    protected String MESSAGE_SUCCESS_CSS = ".ant-message-top .ant-message-success";
 
     @FindBy(xpath = ".//label[contains(@class, 'ant-checkbox-wrapper ant-checkbox-wrapper-checked ant-checkbox-wrapper-in-form-item css-k7429z')]/../..")
     protected WebElement keyMemberCheckboxRoot;
@@ -74,12 +79,18 @@ public class CreateEditMemberModal extends BaseCreateEditModal {
     protected WebElement addSocialMediaButton;
 
     protected PhotoModalComponent photoModalComponent;
+
+    @FindBy(css = ".ant-upload-list-item-container")
+    protected WebElement photoWindowComponentRoot;
+
+    @FindBy(xpath = ".//a[@title='Preview file']")
+    protected WebElement PreviewFile;
+
     protected PhotoWindowComponent photoWindowComponent;
 
     public CreateEditMemberModal(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
         //this.photoModalComponent = new PhotoModalComponent(driver, rootElement);
-        //this.photoWindowComponent = new PhotoWindowComponent(driver, rootElement);
     }
 
     private CheckboxElement getKeyMemberCheckbox(){
@@ -133,6 +144,22 @@ public class CreateEditMemberModal extends BaseCreateEditModal {
         return this;
     }
 
+
+    public PhotoWindowComponent getPhotoWindowComponent(){
+        if(photoWindowComponent == null){
+            return getRefreshedPhotoWindowComponent();
+        }
+        return this.photoWindowComponent;
+    }
+
+
+    public PhotoWindowComponent getRefreshedPhotoWindowComponent(){
+        this.photoWindowComponent = new PhotoWindowComponent(driver, photoWindowComponentRoot);
+        return this.photoWindowComponent;
+    }
+
+
+
     public boolean isKeyMemberChecked() {
         return getKeyMemberCheckbox().isChecked();
     }
@@ -183,6 +210,16 @@ public class CreateEditMemberModal extends BaseCreateEditModal {
     @Step("Loading image {imageName} as a team member photo")
     public CreateEditMemberModal loadPhoto(String imageName){
         ImageLoader.loadImageUsingRelativePath(imageName, photoInputField);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(PHOTO_ACTIONS_COMPONENT_ROOT_CSS)));
+        return this;
+    }
+
+    @Step("Loading image {imageName} to replace an existing team member photo")
+    public CreateEditMemberModal updatePhoto(String imageName){
+        ImageLoader.loadImageUsingRelativePath(imageName, photoInputField);
+        //wait.until(new StalenessOfElementLocatedBy(By.cssSelector(PHOTO_ACTIONS_COMPONENT_ROOT_CSS)));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(PHOTO_ACTIONS_COMPONENT_ROOT_CSS)));
+        sleep(3000);
         return this;
     }
 
@@ -209,7 +246,6 @@ public class CreateEditMemberModal extends BaseCreateEditModal {
     @Step("Add social media link {link}")
     public CreateEditMemberModal addSocialMediaLink(String link) {
         getSocialMediaInput().setInputField(link);
-        addSocialMediaButton.click();
         return this;
     }
 
@@ -247,20 +283,28 @@ public class CreateEditMemberModal extends BaseCreateEditModal {
     @Step("Click the 'Зберегти' button")
     public CreateEditMemberModal saveEditedMember() {
         clickSaveButton();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(MESSAGE_SUCCESS_CSS)));
+        return this;
+    }
+
+    @Step("Click the 'Зберегти' button")
+    public CreateEditMemberModal saveEditedMemberWithoutWaitingForSuccessMessage() {
+        clickSaveButton();
         return this;
     }
 
     @Step("Close the modal window")
     public TeamPageAdminPanel closeEditMemberModal() {
-        actions.moveToElement(closeButton).perform();
-        waitUntilElementClickable(closeButton);
-        clickCloseButton();
-        wait.until(ExpectedConditions.invisibilityOf(closeButton));
+        closeModal();
         return new TeamPageAdminPanel(driver);
     }
 
     @Step("Close the modal window")
     public void closeEditMemberModalWithoutGridRefresh() {
+        closeModal();
+    }
+
+    private void closeModal(){
         actions.moveToElement(closeButton).perform();
         waitUntilElementClickable(closeButton);
         clickCloseButton();
@@ -283,4 +327,15 @@ public class CreateEditMemberModal extends BaseCreateEditModal {
     public void openPositionsDropdown(){
         getPositionsDropdown().openDropdownPosition();
     }
+    public void clickPreviewFile(){
+        actions.moveToElement(PreviewFile).perform();
+        PreviewFile.click();
+    }
+
+    public String getEncodedPreviewPhoto() {
+        clickPreviewFile();
+        return driver.findElement(By.xpath("//img[@alt='uploaded']")).getDomAttribute("src");
+    }
+
+
 }

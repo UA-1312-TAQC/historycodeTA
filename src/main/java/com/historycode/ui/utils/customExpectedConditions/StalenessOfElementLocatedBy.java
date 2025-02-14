@@ -1,0 +1,40 @@
+package com.historycode.ui.utils.customExpectedConditions;
+
+
+import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+
+
+import java.time.Duration;
+
+@Slf4j
+public class StalenessOfElementLocatedBy implements ExpectedCondition<Boolean> {
+
+    By locator;
+
+    public StalenessOfElementLocatedBy(By locator) {
+        this.locator = locator;
+    }
+
+    @Override
+    public Boolean apply(WebDriver driver) {
+        log.debug("Applying custom expected condition");
+        Duration timeout = driver.manage().timeouts().getImplicitWaitTimeout();
+        log.debug("Implicit wait " + timeout);
+        try {
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
+            driver.findElement(this.locator);
+        } catch (StaleElementReferenceException | NoSuchElementException ex) {
+            log.debug("Expected condition is true: " + ex.getClass() + " is thrown");
+            return true;
+        }finally {
+            driver.manage().timeouts().implicitlyWait(timeout);
+        }
+        return false;
+    }
+}
+

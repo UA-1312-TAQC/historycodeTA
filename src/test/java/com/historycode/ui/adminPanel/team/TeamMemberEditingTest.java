@@ -1,20 +1,29 @@
 package com.historycode.ui.adminPanel.team;
 
+import com.historycode.ui.data_provider.enums.SocialMedia;
 import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
 import com.historycode.ui.page.adminpanel.teampage.TeamRowComponent;
 import com.historycode.ui.page.adminpanel.teampage.createEditModal.CreateEditMemberModal;
-import com.historycode.ui.testrunners.TestRunnerWithAdmin;
+import com.historycode.ui.page.adminpanel.teampage.createEditModal.photoElement.PhotoModalComponent;
+import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
+import com.historycode.utils.ImageProcessor;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Story;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Base64;
 
 
-public class TeamMemberEditingTest extends TestRunnerWithAdmin {
+@Slf4j
+public class TeamMemberEditingTest extends BaseTestRunnerWithAdmin {
 
     TeamRowComponent targetTeamMember;
     String teamMemberName;
@@ -32,8 +41,8 @@ public class TeamMemberEditingTest extends TestRunnerWithAdmin {
                 .setName(teamMemberName)
                 .setDescription(teamMemberDescription)
                 .loadPhoto("TeamMemberImage.png")
-                .addSocialMedia("LinkedIn")
-                .addSocialMediaLink("https://ua.linkedin.com/")
+                .addSocialMedia(SocialMedia.LINKEDIN.getName())
+                .addSocialMediaLink(SocialMedia.LINKEDIN.getValidLink())
                 .saveEditedMember()
                 .closeEditMemberModal()
                 //.clickLastPaginationItem()
@@ -55,8 +64,8 @@ public class TeamMemberEditingTest extends TestRunnerWithAdmin {
                 .closeEditMemberModalWithoutGridRefresh();
         CreateEditMemberModal res = targetTeamMember.clickEdit();
         String actual = res.getName();
-        Assert.assertEquals(newTeamMemberName, actual);
         res.closeEditMemberModalWithoutGridRefresh();
+        Assert.assertEquals(newTeamMemberName, actual);
     }
 
     @Test
@@ -73,8 +82,8 @@ public class TeamMemberEditingTest extends TestRunnerWithAdmin {
                 .closeEditMemberModalWithoutGridRefresh();
         CreateEditMemberModal res = targetTeamMember.clickEdit();
         String actual = res.getName();
-        Assert.assertEquals(newTeamMemberName.substring(0,41), actual);
         res.closeEditMemberModalWithoutGridRefresh();
+        Assert.assertEquals(newTeamMemberName.substring(0,41), actual);
     }
 
 
@@ -87,12 +96,12 @@ public class TeamMemberEditingTest extends TestRunnerWithAdmin {
         targetTeamMember
                 .clickEdit()
                 .setName("")
-                .saveEditedMember()
+                .saveEditedMemberWithoutWaitingForSuccessMessage()
                 .closeEditMemberModalWithoutGridRefresh();
         CreateEditMemberModal res = targetTeamMember.clickEdit();
         String actual = res.getName();
-        Assert.assertEquals(teamMemberName, actual);
         res.closeEditMemberModalWithoutGridRefresh();
+        Assert.assertEquals(teamMemberName, actual);
     }
 
     @Test
@@ -109,8 +118,8 @@ public class TeamMemberEditingTest extends TestRunnerWithAdmin {
                 .closeEditMemberModalWithoutGridRefresh();
         CreateEditMemberModal res = targetTeamMember.clickEdit();
         String actual = res.getDescription();
-        Assert.assertEquals(newTeamMemberDescription, actual);
         res.closeEditMemberModalWithoutGridRefresh();
+        Assert.assertEquals(newTeamMemberDescription, actual);
     }
 
     @Test
@@ -127,10 +136,10 @@ public class TeamMemberEditingTest extends TestRunnerWithAdmin {
                 .closeEditMemberModalWithoutGridRefresh();
         CreateEditMemberModal res = targetTeamMember.clickEdit();
         String actual = res.getDescription();
-        System.out.println(newTeamMemberDescription);
-        Assert.assertEquals(newTeamMemberDescription.substring(0,70), actual);
         res.closeEditMemberModalWithoutGridRefresh();
+        Assert.assertEquals(newTeamMemberDescription.substring(0,70), actual);
     }
+
     @Test
     @Issue("120")
     @Story("95")
@@ -144,8 +153,33 @@ public class TeamMemberEditingTest extends TestRunnerWithAdmin {
                 .closeEditMemberModalWithoutGridRefresh();
         CreateEditMemberModal res = targetTeamMember.clickEdit();
         String actual = res.getDescription();
-        Assert.assertTrue(actual.isEmpty());
         res.closeEditMemberModalWithoutGridRefresh();
+        Assert.assertTrue(actual.isEmpty());
+    }
+
+    @Test
+    @Issue("120")
+    @Story("95")
+    @Epic("(Epic #5) Admin/other pages")
+    @Description("Verify that the admin can edit the team member photo")
+    public void editPhotoTest() {
+        CreateEditMemberModal modal;
+        String resultPhoto;
+
+        targetTeamMember.clickEdit()
+                .updatePhoto("memberImage.jpg")
+                .saveEditedMember()
+                .closeEditMemberModalWithoutGridRefresh();
+        modal = targetTeamMember.clickEdit();
+        PhotoModalComponent previewPhotoModal =  modal.getPhotoWindowComponent().clickPreviewButton();
+        resultPhoto = previewPhotoModal.getEncodedPhoto();
+        previewPhotoModal.close();
+        modal.closeEditMemberModalWithoutGridRefresh();
+        log.debug(ImageProcessor.clearStringMetadata(resultPhoto));
+        log.debug(ImageProcessor.encodeImage("src/test/resources/memberImage.jpg"));
+        log.debug(ImageProcessor.encodeImage("src/test/resources/TeamMemberImage.png"));
+        Assert.assertTrue(ImageProcessor.compareEncodedAndNormalImage("src/test/resources/memberImage.jpg", resultPhoto),
+                "New photo is incorrect or not shown in the modal window");
     }
 
     @AfterMethod

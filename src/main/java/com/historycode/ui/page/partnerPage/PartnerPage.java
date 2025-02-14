@@ -50,9 +50,6 @@ public class PartnerPage extends BasePage {
     public String getLogoSrc(String alt, PartnerType type) {
         List<WebElement> partners = type == PartnerType.KEY ? keyPartners : notKeyPartners;
         String logoSrc = findLogo(partners, alt).getDomAttribute("src");
-        if (logoSrc.startsWith(LOGOPREFIX)) {
-            return logoSrc.substring(LOGOPREFIX.length());
-        }
         return logoSrc;
     }
 

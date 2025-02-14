@@ -7,10 +7,16 @@ import com.historycode.ui.page.partnerPage.PartnerPage;
 
 import io.qameta.allure.*;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Issue;
+import io.qameta.allure.Story;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+
+import static com.historycode.ui.utils.ImageLoader.getBase64FromFile;
 
 public class CreatePartner extends TestAdminPartnerPage {
 
@@ -34,7 +40,8 @@ public class CreatePartner extends TestAdminPartnerPage {
                 .findPartnerByName(testName);
 
         softAssert.assertEquals(newPartner.getNameText(), testName);
-        softAssert.assertEquals(newPartner.getLogoSrc(), testLogoSrc);
+        softAssert.assertEquals(getBase64FromFile(testLogo), newPartner.getLogoSrc(),
+                "Img code base64 don't match");
         softAssert.assertAll();
     }
 
@@ -97,8 +104,8 @@ public class CreatePartner extends TestAdminPartnerPage {
         basePage.openBurgerMenu().goToPartnerPage();
         basePage.scrollToEndOfPage();
 
-        Assert.assertEquals(basePage.getLogoSrc(testName, PartnerPage.PartnerType.NOT_KEY), testLogoSrc,
-                        "Img code base64 don't match");
+        Assert.assertEquals(getBase64FromFile(testLogo), basePage.getLogoSrc(testName, PartnerPage.PartnerType.NOT_KEY),
+                "Img code base64 don't match");
     }
 
     @Test
@@ -120,7 +127,7 @@ public class CreatePartner extends TestAdminPartnerPage {
         basePage.openBurgerMenu().goToPartnerPage();
         basePage.scrollToElementJs(basePage.getNotKeyPartners().getFirst());
 
-        softAssert.assertEquals(basePage.getLogoSrc(testName, PartnerPage.PartnerType.KEY), testLogoSrc,
+        Assert.assertEquals(getBase64FromFile(testLogo), basePage.getLogoSrc(testName, PartnerPage.PartnerType.KEY),
                 "Img code base64 don't match");
         softAssert.assertTrue(basePage.isGoodLogoSize(testName, PartnerPage.PartnerType.KEY),
                 "The image size doesn't match the mockup");
@@ -146,7 +153,8 @@ public class CreatePartner extends TestAdminPartnerPage {
                 .getPartnersPageGridComponent()
                 .findPartnerByName(testName);
 
-        Assert.assertEquals(newPartner.getLogoSrc(), testLogoNewSrc);
+        Assert.assertEquals(getBase64FromFile(testLogo), newPartner.getLogoSrc(),
+                "The image size doesn't match the mockup");
     }
 
     @AfterMethod
@@ -162,7 +170,7 @@ public class CreatePartner extends TestAdminPartnerPage {
         if (newPartner != null) {
             newPartner.clickDelete().clickOkButton();
             Allure.step(String.format("Партнер '%s' успішно видалений.", testName));
-            
+
         } else {
             Allure.step(String.format("Партнер '%s' не знайдений у системі.", testName));
         }

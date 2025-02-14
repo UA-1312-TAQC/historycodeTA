@@ -15,10 +15,6 @@ import java.util.List;
 
 public class ContextsPage extends BaseEditorPage {
 
-    @Getter
-    @FindBy(xpath = "//div[contains(@class, 'ant-table-wrapper')]")
-    private WebElement gridNode;
-
     private AddButtonElement addContextButton;
     private ContextsGridComponent grid;
 
@@ -110,26 +106,31 @@ public class ContextsPage extends BaseEditorPage {
 
     public ContextsPage clickNextPage() {
         grid.clickNextPage();
+        sleep(1000); //ToDo Change it to better solution
         return new ContextsPage(driver);
     }
 
     public ContextsPage clickPrevPage() {
         grid.clickPrevPage();
+        sleep(1000); //ToDo Change it to better solution
         return new ContextsPage(driver);
     }
 
     public ContextsPage clickPrevFivePages() {
         grid.clickPrevFivePages();
+        sleep(1000); //ToDo Change it to better solution
         return new ContextsPage(driver);
     }
 
     public ContextsPage clickNextFivePages() {
         grid.clickNextFivePages();
+        sleep(1000); //ToDo Change it to better solution
         return new ContextsPage(driver);
     }
 
     public ContextsPage clickPaginationItem(int index) {
         grid.clickPaginationItem(index);
+        sleep(1000); //ToDo Change it to better solution
         return new ContextsPage(driver);
     }
 

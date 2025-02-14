@@ -1,15 +1,16 @@
 package com.historycode.ui.adminPanel.EditorPage;
 
+import com.beust.ah.A;
 import com.historycode.ui.page.adminpanel.editorpage.CategoriesPage;
 import com.historycode.ui.page.adminpanel.editorpage.PositionsPage;
-import com.historycode.ui.testrunners.TestRunnerWithAdminEditor;
+import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Issue;
 import jdk.jfr.Description;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class EditorPositionsTests extends TestRunnerWithAdminEditor {
+public class EditorPositionsTests extends BaseTestRunnerWithAdmin {
 
     private final String TEST_POSITION = "testPosition23";
     private final String TEST_POSITION_NEW = "testPosition32";
@@ -59,14 +60,27 @@ public class EditorPositionsTests extends TestRunnerWithAdminEditor {
     @Description("Verify that the admin can add a new position with valid data")
     public void verifyAdminCanAddNewValidPosition() {
 
-        new CategoriesPage(driver)
-                .moveToPositions()
+        PositionsPage positionsPage = new CategoriesPage(driver)
+                .moveToPositions();
+
+        positionsPage
                 .clickAddPosition()
                 .enterPosition(TEST_POSITION_VALID)
                 .save()
                 .close();
 
-        //ToDo Add searching of position in grids and assertation of it name
+        positionsPage = new PositionsPage(driver);
+        while (positionsPage.getTableRowByTitle(TEST_POSITION_VALID) == null) {
+            if (!positionsPage.tableHasNextPage()) {
+                break;
+            }
+            positionsPage = positionsPage.clickNextPage();
+        }
+
+        boolean actual = positionsPage.getTableRowByTitle(TEST_POSITION_VALID) != null;
+        Assert.assertTrue(actual,
+                "The position was not created.");
+
     }
 
     //ToDo Add Before Class method to add new position than move back to Base Admin Page and move to the editor
