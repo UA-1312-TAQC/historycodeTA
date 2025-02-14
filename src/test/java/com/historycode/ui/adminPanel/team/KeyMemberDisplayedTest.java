@@ -3,13 +3,14 @@ package com.historycode.ui.adminPanel.team;
 import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
 import com.historycode.ui.page.adminpanel.teampage.TeamPageAdminPanel;
 import com.historycode.ui.page.adminpanel.teampage.TeamRowComponent;
-import com.historycode.ui.testrunners.TestRunnerWithAdmin;
+
+import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class KeyMemberDisplayedTest extends TestRunnerWithAdmin {
+public class KeyMemberDisplayedTest extends BaseTestRunnerWithAdmin {
 
     @Issue("121")
     @Test

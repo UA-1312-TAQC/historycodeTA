@@ -3,7 +3,7 @@ package com.historycode.ui.adminPanel;
 import com.historycode.ui.page.adminpanel.editorpage.TagsPage;
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.TagsModalComponent;
 import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
-import com.historycode.ui.testrunners.TestRunnerWithAdmin;
+import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Issue;
@@ -12,7 +12,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-public class AdminEditorTagsTest extends TestRunnerWithAdmin {
+public class AdminEditorTagsTest extends BaseTestRunnerWithAdmin {
 
     private String newTag;
     private SoftAssert softAssert;

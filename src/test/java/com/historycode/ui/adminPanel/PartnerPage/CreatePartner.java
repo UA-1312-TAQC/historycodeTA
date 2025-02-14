@@ -4,7 +4,8 @@ import com.historycode.ui.page.adminpanel.partnerspage.PartnersPageAdminPanel;
 import com.historycode.ui.page.adminpanel.partnerspage.PartnersRowComponent;
 import com.historycode.ui.page.adminpanel.partnerspage.modal.CreatePartnersModal;
 import com.historycode.ui.page.partnerPage.PartnerPage;
-import com.historycode.ui.testrunners.TestRunnerWithAdmin;
+import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
+import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Issue;
@@ -14,7 +15,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
-public class CreatePartner extends TestRunnerWithAdmin {
+public class CreatePartner extends BaseTestRunnerWithAdmin {
 
     String testName = "SpongeBob";
     String testDescription = "Our optimistic and energetic sponge";
@@ -78,7 +79,7 @@ public class CreatePartner extends TestRunnerWithAdmin {
 
     @AfterMethod
     public void deletePartner() {
-        login();
+        
         PartnersRowComponent newPartner = new PartnersPageAdminPanel(driver)
                 .getAdminMenuBar()
                 .goToPartnersPage()

@@ -4,13 +4,13 @@ import com.historycode.ui.component.adminPanel.modalAdminPanel.PopUpMessageCompo
 import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
 import com.historycode.ui.page.adminpanel.teampage.TeamPageAdminPanel;
 import com.historycode.ui.page.adminpanel.teampage.TeamRowComponent;
-import com.historycode.ui.testrunners.TestRunnerWithAdmin;
+import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class MandatoryFieldsMemberAdd extends TestRunnerWithAdmin {
+public class MandatoryFieldsMemberAdd extends BaseTestRunnerWithAdmin {
 
     private static final String SUCCESS_MESSAGE = "Члена команди успішно додано/оновлено!";
 

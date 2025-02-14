@@ -2,13 +2,13 @@ package com.historycode.ui.adminPanel.team;
 
 import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
 import com.historycode.ui.page.adminpanel.teampage.createEditModal.CreateEditMemberModal;
-import com.historycode.ui.testrunners.TestRunnerWithAdmin;
+import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class AddNewMemberButtonTest extends TestRunnerWithAdmin {
+public class AddNewMemberButtonTest extends BaseTestRunnerWithAdmin {
 
     @Issue("115")
     @Test

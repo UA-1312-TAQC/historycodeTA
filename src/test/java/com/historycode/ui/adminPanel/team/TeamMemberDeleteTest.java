@@ -4,7 +4,7 @@ import com.historycode.ui.data_provider.enums.SocialMedia;
 import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
 import com.historycode.ui.page.adminpanel.teampage.TeamPageAdminPanel;
 import com.historycode.ui.page.adminpanel.teampage.TeamRowComponent;
-import com.historycode.ui.testrunners.TestRunnerWithAdmin;
+import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Issue;
@@ -14,7 +14,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-public class TeamMemberDeleteTest extends TestRunnerWithAdmin {
+public class TeamMemberDeleteTest extends BaseTestRunnerWithAdmin {
 
     TeamRowComponent target;
 

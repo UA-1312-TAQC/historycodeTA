@@ -5,7 +5,8 @@ import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanel
 import com.historycode.ui.page.adminpanel.teampage.TeamPageAdminPanel;
 import com.historycode.ui.page.adminpanel.teampage.TeamRowComponent;
 import com.historycode.ui.page.adminpanel.teampage.TeamSocialMediaComponent;
-import com.historycode.ui.testrunners.TestRunnerWithAdmin;
+import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
+import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Issue;
@@ -18,7 +19,7 @@ import com.historycode.ui.data_provider.StreetCodeDP;
 
 import java.util.List;
 
-public class TeamMemberCreationTest extends TestRunnerWithAdmin{
+public class TeamMemberCreationTest extends BaseTestRunnerWithAdmin {
 
     TeamRowComponent targetTeamMember;
 

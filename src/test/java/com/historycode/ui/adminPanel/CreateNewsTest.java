@@ -4,7 +4,7 @@ import com.historycode.ui.page.adminpanel.newspage.NewsPageAdminPanel;
 import com.historycode.ui.page.adminpanel.newspage.NewsPageGridComponent;
 import com.historycode.ui.page.adminpanel.newspage.NewsRowComponent;
 import com.historycode.ui.page.adminpanel.newspage.modal.CreateEditNewsModal;
-import com.historycode.ui.testrunners.TestRunnerWithAdmin;
+import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
 import io.qameta.allure.Issue;
 
 import org.testng.annotations.AfterMethod;
@@ -16,7 +16,7 @@ import java.util.Random;
 
 import static org.testng.Assert.*;
 
-public class CreateNewsTest extends TestRunnerWithAdmin {
+public class CreateNewsTest extends BaseTestRunnerWithAdmin {
 
     private String createdTitle;
     private String createdLink;
@@ -25,7 +25,7 @@ public class CreateNewsTest extends TestRunnerWithAdmin {
 
     @BeforeMethod
     public void setupForCreateNews() {
-        login();
+        
 
         Random rand = new Random();
         int n = rand.nextInt(50);

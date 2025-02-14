@@ -3,14 +3,14 @@ package com.historycode.ui.adminPanel.EditorPage;
 import com.beust.ah.A;
 import com.historycode.ui.page.adminpanel.editorpage.CategoriesPage;
 import com.historycode.ui.page.adminpanel.editorpage.PositionsPage;
-import com.historycode.ui.testrunners.TestRunnerWithAdminEditor;
+import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Issue;
 import jdk.jfr.Description;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class EditorPositionsTests extends TestRunnerWithAdminEditor {
+public class EditorPositionsTests extends BaseTestRunnerWithAdmin {
 
     private final String TEST_POSITION = "testPosition23";
     private final String TEST_POSITION_NEW = "testPosition32";

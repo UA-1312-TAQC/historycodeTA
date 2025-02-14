@@ -5,7 +5,7 @@ import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanel
 import com.historycode.ui.page.adminpanel.teampage.TeamRowComponent;
 import com.historycode.ui.page.adminpanel.teampage.createEditModal.CreateEditMemberModal;
 import com.historycode.ui.page.adminpanel.teampage.createEditModal.photoElement.PhotoModalComponent;
-import com.historycode.ui.testrunners.TestRunnerWithAdmin;
+import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
 import com.historycode.utils.ImageProcessor;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -23,7 +23,7 @@ import java.util.Base64;
 
 
 @Slf4j
-public class TeamMemberEditingTest extends TestRunnerWithAdmin {
+public class TeamMemberEditingTest extends BaseTestRunnerWithAdmin {
 
     TeamRowComponent targetTeamMember;
     String teamMemberName;

@@ -4,7 +4,8 @@ import com.historycode.ui.page.adminpanel.newspage.NewsPageAdminPanel;
 import com.historycode.ui.page.adminpanel.newspage.NewsPageGridComponent;
 import com.historycode.ui.page.adminpanel.newspage.NewsRowComponent;
 import com.historycode.ui.page.adminpanel.newspage.modal.CreateEditNewsModal;
-import com.historycode.ui.testrunners.TestRunnerWithAdmin;
+import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
+import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
 
 import io.qameta.allure.Issue;
 
@@ -16,7 +17,7 @@ import static org.testng.Assert.*;
 
 import java.util.Random;
 
-public class DeleteNewsTest extends TestRunnerWithAdmin {
+public class DeleteNewsTest extends BaseTestRunnerWithAdmin {
 
     private String createdTitle;
     private String createdLink;
@@ -25,7 +26,7 @@ public class DeleteNewsTest extends TestRunnerWithAdmin {
 
     @BeforeMethod
     public void setupForDeleteNews() {
-        login();
+        
 
         Random rand = new Random();
         int n = rand.nextInt(50);

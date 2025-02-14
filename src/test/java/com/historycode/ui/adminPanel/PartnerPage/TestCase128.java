@@ -3,7 +3,8 @@ package com.historycode.ui.adminPanel.PartnerPage;
 import com.historycode.ui.page.adminpanel.partnerspage.PartnersPageAdminPanel;
 import com.historycode.ui.page.adminpanel.partnerspage.PartnersRowComponent;
 import com.historycode.ui.page.adminpanel.partnerspage.modal.CreatePartnersModal;
-import com.historycode.ui.testrunners.TestRunnerWithAdmin;
+import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
+import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -12,7 +13,7 @@ import io.qameta.allure.Story;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-public class TestCase128 extends TestRunnerWithAdmin  {
+public class TestCase128 extends BaseTestRunnerWithAdmin {
 
     String testName = "SpongeBob";
 
