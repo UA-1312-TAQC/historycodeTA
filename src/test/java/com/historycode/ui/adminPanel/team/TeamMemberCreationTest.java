@@ -35,8 +35,8 @@ public class TeamMemberCreationTest extends TestRunnerWithAdmin{
                 .clickAddNewMemberButton()
                 .setName(teamMember)
                 .loadPhoto("TeamMemberImage.png")
-                .addSocialMedia("LinkedIn")
-                .addSocialMediaLink("https://ua.linkedin.com/")
+                .addSocialMedia(SocialMedia.LINKEDIN.getName())
+                .addSocialMediaLink(SocialMedia.LINKEDIN.getValidLink())
                 .saveEditedMember()
                 .closeEditMemberModal();
         if(res.getTeamPageGridComponent().findUserByName(teamMember) == null)
@@ -50,7 +50,7 @@ public class TeamMemberCreationTest extends TestRunnerWithAdmin{
     @Story("95")
     @Description("Verify that the admin can add 8 social links to the team member")
     @Test(dataProvider = "socialMediaDataProvider",  dataProviderClass = StreetCodeDP.class)
-    public void addDifferentSocialMediaTest(SocialMedia media){
+    public void addDifferentSocialMediaTest(SocialMedia socialMedia){
         String teamMember = RandomStringUtils.randomAlphabetic(7) + " " + RandomStringUtils.randomAlphabetic(10);
         TeamPageAdminPanel res= new HistoryCodesAdminPanelPage(driver)
                 .getAdminMenuBar()
@@ -58,8 +58,8 @@ public class TeamMemberCreationTest extends TestRunnerWithAdmin{
                 .clickAddNewMemberButton()
                 .setName(teamMember)
                 .loadPhoto("TeamMemberImage.png")
-                .addSocialMedia(media.getName())
-                .addSocialMediaLink(media.getValidLink())
+                .addSocialMedia(socialMedia.getName())
+                .addSocialMediaLink(socialMedia.getValidLink())
                 .saveEditedMember()
                 .closeEditMemberModal();
         if(res.getTeamPageGridComponent().findUserByName(teamMember) == null)
@@ -67,7 +67,7 @@ public class TeamMemberCreationTest extends TestRunnerWithAdmin{
         targetTeamMember = res.getTeamPageGridComponent().findUserByName(teamMember);
         List<TeamSocialMediaComponent> result = targetTeamMember.getSocialMediaLinks();
         Assert.assertFalse(result.isEmpty(), "Team member has no added social media");
-        Assert.assertEquals(result.get(0).getIcon(), media.getIcon(), "The social media icon is incorrect");
+        Assert.assertEquals(result.get(0).getIcon(), socialMedia.getIcon(), "The social media icon is incorrect");
     }
 
 

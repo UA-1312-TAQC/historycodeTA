@@ -1,6 +1,7 @@
 package com.historycode.ui.page.adminpanel.teampage.createEditModal.photoElement;
 
 import com.historycode.ui.component.BaseComponent;
+
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -13,23 +14,23 @@ import java.time.Duration;
 
 public class PhotoWindowComponent extends BaseComponent {
 
-    @FindBy(xpath = "//a[contains(@class, 'ant-upload-list-item-thumbnail')]/img")
+    @FindBy(xpath = ".//a[contains(@class, 'ant-upload-list-item-thumbnail')]/img")
     private WebElement uploadedPhoto;
 
-    @FindBy(xpath = "//span[@role='img' and contains(@class, 'anticon-picture')]")
+    @FindBy(xpath = ".//span[@role='img' and contains(@class, 'anticon-picture')]")
     private WebElement placeholderIcon;
 
-    @FindBy(xpath = "//span[@role='img' and @aria-label='eye']")
+    @FindBy(xpath = ".//span[@role='img' and @aria-label='eye']")
     private WebElement previewButton;
 
-    @FindBy(xpath = "//button[contains(@class, 'ant-btn-icon-only') and @title='Remove file']")
+    @FindBy(xpath = ".//button[contains(@class, 'ant-btn-icon-only') and @title='Remove file']")
     private WebElement deleteButton;
 
-    private final PhotoModalComponent photoModalComponent;
+    @FindBy(xpath = "//div[@class='modal-item-image']/ancestor::div[@class='ant-modal-content']")
+    private WebElement photoModalComponentRoot;
 
     public PhotoWindowComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        this.photoModalComponent = new PhotoModalComponent(driver, rootElement);
     }
 
     public boolean isPhotoUploaded() {
@@ -50,13 +51,16 @@ public class PhotoWindowComponent extends BaseComponent {
         }
     }
 
-    public void clickPreviewButton() {
+    public PhotoModalComponent clickPreviewButton() {
+        actions.moveToElement(previewButton).perform();
         previewButton.click();
-        photoModalComponent.waitForModalToAppear();
+        waitUntilElementVisible(photoModalComponentRoot);
+        return new PhotoModalComponent(driver, photoModalComponentRoot);
     }
 
-    public void closePreviewModal() {
-        photoModalComponent.close();
+
+    public String getEncodedPhoto(){
+        return uploadedPhoto.getDomAttribute("src");
     }
 
     public void clickDeleteButton() {
