@@ -200,10 +200,6 @@ public class StreetCodePage extends BasePage {
         return historyMapComponent;
     }
 
-    public void scrollToTop() {
-        scrollTopButton.clickScrollTop();
-    }
-
     public void toggleProgressBar() {
         verticalProgress.toggleProgressBar();
     }
