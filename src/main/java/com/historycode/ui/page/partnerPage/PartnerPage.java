@@ -11,6 +11,8 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
+import static com.historycode.ui.utils.ImageLoader.clearStringMetadata;
+
 public class PartnerPage extends BasePage {
 
     private static final String LOGO_XPATH = ".//img";
@@ -50,7 +52,7 @@ public class PartnerPage extends BasePage {
     public String getLogoSrc(String alt, PartnerType type) {
         List<WebElement> partners = type == PartnerType.KEY ? keyPartners : notKeyPartners;
         String logoSrc = findLogo(partners, alt).getDomAttribute("src");
-        return logoSrc;
+        return clearStringMetadata(logoSrc);
     }
 
     public Boolean isGoodLogoSize(String alt, PartnerType type) {

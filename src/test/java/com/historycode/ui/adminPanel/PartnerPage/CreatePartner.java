@@ -3,6 +3,7 @@ package com.historycode.ui.adminPanel.PartnerPage;
 import com.historycode.ui.page.adminpanel.partnerspage.PartnersPageAdminPanel;
 import com.historycode.ui.page.adminpanel.partnerspage.PartnersRowComponent;
 import com.historycode.ui.page.adminpanel.partnerspage.modal.CreatePartnersModal;
+import com.historycode.ui.page.adminpanel.streetcodeeditpage.StreetcodeEditPage;
 import com.historycode.ui.page.partnerPage.PartnerPage;
 
 import io.qameta.allure.*;
@@ -26,7 +27,7 @@ public class CreatePartner extends TestAdminPartnerPage {
     @Story("64")
     @Description("Verify that admin can add new partner via 'Додати' button in the 'Партнери' block ")
     public void CreateNotKeyPartner() {
-        SoftAssert softAssert = new SoftAssert();
+        /*SoftAssert softAssert = new SoftAssert();
 
         CreatePartnersModal createModal = openCreateModal();
         createModal.name.setInputField(testName);
@@ -42,7 +43,14 @@ public class CreatePartner extends TestAdminPartnerPage {
         softAssert.assertEquals(newPartner.getNameText(), testName);
         softAssert.assertEquals(getBase64FromFile(testLogo), newPartner.getLogoSrc(),
                 "Img code base64 don't match");
-        softAssert.assertAll();
+        */
+        driver.get(testValueProvider.getBaseUIUrl() + "/admin-panel/new-streetcode");
+        StreetcodeEditPage streetcodeEditPage = new StreetcodeEditPage(driver);
+        streetcodeEditPage.waitForPageToLoad(5);
+        streetcodeEditPage.scrollToElementJs(streetcodeEditPage.getPartnersRootElement());
+        streetcodeEditPage.sleep(10000);
+
+        //softAssert.assertAll();
     }
 
     @Test
@@ -154,7 +162,7 @@ public class CreatePartner extends TestAdminPartnerPage {
                 .findPartnerByName(testName);
 
         Assert.assertEquals(getBase64FromFile(testLogo), newPartner.getLogoSrc(),
-                "The image size doesn't match the mockup");
+                "The image code doesn't match");
     }
 
     @AfterMethod

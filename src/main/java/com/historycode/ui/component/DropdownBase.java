@@ -64,5 +64,5 @@ public class DropdownBase extends BaseComponent {
         String actualText = chosenOption.getText().trim();
         return expectedText.equals(actualText);
     }
-    
+
 }

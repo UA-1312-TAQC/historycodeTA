@@ -13,7 +13,6 @@ public class TestAdminPartnerPage extends BaseTestRunnerWithAdmin {
     protected final String testLogoNew = "uploadfiles/test.webp";
 
     protected CreatePartnersModal openCreateModal() {
-        driver.get(testValueProvider.getBaseUIUrl() + "/admin-panel");
         PartnersPageAdminPanel partnerPage = new PartnersPageAdminPanel(driver);
         return partnerPage
                .getAdminMenuBar()
