@@ -26,11 +26,11 @@ public class TagsRowComponent extends RowComponent {
 
     public void clickEdit() {
         scrollToElement(editAction);
-        editAction.click();
+        actions.click().perform();
     }
 
     public void clickDelete() {
         scrollToElement(deleteAction);
-        deleteAction.click();
+        actions.click().perform();
     }
 }

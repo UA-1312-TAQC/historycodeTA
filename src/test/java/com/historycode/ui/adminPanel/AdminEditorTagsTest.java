@@ -57,7 +57,7 @@ public class AdminEditorTagsTest extends BaseTestRunnerWithAdmin {
                 .save()
                 .close();
 
-        Assert.assertNotNull(new TagsPage(driver).getTableRowByTitle(newTag), "The tag was successfully created");
+        Assert.assertNotNull(new TagsPage(driver).getTableRowByTitle(newTag), "The tag was not successfully created");
         deleteNewTag();
     }
 
@@ -67,16 +67,18 @@ public class AdminEditorTagsTest extends BaseTestRunnerWithAdmin {
     @Description("Verify that admin can edit existing tag")
     public void editTagTest() {
         createNewTag();
-        newTag += "_edited";
         TagsPage tagsPage = new TagsPage(driver);
-        Assert.assertNotNull(tagsPage.getTableRowByTitle(newTag), "The tag was successfully created");
+        Assert.assertNotNull(tagsPage.getTableRowByTitle(newTag), "The tag was not successfully created");
+        String newName = newTag + "_edited";
 
         tagsPage.editTableRow(tagsPage.getTableRowByTitle(newTag))
-                .setTag(newTag)
+                .setTag(newName)
                 .save()
                 .close();
 
-        Assert.assertNotNull(tagsPage.getTableRowByTitle(newTag), "The tag was successfully edited");
+        newTag += "_edited";
+
+        Assert.assertNotNull(tagsPage.getTableRowByTitle(newTag), "The tag was not successfully edited");
         deleteNewTag();
     }
 
@@ -86,10 +88,10 @@ public class AdminEditorTagsTest extends BaseTestRunnerWithAdmin {
     @Description("Verify that admin can delete existing tag")
     public void deleteTagTest() {
         createNewTag();
-        Assert.assertNotNull( new TagsPage(driver).getTableRowByTitle(newTag), "The tag was successfully created");
+        Assert.assertNotNull( new TagsPage(driver).getTableRowByTitle(newTag), "The tag was not successfully created");
 
         deleteNewTag();
-        Assert.assertNull(new TagsPage(driver).getTableRowByTitle(newTag), "The tag was successfully deleted");
+        Assert.assertNull(new TagsPage(driver).getTableRowByTitle(newTag), "The tag was not successfully deleted");
     }
 
     @Step("Deleting new Tag")
