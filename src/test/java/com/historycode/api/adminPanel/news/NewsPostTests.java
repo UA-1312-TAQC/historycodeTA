@@ -5,26 +5,27 @@ import com.historycode.api.clients.NewsClient;
 import com.historycode.api.models.adminPanel.news.NewsRequestBody;
 import com.historycode.api.models.img.ImageRequest;
 import com.historycode.api.testRunners.ApiTestRunner;
+import com.historycode.utils.ImageProcessor;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.Base64;
 
 public class NewsPostTests extends ApiTestRunner {
 
     private NewsClient client;
     private NewsRequestBody newsRequestBody;
+    private final String IMAGE_PATH = "src/test/resources/logo.jpeg";
+    private int NEWS_ID;
 
     @BeforeClass
     public void setUpClass() {
@@ -40,10 +41,10 @@ public class NewsPostTests extends ApiTestRunner {
     public void testCreateNewsWithAllRequiredData() {
         Response response = client.create(newsRequestBody);
         Assert.assertEquals(response.getStatusCode(), 200, "News was not created");
-        client.delete(response.getBody().jsonPath().getInt("id"));
+        NEWS_ID = response.getBody().jsonPath().getInt("id");
     }
 
-    @Test
+    @Test(dependsOnMethods = "testCreateNewsWithAllRequiredData")
     @Issue("192")
     @Epic("(Epic#5) Admin/Other pages")
     @Description("Verify that the news cannot be created if the mandatory field 'title' is empty")
@@ -54,7 +55,7 @@ public class NewsPostTests extends ApiTestRunner {
         Assert.assertEquals(response.getStatusCode(), 400);
     }
 
-    @Test
+    @Test(dependsOnMethods = "testCreateNewsWithAllRequiredData")
     @Issue("193")
     @Epic("(Epic#5) Admin/Other pages")
     @Description("Verify that the news cannot be created if the mandatory field 'text' is empty")
@@ -65,7 +66,7 @@ public class NewsPostTests extends ApiTestRunner {
         Assert.assertEquals(response.getStatusCode(), 400);
     }
 
-    @Test
+    @Test(dependsOnMethods = "testCreateNewsWithAllRequiredData")
     @Issue("194")
     @Epic("(Epic#5) Admin/Other pages")
     @Description("Verify that the news cannot be created if the mandatory field 'imageId' is empty using POST method")
@@ -76,7 +77,7 @@ public class NewsPostTests extends ApiTestRunner {
         Assert.assertEquals(response.getStatusCode(), 400);
     }
 
-    @Test
+    @Test(dependsOnMethods = "testCreateNewsWithAllRequiredData")
     @Issue("195")
     @Epic("(Epic#5) Admin/Other pages")
     @Description("Verify that the news cannot be created if the mandatory field 'url' is empty using POST method")
@@ -87,7 +88,7 @@ public class NewsPostTests extends ApiTestRunner {
         Assert.assertEquals(response.getStatusCode(), 400);
     }
 
-    @Test
+    @Test(dependsOnMethods = "testCreateNewsWithAllRequiredData")
     @Issue("196")
     @Epic("(Epic#5) Admin/Other pages")
     @Description("Verify that the news cannot be created if the mandatory field 'creationDate' is empty using POST method")
@@ -109,13 +110,18 @@ public class NewsPostTests extends ApiTestRunner {
         newsRequestBody.setCreationDate(DateTimeFormatter.ISO_INSTANT.withZone(ZoneOffset.UTC).format(Instant.now()));
     }
 
+    @AfterClass
+    private void deleteNews() {
+        client.delete(NEWS_ID);
+    }
+
     @Step("Creating a new image for a request")
     private int createNewImg() {
         ImageClient imageClient = new ImageClient(testValueProvider.getBaseAPIUrl());
         ImageRequest newsImage = new ImageRequest();
 
         newsImage.setTitle("TestImg" + System.currentTimeMillis());
-        newsImage.setBaseFormat(encodeImageToBase64());
+        newsImage.setBaseFormat(ImageProcessor.encodeImage(IMAGE_PATH));
         newsImage.setMimeType("image/jpeg");
         newsImage.setExtension("jpeg");
         newsImage.setAlt("1");
@@ -124,16 +130,5 @@ public class NewsPostTests extends ApiTestRunner {
         Assert.assertEquals(response.getStatusCode(), 200, "Image was not created");
 
         return response.getBody().jsonPath().getInt("id");
-    }
-
-    //todo: Replace with the class that provides this functionality
-    private static String encodeImageToBase64() {
-        try {
-            byte[] imageBytes = Files.readAllBytes(Path.of("src/test/resources/logo.jpeg"));
-            return Base64.getEncoder().encodeToString(imageBytes);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 }
