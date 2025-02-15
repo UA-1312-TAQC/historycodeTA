@@ -135,8 +135,8 @@ public class PartnersTest extends ApiTestRunner {
         System.out.println("Response Body: " + response.getBody().asString());
         softAssert.assertEquals(response.statusCode(), 400, "Expected status code to be 400");
         softAssert.assertTrue(
-                response.getBody().asString().contains("Обрані 'streetcodes' не існує у системі"),
-                "Error message should contain 'Обрані 'streetcodes' не існує у системі'");
+                response.getBody().asString().contains("Немає існуючого стріткоду з ідентифікатором:"),
+                "Error message should contain 'Немає існуючого стріткоду з ідентифікатором:'");
         softAssert.assertAll();
     }
 

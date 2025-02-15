@@ -53,7 +53,7 @@ public class StreetCodeClickButtonTest extends BaseTestRunner {
     public void testStreetCodeVideoClick(String addUIUrl) {
         navigateToStreetCodePage(addUIUrl);
         StreetCodeVideoComponent streetCodeVideoComponent = streetCodePage.getVideoBlock();
-        streetCodePage.scrollToElement(streetCodePage.getVideoBlock().getVideoPlayer());
+        streetCodePage.scrollToVideo();
 
         SoftAssert softAssert = new SoftAssert();
 
