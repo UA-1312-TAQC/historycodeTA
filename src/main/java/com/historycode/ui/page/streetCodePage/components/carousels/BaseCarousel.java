@@ -55,6 +55,7 @@ public abstract class BaseCarousel extends BaseComponent {
     public BaseCarousel dynamicClickNextButton() {
         if (hasArrows()) {
             clickDynamicElement(rightArrow);
+            wait.until(d -> !rootElement.getAttribute("class").contains("slick-animating"));
         }
         return this;
     }

@@ -4,7 +4,6 @@ import com.historycode.ui.page.streetCodePage.components.InterestingFactsCardCom
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 import java.util.Objects;
@@ -61,16 +60,6 @@ public class InterestingFactsCarousel extends BaseCarousel {
     public String getCurrentNodeTitle() {
         waitUntilElementVisible(activeCardNode);
         return activeCardNode.getText();
-    }
-
-    @Override
-    public BaseCarousel dynamicClickNextButton() {
-        String currentTitle = getCurrentNodeTitle();
-        BaseCarousel carusel = super.dynamicClickNextButton();
-        wait.until(ExpectedConditions.not(
-                ExpectedConditions.attributeToBe(activeCardNode, "textContent", currentTitle)
-        ));
-        return carusel;
     }
 
     @Step("Get a center of the element relative to the block.")
