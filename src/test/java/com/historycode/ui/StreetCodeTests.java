@@ -58,14 +58,14 @@ public class StreetCodeTests extends BaseTestRunner {
 
         if (teaserParagraphCount == 1) {
             Assert.assertTrue(teaserCharacterCount <= MAX_SINGLE_TEASER_PARAGRAPH_LENGTH,
-                    ("The 'Teaser' text is too long for one paragraph"));
+                    ("The 'Teaser' text is too long for one paragraph."));
         } else if (teaserParagraphCount == 2) {
             Assert.assertTrue(teaserCharacterCount <= MAX_TWO_TEASER_PARAGRAPH_LENGTH,
-                    ("The 'Teaser' text is too long for two paragraphs"));
+                    ("The 'Teaser' text is too long for two paragraphs."));
         }
 
         Assert.assertFalse(streetCodePage.getMainCard().isTeaserTextOverflowing(),
-                ("The 'Teaser' text is displayed with truncation or overflow"));
+                ("The 'Teaser' text is displayed with truncation or overflow."));
     }
 
     @Issue("79")
@@ -81,7 +81,7 @@ public class StreetCodeTests extends BaseTestRunner {
 
         SoftAssert softAssert = new SoftAssert();
 
-        softAssert.assertTrue(donateModal.isFirstTitleDisplayed(), "The title of the modal window is not displayed.'");
+        softAssert.assertTrue(donateModal.isFirstTitleDisplayed(), "The title of the modal window is not displayed.");
         softAssert.assertTrue(donateModal.isAmountInputDisplayed(), "The manual amount input is not displayed.");
         softAssert.assertTrue(donateModal.areAmountButtonsDisplayed(), "The amount buttons are not displayed.");
         softAssert.assertTrue(donateModal.isAgreeCheckboxDisplayed(), "The 'Agree' checkbox is not displayed.");
@@ -106,8 +106,8 @@ public class StreetCodeTests extends BaseTestRunner {
                 .getTextBlock()
                 .isTextFitsOneScreen();
 
-        Assert.assertTrue(isReadMoreDisplayed, "The 'Read More' button is not displayed");
-        Assert.assertTrue(isTextFitsOnOneScreen, "The text is not displayed on one screen");
+        Assert.assertTrue(isReadMoreDisplayed, "The 'Read More' button is not displayed.");
+        Assert.assertTrue(isTextFitsOnOneScreen, "The text is not displayed on one screen.");
 
         int paragraphFirstCount = streetCodePage
                 .getTextBlock()
@@ -125,8 +125,8 @@ public class StreetCodeTests extends BaseTestRunner {
                 .getTextBlock()
                 .checkExpanded(paragraphFirstCount);
 
-        Assert.assertTrue(checkExpanded, "The text is not expanded");
-        Assert.assertTrue(isLessButtonDisplayed, "The less button is not displayed");
+        Assert.assertTrue(checkExpanded, "The text is not expanded.");
+        Assert.assertTrue(isLessButtonDisplayed, "The less button is not displayed.");
 
         boolean checkCollapsed = streetCodePage
                 .getTextBlock()
@@ -137,13 +137,13 @@ public class StreetCodeTests extends BaseTestRunner {
                 .getTextBlock()
                 .isReadMoreButtonDisplayed();
 
-        Assert.assertTrue(checkCollapsed, "The text is not collapsed");
-        Assert.assertTrue(isReadMoreDisplayed, "The expand button is not displayed");
+        Assert.assertTrue(checkCollapsed, "The text is not collapsed.");
+        Assert.assertTrue(isReadMoreDisplayed, "The expand button is not displayed.");
     }
 
     @Issue("86")
     @Test(dataProvider = "urlOneWowFactSetProvider", dataProviderClass = StreetCodeDP.class, priority = 1)
-    @Description("Verification if only one fact is displayed - it is located in the center of the block.")
+    @Description("Verification if only one fact is displayed - it is located in the center of the block")
     public void testWowFactsOneElementAlign(int index) {
 
         openStreetCodePage(index);
@@ -154,7 +154,7 @@ public class StreetCodeTests extends BaseTestRunner {
                 .getCarousel()
                 .isOneCardPresent();
 
-        Assert.assertTrue(isOneCard, "The carousel contains more than one cards");
+        Assert.assertTrue(isOneCard, "The carousel contains more than one card.");
 
         SoftAssert softAssert = new SoftAssert();
 
@@ -170,21 +170,21 @@ public class StreetCodeTests extends BaseTestRunner {
                 .getCarousel()
                 .hasArrows();
 
-        softAssert.assertFalse(hasArrows, "The navigation arrows are displayed");
+        softAssert.assertFalse(hasArrows, "The navigation arrows are displayed.");
 
         boolean hasPagination = streetCodePage
                 .getFacts()
                 .getCarousel()
                 .hasPagination();
 
-        softAssert.assertFalse(hasPagination, "The navigation arrows are displayed");
+        softAssert.assertFalse(hasPagination, "Pagination is displayed.");
 
         softAssert.assertAll();
     }
 
     @Issue("87")
     @Test(dataProvider = "urlWowFactSetProvider", dataProviderClass = StreetCodeDP.class, priority = 1)
-    @Description("Verification that if 3 or more facts are displayed, they scroll in a loop.")
+    @Description("Verification that if 3 or more facts are displayed, they scroll in a loop")
     public void testWowFactsScroll(int index) {
         final int ADDITIONAL_CARD = 2;
 
@@ -207,7 +207,7 @@ public class StreetCodeTests extends BaseTestRunner {
             streetCodePage
                     .getFacts()
                     .getCarousel()
-                    .clickNextButton();
+                    .dynamicClickNextButton();
         }
 
         String afterScrollCurrentCardTitle = streetCodePage

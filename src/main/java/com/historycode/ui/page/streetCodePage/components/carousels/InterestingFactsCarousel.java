@@ -19,24 +19,12 @@ public class InterestingFactsCarousel extends BaseCarousel {
 
     @FindBy(xpath = "//div[@id='wow-facts']//div[contains(@class, 'slick-slide')]")
     List<WebElement> allCads;
-    @FindBy(xpath = ".//div[@class='interestingFactSlide']//div[contains(@class, 'slick-current')]")
-    private WebElement factCardCurrentNode;
 
     @FindBy(xpath = ".//div[contains(@class, 'oneFactItem')]//div[@class='interestingFactSlide']")
     private WebElement oneCardNode;
 
-    @FindBy(xpath = "//div[@class ='slick-slide slick-active slick-center slick-current']")
+    @FindBy(xpath = ".//div[@class ='slick-slide slick-active slick-center slick-current']")
     private WebElement activeCard;
-
-    //TODO: remove this
-    @FindBy(xpath = ".//button[@class='slick-arrow slick-next']")
-    private WebElement nextButtonNode;
-
-    @FindBy(xpath = ".//button[@class='slick-arrow slick-prev']")
-    private WebElement prevButtonNode;
-
-    @FindBy(xpath = ".//ul[@class='slick-dots']")
-    private WebElement paginationNode;
 
     private final List<InterestingFactsCardComponent> factCards;
 
@@ -59,7 +47,11 @@ public class InterestingFactsCarousel extends BaseCarousel {
 
     @Step("Check if the carousel is in the one card mode.")
     public boolean isOneCardPresent() {
-        return (oneCardNode != null) && (oneCardNode.isDisplayed());
+        try {
+            return oneCardNode.isDisplayed();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
     }
 
     @Step("Get a card title.")
@@ -67,17 +59,10 @@ public class InterestingFactsCarousel extends BaseCarousel {
         return factCards.get(index).getTitle();
     }
 
-    @Step("Click the 'Next' button.")
-    public InterestingFactsCarousel clickNextButton() {
-        clickDynamicElement(nextButtonNode);
-        sleep(1000);
-        return this;
-    }
-
     @Step("Get a current card title.")
     public String getCurrentNodeTitle() {
-        waitUntilElementVisible(factCardCurrentNode);
-        return factCardCurrentNode.findElement(By.xpath(".//p[@class = 'cardTextContainerTitle']")).getText();
+        waitUntilElementVisible(activeCard);
+        return activeCard.getText();
     }
 
     @Step("Get a center of the element relative to the block.")
@@ -124,25 +109,6 @@ public class InterestingFactsCarousel extends BaseCarousel {
 
         return Math.abs(elementCenterX - blockCenterX) <= CENTER_ALIGNMENT_TOLERANCE
                 && Math.abs(elementCenterY - blockCenterY) <= CENTER_ALIGNMENT_TOLERANCE;
-    }
-
-    //TODO: remove this
-    @Override
-    public boolean hasArrows() {
-        try {
-            return prevButtonNode.isDisplayed() && nextButtonNode.isDisplayed();
-        } catch (NoSuchElementException e) {
-            return false;
-        }
-    }
-
-    @Override
-    public boolean hasPagination() {
-        try {
-            return paginationNode.isDisplayed();
-        } catch (NoSuchElementException e) {
-            return false;
-        }
     }
 
     public int getCurrentCardIndex() {

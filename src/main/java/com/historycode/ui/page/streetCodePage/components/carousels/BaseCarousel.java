@@ -2,6 +2,7 @@ package com.historycode.ui.page.streetCodePage.components.carousels;
 
 import com.historycode.ui.component.BaseComponent;
 import com.historycode.ui.page.streetCodePage.components.PaginationComponent;
+import io.qameta.allure.Step;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -50,6 +51,15 @@ public abstract class BaseCarousel extends BaseComponent {
         return this;
     }
 
+    @Step("Click the 'Next' button.")
+    public BaseCarousel dynamicClickNextButton() {
+        if (hasArrows()) {
+            clickDynamicElement(rightArrow);
+        }
+        sleep(1000);
+        return this;
+    }
+
     public BaseCarousel clickPreviousArrow() {
         if (hasArrows()) {
             leftArrow.click();
@@ -78,4 +88,5 @@ public abstract class BaseCarousel extends BaseComponent {
     public int getTotalSlides() {
         return pagination != null ? pagination.getTotalDots() : 0;
     }
+
 }
