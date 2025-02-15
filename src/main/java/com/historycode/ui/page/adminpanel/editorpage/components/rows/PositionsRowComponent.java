@@ -30,7 +30,8 @@ public class PositionsRowComponent extends RowComponent {
     }
 
     public void clickDelete() {
-        scrollToElement(editAction);
-        deleteAction.click();
+        scrollToElement(deleteAction);
+        actions.click().perform();
+
     }
 }
