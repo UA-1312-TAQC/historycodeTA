@@ -203,12 +203,10 @@ public class StreetCodeTests extends BaseTestRunner {
                 .getCarousel()
                 .getCurrentNodeTitle();
 
-        for (int i = 0; i < countFactCard - ADDITIONAL_CARD; i++) {
-            streetCodePage
-                    .getFacts()
-                    .getCarousel()
-                    .dynamicClickNextButton();
-        }
+        streetCodePage
+                .getFacts()
+                .getCarousel()
+                .dynamicClickNextButton(countFactCard - ADDITIONAL_CARD);
 
         String afterScrollCurrentCardTitle = streetCodePage
                 .getFacts()

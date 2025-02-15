@@ -60,6 +60,13 @@ public abstract class BaseCarousel extends BaseComponent {
         return this;
     }
 
+    public BaseCarousel dynamicClickNextButton(int count) {
+        for (int i = 0; i < count; i++) {
+            dynamicClickNextButton();
+        }
+        return this;
+    }
+
     public BaseCarousel clickPreviousArrow() {
         if (hasArrows()) {
             leftArrow.click();
