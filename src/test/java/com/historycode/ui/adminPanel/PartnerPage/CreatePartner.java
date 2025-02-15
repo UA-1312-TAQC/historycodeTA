@@ -1,5 +1,6 @@
 package com.historycode.ui.adminPanel.PartnerPage;
 
+import com.historycode.ui.component.DropdownBase;
 import com.historycode.ui.page.adminpanel.partnerspage.PartnersPageAdminPanel;
 import com.historycode.ui.page.adminpanel.partnerspage.PartnersRowComponent;
 import com.historycode.ui.page.adminpanel.partnerspage.modal.CreatePartnersModal;
@@ -27,7 +28,8 @@ public class CreatePartner extends TestAdminPartnerPage {
     @Story("64")
     @Description("Verify that admin can add new partner via 'Додати' button in the 'Партнери' block ")
     public void CreateNotKeyPartner() {
-        /*SoftAssert softAssert = new SoftAssert();
+        String testName = "1SpongeBob";
+        SoftAssert softAssert = new SoftAssert();
 
         CreatePartnersModal createModal = openCreateModal();
         createModal.name.setInputField(testName);
@@ -43,14 +45,14 @@ public class CreatePartner extends TestAdminPartnerPage {
         softAssert.assertEquals(newPartner.getNameText(), testName);
         softAssert.assertEquals(getBase64FromFile(testLogo), newPartner.getLogoSrc(),
                 "Img code base64 don't match");
-        */
-        driver.get(testValueProvider.getBaseUIUrl() + "/admin-panel/new-streetcode");
-        StreetcodeEditPage streetcodeEditPage = new StreetcodeEditPage(driver);
-        streetcodeEditPage.waitForPageToLoad(5);
-        streetcodeEditPage.scrollToElementJs(streetcodeEditPage.getPartnersRootElement());
-        streetcodeEditPage.sleep(10000);
 
-        //softAssert.assertAll();
+        driver.get(testValueProvider.getBaseUIUrl() + "/admin-panel/new-streetcode");
+        StreetcodeEditPage editPage = new StreetcodeEditPage(driver);
+        editPage.scrollToElementJs(editPage.getPartnersRootElement());
+
+        softAssert.assertTrue(editPage.getPartnersDropdown().isOptionPresent(testName),
+                String.format("New partner tag %s not found", testName));
+        softAssert.assertAll();
     }
 
     @Test
