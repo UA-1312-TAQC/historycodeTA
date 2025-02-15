@@ -6,7 +6,9 @@ import com.historycode.ui.page.BasePage;
 import com.historycode.ui.page.streetCodePage.components.*;
 import com.historycode.ui.page.streetCodePage.elememts.QuickDonateButtonElement;
 import com.historycode.ui.page.streetCodePage.modals.SurveyModal;
+import com.historycode.ui.utils.customExpectedConditions.StalenessOfElementLocatedBy;
 import lombok.Getter;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -82,7 +84,7 @@ public class StreetCodePage extends BasePage {
 
     public StreetCodePage(WebDriver driver) {
         super(driver);
-        waitForPageToLoad(10);
+        wait.until(new StalenessOfElementLocatedBy(By.cssSelector(".loader-container")));
     }
 
     public BreadcrumbsElement getBreadcrumbs() {
