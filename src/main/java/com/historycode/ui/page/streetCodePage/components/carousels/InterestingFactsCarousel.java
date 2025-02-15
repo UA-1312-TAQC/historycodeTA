@@ -16,13 +16,13 @@ public class InterestingFactsCarousel extends BaseCarousel {
     private List<WebElement> factCardNodes;
 
     @FindBy(xpath = "//div[@id='wow-facts']//div[contains(@class, 'slick-slide')]")
-    List<WebElement> allCads;
+    List<WebElement> allCardsNodes;
 
     @FindBy(xpath = ".//div[contains(@class, 'oneFactItem')]//div[@class='interestingFactSlide']")
     private WebElement oneCardNode;
 
     @FindBy(xpath = ".//div[@class ='slick-slide slick-active slick-center slick-current']")
-    private WebElement activeCard;
+    private WebElement activeCardNode;
 
     private final List<InterestingFactsCardComponent> factCards;
 
@@ -59,8 +59,8 @@ public class InterestingFactsCarousel extends BaseCarousel {
 
     @Step("Get a current card title.")
     public String getCurrentNodeTitle() {
-        waitUntilElementVisible(activeCard);
-        return activeCard.getText();
+        waitUntilElementVisible(activeCardNode);
+        return activeCardNode.getText();
     }
 
     @Override
@@ -68,7 +68,7 @@ public class InterestingFactsCarousel extends BaseCarousel {
         String currentTitle = getCurrentNodeTitle();
         BaseCarousel carusel = super.dynamicClickNextButton();
         wait.until(ExpectedConditions.not(
-                ExpectedConditions.attributeToBe(activeCard, "textContent", currentTitle)
+                ExpectedConditions.attributeToBe(activeCardNode, "textContent", currentTitle)
         ));
         return carusel;
     }
@@ -120,12 +120,12 @@ public class InterestingFactsCarousel extends BaseCarousel {
     }
 
     public int getCurrentCardIndex() {
-        String index = activeCard.getAttribute("data-index");
+        String index = activeCardNode.getAttribute("data-index");
         return Integer.parseInt(index);
     }
 
     public int getLastCardIndex() {
-        WebElement lastSlide = allCads.get(allCads.size() - 1);
+        WebElement lastSlide = allCardsNodes.get(allCardsNodes.size() - 1);
         int lastIndex = Integer.parseInt(lastSlide.getAttribute("data-index"));
         return (lastIndex / 2);
     }
@@ -137,7 +137,7 @@ public class InterestingFactsCarousel extends BaseCarousel {
 
     public void clickPreviousCard() {
         int previousCardIndex = getPreviousCardIndex();
-        WebElement previousCard = allCads.get(previousCardIndex);
+        WebElement previousCard = allCardsNodes.get(previousCardIndex);
         clickDynamicElement(previousCard);
     }
 
