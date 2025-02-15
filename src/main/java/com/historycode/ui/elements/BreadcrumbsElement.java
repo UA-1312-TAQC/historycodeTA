@@ -24,8 +24,8 @@ public class BreadcrumbsElement extends BaseElement {
     }
 
     public StreetCodeCatalogPage clickCatalog() {
-        //BaseEditorPage.moveToElement(driver, catalogLink);
-        catalogLink.click();
+        actions.moveToElement(catalogLink).click().perform();
+        //catalogLink.click();
         return new StreetCodeCatalogPage(driver);
     }
 
