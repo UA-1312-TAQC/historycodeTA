@@ -56,7 +56,6 @@ public abstract class BaseCarousel extends BaseComponent {
         if (hasArrows()) {
             clickDynamicElement(rightArrow);
         }
-        sleep(1000);
         return this;
     }
 

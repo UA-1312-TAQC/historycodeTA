@@ -2,16 +2,14 @@ package com.historycode.ui.page.streetCodePage.components.carousels;
 
 import com.historycode.ui.page.streetCodePage.components.InterestingFactsCardComponent;
 import io.qameta.allure.Step;
-import lombok.Getter;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Random;
 import java.util.stream.Collectors;
 
-import static java.lang.Thread.sleep;
 
 public class InterestingFactsCarousel extends BaseCarousel {
     @FindBy(xpath = ".//div[contains(@class, 'slick-slide slick-cloned')]//div[@class='interestingFactSlide']")
@@ -63,6 +61,16 @@ public class InterestingFactsCarousel extends BaseCarousel {
     public String getCurrentNodeTitle() {
         waitUntilElementVisible(activeCard);
         return activeCard.getText();
+    }
+
+    @Override
+    public BaseCarousel dynamicClickNextButton() {
+        String currentTitle = getCurrentNodeTitle();
+        BaseCarousel carusel = super.dynamicClickNextButton();
+        wait.until(ExpectedConditions.not(
+                ExpectedConditions.attributeToBe(activeCard, "textContent", currentTitle)
+        ));
+        return carusel;
     }
 
     @Step("Get a center of the element relative to the block.")
