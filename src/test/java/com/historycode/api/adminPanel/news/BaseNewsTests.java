@@ -10,21 +10,26 @@ import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Base64;
 import java.util.Random;
 
 public class BaseNewsTests extends ApiTestRunner {
     private static final int NO_DELETE_ID = -1;
     protected int deleteId = NO_DELETE_ID;
     protected NewsClient client;
+    NewsRequestBody requestBody;
 
     @BeforeClass
     public void setUpClass() {
         client = new NewsClient(testValueProvider.getBaseAPIUrl());
         client.setToken(testValueProvider.getAccessToken());
+        requestBody = new NewsRequestBody();
+    }
+
+    @BeforeMethod
+    public void initNewsRequest() {
+        setNewsRequest(null, null, 0, null, null);
     }
 
     @AfterMethod
@@ -38,14 +43,12 @@ public class BaseNewsTests extends ApiTestRunner {
         }
     }
 
-    protected NewsRequestBody createNewsRequest(String title, String text, int imageId, String url, String creationDate) {
-        NewsRequestBody requestBody = new NewsRequestBody();
+    protected void setNewsRequest(String title, String text, int imageId, String url, String creationDate) {
         requestBody.setTitle(title);
         requestBody.setText(text);
         requestBody.setImageId(imageId);
         requestBody.setUrl(url);
         requestBody.setCreationDate(creationDate);
-        return requestBody;
     }
 
     public static String generateRandomAlphanumericString(int length) {

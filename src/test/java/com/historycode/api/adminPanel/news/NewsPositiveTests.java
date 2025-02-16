@@ -25,7 +25,7 @@ public class NewsPositiveTests extends BaseNewsTests {
         String url = "news-item";
         String creationDate = Instant.now().toString();
 
-        NewsRequestBody requestBody = createNewsRequest(title, text, imageId, url, creationDate);
+        setNewsRequest(title, text, imageId, url, creationDate);
 
         Response response = client.create(requestBody);
 
@@ -53,7 +53,7 @@ public class NewsPositiveTests extends BaseNewsTests {
         String url = generateRandomAlphanumericString(200).toLowerCase();
         String creationDate = Instant.now().toString();
 
-        NewsRequestBody requestBody = createNewsRequest(title, text, imageId, url, creationDate);
+        setNewsRequest(title, text, imageId, url, creationDate);
 
         Response response = client.create(requestBody);
 
@@ -81,7 +81,7 @@ public class NewsPositiveTests extends BaseNewsTests {
         String url = "news-item";
         String creationDate = Instant.now().toString();
 
-        NewsRequestBody requestBody = createNewsRequest(title, text, imageId, url, creationDate);
+        setNewsRequest(title, text, imageId, url, creationDate);
 
         Response response = client.create(requestBody);
 
@@ -110,7 +110,7 @@ public class NewsPositiveTests extends BaseNewsTests {
 
         String creationDate = Instant.now().plus(7, ChronoUnit.DAYS).toString();
 
-        NewsRequestBody requestBody = createNewsRequest(title, text, imageId, url, creationDate);
+        setNewsRequest(title, text, imageId, url, creationDate);
 
         Response response = client.create(requestBody);
 
@@ -140,7 +140,7 @@ public class NewsPositiveTests extends BaseNewsTests {
         String url = "news-item";
         String creationDate = Instant.now().toString();
 
-        NewsRequestBody requestBody = createNewsRequest(title, text, imageId, url, creationDate);
+        setNewsRequest(title, text, imageId, url, creationDate);
 
         Response response = client.create(requestBody);
         NewsResponse newsResponse = response.body().as(NewsResponse.class);

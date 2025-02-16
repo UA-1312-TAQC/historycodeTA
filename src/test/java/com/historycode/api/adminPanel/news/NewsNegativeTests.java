@@ -26,7 +26,7 @@ public class NewsNegativeTests extends BaseNewsTests{
         String url = "news-item";
         String creationDate = Instant.now().toString();
 
-        NewsRequestBody requestBody = createNewsRequest(title, text, imageId, url, creationDate);
+        setNewsRequest(title, text, imageId, url, creationDate);
 
         Response response = client.create(requestBody);
 
@@ -46,7 +46,7 @@ public class NewsNegativeTests extends BaseNewsTests{
         String url = generateRandomAlphanumericString(201).toLowerCase();
         String creationDate = Instant.now().toString();
 
-        NewsRequestBody requestBody = createNewsRequest(title, text, imageId, url, creationDate);
+        setNewsRequest(title, text, imageId, url, creationDate);
 
         Response response = client.create(requestBody);
 
@@ -66,7 +66,7 @@ public class NewsNegativeTests extends BaseNewsTests{
         String url = "News-item";
         String creationDate = Instant.now().toString();
 
-        NewsRequestBody requestBody = createNewsRequest(title, text, imageId, url, creationDate);
+        setNewsRequest(title, text, imageId, url, creationDate);
 
         Response response = client.create(requestBody);
 
@@ -86,7 +86,7 @@ public class NewsNegativeTests extends BaseNewsTests{
         String url = "новина";
         String creationDate = Instant.now().toString();
 
-        NewsRequestBody requestBody = createNewsRequest(title, text, imageId, url, creationDate);
+        setNewsRequest(title, text, imageId, url, creationDate);
 
         Response response = client.create(requestBody);
 
@@ -105,7 +105,7 @@ public class NewsNegativeTests extends BaseNewsTests{
         int imageId = createNewImg();
         String creationDate = Instant.now().toString();
 
-        NewsRequestBody requestBody = createNewsRequest(title, text, imageId, url, creationDate);
+        setNewsRequest(title, text, imageId, url, creationDate);
 
         Response response = client.create(requestBody);
 
@@ -125,7 +125,7 @@ public class NewsNegativeTests extends BaseNewsTests{
         String url = "news-item";
         String creationDate = Instant.now().toString();
 
-        NewsRequestBody requestBody = createNewsRequest(title, text, imageId, url, creationDate);
+        setNewsRequest(title, text, imageId, url, creationDate);
 
         Response response = client.create(requestBody);
 
@@ -145,7 +145,7 @@ public class NewsNegativeTests extends BaseNewsTests{
         String url = "news-item";
         String creationDate = Instant.now().minus(7, ChronoUnit.DAYS).toString();
 
-        NewsRequestBody requestBody = createNewsRequest(title, text, imageId, url, creationDate);
+        setNewsRequest(title, text, imageId, url, creationDate);
 
         Response response = client.create(requestBody);
 
@@ -165,7 +165,7 @@ public class NewsNegativeTests extends BaseNewsTests{
         String url = "news-item";
         String creationDate = Instant.now().toString();
 
-        NewsRequestBody requestBody = createNewsRequest(title, text, imageId, url, creationDate);
+        setNewsRequest(title, text, imageId, url, creationDate);
 
         Response response = client.create(requestBody);
         NewsResponse newsResponse = response.body().as(NewsResponse.class);
