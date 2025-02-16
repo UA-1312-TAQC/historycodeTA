@@ -6,6 +6,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.restassured.response.Response;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -14,6 +15,13 @@ import java.time.temporal.ChronoUnit;
 
 
 public class NewsNegativeTests extends BaseNewsTests{
+
+    @AfterMethod
+    public void setToken() {
+        if (client.getToken() == null) {
+            client.setToken(testValueProvider.getAccessToken());
+        }
+    }
 
     @Issue("198")
     @Test(priority = 1)

@@ -18,12 +18,14 @@ public class BaseNewsTests extends ApiTestRunner {
     private static final int NO_DELETE_ID = -1;
     protected int deleteId = NO_DELETE_ID;
     protected NewsClient client;
+    protected ImageClient imageClient;
     NewsRequestBody requestBody;
 
     @BeforeClass
     public void setUpClass() {
         client = new NewsClient(testValueProvider.getBaseAPIUrl());
         client.setToken(testValueProvider.getAccessToken());
+        imageClient = new ImageClient(testValueProvider.getBaseAPIUrl());
         requestBody = new NewsRequestBody();
     }
 
@@ -64,17 +66,16 @@ public class BaseNewsTests extends ApiTestRunner {
     }
 
     protected int createNewImg() {
-        ImageClient imageClient = new ImageClient(testValueProvider.getBaseAPIUrl());
         ImageRequest newsImage = new ImageRequest();
 
-        newsImage.setTitle("TestImg" + System.currentTimeMillis());
+        newsImage.setTitle("Temp" + System.currentTimeMillis());
         newsImage.setBaseFormat(ImageProcessor.encodeImage("src/test/resources/logo.jpeg"));
         newsImage.setMimeType("image/jpeg");
         newsImage.setExtension("jpeg");
-        newsImage.setAlt("1");
+        newsImage.setAlt("Temp");
 
         Response response = imageClient.post(newsImage);
-        Assert.assertEquals(response.getStatusCode(), 200, "Image was not created");
+        Assert.assertEquals(response.getStatusCode(), 200);
 
         return response.getBody().jsonPath().getInt("id");
     }
