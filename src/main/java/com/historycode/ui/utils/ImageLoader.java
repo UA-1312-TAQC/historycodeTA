@@ -42,6 +42,7 @@ public class ImageLoader {
             return null;
         }
     }
+
     public static String clearStringMetadata(String input){
         return  input.substring(input.indexOf(",")+1);
     }

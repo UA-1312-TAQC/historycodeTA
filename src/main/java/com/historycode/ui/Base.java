@@ -121,15 +121,15 @@ public abstract class Base {
         wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
+    public void refreshPage() {
+        driver.navigate().refresh();
+    }
+
     public void waitUntilAllElementsVisible(List<WebElement> elements) {
         wait.until(ExpectedConditions.visibilityOfAllElements(elements));
     }
 
     public void waitUntilPageLouder() {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.tagName("body")));
-    }
-
-    public void refreshPage() {
-        driver.navigate().refresh();
     }
 }

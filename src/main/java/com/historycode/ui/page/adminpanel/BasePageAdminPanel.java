@@ -11,6 +11,7 @@ import org.openqa.selenium.support.FindBy;
 
 public abstract class BasePageAdminPanel extends BasePage {
 
+    @Getter
     protected AdminMenuBarComponent adminMenuBar;
     @FindBy(xpath = "//div[contains(@class,'PageBarContainer')]")
     private WebElement adminMenuBarNode;
@@ -23,9 +24,4 @@ public abstract class BasePageAdminPanel extends BasePage {
     public PopUpMessageComponent getPopUpMessageComponent(){
         return new PopUpMessageComponent(driver);
     }
-
-    public AdminMenuBarComponent getAdminMenuBar () {
-        return adminMenuBar;
-    }
-
 }
