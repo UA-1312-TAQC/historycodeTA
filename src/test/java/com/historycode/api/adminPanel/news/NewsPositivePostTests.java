@@ -4,6 +4,7 @@ import com.historycode.api.clients.NewsClient;
 import com.historycode.api.models.adminPanel.news.NewsRequestBody;
 import com.historycode.api.models.adminPanel.news.NewsResponse;
 import com.historycode.api.testRunners.ApiTestRunner;
+import com.historycode.utils.StringDataCreator;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.restassured.response.Response;
@@ -12,10 +13,9 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Random;
+
 
 public class NewsPositivePostTests extends ApiTestRunner {
     private NewsClient client;
@@ -53,7 +53,7 @@ public class NewsPositivePostTests extends ApiTestRunner {
     @Test
     @Description("Verify that the news is created with the maximum number of characters allowed in the 'title' field using POST method")
     public void testVerifyCreationWithMaxTitleLength() {
-        String title = generateString(100);
+        String title = StringDataCreator.generateRandomString(100);
         String text = "News Item Testing";
         int imageId = 3298;
         String url = "news-item";
@@ -90,7 +90,7 @@ public class NewsPositivePostTests extends ApiTestRunner {
         String title = "Test News Item";
         String text = "News Item Testing";
         int imageId = 3298;
-        String url = generateString(200).toLowerCase();
+        String url = StringDataCreator.generateRandomString(200).toLowerCase();
         String creationDate = Instant.now().toString();
 
         newNews.setTitle(title);
@@ -126,7 +126,7 @@ public class NewsPositivePostTests extends ApiTestRunner {
         String title = "Test News Item";
         String text = "News Item Testing";
         int imageId = 3298;
-        String url = generateString(201).toLowerCase();
+        String url = StringDataCreator.generateRandomString(201).toLowerCase();
 
         String creationDate = Instant.now().toString();
 
@@ -233,7 +233,7 @@ public class NewsPositivePostTests extends ApiTestRunner {
         NewsRequestBody newNews = new NewsRequestBody();
 
         String title = "Test News Item";
-        String text = generateString(15000);
+        String text = StringDataCreator.generateRandomString(15000);
         int imageId = 3298;
         String url = "news-item";
         String creationDate = Instant.now().toString();
@@ -269,7 +269,7 @@ public class NewsPositivePostTests extends ApiTestRunner {
         NewsRequestBody newNews = new NewsRequestBody();
 
         String title = "Test News Item";
-        String text = generateString(15001);
+        String text = StringDataCreator.generateRandomString(15001);
         int imageId = 3298;
         String url = "news-item";
         String creationDate = Instant.now().toString();
@@ -404,18 +404,6 @@ public class NewsPositivePostTests extends ApiTestRunner {
         Response deleteResponse = client.delete(newsResponse.getId());
 
         Assert.assertEquals(deleteResponse.getStatusCode(), 401);
-    }
-
-    private String generateString(int length) {
-        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        StringBuilder result = new StringBuilder(length);
-        Random random = new Random();
-
-        for (int i = 0; i < length; i++) {
-            result.append(characters.charAt(random.nextInt(characters.length())));
-        }
-
-        return result.toString();
     }
 
 }
