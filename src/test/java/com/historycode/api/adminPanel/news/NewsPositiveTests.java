@@ -18,7 +18,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
 
-public class NewsPositivePostTests extends ApiTestRunner {
+public class NewsPositiveTests extends ApiTestRunner {
     private NewsClient client;
     private static final int NO_DELETE_ID = -1;
     private int deleteId = NO_DELETE_ID;
