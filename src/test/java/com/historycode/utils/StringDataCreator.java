@@ -2,8 +2,8 @@ package com.historycode.utils;
 
 import java.util.Random;
 
-public static class StringDataCreator {
-    public static String generateRandomString(int length) {
+public class StringDataCreator {
+    public static String generateRandomAlphanumericString(int length) {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         StringBuilder result = new StringBuilder(length);
         Random random = new Random();
