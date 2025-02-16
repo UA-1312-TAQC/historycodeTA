@@ -5,6 +5,7 @@ import com.historycode.api.clients.NewsClient;
 import com.historycode.api.models.adminPanel.news.NewsRequestBody;
 import com.historycode.api.models.img.ImageRequest;
 import com.historycode.api.testRunners.ApiTestRunner;
+import com.historycode.utils.ImageProcessor;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -64,7 +65,7 @@ public class BaseNewsTests extends ApiTestRunner {
         ImageRequest newsImage = new ImageRequest();
 
         newsImage.setTitle("TestImg" + System.currentTimeMillis());
-        newsImage.setBaseFormat(encodeImageToBase64());
+        newsImage.setBaseFormat(ImageProcessor.encodeImage("src/test/resources/logo.jpeg"));
         newsImage.setMimeType("image/jpeg");
         newsImage.setExtension("jpeg");
         newsImage.setAlt("1");
@@ -73,16 +74,6 @@ public class BaseNewsTests extends ApiTestRunner {
         Assert.assertEquals(response.getStatusCode(), 200, "Image was not created");
 
         return response.getBody().jsonPath().getInt("id");
-    }
-
-    private static String encodeImageToBase64() {
-        try {
-            byte[] imageBytes = Files.readAllBytes(Path.of("src/test/resources/logo.jpeg"));
-            return Base64.getEncoder().encodeToString(imageBytes);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
 }
