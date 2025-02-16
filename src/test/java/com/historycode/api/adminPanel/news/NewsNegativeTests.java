@@ -17,7 +17,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
 
-public class NewsNegativePostTests extends ApiTestRunner {
+public class NewsNegativeTests extends ApiTestRunner {
     NewsClient client;
 
     @BeforeClass
