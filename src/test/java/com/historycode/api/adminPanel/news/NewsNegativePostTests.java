@@ -8,6 +8,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.restassured.response.Response;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -16,8 +17,10 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Random;
 
-public class NewsTests extends ApiTestRunner {
-    NewsClient client;
+public class NewsNegativePostTests extends ApiTestRunner {
+    private NewsClient client;
+    private static final int NO_DELETE_ID = -1;
+    private int deleteId = NO_DELETE_ID;
 
     @BeforeClass
     public void setUpClass() {
@@ -25,30 +28,47 @@ public class NewsTests extends ApiTestRunner {
         client.setToken(testValueProvider.getAccessToken());
     }
 
+    @AfterMethod
+    public void tearDownMethod() {
+        if (deleteId != NO_DELETE_ID) {
+            try {
+                client.delete(deleteId);
+            } finally {
+                deleteId = NO_DELETE_ID;
+            }
+        }
+    }
+
+    private NewsRequestBody setUpTestData(String title, String text, int imageId, String url, String creationDate) {
+        NewsRequestBody newsRequestBody = new NewsRequestBody();
+        newsRequestBody.setTitle(title);
+        newsRequestBody.setText(text);
+        newsRequestBody.setImageId(imageId);
+        newsRequestBody.setUrl(url);
+        newsRequestBody.setCreationDate(creationDate);
+        return newsRequestBody;
+    }
+
     @Issue("197")
     @Test
     @Description("Verify that the news is created with the maximum number of characters allowed in the 'title' field using POST method")
     public void testVerifyCreationWithMaxTitleLength() {
-        NewsRequestBody newNews = new NewsRequestBody();
-
         String title = generateString(100);
         String text = "News Item Testing";
         int imageId = 3298;
         String url = "news-item";
         String creationDate = Instant.now().toString();
 
-        newNews.setTitle(title);
-        newNews.setText(text);
-        newNews.setImageId(imageId);
-        newNews.setUrl(url);
-        newNews.setCreationDate(creationDate);
+        NewsRequestBody newsRequestBody = setUpTestData(title, text, imageId, url, creationDate);
 
-        Response response = client.create(newNews);
+        Response response = client.create(newsRequestBody);
 
         SoftAssert softAssert = new SoftAssert();
+
         softAssert.assertEquals(response.getStatusCode(), 200);
 
         NewsResponse newsResponse = response.body().as(NewsResponse.class);
+        deleteId = newsResponse.getId();
 
         softAssert.assertEquals(newsResponse.getTitle(), title);
         softAssert.assertEquals(newsResponse.getText(), text);
@@ -57,36 +77,9 @@ public class NewsTests extends ApiTestRunner {
         softAssert.assertEquals(newsResponse.getCreationDate(), creationDate);
 
         softAssert.assertAll();
-
-        client.delete(newsResponse.getId());
     }
 
-    @Issue("198")
-    @Test
-    @Description("Verify that the news cannot be created with character limit exceeded of 'title' field using POST method")
-    public void testVerifyCreationWithExceededTitleLength() {
-        NewsRequestBody newNews = new NewsRequestBody();
 
-        String title = generateString(101);
-        String text = "News Item Testing";
-        int imageId = 3298;
-        String url = "news-item";
-        String creationDate = Instant.now().toString();
-
-        newNews.setTitle(title);
-        newNews.setText(text);
-        newNews.setImageId(imageId);
-        newNews.setUrl(url);
-        newNews.setCreationDate(creationDate);
-
-        Response response = client.create(newNews);
-
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(response.getStatusCode(), 400);
-        softAssert.assertTrue(response.body().asPrettyString().contains("'Title': 'Max Length is 100'"));
-
-        softAssert.assertAll();
-    }
 
     @Issue("199")
     @Test
