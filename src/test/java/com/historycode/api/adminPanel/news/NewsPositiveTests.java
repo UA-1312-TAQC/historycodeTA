@@ -1,6 +1,5 @@
 package com.historycode.api.adminPanel.news;
 
-import com.historycode.api.models.adminPanel.news.NewsRequestBody;
 import com.historycode.api.models.adminPanel.news.NewsResponse;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
