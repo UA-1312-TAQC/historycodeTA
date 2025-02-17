@@ -1,7 +1,7 @@
 package com.historycode.ui.adminPanel.team;
 
+import com.historycode.ui.data_provider.enums.SocialMedia;
 import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
-import com.historycode.ui.page.adminpanel.teampage.TeamPageAdminPanel;
 import com.historycode.ui.page.adminpanel.teampage.TeamRowComponent;
 
 import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
@@ -22,32 +22,24 @@ public class KeyMemberDisplayedTest extends BaseTestRunnerWithAdmin {
     public void verifyAdminPanelKeyMemberButton() {
         String memberName = CustomStringGenerator.generateUserLastFirstName(7, 10);
         String photo = "memberImage.jpg";
-        String socialMedia = "Youtube";
-        String socialMediaLink = "https://www.youtube.com/";
         boolean keyRole = true;
 
-        TeamPageAdminPanel memberModal = new HistoryCodesAdminPanelPage(driver)
+        teamMember = new HistoryCodesAdminPanelPage(driver)
                 .getAdminMenuBar()
                 .goToTeamPage()
                 .clickAddNewMemberButton()
                 .setName(memberName)
                 .loadPhoto(photo)
-                .addSocialMedia(socialMedia)
-                .addSocialMediaLink(socialMediaLink)
+                .addSocialMedia(SocialMedia.YOUTUBE.getName())
+                .addSocialMediaLink(SocialMedia.YOUTUBE.getValidLink())
                 .setKeyMemberStatus(keyRole)
                 .saveEditedMember()
-                .closeEditMemberModal();
-
-        teamMember = memberModal.getTeamPageGridComponent().findUserByName(memberName);
-
-        if (teamMember == null) {
-            memberModal = memberModal.clickLastPaginationItem();
-            teamMember = memberModal.getTeamPageGridComponent().findUserByName(memberName);
-        }
-        Assert.assertNotNull(teamMember, String.format("The member %s is not found in the team grid", teamMember));
+                .closeEditMemberModal()
+                .findUserOnCurrentOrLastPage(memberName);
+        Assert.assertNotNull(teamMember, String.format("The member %s is not found in the team grid", memberName));
 
         boolean isKeyRoleAssigned = teamMember.getKeyMemberRole().isDisplayed();
-        Assert.assertTrue(isKeyRoleAssigned, String.format("The member %s is not marked with a key role", teamMember));
+        Assert.assertTrue(isKeyRoleAssigned, String.format("The member %s is not marked with a key role", memberName));
     }
 
     @AfterMethod

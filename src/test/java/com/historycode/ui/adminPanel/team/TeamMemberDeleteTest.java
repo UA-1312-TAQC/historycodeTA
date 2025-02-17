@@ -10,7 +10,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Story;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -25,7 +24,7 @@ public class TeamMemberDeleteTest extends BaseTestRunnerWithAdmin {
     @BeforeMethod
     public void createTeamMember(){
         teamMemberName = CustomStringGenerator.generateUserLastFirstName(7, 10);
-        TeamPageAdminPanel res= new HistoryCodesAdminPanelPage(driver)
+        target = new HistoryCodesAdminPanelPage(driver)
                 .getAdminMenuBar()
                 .goToTeamPage()
                 .clickAddNewMemberButton()
@@ -34,12 +33,9 @@ public class TeamMemberDeleteTest extends BaseTestRunnerWithAdmin {
                 .addSocialMedia(SocialMedia.LINKEDIN.getName())
                 .addSocialMediaLink(SocialMedia.LINKEDIN.getValidLink())
                 .saveEditedMember()
-                .closeEditMemberModal();
-        if(res.getTeamPageGridComponent().findUserByName(teamMemberName) == null)
-            res = res.clickLastPaginationItem();
-        target = res.getTeamPageGridComponent().findUserByName(teamMemberName);
+                .closeEditMemberModal()
+                .findUserOnCurrentOrLastPage(teamMemberName);
     }
-
 
     @Test
     @Issue("122")
@@ -48,9 +44,8 @@ public class TeamMemberDeleteTest extends BaseTestRunnerWithAdmin {
     @Description("Verify that the admin can delete the team member")
     public void deleteTeamMemberTest() {
         target.clickDelete().clickOkButton();
-        TeamPageAdminPanel res = new TeamPageAdminPanel(driver);
-        if(res.getTeamPageGridComponent().findUserByName(teamMemberName) == null)
-            res = res.clickLastPaginationItem();
-        Assert.assertNull(res.getTeamPageGridComponent().findUserByName(teamMemberName));
+        TeamRowComponent res = new TeamPageAdminPanel(driver)
+                .findUserOnCurrentOrLastPage(teamMemberName);
+        Assert.assertNull(res, "The user is present in the grid after deleting");
     }
 }
