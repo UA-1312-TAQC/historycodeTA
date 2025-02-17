@@ -11,6 +11,8 @@ import org.testng.asserts.SoftAssert;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
+import static org.testng.Assert.assertEquals;
+
 
 public class NewsPositiveTests extends BaseNewsTests {
 
@@ -18,7 +20,7 @@ public class NewsPositiveTests extends BaseNewsTests {
     @Test(priority = 1)
     @Description("Verify that the news is created with the maximum number of characters allowed in the 'title' field using POST method")
     public void testVerifyCreationWithMaxTitleLength() {
-        String title = generateRandomAlphanumericString(100);
+        String title = generateRandomAlphanumeric(100);
         String text = "News Item Testing";
         int imageId = createNewImg();
         String url = "news-item";
@@ -28,12 +30,12 @@ public class NewsPositiveTests extends BaseNewsTests {
 
         Response response = client.create(requestBody);
 
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertEquals(response.getStatusCode(), 200);
 
         NewsResponse newsResponse = response.body().as(NewsResponse.class);
         deleteId = newsResponse.getId();
 
+        SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(newsResponse.getTitle(), title);
         softAssert.assertEquals(newsResponse.getText(), text);
         softAssert.assertEquals(newsResponse.getImageId(), imageId);
@@ -49,19 +51,19 @@ public class NewsPositiveTests extends BaseNewsTests {
         String title = "Test News Item";
         String text = "News Item Testing";
         int imageId = createNewImg();
-        String url = generateRandomAlphanumericString(200).toLowerCase();
+        String url = generateRandomAlphanumeric(200).toLowerCase();
         String creationDate = Instant.now().toString();
 
         setNewsRequest(title, text, imageId, url, creationDate);
 
         Response response = client.create(requestBody);
 
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertEquals(response.getStatusCode(), 200);
 
         NewsResponse newsResponse = response.body().as(NewsResponse.class);
         deleteId = newsResponse.getId();
 
+        SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(newsResponse.getTitle(), title);
         softAssert.assertEquals(newsResponse.getText(), text);
         softAssert.assertEquals(newsResponse.getImageId(), imageId);
@@ -75,7 +77,7 @@ public class NewsPositiveTests extends BaseNewsTests {
     @Description("Verify that the news is created with the maximum number of characters allowed in the 'text' field using POST method")
     public void testVerifyCreationWithMaxLengthInText() {
         String title = "Test News Item";
-        String text = generateRandomAlphanumericString(15000);
+        String text = generateRandomAlphanumeric(15000);
         int imageId = createNewImg();
         String url = "news-item";
         String creationDate = Instant.now().toString();
@@ -84,12 +86,12 @@ public class NewsPositiveTests extends BaseNewsTests {
 
         Response response = client.create(requestBody);
 
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertEquals(response.getStatusCode(), 200);
 
         NewsResponse newsResponse = response.body().as(NewsResponse.class);
         deleteId = newsResponse.getId();
 
+        SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(newsResponse.getTitle(), title);
         softAssert.assertEquals(newsResponse.getText(), text);
         softAssert.assertEquals(newsResponse.getImageId(), imageId);
@@ -106,20 +108,20 @@ public class NewsPositiveTests extends BaseNewsTests {
         String text = "News Item Testing";
         int imageId = createNewImg();
         String url = "news-item";
-
         String creationDate = Instant.now().plus(7, ChronoUnit.DAYS).toString();
 
         setNewsRequest(title, text, imageId, url, creationDate);
 
         Response response = client.create(requestBody);
 
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertEquals(response.getStatusCode(), 200);
 
         NewsResponse newsResponse = response.body().as(NewsResponse.class);
+
         deleteId = newsResponse.getId();
 
-        //TODO: Add assertions for the status field ("Запланована")
+        SoftAssert softAssert = new SoftAssert();
+        assertEquals(response.path("Status"), "Запланована");
         softAssert.assertEquals(newsResponse.getTitle(), title);
         softAssert.assertEquals(newsResponse.getText(), text);
         softAssert.assertEquals(newsResponse.getImageId(), imageId);
@@ -128,25 +130,25 @@ public class NewsPositiveTests extends BaseNewsTests {
         softAssert.assertAll();
     }
 
-
     @Issue("208")
     @Test(priority = 1)
     @Description("Verify that the news is deleted by 'id' using DELETE method")
     public void testVerifyDeletionById() {
-        String title = "Test News Item";
-        String text = "News Item Testing";
-        int imageId = createNewImg();
-        String url = "news-item";
-        String creationDate = Instant.now().toString();
-
-        setNewsRequest(title, text, imageId, url, creationDate);
+        setNewsRequest(
+                "Test News Item",
+                "News Item Testing",
+                createNewImg(),
+                "news-item",
+                Instant.now().toString());
 
         Response response = client.create(requestBody);
+
         NewsResponse newsResponse = response.body().as(NewsResponse.class);
+        deleteId = newsResponse.getId();
 
         Response deleteResponse = client.delete(newsResponse.getId());
 
-        Assert.assertEquals(deleteResponse.getStatusCode(), 200);
+        assertEquals(deleteResponse.getStatusCode(), 200);
     }
 
 }

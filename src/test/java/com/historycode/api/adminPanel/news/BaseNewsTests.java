@@ -53,7 +53,7 @@ public class BaseNewsTests extends ApiTestRunner {
         requestBody.setCreationDate(creationDate);
     }
 
-    public static String generateRandomAlphanumericString(int length) {
+    public static String generateRandomAlphanumeric(int length) {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         StringBuilder result = new StringBuilder(length);
         Random random = new Random();
@@ -66,16 +66,17 @@ public class BaseNewsTests extends ApiTestRunner {
     }
 
     protected int createNewImg() {
+        ImageClient imageClient = new ImageClient(testValueProvider.getBaseAPIUrl());
         ImageRequest newsImage = new ImageRequest();
 
-        newsImage.setTitle("Temp" + System.currentTimeMillis());
+        newsImage.setTitle("TempImg" + System.currentTimeMillis());
         newsImage.setBaseFormat(ImageProcessor.encodeImage("src/test/resources/logo.jpeg"));
         newsImage.setMimeType("image/jpeg");
         newsImage.setExtension("jpeg");
-        newsImage.setAlt("Temp");
+        newsImage.setAlt("1");
 
         Response response = imageClient.post(newsImage);
-        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertEquals(response.getStatusCode(), 200, "Image was not created");
 
         return response.getBody().jsonPath().getInt("id");
     }
