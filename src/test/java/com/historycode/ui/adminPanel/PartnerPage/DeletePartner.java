@@ -19,6 +19,11 @@ public class DeletePartner extends TestAdminPartnerPage {
         createModal.logo.uploadLogo(testLogo);
         createModal.clickSaveButton();
         createModal.clickCloseButton();
+        // Verify partner creation
+        PartnersRowComponent newPartner = new PartnersPageAdminPanel(driver)
+                       .getPartnersPageGridComponent()
+                       .findPartnerByName(testName);
+        Assert.assertNotNull(newPartner, "Partner was not created successfully");
     }
 
     @Test

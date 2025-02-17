@@ -55,6 +55,9 @@ public class PartnersRowComponent extends BaseComponent {
 
     public String getLogoSrc() {
         String logoSrc = logo.getDomAttribute("src");
+        if (logoSrc == null) {
+            return null;
+        }
         if (logoSrc.startsWith(LOGOPREFIX)) {
             return logoSrc.substring(LOGOPREFIX.length());
         }
