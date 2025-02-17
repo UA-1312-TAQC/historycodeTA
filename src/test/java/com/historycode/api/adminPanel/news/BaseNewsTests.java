@@ -12,6 +12,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
+import java.time.Instant;
 import java.util.Random;
 
 public class BaseNewsTests extends ApiTestRunner {
@@ -26,12 +27,16 @@ public class BaseNewsTests extends ApiTestRunner {
         client = new NewsClient(testValueProvider.getBaseAPIUrl());
         client.setToken(testValueProvider.getAccessToken());
         imageClient = new ImageClient(testValueProvider.getBaseAPIUrl());
-        requestBody = new NewsRequestBody();
     }
 
     @BeforeMethod
     public void initNewsRequest() {
-        setNewsRequest(null, null, 0, null, null);
+        requestBody = new NewsRequestBody();
+        requestBody.setTitle("Test News Item");
+        requestBody.setText("News Item Testing");
+        requestBody.setImageId(createNewImg());
+        requestBody.setUrl("news-item");
+        requestBody.setCreationDate(Instant.now().toString());
     }
 
     @AfterMethod
@@ -43,14 +48,6 @@ public class BaseNewsTests extends ApiTestRunner {
                 deleteId = NO_DELETE_ID;
             }
         }
-    }
-
-    protected void setNewsRequest(String title, String text, int imageId, String url, String creationDate) {
-        requestBody.setTitle(title);
-        requestBody.setText(text);
-        requestBody.setImageId(imageId);
-        requestBody.setUrl(url);
-        requestBody.setCreationDate(creationDate);
     }
 
     public static String generateRandomAlphanumeric(int length) {

@@ -28,12 +28,8 @@ public class NewsNegativeTests extends BaseNewsTests {
     @Test(priority = 1)
     @Description("Verify that the news cannot be created with character limit exceeded of 'title' field using POST method")
     public void testVerifyCreationWithExceededTitleLength() {
-        setNewsRequest(
-                generateRandomAlphanumeric(101),
-                "News Item Testing" + System.currentTimeMillis(),
-                createNewImg(),
-                "news-item" + + System.currentTimeMillis(),
-                Instant.now().toString());
+
+        requestBody.setTitle(generateRandomAlphanumeric(101));
 
         Response response = client.create(requestBody);
 
@@ -46,12 +42,8 @@ public class NewsNegativeTests extends BaseNewsTests {
     @Test(priority = 1)
     @Description("Verify that the news cannot be created with character limit exceeded of 'url' field using POST method")
     public void testVerifyCreationWithExceededUrlLength() {
-        setNewsRequest(
-                "Test News Item" + + System.currentTimeMillis(),
-                "News Item Testing" + + System.currentTimeMillis(),
-                createNewImg(),
-                generateRandomAlphanumeric(201).toLowerCase(),
-                Instant.now().toString());
+
+        requestBody.setUrl(generateRandomAlphanumeric(201).toLowerCase());
 
         Response response = client.create(requestBody);
 
@@ -64,12 +56,8 @@ public class NewsNegativeTests extends BaseNewsTests {
     @Test(priority = 1)
     @Description("Verify that the news cannot be created with capital letters in 'url' field using POST method")
     public void testVerifyCreationWithCapitalLettersInUrl() {
-        setNewsRequest(
-                "Test News Item" + System.currentTimeMillis(),
-                "News Item Testing" + System.currentTimeMillis(),
-                createNewImg(),
-                "News-item" + + System.currentTimeMillis(),
-                Instant.now().toString());
+
+        requestBody.setUrl("News-item");
 
         Response response = client.create(requestBody);
 
@@ -83,12 +71,8 @@ public class NewsNegativeTests extends BaseNewsTests {
     @Test(priority = 1)
     @Description("Verify that the news cannot be created with cyrillic letters in 'url' field using POST method")
     public void testVerifyCreationWithCyrillicLettersInUrl() {
-        setNewsRequest(
-                "Test News Item" + System.currentTimeMillis(),
-                "News Item Testing" + System.currentTimeMillis(),
-                createNewImg(),
-                "новина" + System.currentTimeMillis(),
-                Instant.now().toString());
+
+        requestBody.setUrl("новина");
 
         Response response = client.create(requestBody);
 
@@ -101,12 +85,8 @@ public class NewsNegativeTests extends BaseNewsTests {
     @Test(dataProvider = "specialSymbolsDataProvider", dataProviderClass = NewsDP.class, priority = 1)
     @Description("Verify that the news cannot be created with special symbols ($,@,%,#) in 'url' field using POST method")
     public void testVerifyCreationWithSpecialSymbolsInUrl(String url) {
-        setNewsRequest(
-                "Test News Item" + System.currentTimeMillis(),
-                "News Item Testing" + System.currentTimeMillis(),
-                createNewImg(),
-                url + System.currentTimeMillis(),
-                Instant.now().toString());
+
+        requestBody.setCreationDate(url);
 
         Response response = client.create(requestBody);
 
@@ -119,12 +99,8 @@ public class NewsNegativeTests extends BaseNewsTests {
     @Test(priority = 1)
     @Description("Verify that the news cannot be created with character limit exceeded of 'text' field using POST method")
     public void testVerifyCreationWithExceededLengthInText() {
-        setNewsRequest(
-                "Test News Item" + System.currentTimeMillis(),
-                generateRandomAlphanumeric(15001),
-                createNewImg(),
-                "news-item" + System.currentTimeMillis(),
-                Instant.now().toString());
+
+        requestBody.setText(generateRandomAlphanumeric(15001));
 
         Response response = client.create(requestBody);
 
@@ -137,12 +113,8 @@ public class NewsNegativeTests extends BaseNewsTests {
     @Test(priority = 1)
     @Description("Verify that the news is not created with the past date chosen in the 'creationDate' field using POST method")
     public void testVerifyCreationWithPastDateInCreationDate() {
-        setNewsRequest(
-                "Test News Item" + System.currentTimeMillis(),
-                "News Item Testing" + System.currentTimeMillis(),
-                createNewImg(),
-                "news-item" + System.currentTimeMillis(),
-                Instant.now().minus(7, ChronoUnit.DAYS).toString());
+
+        requestBody.setCreationDate(Instant.now().minus(7, ChronoUnit.DAYS).toString());
 
         Response response = client.create(requestBody);
 
@@ -155,12 +127,6 @@ public class NewsNegativeTests extends BaseNewsTests {
     @Test(priority = 1)
     @Description("Verify that the news cannot be deleted without authorization by 'id' using DELETE method")
     public void testVerifyDeletionWithoutAuthorizationById() {
-        setNewsRequest(
-                "Test News Item" + System.currentTimeMillis(),
-                "News Item Testing" + System.currentTimeMillis(),
-                createNewImg(),
-                "news-item" + System.currentTimeMillis(),
-                Instant.now().toString());
 
         Response response = client.create(requestBody);
 
