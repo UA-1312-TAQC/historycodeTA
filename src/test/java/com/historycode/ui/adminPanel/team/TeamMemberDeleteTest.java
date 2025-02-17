@@ -5,6 +5,7 @@ import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanel
 import com.historycode.ui.page.adminpanel.teampage.TeamPageAdminPanel;
 import com.historycode.ui.page.adminpanel.teampage.TeamRowComponent;
 import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
+import com.historycode.utils.CustomStringGenerator;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Issue;
@@ -23,7 +24,7 @@ public class TeamMemberDeleteTest extends BaseTestRunnerWithAdmin {
 
     @BeforeMethod
     public void createTeamMember(){
-        teamMemberName = RandomStringUtils.randomAlphabetic(7) + " " + RandomStringUtils.randomAlphabetic(10);
+        teamMemberName = CustomStringGenerator.generateUserLastFirstName(7, 10);
         TeamPageAdminPanel res= new HistoryCodesAdminPanelPage(driver)
                 .getAdminMenuBar()
                 .goToTeamPage()

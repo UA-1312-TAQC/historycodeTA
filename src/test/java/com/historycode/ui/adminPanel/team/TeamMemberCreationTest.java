@@ -7,6 +7,7 @@ import com.historycode.ui.page.adminpanel.teampage.TeamRowComponent;
 import com.historycode.ui.page.adminpanel.teampage.TeamSocialMediaComponent;
 import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
 import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
+import com.historycode.utils.CustomStringGenerator;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Issue;
@@ -29,7 +30,7 @@ public class TeamMemberCreationTest extends BaseTestRunnerWithAdmin {
     @Test
     @Description("Verify that the new team member is immediately displayed in the list of team members")
     public void testTeamMemberPresentAfterCreation(){
-        String teamMember = RandomStringUtils.randomAlphabetic(7) + " " + RandomStringUtils.randomAlphabetic(10);
+        String teamMember = CustomStringGenerator.generateUserLastFirstName(7, 10);
         TeamPageAdminPanel res= new HistoryCodesAdminPanelPage(driver)
                 .getAdminMenuBar()
                 .goToTeamPage()
@@ -52,7 +53,7 @@ public class TeamMemberCreationTest extends BaseTestRunnerWithAdmin {
     @Description("Verify that the admin can add 8 social links to the team member")
     @Test(dataProvider = "socialMediaDataProvider",  dataProviderClass = StreetCodeDP.class)
     public void addDifferentSocialMediaTest(SocialMedia socialMedia){
-        String teamMember = RandomStringUtils.randomAlphabetic(7) + " " + RandomStringUtils.randomAlphabetic(10);
+        String teamMember = CustomStringGenerator.generateUserLastFirstName(7, 10);
         TeamPageAdminPanel res= new HistoryCodesAdminPanelPage(driver)
                 .getAdminMenuBar()
                 .goToTeamPage()

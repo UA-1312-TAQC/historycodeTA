@@ -6,6 +6,7 @@ import com.historycode.ui.page.adminpanel.teampage.TeamRowComponent;
 import com.historycode.ui.page.adminpanel.teampage.createEditModal.CreateEditMemberModal;
 import com.historycode.ui.page.adminpanel.teampage.createEditModal.photoElement.PhotoModalComponent;
 import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
+import com.historycode.utils.CustomStringGenerator;
 import com.historycode.utils.ImageProcessor;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -31,7 +32,7 @@ public class TeamMemberEditingTest extends BaseTestRunnerWithAdmin {
     String teamMemberDescription;
     @BeforeMethod
     public void createTeamMemberForEditing(){
-        teamMemberName = RandomStringUtils.randomAlphabetic(7) + " " + RandomStringUtils.randomAlphabetic(10);
+        teamMemberName = CustomStringGenerator.generateUserLastFirstName(7, 10);
         teamMemberDescription = RandomStringUtils.randomAlphabetic(20);
         targetTeamMember =
                 new HistoryCodesAdminPanelPage(driver)
@@ -56,7 +57,7 @@ public class TeamMemberEditingTest extends BaseTestRunnerWithAdmin {
     @Story("95")
     @Description("Verify that the admin can edit the team member name")
     public void EditTeamMemberNameTest(){
-       String newTeamMemberName =  RandomStringUtils.randomAlphabetic(7) + " " + RandomStringUtils.randomAlphabetic(11);
+       String newTeamMemberName =  CustomStringGenerator.generateUserLastFirstName(7, 11);
        targetTeamMember
                 .clickEdit()
                 .setName(newTeamMemberName)
@@ -65,7 +66,7 @@ public class TeamMemberEditingTest extends BaseTestRunnerWithAdmin {
         CreateEditMemberModal res = targetTeamMember.clickEdit();
         String actual = res.getName();
         res.closeEditMemberModalWithoutGridRefresh();
-        Assert.assertEquals(newTeamMemberName, actual);
+        Assert.assertEquals(actual, newTeamMemberName);
     }
 
     @Test
@@ -83,7 +84,7 @@ public class TeamMemberEditingTest extends BaseTestRunnerWithAdmin {
         CreateEditMemberModal res = targetTeamMember.clickEdit();
         String actual = res.getName();
         res.closeEditMemberModalWithoutGridRefresh();
-        Assert.assertEquals(newTeamMemberName.substring(0,41), actual);
+        Assert.assertEquals(actual, newTeamMemberName.substring(0,41));
     }
 
 
@@ -101,7 +102,7 @@ public class TeamMemberEditingTest extends BaseTestRunnerWithAdmin {
         CreateEditMemberModal res = targetTeamMember.clickEdit();
         String actual = res.getName();
         res.closeEditMemberModalWithoutGridRefresh();
-        Assert.assertEquals(teamMemberName, actual);
+        Assert.assertEquals(actual, teamMemberName);
     }
 
     @Test
@@ -119,7 +120,7 @@ public class TeamMemberEditingTest extends BaseTestRunnerWithAdmin {
         CreateEditMemberModal res = targetTeamMember.clickEdit();
         String actual = res.getDescription();
         res.closeEditMemberModalWithoutGridRefresh();
-        Assert.assertEquals(newTeamMemberDescription, actual);
+        Assert.assertEquals(actual, newTeamMemberDescription);
     }
 
     @Test
@@ -137,7 +138,7 @@ public class TeamMemberEditingTest extends BaseTestRunnerWithAdmin {
         CreateEditMemberModal res = targetTeamMember.clickEdit();
         String actual = res.getDescription();
         res.closeEditMemberModalWithoutGridRefresh();
-        Assert.assertEquals(newTeamMemberDescription.substring(0,70), actual);
+        Assert.assertEquals(actual, newTeamMemberDescription.substring(0,70));
     }
 
     @Test
