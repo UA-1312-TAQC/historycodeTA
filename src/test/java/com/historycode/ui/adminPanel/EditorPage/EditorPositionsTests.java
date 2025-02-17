@@ -3,11 +3,17 @@ package com.historycode.ui.adminPanel.EditorPage;
 import com.beust.ah.A;
 import com.historycode.ui.page.adminpanel.editorpage.CategoriesPage;
 import com.historycode.ui.page.adminpanel.editorpage.PositionsPage;
+import com.historycode.ui.page.adminpanel.editorpage.components.rows.PositionsRowComponent;
+import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
 import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Issue;
+import io.qameta.allure.Step;
 import jdk.jfr.Description;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class EditorPositionsTests extends BaseTestRunnerWithAdmin {
@@ -16,6 +22,14 @@ public class EditorPositionsTests extends BaseTestRunnerWithAdmin {
     private final String TEST_POSITION_NEW = "testPosition32";
     private final String TEST_POSITION_VALID = "testPositionValid";
     private final String TEST_POSITION_TOO_LONG = "testPositionAddingWithATooLongNameMoreThan50Symbols";
+
+    @Step("Go to Editor page.")
+    @BeforeMethod
+    public void moveToEditor() {
+        new HistoryCodesAdminPanelPage(driver)
+                .getAdminMenuBar()
+                .goToEditorPage();
+    }
 
     @Test
     @Issue("100")
@@ -83,6 +97,27 @@ public class EditorPositionsTests extends BaseTestRunnerWithAdmin {
 
     }
 
+    @Step("Cleanup data.")
+    @AfterClass
+    void cleanup() {
+
+        driver.get(testValueProvider.getBaseUIUrl() + "/admin-panel/editor");
+        PositionsPage positionsPage = new CategoriesPage(driver)
+                .moveToPositions();
+
+        while (positionsPage.getTableRowByTitle(TEST_POSITION_VALID) == null) {
+            if (!positionsPage.tableHasNextPage()) {
+                break;
+            }
+            positionsPage = positionsPage.clickNextPage();
+        }
+
+        PositionsRowComponent row = positionsPage.getTableRowByTitle(TEST_POSITION_VALID);
+        if (row != null) {
+            positionsPage.deleteTableRow(row).clickOkButton();
+        }
+
+    }
+
     //ToDo Add Before Class method to add new position than move back to Base Admin Page and move to the editor
-    //ToDo Add After Class method to remove new position
 }
