@@ -60,7 +60,8 @@ public class EditorPositionsTests extends BaseTestRunnerWithAdmin {
                 .enterPosition(TEST_POSITION_TOO_LONG)
                 .getInputFieldText();
 
-        Assert.assertTrue(actualMessage.length() <= 50);
+        Assert.assertTrue(actualMessage.length() <= 50,
+                "The position name is more then 50 symbols.");
 
     }
 
