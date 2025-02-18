@@ -6,10 +6,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.time.Duration;
+
 public class PositionsRowComponent extends RowComponent {
 
     @Getter
-    @FindBy(xpath = ".//td[@class='ant-table-cell'][2]//span[contains(@class, 'anticon-delete')]//*[name()='svg']")
+    @FindBy(xpath = ".//td[@class='ant-table-cell'][2]//span[contains(@class, 'anticon-delete')]")
     private WebElement deleteAction;
     @Getter
     @FindBy(xpath = ".//td[@class='ant-table-cell'][2]//span[contains(@class, 'anticon-edit')]//*[name()='svg']")
@@ -25,13 +27,10 @@ public class PositionsRowComponent extends RowComponent {
     }
 
     public void clickEdit() {
-        scrollToElement(editAction);
-        editAction.click();
+        actions.moveToElement(editAction).pause(Duration.ofMillis(300)).click().perform();
     }
 
     public void clickDelete() {
-        scrollToElement(deleteAction);
-        actions.click().perform();
-
+        actions.moveToElement(deleteAction).pause(Duration.ofMillis(300)).click().perform();
     }
 }
