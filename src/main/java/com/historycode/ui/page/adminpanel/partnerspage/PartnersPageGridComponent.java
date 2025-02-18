@@ -21,7 +21,7 @@ public class PartnersPageGridComponent extends BaseGridComponent {
 
     public PartnersPageGridComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        sleep(3000); // Потрібно зачикати поки сторінка завантажиться
+        sleep(1000);
         this.partnersRowComponents = initializePartnersRowComponents(driver, partnerRowNodes);
     }
 
@@ -33,7 +33,8 @@ public class PartnersPageGridComponent extends BaseGridComponent {
         return components;
     }
 
-    public PartnersRowComponent findUserByName(String name){
+    public PartnersRowComponent findPartnerByName(String name){
+        sleep(1000);
         for(PartnersRowComponent item: getPartnersRowComponents()){
             if(item.getNameText().equals(name))
                 return item;
@@ -43,10 +44,6 @@ public class PartnersPageGridComponent extends BaseGridComponent {
 
     public PartnersRowComponent getRowById(int id) {
         return partnersRowComponents.get(id);
-    }
-
-    public int getRowCount() {
-        return partnersRowComponents.size();
     }
 
     public void clickNextPage() {
@@ -68,8 +65,7 @@ public class PartnersPageGridComponent extends BaseGridComponent {
     }
 
     public void clickLastPage(){
-        waitUntilElementVisible(pagination.getPaginationItems().getLast());
         pagination.clickLastPage();
-        waitUntilElementInvisible(partnerRowNodes.getFirst());
+        waitUntilPageLouder();
     }
 }

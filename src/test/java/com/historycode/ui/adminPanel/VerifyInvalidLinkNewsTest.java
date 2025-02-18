@@ -2,7 +2,7 @@ package com.historycode.ui.adminPanel;
 
 import com.historycode.ui.page.adminpanel.newspage.NewsPageAdminPanel;
 import com.historycode.ui.page.adminpanel.newspage.modal.CreateEditNewsModal;
-import com.historycode.ui.testrunners.TestRunnerWithAdmin;
+import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
 
 import io.qameta.allure.Issue;
 import org.testng.annotations.BeforeMethod;
@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
 
-public class VerifyInvalidLinkNewsTest extends TestRunnerWithAdmin {
+public class VerifyInvalidLinkNewsTest extends BaseTestRunnerWithAdmin {
 
     private String newsTitle;
     private String newsText;
@@ -22,7 +22,7 @@ public class VerifyInvalidLinkNewsTest extends TestRunnerWithAdmin {
 
     @BeforeMethod
     public void setupForCreateNews() {
-        login();
+        
 
         newsTitle = "Тестова новина";
         newsText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras et commodo ex. Pellentesque id sagittis ex. Morbi tincidunt volutpat ante, ut elementum turpis pulvinar et.";

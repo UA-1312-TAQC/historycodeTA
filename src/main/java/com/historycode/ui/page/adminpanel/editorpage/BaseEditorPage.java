@@ -2,7 +2,7 @@ package com.historycode.ui.page.adminpanel.editorpage;
 
 import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
 import com.historycode.ui.page.adminpanel.editorpage.components.SectionsComponent;
-import com.historycode.ui.utils.customExpectedConditions.CustomExpectedConditions;
+import com.historycode.ui.utils.customExpectedConditions.StalenessOfElementLocatedBy;
 import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -35,7 +35,7 @@ public abstract class BaseEditorPage extends BasePageAdminPanel {
 
     public BaseEditorPage(WebDriver driver) {
         super(driver);
-        wait.until(CustomExpectedConditions.stalenessOfElementLocatedBy(By.xpath(getLOADING_GIF_XPATH())));
+        wait.until(new StalenessOfElementLocatedBy(By.xpath(getLOADING_GIF_XPATH())));
         setAddButtonNode();
         setGridNode();
         sections = new SectionsComponent(driver, sectionsNode);

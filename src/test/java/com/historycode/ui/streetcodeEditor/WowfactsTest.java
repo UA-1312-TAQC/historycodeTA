@@ -1,7 +1,7 @@
 package com.historycode.ui.streetcodeEditor;
 
 import com.historycode.ui.page.adminpanel.streetcodeeditpage.StreetcodeEditPage;
-import com.historycode.ui.testrunners.TestRunnerWithAdmin;
+import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
 import io.qameta.allure.Issue;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -12,7 +12,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-public class WowfactsTest extends TestRunnerWithAdmin {
+public class WowfactsTest extends BaseTestRunnerWithAdmin {
 
     @Test
     @Issue("58")

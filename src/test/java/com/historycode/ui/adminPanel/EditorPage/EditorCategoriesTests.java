@@ -1,15 +1,16 @@
 package com.historycode.ui.adminPanel.EditorPage;
 
-import com.beust.ah.A;
+
 import com.historycode.ui.page.adminpanel.editorpage.CategoriesPage;
-import com.historycode.ui.testrunners.TestRunnerWithAdminEditor;
+import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
+
 import io.qameta.allure.Epic;
 import io.qameta.allure.Issue;
 import jdk.jfr.Description;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class EditorCategoriesTests extends TestRunnerWithAdminEditor {
+public class EditorCategoriesTests extends BaseTestRunnerWithAdmin {
 
     private final String TEST_CATEGORY = "test_Category23";
 

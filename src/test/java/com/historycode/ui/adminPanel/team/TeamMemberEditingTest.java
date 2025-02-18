@@ -1,20 +1,25 @@
 package com.historycode.ui.adminPanel.team;
 
+import com.historycode.ui.data_provider.enums.SocialMedia;
 import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
 import com.historycode.ui.page.adminpanel.teampage.TeamRowComponent;
 import com.historycode.ui.page.adminpanel.teampage.createEditModal.CreateEditMemberModal;
-import com.historycode.ui.testrunners.TestRunnerWithAdmin;
+import com.historycode.ui.page.adminpanel.teampage.createEditModal.photoElement.PhotoModalComponent;
+import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
+import com.historycode.utils.CustomStringGenerator;
+import com.historycode.utils.ImageProcessor;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Story;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
 
-
-public class TeamMemberEditingTest extends TestRunnerWithAdmin {
+@Slf4j
+public class TeamMemberEditingTest extends BaseTestRunnerWithAdmin {
 
     TeamRowComponent targetTeamMember;
     String teamMemberName;
@@ -22,23 +27,20 @@ public class TeamMemberEditingTest extends TestRunnerWithAdmin {
     String teamMemberDescription;
     @BeforeMethod
     public void createTeamMemberForEditing(){
-        teamMemberName = RandomStringUtils.randomAlphabetic(7) + " " + RandomStringUtils.randomAlphabetic(10);
+        teamMemberName = CustomStringGenerator.generateUserLastFirstName(7, 10);
         teamMemberDescription = RandomStringUtils.randomAlphabetic(20);
-        targetTeamMember =
-                new HistoryCodesAdminPanelPage(driver)
+        targetTeamMember = new HistoryCodesAdminPanelPage(driver)
                 .getAdminMenuBar()
                 .goToTeamPage()
                 .clickAddNewMemberButton()
                 .setName(teamMemberName)
                 .setDescription(teamMemberDescription)
                 .loadPhoto("TeamMemberImage.png")
-                .addSocialMedia("LinkedIn")
-                .addSocialMediaLink("https://ua.linkedin.com/")
+                .addSocialMedia(SocialMedia.LINKEDIN.getName())
+                .addSocialMediaLink(SocialMedia.LINKEDIN.getValidLink())
                 .saveEditedMember()
                 .closeEditMemberModal()
-                //.clickLastPaginationItem()
-                .getTeamPageGridComponent()
-                .findUserByName(teamMemberName);
+                .findUserOnCurrentOrLastPage(teamMemberName);
     }
 
     @Test
@@ -47,7 +49,7 @@ public class TeamMemberEditingTest extends TestRunnerWithAdmin {
     @Story("95")
     @Description("Verify that the admin can edit the team member name")
     public void EditTeamMemberNameTest(){
-       String newTeamMemberName =  RandomStringUtils.randomAlphabetic(7) + " " + RandomStringUtils.randomAlphabetic(11);
+       String newTeamMemberName =  CustomStringGenerator.generateUserLastFirstName(7, 11);
        targetTeamMember
                 .clickEdit()
                 .setName(newTeamMemberName)
@@ -55,8 +57,8 @@ public class TeamMemberEditingTest extends TestRunnerWithAdmin {
                 .closeEditMemberModalWithoutGridRefresh();
         CreateEditMemberModal res = targetTeamMember.clickEdit();
         String actual = res.getName();
-        Assert.assertEquals(newTeamMemberName, actual);
         res.closeEditMemberModalWithoutGridRefresh();
+        Assert.assertEquals(actual, newTeamMemberName);
     }
 
     @Test
@@ -65,7 +67,7 @@ public class TeamMemberEditingTest extends TestRunnerWithAdmin {
     @Epic("(Epic #5) Admin/other pages")
     @Description("Verify that the admin cannot set the team member name longer than 41 character")
     public void EditTeamMemberSetTooLongNameTest(){
-        String newTeamMemberName =  RandomStringUtils.randomAlphabetic(50);
+        String newTeamMemberName = RandomStringUtils.randomAlphabetic(50);
         targetTeamMember
                 .clickEdit()
                 .setName(newTeamMemberName)
@@ -73,8 +75,8 @@ public class TeamMemberEditingTest extends TestRunnerWithAdmin {
                 .closeEditMemberModalWithoutGridRefresh();
         CreateEditMemberModal res = targetTeamMember.clickEdit();
         String actual = res.getName();
-        Assert.assertEquals(newTeamMemberName.substring(0,41), actual);
         res.closeEditMemberModalWithoutGridRefresh();
+        Assert.assertEquals(actual, newTeamMemberName.substring(0,41));
     }
 
 
@@ -87,12 +89,12 @@ public class TeamMemberEditingTest extends TestRunnerWithAdmin {
         targetTeamMember
                 .clickEdit()
                 .setName("")
-                .saveEditedMember()
+                .saveEditedMemberWithoutWaitingForSuccessMessage()
                 .closeEditMemberModalWithoutGridRefresh();
         CreateEditMemberModal res = targetTeamMember.clickEdit();
         String actual = res.getName();
-        Assert.assertEquals(teamMemberName, actual);
         res.closeEditMemberModalWithoutGridRefresh();
+        Assert.assertEquals(actual, teamMemberName);
     }
 
     @Test
@@ -109,8 +111,8 @@ public class TeamMemberEditingTest extends TestRunnerWithAdmin {
                 .closeEditMemberModalWithoutGridRefresh();
         CreateEditMemberModal res = targetTeamMember.clickEdit();
         String actual = res.getDescription();
-        Assert.assertEquals(newTeamMemberDescription, actual);
         res.closeEditMemberModalWithoutGridRefresh();
+        Assert.assertEquals(actual, newTeamMemberDescription);
     }
 
     @Test
@@ -119,7 +121,7 @@ public class TeamMemberEditingTest extends TestRunnerWithAdmin {
     @Epic("(Epic #5) Admin/other pages")
     @Description("Verify that the admin cannot set the team member description longer than 70 character")
     public void EditTeamMemberDescriptionSetTooLongTest(){
-        String newTeamMemberDescription =  RandomStringUtils.randomAlphabetic(100);
+        String newTeamMemberDescription = RandomStringUtils.randomAlphabetic(100);
         targetTeamMember
                 .clickEdit()
                 .setDescription(newTeamMemberDescription)
@@ -127,10 +129,10 @@ public class TeamMemberEditingTest extends TestRunnerWithAdmin {
                 .closeEditMemberModalWithoutGridRefresh();
         CreateEditMemberModal res = targetTeamMember.clickEdit();
         String actual = res.getDescription();
-        System.out.println(newTeamMemberDescription);
-        Assert.assertEquals(newTeamMemberDescription.substring(0,70), actual);
         res.closeEditMemberModalWithoutGridRefresh();
+        Assert.assertEquals(actual, newTeamMemberDescription.substring(0,70));
     }
+
     @Test
     @Issue("120")
     @Story("95")
@@ -144,8 +146,33 @@ public class TeamMemberEditingTest extends TestRunnerWithAdmin {
                 .closeEditMemberModalWithoutGridRefresh();
         CreateEditMemberModal res = targetTeamMember.clickEdit();
         String actual = res.getDescription();
-        Assert.assertTrue(actual.isEmpty());
         res.closeEditMemberModalWithoutGridRefresh();
+        Assert.assertTrue(actual.isEmpty());
+    }
+
+    @Test
+    @Issue("120")
+    @Story("95")
+    @Epic("(Epic #5) Admin/other pages")
+    @Description("Verify that the admin can edit the team member photo")
+    public void editPhotoTest() {
+        CreateEditMemberModal modal;
+        String resultPhoto;
+
+        targetTeamMember.clickEdit()
+                .updatePhoto("memberImage.jpg")
+                .saveEditedMember()
+                .closeEditMemberModalWithoutGridRefresh();
+        modal = targetTeamMember.clickEdit();
+        PhotoModalComponent previewPhotoModal =  modal.getPhotoWindowComponent().clickPreviewButton();
+        resultPhoto = previewPhotoModal.getEncodedPhoto();
+        previewPhotoModal.close();
+        modal.closeEditMemberModalWithoutGridRefresh();
+        log.debug(ImageProcessor.clearStringMetadata(resultPhoto));
+        log.debug(ImageProcessor.encodeImage("src/test/resources/memberImage.jpg"));
+        log.debug(ImageProcessor.encodeImage("src/test/resources/TeamMemberImage.png"));
+        Assert.assertTrue(ImageProcessor.compareEncodedAndNormalImage("src/test/resources/memberImage.jpg", resultPhoto),
+                "New photo is incorrect or not shown in the modal window");
     }
 
     @AfterMethod

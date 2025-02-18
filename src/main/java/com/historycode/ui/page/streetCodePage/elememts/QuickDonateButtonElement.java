@@ -16,14 +16,17 @@ public class QuickDonateButtonElement extends BaseElement {
     @FindBy(xpath = ".//h2[@class='donateBtnText']")
     private WebElement donateBtnTextNode;
 
+    @FindBy(xpath = "//div[@role='dialog' and contains(@class,'donatesModal')]")
+    private WebElement donatesModalRoot;
+
     public QuickDonateButtonElement(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
 
     public DonateModal clickDonateButton() {
         clickDynamicElement(rootElement);
-        return new DonateModal(driver,
-                driver.findElement(By.xpath("//div[@role='dialog' and contains(@class,'donatesModal')]")));
+        waitUntilElementVisible(donatesModalRoot);
+        return new DonateModal(driver, donatesModalRoot);
     }
 
     public boolean isDonateButtonDisplayed() {
