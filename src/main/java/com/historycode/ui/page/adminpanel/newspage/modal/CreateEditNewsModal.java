@@ -62,6 +62,9 @@ public class CreateEditNewsModal extends BaseCreateEditModal {
     private WebElement closeButton;
 
     @FindBy(xpath = "//div[contains(@class, 'ant-form-item-explain-error')]")
+    private WebElement newsTitleErrorMessage;
+
+    @FindBy(xpath = "//div[contains(@class, 'ant-form-item-explain-error')]")
     private WebElement newsLinkTranslitErrorMessage;
 
     protected PhotoModalComponent photoModalComponent;
@@ -177,6 +180,16 @@ public class CreateEditNewsModal extends BaseCreateEditModal {
 
 public TextEditorElements getTextEditorElements() {
         return textEditorElements;
+    }
+
+    public String getNewsTitleErrorMessage() {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.visibilityOf(newsTitleErrorMessage));
+            return newsTitleErrorMessage.getText();
+        } catch (Exception e) {
+            return "";
+        }
     }
 
     public String getNewsLinkTranslitErrorMessage() {
