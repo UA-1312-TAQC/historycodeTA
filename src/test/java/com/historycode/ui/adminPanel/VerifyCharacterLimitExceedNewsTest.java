@@ -61,19 +61,18 @@ public class VerifyCharacterLimitExceedNewsTest extends BaseTestRunnerWithAdmin 
         assertTrue(actualTitleMessage.contains(CREATE_UPDATE_ERROR_MESSAGE), "Error message for text exceeded the limit is not displayed.");
     }
 
-@AfterMethod
-public void cleanup() {
-    NewsPageAdminPanel newsPage = new NewsPageAdminPanel(driver);
-    NewsPageGridComponent newsGrid = newsPage.getNewsPageGridComponent();
-    newsGrid.updateNewsRows(driver);
+    @AfterMethod
+    public void cleanup() {
+        NewsPageAdminPanel newsPage = new NewsPageAdminPanel(driver);
+        NewsPageGridComponent newsGrid = newsPage.getNewsPageGridComponent();
+        newsGrid.updateNewsRows(driver);
 
-    for (int i = 0; i < newsGrid.getRowCount(); i++) {
-        NewsRowComponent leftoverNews = newsGrid.getRowById(i);
-        if (leftoverNews.getName().getText().equals(createdTitle)) {
-            newsPage.deleteNewsByIndex(i).clickOkButton();
-            break;
+        for (int i = 0; i < newsGrid.getRowCount(); i++) {
+            NewsRowComponent leftoverNews = newsGrid.getRowById(i);
+            if (leftoverNews.getName().getText().equals(createdTitle)) {
+                newsPage.deleteNewsByIndex(i).clickOkButton();
+                break;
+            }
         }
     }
-}
-
 }
