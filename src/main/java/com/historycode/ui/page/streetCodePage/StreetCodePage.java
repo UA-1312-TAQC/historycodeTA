@@ -6,7 +6,9 @@ import com.historycode.ui.page.BasePage;
 import com.historycode.ui.page.streetCodePage.components.*;
 import com.historycode.ui.page.streetCodePage.elememts.QuickDonateButtonElement;
 import com.historycode.ui.page.streetCodePage.modals.SurveyModal;
+import com.historycode.ui.utils.customExpectedConditions.StalenessOfElementLocatedBy;
 import lombok.Getter;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -221,7 +223,7 @@ public class StreetCodePage extends BasePage {
         return new SurveyModal(driver, surveyModalNode);
     }
 
-    public StreetCodePage scrollToWowFactCarousel(){
+    public StreetCodePage scrollToWowFactCarousel() {
         scrollToElement(facts.getCarouselRoot());
         return this;
     }
@@ -231,4 +233,9 @@ public class StreetCodePage extends BasePage {
         return this;
     }
 
+    public StreetCodePage scrollToVideo() {
+        wait.until(new StalenessOfElementLocatedBy(By.cssSelector(".loader-container")));
+        scrollToElement(videoComponent.getVideoPlayer());
+        return this;
+    }
 }
