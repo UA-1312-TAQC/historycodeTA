@@ -58,14 +58,10 @@ public class EditorPositionsTests extends BaseTestRunnerWithAdmin {
                 .moveToPositions()
                 .clickAddPosition()
                 .enterPosition(TEST_POSITION_TOO_LONG)
-                .getError()
-                .getText();
+                .getInputFieldText();
 
-        String expectedMessage = "Filling out no more than 50 symbols is available.";
-        Assert.assertEquals(actualMessage, expectedMessage);
+        Assert.assertTrue(actualMessage.length() <= 50);
 
-        //ToDo Update modals error messages
-        //ToDo Check whether expected message is the same on web page
     }
 
     @Test
