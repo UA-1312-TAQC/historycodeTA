@@ -17,7 +17,7 @@ public class StreetcodeRequestBody {
     private String transliterationUrl;
     private String dateString;
     private Date eventStartOrPersonBirthDate;
-    private Object eventEndOrPersonDeathDate;
+    private Date eventEndOrPersonDeathDate;
     private List<Object> tags;
     private String teaser;
     private List<Integer> imagesIds;
@@ -84,7 +84,7 @@ public class StreetcodeRequestBody {
         return this;
     }
 
-    public StreetcodeRequestBody setEventEndOrPersonDeathDate(Object eventEndOrPersonDeathDate) {
+    public StreetcodeRequestBody setEventEndOrPersonDeathDate(Date eventEndOrPersonDeathDate) {
         this.eventEndOrPersonDeathDate = eventEndOrPersonDeathDate;
         return this;
     }
