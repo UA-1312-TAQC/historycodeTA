@@ -58,4 +58,11 @@ public class NewsClient extends BaseClient {
                 .when()
                 .delete(resourceUrl + "/Delete/" + newsId);
     }
+
+    public Response updateNews(NewsRequestBody news) {
+        return preparedRequest()
+                .when()
+                .body(news)
+                .put(resourceUrl + "/Update");
+    }
 }
