@@ -6,20 +6,16 @@ import com.historycode.ui.page.adminpanel.teampage.TeamRowComponent;
 import com.historycode.ui.page.adminpanel.teampage.createEditModal.CreateEditMemberModal;
 import com.historycode.ui.page.adminpanel.teampage.createEditModal.photoElement.PhotoModalComponent;
 import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
+import com.historycode.utils.CustomStringGenerator;
 import com.historycode.utils.ImageProcessor;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Story;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.*;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.Base64;
 
 
 @Slf4j
@@ -31,10 +27,9 @@ public class TeamMemberEditingTest extends BaseTestRunnerWithAdmin {
     String teamMemberDescription;
     @BeforeMethod
     public void createTeamMemberForEditing(){
-        teamMemberName = RandomStringUtils.randomAlphabetic(7) + " " + RandomStringUtils.randomAlphabetic(10);
+        teamMemberName = CustomStringGenerator.generateUserLastFirstName(7, 10);
         teamMemberDescription = RandomStringUtils.randomAlphabetic(20);
-        targetTeamMember =
-                new HistoryCodesAdminPanelPage(driver)
+        targetTeamMember = new HistoryCodesAdminPanelPage(driver)
                 .getAdminMenuBar()
                 .goToTeamPage()
                 .clickAddNewMemberButton()
@@ -45,9 +40,7 @@ public class TeamMemberEditingTest extends BaseTestRunnerWithAdmin {
                 .addSocialMediaLink(SocialMedia.LINKEDIN.getValidLink())
                 .saveEditedMember()
                 .closeEditMemberModal()
-                //.clickLastPaginationItem()
-                .getTeamPageGridComponent()
-                .findUserByName(teamMemberName);
+                .findUserOnCurrentOrLastPage(teamMemberName);
     }
 
     @Test
@@ -56,7 +49,7 @@ public class TeamMemberEditingTest extends BaseTestRunnerWithAdmin {
     @Story("95")
     @Description("Verify that the admin can edit the team member name")
     public void EditTeamMemberNameTest(){
-       String newTeamMemberName =  RandomStringUtils.randomAlphabetic(7) + " " + RandomStringUtils.randomAlphabetic(11);
+       String newTeamMemberName =  CustomStringGenerator.generateUserLastFirstName(7, 11);
        targetTeamMember
                 .clickEdit()
                 .setName(newTeamMemberName)
@@ -65,7 +58,7 @@ public class TeamMemberEditingTest extends BaseTestRunnerWithAdmin {
         CreateEditMemberModal res = targetTeamMember.clickEdit();
         String actual = res.getName();
         res.closeEditMemberModalWithoutGridRefresh();
-        Assert.assertEquals(newTeamMemberName, actual);
+        Assert.assertEquals(actual, newTeamMemberName);
     }
 
     @Test
@@ -74,7 +67,7 @@ public class TeamMemberEditingTest extends BaseTestRunnerWithAdmin {
     @Epic("(Epic #5) Admin/other pages")
     @Description("Verify that the admin cannot set the team member name longer than 41 character")
     public void EditTeamMemberSetTooLongNameTest(){
-        String newTeamMemberName =  RandomStringUtils.randomAlphabetic(50);
+        String newTeamMemberName = RandomStringUtils.randomAlphabetic(50);
         targetTeamMember
                 .clickEdit()
                 .setName(newTeamMemberName)
@@ -83,7 +76,7 @@ public class TeamMemberEditingTest extends BaseTestRunnerWithAdmin {
         CreateEditMemberModal res = targetTeamMember.clickEdit();
         String actual = res.getName();
         res.closeEditMemberModalWithoutGridRefresh();
-        Assert.assertEquals(newTeamMemberName.substring(0,41), actual);
+        Assert.assertEquals(actual, newTeamMemberName.substring(0,41));
     }
 
 
@@ -101,7 +94,7 @@ public class TeamMemberEditingTest extends BaseTestRunnerWithAdmin {
         CreateEditMemberModal res = targetTeamMember.clickEdit();
         String actual = res.getName();
         res.closeEditMemberModalWithoutGridRefresh();
-        Assert.assertEquals(teamMemberName, actual);
+        Assert.assertEquals(actual, teamMemberName);
     }
 
     @Test
@@ -119,7 +112,7 @@ public class TeamMemberEditingTest extends BaseTestRunnerWithAdmin {
         CreateEditMemberModal res = targetTeamMember.clickEdit();
         String actual = res.getDescription();
         res.closeEditMemberModalWithoutGridRefresh();
-        Assert.assertEquals(newTeamMemberDescription, actual);
+        Assert.assertEquals(actual, newTeamMemberDescription);
     }
 
     @Test
@@ -128,7 +121,7 @@ public class TeamMemberEditingTest extends BaseTestRunnerWithAdmin {
     @Epic("(Epic #5) Admin/other pages")
     @Description("Verify that the admin cannot set the team member description longer than 70 character")
     public void EditTeamMemberDescriptionSetTooLongTest(){
-        String newTeamMemberDescription =  RandomStringUtils.randomAlphabetic(100);
+        String newTeamMemberDescription = RandomStringUtils.randomAlphabetic(100);
         targetTeamMember
                 .clickEdit()
                 .setDescription(newTeamMemberDescription)
@@ -137,7 +130,7 @@ public class TeamMemberEditingTest extends BaseTestRunnerWithAdmin {
         CreateEditMemberModal res = targetTeamMember.clickEdit();
         String actual = res.getDescription();
         res.closeEditMemberModalWithoutGridRefresh();
-        Assert.assertEquals(newTeamMemberDescription.substring(0,70), actual);
+        Assert.assertEquals(actual, newTeamMemberDescription.substring(0,70));
     }
 
     @Test
