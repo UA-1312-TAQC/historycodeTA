@@ -27,7 +27,7 @@ public class PartnersPageAdminPanel extends BasePageAdminPanel {
 
     public PartnersPageGridComponent getPartnersPageGridComponent(){
         if(partnersPageGridComponent == null){
-            waitUntilElementVisible(gridRootElement);
+            sleep(2000);
             partnersPageGridComponent = new PartnersPageGridComponent(driver, gridRootElement);
         }
         return partnersPageGridComponent;
@@ -60,7 +60,6 @@ public class PartnersPageAdminPanel extends BasePageAdminPanel {
 
     public PartnersPageAdminPanel clickLastPage(){
         getPartnersPageGridComponent().clickLastPage();
-        waitUntilElementVisible(getPartnersPageGridComponent().partnerRowNodes.getLast());
         return new PartnersPageAdminPanel(driver);
     }
 }

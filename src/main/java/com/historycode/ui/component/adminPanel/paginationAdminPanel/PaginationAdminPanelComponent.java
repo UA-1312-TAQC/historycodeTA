@@ -116,7 +116,7 @@ public class PaginationAdminPanelComponent extends BaseComponent {
 
     @Step("Click on the last page of the pagination")
     public void clickLastPage(){
-        scrollToElement(nextPage);
+        scrollToElementJs(nextPage);
         waitUntilElementClickable(paginationItems.getLast());
         paginationItems.getLast().click();
     }

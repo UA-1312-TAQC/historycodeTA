@@ -10,6 +10,7 @@ import org.openqa.selenium.support.FindBy;
 
 
 public abstract class BasePageAdminPanel extends BasePage {
+
     @Getter
     protected AdminMenuBarComponent adminMenuBar;
     @FindBy(xpath = "//div[contains(@class,'PageBarContainer')]")
