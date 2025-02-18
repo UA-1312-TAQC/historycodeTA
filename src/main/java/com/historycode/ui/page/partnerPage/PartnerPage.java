@@ -11,11 +11,17 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
+import static com.historycode.ui.utils.ImageLoader.clearStringMetadata;
+
 public class PartnerPage extends BasePage {
 
     private static final String LOGO_XPATH = ".//img";
     private static final String DESCRIPTION_XPATH = ".//div[@class='description']/p";
+    private static final String LOGOPREFIX = "data:image/webp;base64,";
+    private static final int logoNecessaryWidth = 350;
+    private static final int logoNecessaryLength = 106;
 
+    @Getter
     @FindBy(xpath = "//div[@class='otherPartnersBlock']/div[@class='partnersItem']")
     protected List<WebElement> notKeyPartners;
 
@@ -43,8 +49,21 @@ public class PartnerPage extends BasePage {
         hoverOverLogo(logo);
     }
 
+    public String getLogoSrc(String alt, PartnerType type) {
+        List<WebElement> partners = type == PartnerType.KEY ? keyPartners : notKeyPartners;
+        String logoSrc = findLogo(partners, alt).getDomAttribute("src");
+        return clearStringMetadata(logoSrc);
+    }
+
+    public Boolean isGoodLogoSize(String alt, PartnerType type) {
+        List<WebElement> partners = type == PartnerType.KEY ? keyPartners : notKeyPartners;
+        WebElement logo = findLogo(partners, alt);
+        return logo.getSize().getWidth() >= logoNecessaryWidth &&
+                logo.getSize().getHeight() >= logoNecessaryLength;
+    }
+
     public String getPopoverDescription() {
-        waitUntilElementVisible(popoverContainer);
+        waitUntilElementVisible(popoverContainer.findElement(By.xpath(DESCRIPTION_XPATH)));
         WebElement description = popoverContainer.findElement(By.xpath(DESCRIPTION_XPATH));
         return description.getText();
     }

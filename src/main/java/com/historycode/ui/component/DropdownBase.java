@@ -18,6 +18,11 @@ public class DropdownBase extends BaseComponent {
     @FindBy(xpath = ".//input")
     private WebElement input;
 
+    @FindBy(xpath = "./div[contains(@class, 'ant-select')]")
+    private WebElement selectBox;
+
+    private By dropdownItems = By.xpath("//div[contains(@class, 'ant-select-item')]");
+
     public DropdownBase(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
@@ -64,5 +69,22 @@ public class DropdownBase extends BaseComponent {
         String actualText = chosenOption.getText().trim();
         return expectedText.equals(actualText);
     }
-    
+
+    public void openDropdown() {
+        waitUntilElementClickable(selectBox);
+        selectBox.click();
+    }
+
+    public boolean isOptionPresent(String optionText) {
+        openDropdown();
+        sleep(2000);
+        List<WebElement> items = driver.findElements(dropdownItems);
+        for (WebElement item : items) {
+            if (item.getText().equalsIgnoreCase(optionText)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

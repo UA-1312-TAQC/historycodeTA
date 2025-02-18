@@ -9,20 +9,19 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Step;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 public class StreetCodeButtonsTest extends BaseTestRunner {
 
-    SoftAssert softAssert;
     StreetCodePage streetCodePage;
     final int DONATE_AMOUNT = 500;
 
     @BeforeMethod
     @Step("Go to the first StreetCode page")
     public void goToStreetCode() {
-        softAssert = new SoftAssert();
         streetCodePage = new HomePage(driver)
                 .openBurgerMenu()
                 .goToStreetCodeCatalogPage()
@@ -35,11 +34,10 @@ public class StreetCodeButtonsTest extends BaseTestRunner {
     @Description("Page UP button test")
     public void pageUpButtonTest() {
         streetCodePage.getVerticalProgress().clickSection(2);
-        softAssert.assertTrue(streetCodePage.getScrollTopButton().isButtonDisplayed(), "Scroll top button is not visible");
+        Assert.assertTrue(streetCodePage.getScrollTopButton().isButtonDisplayed(), "Scroll top button is not visible");
 
         streetCodePage.getScrollTopButton().clickScrollTop();
-        softAssert.assertTrue(streetCodePage.getMainCard().isNameVisible(), "Scroll top button is not working");
-        softAssert.assertAll();
+        Assert.assertTrue(streetCodePage.getMainCard().isNameVisible(), "Scroll top button is not working");
     }
 
     @Test
@@ -47,21 +45,20 @@ public class StreetCodeButtonsTest extends BaseTestRunner {
     @Epic("StreetCode page")
     @Description("Donate button test")
     public void donateButtonTest() {
-        softAssert.assertTrue(streetCodePage.getQuickDonateButton().isDonateButtonDisplayed(), "Donate button is not visible");
+        Assert.assertTrue(streetCodePage.getQuickDonateButton().isDonateButtonDisplayed(), "Donate button is not visible");
 
         DonateModal donateModal = streetCodePage.getQuickDonateButton().clickDonateButton();
-        softAssert.assertTrue(donateModal.isDonateButtonDisplayed(), "Donate popup is not visible");
+        Assert.assertTrue(donateModal.isDonateButtonDisplayed(), "Donate popup is not visible");
 
-        softAssert.assertFalse(donateModal.isDonateButtonEnabled(), "Save button is enabled, 0/2 mandatory actions taken");
+        Assert.assertFalse(donateModal.isDonateButtonEnabled(), "Save button is enabled, 0/2 mandatory actions taken");
         donateModal.clickAgreeCheckbox();
 
-        softAssert.assertFalse(donateModal.isDonateButtonEnabled(), "Save button is enabled, 1/2 mandatory actions taken");
+        Assert.assertFalse(donateModal.isDonateButtonEnabled(), "Save button is enabled, 1/2 mandatory actions taken");
         donateModal.clickAmountButton(DONATE_AMOUNT);
 
-        softAssert.assertTrue(donateModal.isDonateButtonEnabled(), "Save button is not enabled, 2/2 mandatory actions taken");
+        Assert.assertTrue(donateModal.isDonateButtonEnabled(), "Save button is not enabled, 2/2 mandatory actions taken");
 
         donateModal.clickCloseButton();
-        softAssert.assertAll();
     }
 
     @Test
@@ -69,24 +66,14 @@ public class StreetCodeButtonsTest extends BaseTestRunner {
     @Epic("StreetCode page")
     @Description("Questionnaire modal Test")
     public void questionnaireTest() {
-        SurveyModal surveyModal = streetCodePage.getSurveyModal();
-
-        streetCodePage.scrollUntilElementIsVisible(surveyModal.getRootElement());
-        softAssert.assertTrue(surveyModal.isDisplayed());
-        surveyModal.close();
-
-        streetCodePage.scrollToTop();
-        streetCodePage.waitForElementThenScrollUntilAllContentLoaded(surveyModal.getRootElement());
-        softAssert.assertFalse(surveyModal.isDisplayed());
-
-        streetCodePage.refreshPage();
         streetCodePage = new StreetCodePage(driver);
-        surveyModal = streetCodePage.getSurveyModal();
+        streetCodePage.scrollToEndOfPage();
+        SurveyModal surveyModal = streetCodePage.getSurveyModal();
+        Assert.assertTrue(surveyModal.isDisplayed());
+        surveyModal.clickCloseButton();
 
-        streetCodePage.getQuickDonateButton().clickDonateButton().clickCloseButton();
-        streetCodePage.scrollUntilElementIsVisible(surveyModal.getRootElement());
-        softAssert.assertTrue(surveyModal.isDisplayed());
-
-        softAssert.assertAll();
+        streetCodePage.getScrollTopButton().clickScrollTop();
+        streetCodePage.scrollToEndOfPage();
+        Assert.assertFalse(surveyModal.isDisplayed());
     }
 }

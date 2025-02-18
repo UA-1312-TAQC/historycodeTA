@@ -24,7 +24,7 @@ public class PageNavigationBarComponent extends BaseComponent {
     }
 
     public void clickSection(int sectionNumber) {
-        toggleProgressBar();
+        waitUntilElementVisible(hideButton);
         if(!isProgressBarVisible()) {
             toggleProgressBar();
         }

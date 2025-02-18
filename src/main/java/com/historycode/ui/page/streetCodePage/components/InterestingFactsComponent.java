@@ -30,7 +30,7 @@ public class InterestingFactsComponent extends BaseComponent {
     public InterestingFactsComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
         this.carousel = new InterestingFactsCarousel(driver, carouselRoot);
-        this.carouselSquares = new InterestingFactsCarouselSquares(driver, carouselRoot);;
+        this.carouselSquares = new InterestingFactsCarouselSquares(driver, carouselRoot);
         this.interestingFactsModal = new InterestingFactsModal(driver, rootElement);
     }
 

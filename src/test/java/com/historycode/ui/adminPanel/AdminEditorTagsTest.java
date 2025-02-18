@@ -9,13 +9,12 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Step;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
 
 public class AdminEditorTagsTest extends BaseTestRunnerWithAdmin {
 
     private String newTag;
-    private SoftAssert softAssert;
     private static final String TAG_PREFIX = "Я_newTag_";
 
     @Step("Adding new Tag")
@@ -38,33 +37,27 @@ public class AdminEditorTagsTest extends BaseTestRunnerWithAdmin {
     @Epic("(Epic#5) Admin/Other pages")
     @Description("Verify that admin can save a new tag if the mandatory field is full")
     public void createTagTest() {
-        softAssert = new SoftAssert();
-
-        TagsModalComponent tagsModalComponent = new HistoryCodesAdminPanelPage(driver)
+        TagsModalComponent tagsModalComponent =
+                new HistoryCodesAdminPanelPage(driver)
                 .getAdminMenuBar()
                 .goToEditorPage()
                 .moveToTags()
                 .clickAddTag();
-
-        softAssert.assertFalse(tagsModalComponent.getSaveButton().isEnabled(), "The name field is required");
+        Assert.assertFalse(tagsModalComponent.getSaveButton().isEnabled(), "The name field is required");
 
         int characterLimit = 50;
         int lengthOfNewName = 60;
         tagsModalComponent.enterTag(TAG_PREFIX + RandomStringUtils.randomAlphanumeric(lengthOfNewName));
-
-        softAssert.assertTrue(tagsModalComponent.getInputComponent().getInputValue().length() <= characterLimit, "Header length limit is valid = 50");
+        Assert.assertTrue(tagsModalComponent.getInputComponent().getInputValue().length() <= characterLimit, "Header length limit is valid = 50");
 
         lengthOfNewName = 10;
         this.newTag = TAG_PREFIX + RandomStringUtils.randomAlphanumeric(lengthOfNewName);
-
         tagsModalComponent
                 .setTag(newTag)
                 .save()
                 .close();
 
-        softAssert.assertNotNull(new TagsPage(driver).getTableRowByTitle(newTag), "The tag was successfully created");
-        softAssert.assertAll();
-
+        Assert.assertNotNull(new TagsPage(driver).getTableRowByTitle(newTag), "The tag was not successfully created");
         deleteNewTag();
     }
 
@@ -74,23 +67,18 @@ public class AdminEditorTagsTest extends BaseTestRunnerWithAdmin {
     @Description("Verify that admin can edit existing tag")
     public void editTagTest() {
         createNewTag();
-
         TagsPage tagsPage = new TagsPage(driver);
-        softAssert = new SoftAssert();
-        String editTagName = "_edited";
-
-        softAssert.assertNotNull(tagsPage.getTableRowByTitle(newTag), "The tag was successfully created");
+        Assert.assertNotNull(tagsPage.getTableRowByTitle(newTag), "The tag was not successfully created");
+        String newName = newTag + "_edited";
 
         tagsPage.editTableRow(tagsPage.getTableRowByTitle(newTag))
-                .enterTag(editTagName)
+                .setTag(newName)
                 .save()
                 .close();
 
-        newTag += editTagName;
+        newTag += "_edited";
 
-        softAssert.assertNotNull(tagsPage.getTableRowByTitle(newTag), "The tag was successfully edited");
-        softAssert.assertAll();
-
+        Assert.assertNotNull(tagsPage.getTableRowByTitle(newTag), "The tag was not successfully edited");
         deleteNewTag();
     }
 
@@ -100,21 +88,10 @@ public class AdminEditorTagsTest extends BaseTestRunnerWithAdmin {
     @Description("Verify that admin can delete existing tag")
     public void deleteTagTest() {
         createNewTag();
-
-        TagsPage tagsPage = new TagsPage(driver);
-        softAssert = new SoftAssert();
-
-        softAssert.assertNotNull(tagsPage.getTableRowByTitle(newTag), "The tag was successfully created");
+        Assert.assertNotNull( new TagsPage(driver).getTableRowByTitle(newTag), "The tag was not successfully created");
 
         deleteNewTag();
-        /*todo: After deleting an item from the table, the grid is not updated.
-                1. Is this a bug?
-                2. If not, then to check it, you need to write a page refresh
-                   to reload the grid, how best to do it? */
-        tagsPage = new TagsPage(driver);
-
-        softAssert.assertNull(tagsPage.getTableRowByTitle(newTag), "The tag was successfully deleted");
-        softAssert.assertAll();
+        Assert.assertNull(new TagsPage(driver).getTableRowByTitle(newTag), "The tag was not successfully deleted");
     }
 
     @Step("Deleting new Tag")

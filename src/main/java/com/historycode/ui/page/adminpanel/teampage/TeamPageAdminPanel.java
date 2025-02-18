@@ -90,4 +90,14 @@ public class TeamPageAdminPanel extends BasePageAdminPanel {
         teamPageGridComponent.clickPrevFivePages();
         return this;
     }
+
+    public TeamRowComponent findUserOnCurrentOrLastPage(String name){
+        TeamRowComponent res = getTeamPageGridComponent().findUserByName(name);
+        if(res != null)
+            return res;
+
+        //refreshing page grid by replacing it with the grid from the new page
+        this.teamPageGridComponent = clickLastPaginationItem().getTeamPageGridComponent();
+        return getTeamPageGridComponent().findUserByName(name);
+    }
 }

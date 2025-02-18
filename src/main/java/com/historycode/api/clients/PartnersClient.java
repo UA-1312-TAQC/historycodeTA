@@ -1,6 +1,7 @@
 package com.historycode.api.clients;
 
 import com.historycode.api.models.partners.PartnerRequestBody;
+import com.historycode.api.models.partners.PartnerUpdateRequest;
 import com.historycode.api.models.tag.TagRequestBody;
 import io.restassured.response.Response;
 
@@ -29,5 +30,18 @@ public class PartnersClient extends BaseClient {
                 .body(partnerRequestBody)
                 .when()
                 .post(resourceUrl + "/Update");
+    }
+
+    public Response updatePartner(PartnerUpdateRequest partnerUpdateRequest) {
+        return preparedRequest()
+                .body(partnerUpdateRequest)
+                .when()
+                .put(resourceUrl + "/Update");
+    }
+
+    public Response deletePartner(int id) {
+        return preparedRequest()
+                .when()
+                .delete(resourceUrl + "/Delete/" + id);
     }
 }
