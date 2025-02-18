@@ -9,6 +9,7 @@ import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.annotations.AfterMethod;
+import io.qameta.allure.Issue;
 
 import static org.testng.Assert.*;
 
@@ -39,6 +40,7 @@ public class VerifyCharacterLimitExceedNewsTest extends BaseTestRunnerWithAdmin 
     }
 
     @Test
+    @Issue("166")
     public void testCreateNewsWithExceedingCharacterLimits() {
         NewsPageAdminPanel newsPage = new NewsPageAdminPanel(driver);
 
