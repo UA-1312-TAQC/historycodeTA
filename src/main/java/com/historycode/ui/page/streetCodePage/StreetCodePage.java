@@ -84,7 +84,7 @@ public class StreetCodePage extends BasePage {
 
     public StreetCodePage(WebDriver driver) {
         super(driver);
-        waitForPageToLoad(10);
+        wait.until(new StalenessOfElementLocatedBy(By.cssSelector(".loader-container")));
     }
 
     public BreadcrumbsElement getBreadcrumbs() {
@@ -198,10 +198,6 @@ public class StreetCodePage extends BasePage {
             historyMapComponent = new HistoryMapComponent(driver, mapRootElement);
         }
         return historyMapComponent;
-    }
-
-    public void scrollToTop() {
-        scrollTopButton.clickScrollTop();
     }
 
     public void toggleProgressBar() {
