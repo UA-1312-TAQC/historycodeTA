@@ -33,6 +33,7 @@ public class NewsNegativeTests extends BaseNewsTests {
 
         Response response = client.create(requestBody);
 
+        checkError200StatusCode(response);
         assertEquals(response.getStatusCode(), 400);
         assertEquals(response.path("errors.Title[0]"), "Max Length is 100",
                 "Error message is incorrect");
@@ -47,6 +48,7 @@ public class NewsNegativeTests extends BaseNewsTests {
 
         Response response = client.create(requestBody);
 
+        checkError200StatusCode(response);
         assertEquals(response.getStatusCode(), 400);
         assertEquals(response.path("errors.URL[0]"), "Max Length is 200",
                 "Error message is incorrect");
@@ -61,10 +63,11 @@ public class NewsNegativeTests extends BaseNewsTests {
 
         Response response = client.create(requestBody);
 
+        checkError200StatusCode(response);
         assertEquals(response.getStatusCode(), 400);
-        System.out.println(response.body().asPrettyString());
         assertTrue(response.body().asPrettyString().contains("Url Is Invalid"),
                 "Error message is incorrect");
+        checkError200StatusCode(response);
     }
 
     @Issue("202")
@@ -76,6 +79,7 @@ public class NewsNegativeTests extends BaseNewsTests {
 
         Response response = client.create(requestBody);
 
+        checkError200StatusCode(response);
         assertEquals(response.getStatusCode(), 400);
         assertTrue(response.body().asPrettyString().contains("Url Is Invalid"),
                 "Error message is incorrect");
@@ -90,6 +94,7 @@ public class NewsNegativeTests extends BaseNewsTests {
 
         Response response = client.create(requestBody);
 
+        checkError200StatusCode(response);
         assertEquals(response.getStatusCode(), 400);
         assertTrue(response.body().asPrettyString().contains("Url Is Invalid"),
                 "Error message is incorrect");
@@ -104,6 +109,7 @@ public class NewsNegativeTests extends BaseNewsTests {
 
         Response response = client.create(requestBody);
 
+        checkError200StatusCode(response);
         assertEquals(response.getStatusCode(), 400);
         assertEquals(response.path("errors.Text[0]"), "Max Length is 15000",
                 "Error message is incorrect");
@@ -118,6 +124,7 @@ public class NewsNegativeTests extends BaseNewsTests {
 
         Response response = client.create(requestBody);
 
+        checkError200StatusCode(response);
         assertEquals(response.getStatusCode(), 400);
         assertTrue(response.body().asPrettyString().contains("The news cannot be published with a past date"),
                 "Error message is incorrect");
@@ -137,6 +144,13 @@ public class NewsNegativeTests extends BaseNewsTests {
         Response deleteResponse = client.delete(newsResponse.getId());
 
         assertEquals(deleteResponse.getStatusCode(), 401);
+    }
+
+    private void checkError200StatusCode(Response response) {
+        if (response.getStatusCode() == 200) {
+            NewsResponse newsResponse = response.body().as(NewsResponse.class);
+            deleteId = newsResponse.getId();
+        }
     }
 
 }

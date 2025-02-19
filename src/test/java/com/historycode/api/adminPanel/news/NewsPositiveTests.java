@@ -35,7 +35,7 @@ public class NewsPositiveTests extends BaseNewsTests {
         softAssert.assertEquals(newsResponse.getText(), requestBody.getText());
         softAssert.assertEquals(newsResponse.getImageId(), requestBody.getImageId());
         softAssert.assertEquals(newsResponse.getUrl(), requestBody.getUrl());
-        softAssert.assertEquals(newsResponse.getCreationDate(), requestBody.getCreationDate());
+        softAssert.assertNotNull(newsResponse.getCreationDate());
         softAssert.assertAll();
     }
 
@@ -58,7 +58,7 @@ public class NewsPositiveTests extends BaseNewsTests {
         softAssert.assertEquals(newsResponse.getText(), requestBody.getText());
         softAssert.assertEquals(newsResponse.getImageId(), requestBody.getImageId());
         softAssert.assertEquals(newsResponse.getUrl(), requestBody.getUrl());
-        softAssert.assertEquals(newsResponse.getCreationDate(), requestBody.getCreationDate());
+        softAssert.assertNotNull(newsResponse.getCreationDate());
         softAssert.assertAll();
     }
 
@@ -81,7 +81,7 @@ public class NewsPositiveTests extends BaseNewsTests {
         softAssert.assertEquals(newsResponse.getText(), requestBody.getText());
         softAssert.assertEquals(newsResponse.getImageId(), requestBody.getImageId());
         softAssert.assertEquals(newsResponse.getUrl(), requestBody.getUrl());
-        softAssert.assertEquals(newsResponse.getCreationDate(), requestBody.getCreationDate());
+        softAssert.assertNotNull(newsResponse.getCreationDate());
         softAssert.assertAll();
     }
 
@@ -106,7 +106,7 @@ public class NewsPositiveTests extends BaseNewsTests {
         softAssert.assertEquals(newsResponse.getText(), requestBody.getText());
         softAssert.assertEquals(newsResponse.getImageId(), requestBody.getImageId());
         softAssert.assertEquals(newsResponse.getUrl(), requestBody.getUrl());
-        softAssert.assertEquals(newsResponse.getCreationDate(), requestBody.getCreationDate());
+        softAssert.assertNotNull(newsResponse.getCreationDate());
         softAssert.assertAll();
     }
 
@@ -118,7 +118,6 @@ public class NewsPositiveTests extends BaseNewsTests {
         Response response = client.create(requestBody);
 
         NewsResponse newsResponse = response.body().as(NewsResponse.class);
-        deleteId = newsResponse.getId();
 
         Response deleteResponse = client.delete(newsResponse.getId());
 

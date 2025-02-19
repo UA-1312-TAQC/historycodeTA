@@ -67,9 +67,9 @@ public class BaseNewsTests extends ApiTestRunner {
         ImageRequest newsImage = new ImageRequest();
 
         newsImage.setTitle("TempImg" + System.currentTimeMillis());
-        newsImage.setBaseFormat(ImageProcessor.encodeImage("src/test/resources/logo.jpeg"));
-        newsImage.setMimeType("image/jpeg");
-        newsImage.setExtension("jpeg");
+        newsImage.setBaseFormat(ImageProcessor.encodeImage("src/test/resources/newsTest.png"));
+        newsImage.setMimeType("image/png");
+        newsImage.setExtension("png");
         newsImage.setAlt("1");
 
         Response response = imageClient.post(newsImage);
