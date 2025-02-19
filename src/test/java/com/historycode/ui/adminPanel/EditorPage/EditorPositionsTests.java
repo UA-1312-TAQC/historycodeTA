@@ -115,14 +115,10 @@ public class EditorPositionsTests extends BaseTestRunnerWithAdmin {
                 .moveToPositions();
 
         new EditorPageRowSearcher(driver)
-                .searchPositionRow(TEST_POSITION)
-                .deletePositionRow()
-                .searchPositionRow(TEST_POSITION_NEW)
-                .deletePositionRow()
-                .searchPositionRow(TEST_POSITION_VALID)
-                .deletePositionRow()
-                .searchPositionRow(TEST_POSITION_TOO_LONG)
-                .deletePositionRow();
+                .deletePositionRow(TEST_POSITION)
+                .deletePositionRow(TEST_POSITION_NEW)
+                .deletePositionRow(TEST_POSITION_VALID)
+                .deletePositionRow(TEST_POSITION_TOO_LONG);
 
     }
 

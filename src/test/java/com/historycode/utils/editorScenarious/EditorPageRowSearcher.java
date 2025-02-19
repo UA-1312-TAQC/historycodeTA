@@ -30,8 +30,9 @@ public class EditorPageRowSearcher {
         return this;
     }
 
-    public EditorPageRowSearcher deletePositionRow() {
+    public EditorPageRowSearcher deletePositionRow(String title) {
 
+        searchPositionRow(title);
         PositionsPage currentPage = new PositionsPage(driver);
 
         if (positionRow != null) {
