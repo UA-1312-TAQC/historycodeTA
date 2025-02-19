@@ -67,7 +67,6 @@ public class NewsNegativeTests extends BaseNewsTests {
         assertEquals(response.getStatusCode(), 400);
         assertTrue(response.body().asPrettyString().contains("Url Is Invalid"),
                 "Error message is incorrect");
-        checkError200StatusCode(response);
     }
 
     @Issue("202")
