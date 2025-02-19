@@ -73,4 +73,9 @@ public class GridComponent extends BaseGridComponent {
         return pagination.hasNextPage();
     }
 
+    @Step("Grid checks if the table has previous page.")
+    public boolean tableHasPrevPage() {
+        return pagination.hasPrevPage();
+    }
+
 }
