@@ -30,6 +30,7 @@ public class NewsNegativeTests extends BaseNewsTests {
     public void testVerifyCreationWithExceededTitleLength() {
 
         requestBody.setTitle(generateRandomAlphanumeric(101));
+        requestBody.setCreationDate(Instant.now().toString());
 
         Response response = client.create(requestBody);
 
@@ -45,6 +46,7 @@ public class NewsNegativeTests extends BaseNewsTests {
     public void testVerifyCreationWithExceededUrlLength() {
 
         requestBody.setUrl(generateRandomAlphanumeric(201).toLowerCase());
+        requestBody.setCreationDate(Instant.now().toString());
 
         Response response = client.create(requestBody);
 
@@ -60,6 +62,7 @@ public class NewsNegativeTests extends BaseNewsTests {
     public void testVerifyCreationWithCapitalLettersInUrl() {
 
         requestBody.setUrl("News-item");
+        requestBody.setCreationDate(Instant.now().toString());
 
         Response response = client.create(requestBody);
 
@@ -75,6 +78,7 @@ public class NewsNegativeTests extends BaseNewsTests {
     public void testVerifyCreationWithCyrillicLettersInUrl() {
 
         requestBody.setUrl("новина");
+        requestBody.setCreationDate(Instant.now().toString());
 
         Response response = client.create(requestBody);
 
@@ -90,6 +94,7 @@ public class NewsNegativeTests extends BaseNewsTests {
     public void testVerifyCreationWithSpecialSymbolsInUrl(String url) {
 
         requestBody.setCreationDate(url);
+        requestBody.setCreationDate(Instant.now().toString());
 
         Response response = client.create(requestBody);
 
@@ -105,6 +110,7 @@ public class NewsNegativeTests extends BaseNewsTests {
     public void testVerifyCreationWithExceededLengthInText() {
 
         requestBody.setText(generateRandomAlphanumeric(15001));
+        requestBody.setCreationDate(Instant.now().toString());
 
         Response response = client.create(requestBody);
 
@@ -120,6 +126,7 @@ public class NewsNegativeTests extends BaseNewsTests {
     public void testVerifyCreationWithPastDateInCreationDate() {
 
         requestBody.setCreationDate(Instant.now().minus(7, ChronoUnit.DAYS).toString());
+        requestBody.setCreationDate(Instant.now().toString());
 
         Response response = client.create(requestBody);
 
@@ -134,22 +141,16 @@ public class NewsNegativeTests extends BaseNewsTests {
     @Description("Verify that the news cannot be deleted without authorization by 'id' using DELETE method")
     public void testVerifyDeletionWithoutAuthorizationById() {
 
+        requestBody.setCreationDate(Instant.now().toString());
         Response response = client.create(requestBody);
 
         NewsResponse newsResponse = response.body().as(NewsResponse.class);
-        deleteId = newsResponse.getId();
+        setDeleteId(newsResponse.getId());
 
         client.setToken(null);
         Response deleteResponse = client.delete(newsResponse.getId());
 
         assertEquals(deleteResponse.getStatusCode(), 401);
-    }
-
-    private void checkError200StatusCode(Response response) {
-        if (response.getStatusCode() == 200) {
-            NewsResponse newsResponse = response.body().as(NewsResponse.class);
-            deleteId = newsResponse.getId();
-        }
     }
 
 }

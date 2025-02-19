@@ -22,13 +22,14 @@ public class NewsPositiveTests extends BaseNewsTests {
     public void testVerifyCreationWithMaxTitleLength() {
 
         requestBody.setTitle(generateRandomAlphanumeric(100));
+        requestBody.setCreationDate(Instant.now().toString());
 
         Response response = client.create(requestBody);
 
         Assert.assertEquals(response.getStatusCode(), 200);
 
         NewsResponse newsResponse = response.body().as(NewsResponse.class);
-        deleteId = newsResponse.getId();
+        setDeleteId(newsResponse.getId());
 
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(newsResponse.getTitle(), requestBody.getTitle());
@@ -45,13 +46,14 @@ public class NewsPositiveTests extends BaseNewsTests {
     public void testVerifyCreationWithMaxUrlLength() {
 
         requestBody.setUrl(generateRandomAlphanumeric(200).toLowerCase());
+        requestBody.setCreationDate(Instant.now().toString());
 
         Response response = client.create(requestBody);
 
         Assert.assertEquals(response.getStatusCode(), 200);
 
         NewsResponse newsResponse = response.body().as(NewsResponse.class);
-        deleteId = newsResponse.getId();
+        setDeleteId(newsResponse.getId());
 
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(newsResponse.getTitle(), requestBody.getTitle());
@@ -68,13 +70,14 @@ public class NewsPositiveTests extends BaseNewsTests {
     public void testVerifyCreationWithMaxLengthInText() {
 
         requestBody.setText(generateRandomAlphanumeric(15000));
+        requestBody.setCreationDate(Instant.now().toString());
 
         Response response = client.create(requestBody);
 
         Assert.assertEquals(response.getStatusCode(), 200);
 
         NewsResponse newsResponse = response.body().as(NewsResponse.class);
-        deleteId = newsResponse.getId();
+        setDeleteId(newsResponse.getId());
 
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(newsResponse.getTitle(), requestBody.getTitle());
@@ -91,6 +94,7 @@ public class NewsPositiveTests extends BaseNewsTests {
     public void testVerifyCreationWithFutureDateInCreationDate() {
 
         requestBody.setCreationDate(Instant.now().plus(7, ChronoUnit.DAYS).toString());
+        requestBody.setCreationDate(Instant.now().toString());
 
         Response response = client.create(requestBody);
 
@@ -98,7 +102,7 @@ public class NewsPositiveTests extends BaseNewsTests {
 
         NewsResponse newsResponse = response.body().as(NewsResponse.class);
 
-        deleteId = newsResponse.getId();
+        setDeleteId(newsResponse.getId());
 
         SoftAssert softAssert = new SoftAssert();
         assertEquals(response.path("Status"), "Запланована");
@@ -115,6 +119,7 @@ public class NewsPositiveTests extends BaseNewsTests {
     @Description("Verify that the news is deleted by 'id' using DELETE method")
     public void testVerifyDeletionById() {
 
+        requestBody.setCreationDate(Instant.now().toString());
         Response response = client.create(requestBody);
 
         NewsResponse newsResponse = response.body().as(NewsResponse.class);
