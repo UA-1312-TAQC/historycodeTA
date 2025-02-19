@@ -122,5 +122,4 @@ public class EditorPositionsTests extends BaseTestRunnerWithAdmin {
 
     }
 
-    //ToDo Add Before Class method to add new position than move back to Base Admin Page and move to the editor
 }
