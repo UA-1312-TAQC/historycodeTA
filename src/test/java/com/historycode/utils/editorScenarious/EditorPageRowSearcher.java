@@ -1,4 +1,4 @@
-package com.historycode.utils;
+package com.historycode.utils.editorScenarious;
 
 import com.historycode.ui.page.adminpanel.editorpage.*;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.PositionsRowComponent;
@@ -46,4 +46,5 @@ public class EditorPageRowSearcher {
 
     }
 
+    //TODO Refactor this class and make this solution more elegant!
 }
