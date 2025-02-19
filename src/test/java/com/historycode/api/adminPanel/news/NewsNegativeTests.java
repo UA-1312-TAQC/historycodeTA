@@ -126,7 +126,6 @@ public class NewsNegativeTests extends BaseNewsTests {
     public void testVerifyCreationWithPastDateInCreationDate() {
 
         requestBody.setCreationDate(Instant.now().minus(7, ChronoUnit.DAYS).toString());
-        requestBody.setCreationDate(Instant.now().toString());
 
         Response response = client.create(requestBody);
 

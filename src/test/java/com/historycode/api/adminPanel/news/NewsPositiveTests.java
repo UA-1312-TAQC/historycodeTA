@@ -94,7 +94,6 @@ public class NewsPositiveTests extends BaseNewsTests {
     public void testVerifyCreationWithFutureDateInCreationDate() {
 
         requestBody.setCreationDate(Instant.now().plus(7, ChronoUnit.DAYS).toString());
-        requestBody.setCreationDate(Instant.now().toString());
 
         Response response = client.create(requestBody);
 
