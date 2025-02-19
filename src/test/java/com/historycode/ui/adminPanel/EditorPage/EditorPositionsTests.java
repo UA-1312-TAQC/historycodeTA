@@ -111,7 +111,7 @@ public class EditorPositionsTests extends BaseTestRunnerWithAdmin {
     void cleanup() {
 
         driver.get(testValueProvider.getBaseUIUrl() + "/admin-panel/editor");
-        PositionsPage positionsPage = new CategoriesPage(driver)
+        new CategoriesPage(driver)
                 .moveToPositions();
 
         new EditorPageRowSearcher(driver)
