@@ -28,6 +28,7 @@ public class InputElement extends BaseComponent {
     public void setInputField(String value) {
         inputField.click();
         inputField.sendKeys(Keys.chord(Keys.CONTROL,"a", Keys.DELETE));
+        inputField.sendKeys(Keys.COMMAND, "a", Keys.BACK_SPACE);
         inputField.sendKeys(value);
     }
 
