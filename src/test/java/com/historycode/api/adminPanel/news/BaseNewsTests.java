@@ -82,22 +82,6 @@ public class BaseNewsTests extends ApiTestRunner {
         return response.getBody().jsonPath().getInt("id");
     }
 
-    protected static String generateRandomAlphanumeric(int length) {
-        if (length <= 0) {
-            throw new IllegalArgumentException("Length must be greater than 0");
-        }
-
-        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        char[] result = new char[length];
-        Random random = new Random();
-
-        for (int i = 0; i < length; i++) {
-            result[i] = characters.charAt(random.nextInt(characters.length()));
-        }
-
-        return new String(result);
-    }
-
     protected void checkUnexpected200StatusCode(Response response) {
         if (response.getStatusCode() == 200) {
             NewsResponse newsResponse = response.body().as(NewsResponse.class);

@@ -4,6 +4,7 @@ import com.historycode.api.models.adminPanel.news.NewsResponse;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.restassured.response.Response;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -21,7 +22,7 @@ public class NewsPositiveTests extends BaseNewsTests {
     @Description("Verify that the news is created with the maximum number of characters allowed in the 'title' field using POST method")
     public void testVerifyCreationWithMaxTitleLength() {
 
-        requestBody.setTitle(generateRandomAlphanumeric(100));
+        requestBody.setTitle(RandomStringUtils.randomAlphabetic(100));
         requestBody.setCreationDate(Instant.now().toString());
 
         Response response = client.create(requestBody);
@@ -45,7 +46,7 @@ public class NewsPositiveTests extends BaseNewsTests {
     @Description("Verify that the news is created with the maximum number of characters allowed in the 'url' field using POST method")
     public void testVerifyCreationWithMaxUrlLength() {
 
-        requestBody.setUrl(generateRandomAlphanumeric(200).toLowerCase());
+        requestBody.setUrl(RandomStringUtils.randomAlphabetic(200).toLowerCase());
         requestBody.setCreationDate(Instant.now().toString());
 
         Response response = client.create(requestBody);
@@ -69,7 +70,7 @@ public class NewsPositiveTests extends BaseNewsTests {
     @Description("Verify that the news is created with the maximum number of characters allowed in the 'text' field using POST method")
     public void testVerifyCreationWithMaxLengthInText() {
 
-        requestBody.setText(generateRandomAlphanumeric(15000));
+        requestBody.setText(RandomStringUtils.randomAlphabetic(15000));
         requestBody.setCreationDate(Instant.now().toString());
 
         Response response = client.create(requestBody);
