@@ -4,7 +4,6 @@ import com.historycode.ui.page.adminpanel.editorpage.CategoriesPage;
 import com.historycode.ui.page.adminpanel.editorpage.ContextsPage;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.ContextsRowComponent;
 import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
-import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
 import io.qameta.allure.Issue;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;

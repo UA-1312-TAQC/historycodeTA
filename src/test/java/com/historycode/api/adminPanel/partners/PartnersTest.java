@@ -38,7 +38,40 @@ public class PartnersTest extends ApiTestRunner {
         }
         createdPartnerIds.clear();
     }
+  
+  
+    @Issue("264")
+    @Test
+    @Description("Verify create a partner with a mandatory fields")
+    public void createPartnerWithMandatoryField() {
+        PartnerRequestBody partnerRequestBody = new PartnerRequestBody();
 
+        partnerRequestBody.setKeyPartner(false);
+        partnerRequestBody.setVisibleEverywhere(false);
+        partnerRequestBody.setTitle("Enzo Fernandez");
+        partnerRequestBody.setDescription("");
+        partnerRequestBody.setTargetUrl(null);
+        partnerRequestBody.setLogoId(6868);
+        partnerRequestBody.setUrlTitle(null);
+        partnerRequestBody.setPartnerSourceLinks(List.of());
+        partnerRequestBody.setStreetcodes(List.of());
+
+        Response response = client.create(partnerRequestBody);
+
+        softAssert.assertEquals(response.statusCode(), 200, "Expected status code to be 200");
+        softAssert.assertEquals(response.jsonPath().getString("title"), "Enzo Fernandez", "Title mismatch");
+        softAssert.assertEquals(response.jsonPath().getBoolean("isKeyPartner"), false, "isKeyPartner should be false");
+        softAssert.assertEquals(response.jsonPath().getBoolean("isVisibleEverywhere"), false, "isVisibleEverywhere should be false");
+        softAssert.assertEquals(response.jsonPath().getString("description"), "", "Description should be empty");
+        softAssert.assertEquals(response.jsonPath().getInt("logoId"), 6868, "logoId mismatch");
+        softAssert.assertNull(response.jsonPath().getMap("targetUrl").get("title"), "targetUrl.title should be null");
+        softAssert.assertNull(response.jsonPath().getMap("targetUrl").get("href"), "targetUrl.href should be null");;
+        softAssert.assertNull(response.jsonPath().get("urlTitle"), "urlTitle should be null");
+        softAssert.assertTrue(response.jsonPath().getList("partnerSourceLinks").isEmpty(), "partnerSourceLinks should be empty");
+        softAssert.assertTrue(response.jsonPath().getList("streetcodes").isEmpty(), "streetcodes should be empty");
+
+        softAssert.assertAll();
+    }
 
     @Issue("273")
     @Test

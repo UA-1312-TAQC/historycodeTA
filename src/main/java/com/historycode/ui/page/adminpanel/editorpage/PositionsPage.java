@@ -137,4 +137,8 @@ public class PositionsPage extends BaseEditorPage {
     public boolean tableHasNextPage() {
         return grid.tableHasNextPage();
     }
+
+    public boolean tableHasPrevPage() {
+        return grid.tableHasPrevPage();
+    }
 }

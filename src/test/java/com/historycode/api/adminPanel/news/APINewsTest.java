@@ -96,7 +96,7 @@ public class APINewsTest extends ApiTestRunner {
         int newsId = newsList.getFirst().getId();
         int imageId = newsList.getFirst().getImage().getId();
 
-        NewsResponse updatedNews = new NewsResponse();
+        NewsUpdateRequestBody updatedNews = new NewsUpdateRequestBody();
         updatedNews.setId(newsId);
         updatedNews.setTitle("News KH");
         updatedNews.setText("News Testing");
@@ -104,7 +104,7 @@ public class APINewsTest extends ApiTestRunner {
         updatedNews.setUrl("news");
         updatedNews.setCreationDate(Instant.now().toString());
 
-        Response updateResponse = newsClient.updateNews(updatedNews);
+        Response updateResponse = newsClient.update(updatedNews);
         softAssert.assertEquals(updateResponse.getStatusCode(), 200, "News update failed");
 
         Response updatedNewsData = newsClient.getById(newsId);

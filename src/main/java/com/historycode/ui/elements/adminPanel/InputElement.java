@@ -26,9 +26,16 @@ public class InputElement extends BaseComponent {
     }
 
     public void setInputField(String value) {
+
         inputField.click();
-        inputField.sendKeys(Keys.chord(Keys.CONTROL,"a", Keys.DELETE));
+        String os = System.getProperty("os.name").toLowerCase();
+        if (os.contains("mac")) {
+            inputField.sendKeys(Keys.COMMAND, "a", Keys.BACK_SPACE);
+        } else {
+            inputField.sendKeys(Keys.chord(Keys.CONTROL,"a", Keys.DELETE));
+        }
         inputField.sendKeys(value);
+
     }
 
     public String getInputValue() {

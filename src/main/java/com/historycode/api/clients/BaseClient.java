@@ -19,19 +19,16 @@ public class BaseClient {
     public BaseClient(String baseUrl) {
         this.baseAPIUrl = baseUrl;
         contentType = ContentType.JSON;
-        registerCustomParser();
     }
 
     public BaseClient(String baseUrl, ContentType contentType) {
         this.baseAPIUrl = baseUrl;
         this.contentType = contentType;
-        registerCustomParser();
     }
 
     public BaseClient(String baseUrl, String contentType) {
         this.baseAPIUrl = baseUrl;
         this.contentType = ContentType.valueOf(contentType);
-        registerCustomParser();
     }
 
 
@@ -45,7 +42,4 @@ public class BaseClient {
         return request;
     }
 
-    private void registerCustomParser() {
-        RestAssured.registerParser("application/problem+json", Parser.JSON);
-    }
 }
