@@ -45,10 +45,6 @@ public class PartnersTest extends ApiTestRunner {
 
         Response response = client.create(partnerRequestBody);
 
-        // Логування статусу та тіла відповіді
-        System.out.println("Response Status Code: " + response.statusCode());
-        System.out.println("Response Body: " + response.asString());
-
         softAssert.assertEquals(response.statusCode(), 200, "Expected status code to be 200");
         softAssert.assertEquals(response.jsonPath().getString("title"), "Enzo Fernandez", "Title mismatch");
         softAssert.assertEquals(response.jsonPath().getBoolean("isKeyPartner"), false, "isKeyPartner should be false");
