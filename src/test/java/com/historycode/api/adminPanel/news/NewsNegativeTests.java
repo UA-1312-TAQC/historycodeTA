@@ -30,9 +30,11 @@ public class NewsNegativeTests extends BaseNewsTests {
     public void testVerifyCreationWithExceededTitleLength() {
 
         requestBody.setTitle(generateRandomAlphanumeric(101));
+        requestBody.setCreationDate(Instant.now().toString());
 
         Response response = client.create(requestBody);
 
+        checkUnexpected200StatusCode(response);
         assertEquals(response.getStatusCode(), 400);
         assertEquals(response.path("errors.Title[0]"), "Max Length is 100",
                 "Error message is incorrect");
@@ -44,9 +46,11 @@ public class NewsNegativeTests extends BaseNewsTests {
     public void testVerifyCreationWithExceededUrlLength() {
 
         requestBody.setUrl(generateRandomAlphanumeric(201).toLowerCase());
+        requestBody.setCreationDate(Instant.now().toString());
 
         Response response = client.create(requestBody);
 
+        checkUnexpected200StatusCode(response);
         assertEquals(response.getStatusCode(), 400);
         assertEquals(response.path("errors.URL[0]"), "Max Length is 200",
                 "Error message is incorrect");
@@ -58,11 +62,12 @@ public class NewsNegativeTests extends BaseNewsTests {
     public void testVerifyCreationWithCapitalLettersInUrl() {
 
         requestBody.setUrl("News-item");
+        requestBody.setCreationDate(Instant.now().toString());
 
         Response response = client.create(requestBody);
 
+        checkUnexpected200StatusCode(response);
         assertEquals(response.getStatusCode(), 400);
-        System.out.println(response.body().asPrettyString());
         assertTrue(response.body().asPrettyString().contains("Url Is Invalid"),
                 "Error message is incorrect");
     }
@@ -73,9 +78,11 @@ public class NewsNegativeTests extends BaseNewsTests {
     public void testVerifyCreationWithCyrillicLettersInUrl() {
 
         requestBody.setUrl("новина");
+        requestBody.setCreationDate(Instant.now().toString());
 
         Response response = client.create(requestBody);
 
+        checkUnexpected200StatusCode(response);
         assertEquals(response.getStatusCode(), 400);
         assertTrue(response.body().asPrettyString().contains("Url Is Invalid"),
                 "Error message is incorrect");
@@ -86,10 +93,12 @@ public class NewsNegativeTests extends BaseNewsTests {
     @Description("Verify that the news cannot be created with special symbols ($,@,%,#) in 'url' field using POST method")
     public void testVerifyCreationWithSpecialSymbolsInUrl(String url) {
 
-        requestBody.setCreationDate(url);
+        requestBody.setUrl(url);
+        requestBody.setCreationDate(Instant.now().toString());
 
         Response response = client.create(requestBody);
 
+        checkUnexpected200StatusCode(response);
         assertEquals(response.getStatusCode(), 400);
         assertTrue(response.body().asPrettyString().contains("Url Is Invalid"),
                 "Error message is incorrect");
@@ -101,9 +110,11 @@ public class NewsNegativeTests extends BaseNewsTests {
     public void testVerifyCreationWithExceededLengthInText() {
 
         requestBody.setText(generateRandomAlphanumeric(15001));
+        requestBody.setCreationDate(Instant.now().toString());
 
         Response response = client.create(requestBody);
 
+        checkUnexpected200StatusCode(response);
         assertEquals(response.getStatusCode(), 400);
         assertEquals(response.path("errors.Text[0]"), "Max Length is 15000",
                 "Error message is incorrect");
@@ -118,6 +129,7 @@ public class NewsNegativeTests extends BaseNewsTests {
 
         Response response = client.create(requestBody);
 
+        checkUnexpected200StatusCode(response);
         assertEquals(response.getStatusCode(), 400);
         assertTrue(response.body().asPrettyString().contains("The news cannot be published with a past date"),
                 "Error message is incorrect");
@@ -128,10 +140,12 @@ public class NewsNegativeTests extends BaseNewsTests {
     @Description("Verify that the news cannot be deleted without authorization by 'id' using DELETE method")
     public void testVerifyDeletionWithoutAuthorizationById() {
 
+        requestBody.setCreationDate(Instant.now().toString());
+
         Response response = client.create(requestBody);
 
         NewsResponse newsResponse = response.body().as(NewsResponse.class);
-        deleteId = newsResponse.getId();
+        setDeleteId(newsResponse.getId());
 
         client.setToken(null);
         Response deleteResponse = client.delete(newsResponse.getId());
