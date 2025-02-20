@@ -6,6 +6,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.time.Duration;
+
 public class ContextsRowComponent extends RowComponent {
 
     @Getter
@@ -25,13 +27,11 @@ public class ContextsRowComponent extends RowComponent {
     }
 
     public void clickEdit() {
-        scrollToElement(editAction);
-        editAction.click();
+        actions.moveToElement(editAction).pause(Duration.ofMillis(300)).click().perform();
     }
 
     public void clickDelete() {
-        scrollToElement(editAction);
-        deleteAction.click();
+        actions.moveToElement(deleteAction).pause(Duration.ofMillis(300)).click().perform();
     }
 }
 

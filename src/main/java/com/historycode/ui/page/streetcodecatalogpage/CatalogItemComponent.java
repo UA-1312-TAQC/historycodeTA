@@ -38,7 +38,7 @@ public class CatalogItemComponent extends BaseComponent {
                 return descriptionNode;
             }
         } catch (NoSuchElementException e) {
-
+            logger.error("Description node not found", e);
         }
         return null;
     }
@@ -46,5 +46,6 @@ public class CatalogItemComponent extends BaseComponent {
     public boolean hasDescriptionNode() {
         return findDescriptionNodeOrNull() != null;
     }
+
 }
 

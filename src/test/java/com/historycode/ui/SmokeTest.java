@@ -29,7 +29,9 @@ public class SmokeTest extends BaseTestRunner {
     @Description("Verify that after clicking on the StreetCodes, the Catalog page with street codes will be displayed.")
     public void testOpenPreviousPage(){
         new HomePage(driver)
-                .clickPersonCardCarouselItem(0)
+                .openBurgerMenu()
+                .goToStreetCodeCatalogPage()
+                .clickCatalogItemByIndex(0)
                 .getBreadcrumbs()
                 .clickCatalog();
         Assert.assertTrue(Objects.requireNonNull(driver.getCurrentUrl()).contains("/catalog"), "Navigation to catalog failed");
