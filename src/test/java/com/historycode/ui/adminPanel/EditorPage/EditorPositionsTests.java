@@ -5,7 +5,6 @@ import com.historycode.ui.page.adminpanel.editorpage.PositionsPage;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.PositionsRowComponent;
 import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
 import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
-import com.historycode.utils.editorScenarious.EditorPageRowSearcher;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Step;
@@ -23,6 +22,7 @@ public class EditorPositionsTests extends BaseTestRunnerWithAdmin {
     @Step("Prepare data.")
     @BeforeClass
     public void prepareData() {
+
         beforeMethod();
         new HistoryCodesAdminPanelPage(driver)
                 .getAdminMenuBar()
@@ -32,6 +32,7 @@ public class EditorPositionsTests extends BaseTestRunnerWithAdmin {
                 .enterPosition(TEST_POSITION)
                 .save()
                 .close();
+
     }
 
     @Step("Go to Editor page.")
@@ -48,22 +49,21 @@ public class EditorPositionsTests extends BaseTestRunnerWithAdmin {
     @Description("Verify that the admin can edit existing positions using the \"pencil\" button")
     public void verifyAdminCanEditPosition() {
 
-        PositionsPage positionsPage = new CategoriesPage(driver)
-                .moveToPositions();
-
-        positionsPage
+        new CategoriesPage(driver)
+                .moveToPositions()
+                .moveToPageWithRow(TEST_POSITION)
                 .editTableRow(new PositionsPage(driver).getTableRowByTitle(TEST_POSITION))
                 .enterPosition(TEST_POSITION_NEW)
                 .save()
                 .close();
 
-        Assert.assertNull(new EditorPageRowSearcher(driver)
-                .searchPositionRow(TEST_POSITION)
-                .getPositionRow());
+        Assert.assertNull(new PositionsPage(driver)
+                .moveToPageWithRow(TEST_POSITION)
+                .getTableRowByTitle(TEST_POSITION));
 
-        Assert.assertNotNull(new EditorPageRowSearcher(driver)
-                .searchPositionRow(TEST_POSITION_NEW)
-                .getPositionRow());
+        Assert.assertNotNull(new PositionsPage(driver)
+                .moveToPageWithRow(TEST_POSITION_NEW)
+                .getTableRowByTitle(TEST_POSITION_NEW));
 
     }
 
@@ -97,9 +97,9 @@ public class EditorPositionsTests extends BaseTestRunnerWithAdmin {
                 .save()
                 .close();
 
-        PositionsRowComponent actual = new EditorPageRowSearcher(driver)
-                .searchPositionRow(TEST_POSITION_VALID)
-                .getPositionRow();
+        PositionsRowComponent actual = new PositionsPage(driver)
+                .moveToPageWithRow(TEST_POSITION_VALID)
+                .getTableRowByTitle(TEST_POSITION_VALID);
 
         Assert.assertNotNull(actual,
                 "The position was not created.");
@@ -112,13 +112,11 @@ public class EditorPositionsTests extends BaseTestRunnerWithAdmin {
 
         driver.get(testValueProvider.getBaseUIUrl() + "/admin-panel/editor");
         new CategoriesPage(driver)
-                .moveToPositions();
-
-        new EditorPageRowSearcher(driver)
-                .deletePositionRow(TEST_POSITION)
-                .deletePositionRow(TEST_POSITION_NEW)
-                .deletePositionRow(TEST_POSITION_VALID)
-                .deletePositionRow(TEST_POSITION_TOO_LONG);
+                .moveToPositions()
+                .deletePosition(TEST_POSITION)
+                .deletePosition(TEST_POSITION_NEW)
+                .deletePosition(TEST_POSITION_VALID)
+                .deletePosition(TEST_POSITION_TOO_LONG);
 
     }
 
