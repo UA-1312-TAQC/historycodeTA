@@ -3,17 +3,28 @@ package com.historycode.ui.adminPanel.EditorPage;
 import com.historycode.ui.page.adminpanel.editorpage.CategoriesPage;
 import com.historycode.ui.page.adminpanel.editorpage.ContextsPage;
 import com.historycode.ui.page.adminpanel.editorpage.TagsPage;
+import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
 import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Issue;
+import io.qameta.allure.Step;
 import jdk.jfr.Description;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class EditorContextsTests extends BaseTestRunnerWithAdmin {
+
+    @Step("Go to Editor page.")
+    @BeforeMethod
+    public void moveToEditor() {
+        new HistoryCodesAdminPanelPage(driver)
+                .getAdminMenuBar()
+                .goToEditorPage();
+    }
 
     @Test
     @Issue("110")
@@ -25,7 +36,9 @@ public class EditorContextsTests extends BaseTestRunnerWithAdmin {
                 .moveToContexts()
                 .clickAddContext()
                 .isExist();
-        Assert.assertTrue(actual);
+
+        Assert.assertTrue(actual,
+                "The modal window for adding a new context is not displayed.");
 
     }
 
@@ -37,12 +50,14 @@ public class EditorContextsTests extends BaseTestRunnerWithAdmin {
 
         ContextsPage contextsPage = new CategoriesPage(driver)
                 .moveToContexts();
+
         List<String> expectedGridHeaders = Arrays.asList("Назва", "Дії");
         List<String> actualGridHeaders = contextsPage.getTableHeadersString();
-        boolean actual = contextsPage.isGridDisplayed();
+
         Assert.assertEquals(expectedGridHeaders, actualGridHeaders,
                 "Current headers and expected are not same.");
-        Assert.assertTrue(actual,
+
+        Assert.assertTrue(contextsPage.isGridDisplayed(),
                 "Current rows are not displayed or are displayed incorrectly.");
 
     }
