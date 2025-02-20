@@ -11,11 +11,12 @@ import java.time.Duration;
 
 public class PhotoModalComponent extends BaseComponent {
 
-    @FindBy(xpath = "(//div[@role='dialog' and @aria-modal='true'])[2]")
-    private WebElement modal;
 
-    @FindBy(xpath = "(//button[@class='close' or @aria-label='Close'])[2]")
+
+    @FindBy(xpath = ".//button[@class='close' or @aria-label='Close']")
     private WebElement closeButton;
+    @FindBy(xpath = ".//img[@alt='uploaded']")
+    private WebElement image;
 
     public PhotoModalComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
@@ -23,16 +24,20 @@ public class PhotoModalComponent extends BaseComponent {
 
     public void waitForModalToAppear() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOf(modal));
+        wait.until(ExpectedConditions.visibilityOf(rootElement));
     }
 
     public void waitForModalToDisappear() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.invisibilityOf(modal));
+        wait.until(ExpectedConditions.invisibilityOf(rootElement));
     }
 
     public void close() {
         closeButton.click();
         waitForModalToDisappear();
+    }
+
+    public String getEncodedPhoto(){
+        return image.getDomAttribute("src");
     }
 }

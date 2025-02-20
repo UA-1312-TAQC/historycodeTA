@@ -15,7 +15,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class TeamRowComponent extends BaseComponent {
-    @FindBy(xpath = "./td[1]//div[@class='team-table-item-name']//p")
+
+    private final String LAST_FIRST_NAME_XPATH_BASE_LOCATOR = "./td[1]//div[@class='team-table-item-name']//p";
+    @FindBy(xpath = LAST_FIRST_NAME_XPATH_BASE_LOCATOR)
     protected WebElement lastFirstName;
     @Getter
     @FindBy(xpath = "./td[1]//div[@class='team-table-item-name']//span")
@@ -91,6 +93,10 @@ public class TeamRowComponent extends BaseComponent {
         scrollToElement(editAction);
         editAction.click();
         return new CreateEditMemberModal(driver, editModalRoot);
+    }
+
+    public void waitUntilRowDisappears(){
+        wait.until(ExpectedConditions.stalenessOf(lastFirstName));
     }
 
     @Override

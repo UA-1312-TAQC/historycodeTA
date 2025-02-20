@@ -6,6 +6,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.time.Duration;
+
 public class CategoriesRowComponent extends RowComponent {
 
     @Getter
@@ -28,10 +30,10 @@ public class CategoriesRowComponent extends RowComponent {
     }
 
     public void clickEdit() {
-        editAction.click();
+        actions.moveToElement(editAction).pause(Duration.ofMillis(300)).click().perform();
     }
 
     public void clickDelete() {
-        deleteAction.click();
+        actions.moveToElement(deleteAction).pause(Duration.ofMillis(300)).click().perform();
     }
 }

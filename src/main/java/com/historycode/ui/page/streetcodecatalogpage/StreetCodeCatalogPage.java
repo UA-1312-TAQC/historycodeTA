@@ -42,9 +42,4 @@ public class StreetCodeCatalogPage extends BasePage {
         return new StreetCodePage(driver);
     }
 
-    public void clickOnCatalogComponent(int index) {
-        CatalogComponent catalogComponent = getStreetCodesCatalogComponent();
-        waitUntilElementVisible(containerRootNode);
-        catalogComponent.clickCatalogElement(index);
-    }
 }

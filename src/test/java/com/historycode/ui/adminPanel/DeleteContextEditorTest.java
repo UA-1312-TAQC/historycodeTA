@@ -3,7 +3,8 @@ package com.historycode.ui.adminPanel;
 import com.historycode.ui.page.adminpanel.editorpage.CategoriesPage;
 import com.historycode.ui.page.adminpanel.editorpage.ContextsPage;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.ContextsRowComponent;
-import com.historycode.ui.testrunners.TestRunnerWithAdmin;
+import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
+import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
 import io.qameta.allure.Issue;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -14,11 +15,11 @@ import java.util.Random;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertNull;
 
-public class DeleteContextEditorTest extends TestRunnerWithAdmin {
+public class DeleteContextEditorTest extends BaseTestRunnerWithAdmin {
     String contextName;
     @BeforeMethod
     public void setupForDeleteContext() throws InterruptedException {
-        login();
+        
         Random rand = new Random();
         int n = rand.nextInt(50);
         contextName = "Context_" + n;

@@ -4,18 +4,15 @@ import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
 import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
 import com.historycode.ui.page.adminpanel.teampage.createEditModal.CreateEditMemberModal;
 import io.qameta.allure.Step;
-import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import java.time.LocalTime;
 
 public class TeamPageAdminPanel extends BasePageAdminPanel {
 
-    @Getter
     protected TeamPageGridComponent teamPageGridComponent;
     @FindBy(xpath = "//div[@class = 'team-page-container']")
     protected WebElement gridRootElement;
@@ -92,5 +89,15 @@ public class TeamPageAdminPanel extends BasePageAdminPanel {
     public TeamPageAdminPanel clickPrevFivePages() {
         teamPageGridComponent.clickPrevFivePages();
         return this;
+    }
+
+    public TeamRowComponent findUserOnCurrentOrLastPage(String name){
+        TeamRowComponent res = getTeamPageGridComponent().findUserByName(name);
+        if(res != null)
+            return res;
+
+        //refreshing page grid by replacing it with the grid from the new page
+        this.teamPageGridComponent = clickLastPaginationItem().getTeamPageGridComponent();
+        return getTeamPageGridComponent().findUserByName(name);
     }
 }

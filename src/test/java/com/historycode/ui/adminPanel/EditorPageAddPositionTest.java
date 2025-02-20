@@ -1,14 +1,14 @@
 package com.historycode.ui.adminPanel;
 
 import com.historycode.ui.page.adminpanel.editorpage.PositionsPage;
-import com.historycode.ui.testrunners.TestRunnerWithAdminEditor;
+import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 
-public class EditorPageAddPositionTest extends TestRunnerWithAdminEditor {
+public class EditorPageAddPositionTest extends BaseTestRunnerWithAdmin {
 
     @Issue("111")
     @Description("Verify that the admin can't add already existing position ")

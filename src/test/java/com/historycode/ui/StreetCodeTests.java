@@ -4,11 +4,13 @@ import com.historycode.ui.data_provider.StreetCodeDP;
 import com.historycode.ui.page.homePage.HomePage;
 import com.historycode.ui.page.streetCodePage.StreetCodePage;
 import com.historycode.ui.page.streetCodePage.modals.DonateModal;
+import com.historycode.ui.page.streetcodecatalogpage.StreetCodeCatalogPage;
 import com.historycode.ui.testrunners.BaseTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Step;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -18,19 +20,20 @@ public class StreetCodeTests extends BaseTestRunner {
     private static final int MAX_SINGLE_TEASER_PARAGRAPH_LENGTH = 520;
     private static final int MAX_TWO_TEASER_PARAGRAPH_LENGTH = 455;
 
+    private StreetCodeCatalogPage streetCodeCatalogPage;
     private StreetCodePage streetCodePage;
 
-    @Step("Navigate to the 'StreetCode' page")
-    private void navigateToStreetCodePage(String addUIUrl) {
-        driver.navigate().to(testValueProvider.getBaseUIUrl() + addUIUrl);
-        streetCodePage = new StreetCodePage(driver);
+    @BeforeMethod
+    @Step("Navigate to the 'StreetCodeCatalog' page")
+    private void navigateToStreetCodeCatalogPage() {
+        streetCodeCatalogPage = new HomePage(driver)
+                .openBurgerMenu()
+                .goToStreetCodeCatalogPage();
     }
 
-    @Step("Navigate to the 'StreetCode' page")
-    private void navigateToStreetCodePageFromHomePage(int index) {
-        new HomePage(driver)
-                .openBurgerMenu()
-                .goToStreetCodeCatalogPage()
+    @Step("Open the 'StreetCode' page")
+    private void openStreetCodePage(int index) {
+        streetCodePage = streetCodeCatalogPage
                 .clickCatalogItemByIndex(index);
     }
 
@@ -39,7 +42,7 @@ public class StreetCodeTests extends BaseTestRunner {
     @Description("Verification of the teaser text Length")
     public void testTeaserTextLength(int index) {
 
-        navigateToStreetCodePageFromHomePage(index);
+        openStreetCodePage(index);
 
         int teaserParagraphCount = streetCodePage
                 .getMainCard()
@@ -55,14 +58,14 @@ public class StreetCodeTests extends BaseTestRunner {
 
         if (teaserParagraphCount == 1) {
             Assert.assertTrue(teaserCharacterCount <= MAX_SINGLE_TEASER_PARAGRAPH_LENGTH,
-                    ("The 'Teaser' text is too long for one paragraph"));
+                    ("The 'Teaser' text is too long for one paragraph."));
         } else if (teaserParagraphCount == 2) {
             Assert.assertTrue(teaserCharacterCount <= MAX_TWO_TEASER_PARAGRAPH_LENGTH,
-                    ("The 'Teaser' text is too long for two paragraphs"));
+                    ("The 'Teaser' text is too long for two paragraphs."));
         }
 
         Assert.assertFalse(streetCodePage.getMainCard().isTeaserTextOverflowing(),
-                ("The 'Teaser' text is displayed with truncation or overflow"));
+                ("The 'Teaser' text is displayed with truncation or overflow."));
     }
 
     @Issue("79")
@@ -70,7 +73,7 @@ public class StreetCodeTests extends BaseTestRunner {
     @Description("Verification that clicking the 'Donate' button displays a modal window with donation options")
     public void testDonateButtonClick() {
 
-        navigateToStreetCodePage("/sichovi-striltsi");
+        openStreetCodePage(0);
 
         DonateModal donateModal = streetCodePage
                 .getQuickDonateButton()
@@ -78,7 +81,7 @@ public class StreetCodeTests extends BaseTestRunner {
 
         SoftAssert softAssert = new SoftAssert();
 
-        softAssert.assertTrue(donateModal.isFirstTitleDisplayed(), "The title of the modal window is not displayed.'");
+        softAssert.assertTrue(donateModal.isFirstTitleDisplayed(), "The title of the modal window is not displayed.");
         softAssert.assertTrue(donateModal.isAmountInputDisplayed(), "The manual amount input is not displayed.");
         softAssert.assertTrue(donateModal.areAmountButtonsDisplayed(), "The amount buttons are not displayed.");
         softAssert.assertTrue(donateModal.isAgreeCheckboxDisplayed(), "The 'Agree' checkbox is not displayed.");
@@ -92,7 +95,7 @@ public class StreetCodeTests extends BaseTestRunner {
     @Description("Verification if working 'Трохи ще' button and 'Дещо менше' if there is more text available on the page")
     public void testCheckExpandButton() {
 
-        navigateToStreetCodePage("/roman-ratushnyi-seneka");
+        openStreetCodePage(0);
 
         boolean isReadMoreDisplayed = streetCodePage
                 .scrollToTextVideoBlock()
@@ -103,8 +106,8 @@ public class StreetCodeTests extends BaseTestRunner {
                 .getTextBlock()
                 .isTextFitsOneScreen();
 
-        Assert.assertTrue(isReadMoreDisplayed, "The 'Read More' button is not displayed");
-        Assert.assertTrue(isTextFitsOnOneScreen, "The text is not displayed on one screen");
+        Assert.assertTrue(isReadMoreDisplayed, "The 'Read More' button is not displayed.");
+        Assert.assertTrue(isTextFitsOnOneScreen, "The text is not displayed on one screen.");
 
         int paragraphFirstCount = streetCodePage
                 .getTextBlock()
@@ -122,8 +125,8 @@ public class StreetCodeTests extends BaseTestRunner {
                 .getTextBlock()
                 .checkExpanded(paragraphFirstCount);
 
-        Assert.assertTrue(checkExpanded, "The text is not expanded");
-        Assert.assertTrue(isLessButtonDisplayed, "The less button is not displayed");
+        Assert.assertTrue(checkExpanded, "The text is not expanded.");
+        Assert.assertTrue(isLessButtonDisplayed, "The less button is not displayed.");
 
         boolean checkCollapsed = streetCodePage
                 .getTextBlock()
@@ -134,16 +137,16 @@ public class StreetCodeTests extends BaseTestRunner {
                 .getTextBlock()
                 .isReadMoreButtonDisplayed();
 
-        Assert.assertTrue(checkCollapsed, "The text is not collapsed");
-        Assert.assertTrue(isReadMoreDisplayed, "The expand button is not displayed");
+        Assert.assertTrue(checkCollapsed, "The text is not collapsed.");
+        Assert.assertTrue(isReadMoreDisplayed, "The expand button is not displayed.");
     }
 
     @Issue("86")
-    @Test(priority = 1)
-    @Description("Verification if only one fact is displayed - it is located in the center of the block.")
-    public void testWowFactsOneElementAlign() {
+    @Test(dataProvider = "urlOneWowFactSetProvider", dataProviderClass = StreetCodeDP.class, priority = 1)
+    @Description("Verification if only one fact is displayed - it is located in the center of the block")
+    public void testWowFactsOneElementAlign(int index) {
 
-        navigateToStreetCodePage("/sergii-zhadan");
+        openStreetCodePage(index);
 
         boolean isOneCard = streetCodePage
                 .scrollToInterestingFacts()
@@ -151,7 +154,7 @@ public class StreetCodeTests extends BaseTestRunner {
                 .getCarousel()
                 .isOneCardPresent();
 
-        Assert.assertTrue(isOneCard, "The carousel contains more than one cards");
+        Assert.assertTrue(isOneCard, "The carousel contains more than one card.");
 
         SoftAssert softAssert = new SoftAssert();
 
@@ -167,25 +170,25 @@ public class StreetCodeTests extends BaseTestRunner {
                 .getCarousel()
                 .hasArrows();
 
-        softAssert.assertFalse(hasArrows, "The navigation arrows are displayed");
+        softAssert.assertFalse(hasArrows, "The navigation arrows are displayed.");
 
         boolean hasPagination = streetCodePage
                 .getFacts()
                 .getCarousel()
                 .hasPagination();
 
-        softAssert.assertFalse(hasPagination, "The navigation arrows are displayed");
+        softAssert.assertFalse(hasPagination, "Pagination is displayed.");
 
         softAssert.assertAll();
     }
 
     @Issue("87")
     @Test(dataProvider = "urlWowFactSetProvider", dataProviderClass = StreetCodeDP.class, priority = 1)
-    @Description("Verification that if 3 or more facts are displayed, they scroll in a loop.")
-    public void testWowFactsScroll(String addPath) {
+    @Description("Verification that if 3 or more facts are displayed, they scroll in a loop")
+    public void testWowFactsScroll(int index) {
         final int ADDITIONAL_CARD = 2;
 
-        navigateToStreetCodePage(addPath);
+        openStreetCodePage(index);
 
         int countFactCard = streetCodePage
                 .scrollToInterestingFacts()
@@ -200,12 +203,10 @@ public class StreetCodeTests extends BaseTestRunner {
                 .getCarousel()
                 .getCurrentNodeTitle();
 
-        for (int i = 0; i < countFactCard - ADDITIONAL_CARD; i++) {
-            streetCodePage
-                    .getFacts()
-                    .getCarousel()
-                    .clickNextButton();
-        }
+        streetCodePage
+                .getFacts()
+                .getCarousel()
+                .dynamicClickNextButton(countFactCard - ADDITIONAL_CARD);
 
         String afterScrollCurrentCardTitle = streetCodePage
                 .getFacts()

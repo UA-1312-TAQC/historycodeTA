@@ -1,6 +1,8 @@
 package com.historycode.api.clients;
 
 import com.historycode.api.models.adminPanel.news.NewsRequestBody;
+import com.historycode.api.models.adminPanel.news.NewsResponse;
+import com.historycode.api.models.adminPanel.news.NewsUpdateRequestBody;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
@@ -53,13 +55,20 @@ public class NewsClient extends BaseClient {
                 .post(resourceUrl + "/Create");
     }
 
+    public Response update(NewsUpdateRequestBody news) {
+        return preparedRequest()
+                .when()
+                .body(news)
+                .put(resourceUrl + "/Update");
+    }
+
     public Response delete(int newsId) {
         return preparedRequest()
                 .when()
                 .delete(resourceUrl + "/Delete/" + newsId);
     }
 
-    public Response updateNews(NewsRequestBody news) {
+    public Response updateNews(NewsResponse news) {
         return preparedRequest()
                 .when()
                 .body(news)
