@@ -8,6 +8,7 @@ import com.historycode.api.testRunners.ApiTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.restassured.response.Response;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -32,9 +33,9 @@ public class APINewsTest extends ApiTestRunner {
         Response response = newsClient.getAll();
         SoftAssert softAssert = new SoftAssert();
 
-        softAssert.assertEquals(response.getStatusCode(), 200, "Response status is not 200 OK");
+        Assert.assertEquals(response.getStatusCode(), 200, "Response status is not 200 OK");
         GetAllNewsResponse getAllResponse = response.body().as(GetAllNewsResponse.class);
-        softAssert.assertTrue(getAllResponse.getTotalAmount() > 0, "Total amount of news is 0");
+        Assert.assertTrue(getAllResponse.getTotalAmount() > 0, "Total amount of news is 0");
 
         for (News news : getAllResponse.getNews()) {
             softAssert.assertNotNull(news.getId(), "Key 'id' is missing in the response for news");
@@ -95,7 +96,7 @@ public class APINewsTest extends ApiTestRunner {
         int newsId = newsList.getFirst().getId();
         int imageId = newsList.getFirst().getImage().getId();
 
-        NewsRequestBody updatedNews = new NewsRequestBody();
+        NewsResponse updatedNews = new NewsResponse();
         updatedNews.setId(newsId);
         updatedNews.setTitle("News KH");
         updatedNews.setText("News Testing");

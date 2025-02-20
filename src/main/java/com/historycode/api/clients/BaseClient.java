@@ -2,6 +2,7 @@ package com.historycode.api.clients;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import io.restassured.parsing.Parser;
 import io.restassured.specification.RequestSpecification;
 
 import lombok.Getter;
@@ -18,16 +19,19 @@ public class BaseClient {
     public BaseClient(String baseUrl) {
         this.baseAPIUrl = baseUrl;
         contentType = ContentType.JSON;
+        registerCustomParser();
     }
 
     public BaseClient(String baseUrl, ContentType contentType) {
         this.baseAPIUrl = baseUrl;
         this.contentType = contentType;
+        registerCustomParser();
     }
 
     public BaseClient(String baseUrl, String contentType) {
         this.baseAPIUrl = baseUrl;
         this.contentType = ContentType.valueOf(contentType);
+        registerCustomParser();
     }
 
 
@@ -39,5 +43,9 @@ public class BaseClient {
             request.header("Authorization", "Bearer " + token);
         }
         return request;
+    }
+
+    private void registerCustomParser() {
+        RestAssured.registerParser("application/problem+json", Parser.JSON);
     }
 }

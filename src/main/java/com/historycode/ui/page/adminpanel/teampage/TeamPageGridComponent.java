@@ -56,30 +56,48 @@ public class TeamPageGridComponent extends BaseGridComponent {
 
     public TeamPageGridComponent clickNextPage() {
         pagination.clickNextPage();
+        if(!teamRowComponents.isEmpty()){
+            teamRowComponents.getFirst().waitUntilRowDisappears();
+        }
         return new TeamPageGridComponent(driver, rootElement);
     }
 
     public TeamPageGridComponent clickPrevPage() {
         pagination.clickPrevPage();
+        if(!teamRowComponents.isEmpty()){
+            teamRowComponents.getFirst().waitUntilRowDisappears();
+        }
         return new TeamPageGridComponent(driver, rootElement);
     }
 
     public TeamPageGridComponent clickPaginationItem(int index) {
         pagination.clickPaginationItem(index);
+        if(!teamRowComponents.isEmpty()){
+            teamRowComponents.getFirst().waitUntilRowDisappears();
+        }
         return new TeamPageGridComponent(driver, rootElement);
     }
 
     public TeamPageGridComponent clickPrevFivePages() {
         pagination.clickPrevFivePages();
+        if(!teamRowComponents.isEmpty()){
+            teamRowComponents.getFirst().waitUntilRowDisappears();
+        }
         return new TeamPageGridComponent(driver, rootElement);
     }
 
     public TeamPageGridComponent clickNextFivePages() {
         pagination.clickNextFivePages();
+        if(!teamRowComponents.isEmpty()){
+            teamRowComponents.getFirst().waitUntilRowDisappears();
+        }
         return new TeamPageGridComponent(driver, rootElement);
     }
 
     public void clickLastPage(){
         pagination.clickLastPage();
+        if(!teamRowComponents.isEmpty()){
+            teamRowComponents.getFirst().waitUntilRowDisappears();
+        }
     }
 }

@@ -6,9 +6,7 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.*;
 
 import java.time.Duration;
 
@@ -21,21 +19,39 @@ public class BaseTestRunner {
     public void beforeSuite() {
         WebDriverManager.chromedriver().setup();
         testValueProvider = new TestValueProvider();
+        initDriver();
     }
 
     @Step("init ChromeDriver")
-    @BeforeMethod
-    public void beforeMethod() {
+    public void initDriver() {
         ChromeOptions options = new ChromeOptions();
+
+//        options.addArguments("--disable-notifications");
+//        options.addArguments("--disable-popup-blocking");
+//        options.addArguments("--headless");
 
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(testValueProvider.getImplicitlyWait()));
+    }
+
+
+    @BeforeMethod
+    public void beforeMethod() {
+        if (driver == null){
+            initDriver();
+        }
         driver.get(testValueProvider.getBaseUIUrl());
     }
 
-    @AfterMethod(alwaysRun = true)
+    @AfterClass()
     public void afterMethod() {
+        if (driver != null) {
+            driver.close();
+        }
+    }
+    @AfterSuite
+    public void afterSuite() {
         if (driver != null) {
             driver.quit();
         }

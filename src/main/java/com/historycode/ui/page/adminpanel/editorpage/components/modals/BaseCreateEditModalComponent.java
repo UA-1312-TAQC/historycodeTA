@@ -35,5 +35,10 @@ public class BaseCreateEditModalComponent extends BaseComponent {
         return saveButton.getText();
     }
 
+    @Step("Modal get input field text")
+    public String getInputFieldText() {
+        return inputComponent.getInputValue();
+    }
+
     //TODO Check correctness of new InputField root
 }

@@ -10,4 +10,5 @@ public class NewsResponse {
     private int imageId;
     private String url;
     private String creationDate;
+    private String image;
 }
