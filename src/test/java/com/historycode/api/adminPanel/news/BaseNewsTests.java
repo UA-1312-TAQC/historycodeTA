@@ -10,16 +10,15 @@ import com.historycode.utils.ImageProcessor;
 import io.restassured.response.Response;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
 import java.time.Instant;
-import java.util.Random;
 
-import static org.testng.Assert.assertEquals;
-
+@Slf4j
 public class BaseNewsTests extends ApiTestRunner {
     @Getter
     @Setter
@@ -45,10 +44,18 @@ public class BaseNewsTests extends ApiTestRunner {
         if (getDeleteId() != null) {
             try {
                 Response deleteResponse = client.delete(getDeleteId());
-                assertEquals(deleteResponse.getStatusCode(), 200,
-                        String.format("The test news item with ID %s was not deleted.", getDeleteId()));
+
+                if (deleteResponse.getStatusCode() != 200)
+                    log.error("The test news item with ID {} was not deleted.", getDeleteId());
             } finally {
                 setDeleteId(null);
+            }
+        } else {
+            if (requestBody != null) {
+                Response deleteImageResponse = imageClient.delete(requestBody.getImageId());
+
+                if (deleteImageResponse.getStatusCode() != 200)
+                    log.error("The test image item with ID {} was not deleted.", requestBody.getImageId());
             }
         }
     }
