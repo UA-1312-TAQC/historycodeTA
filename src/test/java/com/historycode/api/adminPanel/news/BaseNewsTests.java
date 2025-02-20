@@ -98,7 +98,7 @@ public class BaseNewsTests extends ApiTestRunner {
         return new String(result);
     }
 
-    protected void checkError200StatusCode(Response response) {
+    protected void checkUnexpected200StatusCode(Response response) {
         if (response.getStatusCode() == 200) {
             NewsResponse newsResponse = response.body().as(NewsResponse.class);
             setDeleteId(newsResponse.getId());
