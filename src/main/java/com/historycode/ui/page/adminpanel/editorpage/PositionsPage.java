@@ -166,9 +166,6 @@ public class PositionsPage extends BaseEditorPage {
             currentPage.deleteTableRow(row).clickOkButton();
         }
 
-        driver.navigate().refresh();
-        new CategoriesPage(driver).moveToPositions();
-
         return currentPage;
 
     }
