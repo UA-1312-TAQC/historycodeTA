@@ -2,7 +2,6 @@ package com.historycode.ui.adminPanel.EditorPage;
 
 import com.historycode.ui.page.adminpanel.editorpage.CategoriesPage;
 import com.historycode.ui.page.adminpanel.editorpage.ContextsPage;
-import com.historycode.ui.page.adminpanel.editorpage.TagsPage;
 import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
 import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
 import io.qameta.allure.Epic;
@@ -53,11 +52,12 @@ public class EditorContextsTests extends BaseTestRunnerWithAdmin {
 
         List<String> expectedGridHeaders = Arrays.asList("Назва", "Дії");
         List<String> actualGridHeaders = contextsPage.getTableHeadersString();
+        boolean actualGridState = contextsPage.isGridDisplayed();
 
         Assert.assertEquals(expectedGridHeaders, actualGridHeaders,
                 "Current headers and expected are not same.");
 
-        Assert.assertTrue(contextsPage.isGridDisplayed(),
+        Assert.assertTrue(actualGridState,
                 "Current rows are not displayed or are displayed incorrectly.");
 
     }
