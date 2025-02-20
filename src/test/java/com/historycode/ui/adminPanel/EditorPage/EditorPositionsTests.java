@@ -1,20 +1,17 @@
 package com.historycode.ui.adminPanel.EditorPage;
 
-import com.beust.ah.A;
 import com.historycode.ui.page.adminpanel.editorpage.CategoriesPage;
 import com.historycode.ui.page.adminpanel.editorpage.PositionsPage;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.PositionsRowComponent;
 import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
 import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
+import com.historycode.utils.editorScenarious.EditorPageRowSearcher;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Step;
 import jdk.jfr.Description;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 public class EditorPositionsTests extends BaseTestRunnerWithAdmin {
 
@@ -22,6 +19,20 @@ public class EditorPositionsTests extends BaseTestRunnerWithAdmin {
     private final String TEST_POSITION_NEW = "testPosition32";
     private final String TEST_POSITION_VALID = "testPositionValid";
     private final String TEST_POSITION_TOO_LONG = "testPositionAddingWithATooLongNameMoreThan50Symbols";
+
+    @Step("Prepare data.")
+    @BeforeClass
+    public void prepareData() {
+        beforeMethod();
+        new HistoryCodesAdminPanelPage(driver)
+                .getAdminMenuBar()
+                .goToEditorPage()
+                .moveToPositions()
+                .clickAddPosition()
+                .enterPosition(TEST_POSITION)
+                .save()
+                .close();
+    }
 
     @Step("Go to Editor page.")
     @BeforeMethod
@@ -37,15 +48,23 @@ public class EditorPositionsTests extends BaseTestRunnerWithAdmin {
     @Description("Verify that the admin can edit existing positions using the \"pencil\" button")
     public void verifyAdminCanEditPosition() {
 
-        new CategoriesPage(driver)
-                .moveToPositions()
+        PositionsPage positionsPage = new CategoriesPage(driver)
+                .moveToPositions();
+
+        positionsPage
                 .editTableRow(new PositionsPage(driver).getTableRowByTitle(TEST_POSITION))
                 .enterPosition(TEST_POSITION_NEW)
                 .save()
                 .close();
 
-        //ToDo Add Search in grids to the get table row
-        //ToDo Add Assert is new position where updated
+        Assert.assertNull(new EditorPageRowSearcher(driver)
+                .searchPositionRow(TEST_POSITION)
+                .getPositionRow());
+
+        Assert.assertNotNull(new EditorPageRowSearcher(driver)
+                .searchPositionRow(TEST_POSITION_NEW)
+                .getPositionRow());
+
     }
 
     @Test
@@ -71,50 +90,36 @@ public class EditorPositionsTests extends BaseTestRunnerWithAdmin {
     @Description("Verify that the admin can add a new position with valid data")
     public void verifyAdminCanAddNewValidPosition() {
 
-        PositionsPage positionsPage = new CategoriesPage(driver)
-                .moveToPositions();
-
-        positionsPage
+        new CategoriesPage(driver)
+                .moveToPositions()
                 .clickAddPosition()
                 .enterPosition(TEST_POSITION_VALID)
                 .save()
                 .close();
 
-        positionsPage = new PositionsPage(driver);
-        while (positionsPage.getTableRowByTitle(TEST_POSITION_VALID) == null) {
-            if (!positionsPage.tableHasNextPage()) {
-                break;
-            }
-            positionsPage = positionsPage.clickNextPage();
-        }
+        PositionsRowComponent actual = new EditorPageRowSearcher(driver)
+                .searchPositionRow(TEST_POSITION_VALID)
+                .getPositionRow();
 
-        boolean actual = positionsPage.getTableRowByTitle(TEST_POSITION_VALID) != null;
-        Assert.assertTrue(actual,
+        Assert.assertNotNull(actual,
                 "The position was not created.");
 
     }
 
     @Step("Cleanup data.")
-    @AfterClass
+    @AfterClass(alwaysRun = true)
     void cleanup() {
 
         driver.get(testValueProvider.getBaseUIUrl() + "/admin-panel/editor");
-        PositionsPage positionsPage = new CategoriesPage(driver)
+        new CategoriesPage(driver)
                 .moveToPositions();
 
-        while (positionsPage.getTableRowByTitle(TEST_POSITION_VALID) == null) {
-            if (!positionsPage.tableHasNextPage()) {
-                break;
-            }
-            positionsPage = positionsPage.clickNextPage();
-        }
-
-        PositionsRowComponent row = positionsPage.getTableRowByTitle(TEST_POSITION_VALID);
-        if (row != null) {
-            positionsPage.deleteTableRow(row).clickOkButton();
-        }
+        new EditorPageRowSearcher(driver)
+                .deletePositionRow(TEST_POSITION)
+                .deletePositionRow(TEST_POSITION_NEW)
+                .deletePositionRow(TEST_POSITION_VALID)
+                .deletePositionRow(TEST_POSITION_TOO_LONG);
 
     }
 
-    //ToDo Add Before Class method to add new position than move back to Base Admin Page and move to the editor
 }
