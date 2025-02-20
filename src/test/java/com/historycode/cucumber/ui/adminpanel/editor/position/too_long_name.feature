@@ -9,5 +9,5 @@ Feature: Admin can manage positions
     When I click on the "Едітор" button in the left navigation panel
     And I navigate to the "Позиції" tab
     And I click on the "Додати нову позицію" button
-    And I fill out the "Назва" field with "ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWX"  # 51 characters
-    Then I should see an error message saying "Filling out no more than 50 symbols is available"
+    And I fill out the "Назва" field with a string of "{invalidLength}" characters
+    Then I should see an error message saying "{errorMessage}"
