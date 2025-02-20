@@ -9,7 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 
-public abstract class BasePageAdminPanel extends BasePage {
+public class BasePageAdminPanel extends BasePage {
 
     @Getter
     protected AdminMenuBarComponent adminMenuBar;
