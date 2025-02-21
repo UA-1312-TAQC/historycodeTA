@@ -6,12 +6,7 @@ public class NewsDP {
     @DataProvider(name = "specialSymbolsDataProvider")
     public Object[][] specialSymbolsDataProvider() {
         return new Object[][]{
-                {"news-item$"},
-                {"news-item@"},
-                {"news-item%"},
-                {"news-item#"},
-                {"news-item&"},
-                {"news-item^"}
+                {"$"}, {"@"}, {"%"}, {"#"}, {"&"}, {"^"}
         };
     }
 
