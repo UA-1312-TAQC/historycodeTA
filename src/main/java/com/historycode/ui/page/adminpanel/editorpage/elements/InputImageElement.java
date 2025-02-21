@@ -10,16 +10,12 @@ public class InputImageElement extends BaseComponent {
 
     @FindBy(xpath = ".//label[@for='image']")
     private WebElement label;
-
     @FindBy(xpath = ".//span[@class='ant-upload']")
     private WebElement uploadPlace;
-
     @FindBy(xpath = ".//div[@class='ant-upload-list-item-container']")
     private WebElement uploadedPlace;
-
     @FindBy(xpath = ".//span[@role='img' and @aria-label='eye']")
     private WebElement previewButton;
-
     @FindBy(xpath = ".//button[contains(@class, 'ant-btn-icon-only') and @title='Remove file']")
     private WebElement deleteButton;
 
