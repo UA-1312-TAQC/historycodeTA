@@ -1,5 +1,9 @@
 package com.historycode.ui.page.adminpanel.editorpage.components.modals;
 
+import com.historycode.ui.page.adminpanel.editorpage.CategoriesPage;
+import com.historycode.ui.page.adminpanel.editorpage.PositionsPage;
+import com.historycode.ui.page.adminpanel.editorpage.components.rows.CategoriesRowComponent;
+import com.historycode.ui.page.adminpanel.editorpage.components.rows.PositionsRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.elements.InputImageElement;
 import io.qameta.allure.Step;
 import lombok.Getter;
