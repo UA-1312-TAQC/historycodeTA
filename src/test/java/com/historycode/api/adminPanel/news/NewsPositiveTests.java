@@ -72,8 +72,6 @@ public class NewsPositiveTests extends BaseNewsTests {
         Response response = newsClient.create(newsRequestBody);
         Assert.assertEquals(response.getStatusCode(), 200);
 
-        System.out.println(response.asPrettyString());
-
         NewsResponse newsResponse = response.body().as(NewsResponse.class);
 
         assertEquals(response.path("status"), "Запланована",
