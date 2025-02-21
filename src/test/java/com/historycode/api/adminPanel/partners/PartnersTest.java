@@ -1,8 +1,6 @@
 package com.historycode.api.adminPanel.partners;
 
-import com.github.dockerjava.transport.DockerHttpClient;
 import com.historycode.api.clients.PartnersClient;
-import com.historycode.api.clients.TagClient;
 import com.historycode.api.models.partners.PartnerRequestBody;
 import com.historycode.api.models.partners.PartnerSourceLink;
 import com.historycode.api.models.partners.PartnerUpdateRequest;
@@ -34,7 +32,7 @@ public class PartnersTest extends ApiTestRunner {
     @AfterMethod
     public void tearDown() {
         for (Integer id : createdPartnerIds) {
-            client.deletePartner(id);
+            client.delete(id);
         }
         createdPartnerIds.clear();
     }
@@ -57,20 +55,56 @@ public class PartnersTest extends ApiTestRunner {
         partnerRequestBody.setStreetcodes(List.of());
 
         Response response = client.create(partnerRequestBody);
+        createdPartnerIds.add(response.jsonPath().getInt("id"));
 
-        softAssert.assertEquals(response.statusCode(), 200, "Expected status code to be 200");
-        softAssert.assertEquals(response.jsonPath().getString("title"), "Enzo Fernandez", "Title mismatch");
-        softAssert.assertEquals(response.jsonPath().getBoolean("isKeyPartner"), false, "isKeyPartner should be false");
-        softAssert.assertEquals(response.jsonPath().getBoolean("isVisibleEverywhere"), false, "isVisibleEverywhere should be false");
-        softAssert.assertEquals(response.jsonPath().getString("description"), "", "Description should be empty");
-        softAssert.assertEquals(response.jsonPath().getInt("logoId"), 6868, "logoId mismatch");
-        softAssert.assertNull(response.jsonPath().getMap("targetUrl").get("title"), "targetUrl.title should be null");
-        softAssert.assertNull(response.jsonPath().getMap("targetUrl").get("href"), "targetUrl.href should be null");;
-        softAssert.assertNull(response.jsonPath().get("urlTitle"), "urlTitle should be null");
-        softAssert.assertTrue(response.jsonPath().getList("partnerSourceLinks").isEmpty(), "partnerSourceLinks should be empty");
-        softAssert.assertTrue(response.jsonPath().getList("streetcodes").isEmpty(), "streetcodes should be empty");
+        softAssert.assertEquals(response.statusCode(), 200,"Expected status code to be 200");
+        softAssert.assertEquals(response.jsonPath().getString("title"), "Enzo Fernandez",
+                "Title mismatch");
+        softAssert.assertEquals(response.jsonPath().getBoolean("isKeyPartner"), false,
+                "isKeyPartner should be false");
+        softAssert.assertEquals(response.jsonPath().getBoolean("isVisibleEverywhere"), false,
+                "isVisibleEverywhere should be false");
+        softAssert.assertEquals(response.jsonPath().getString("description"), "",
+                "Description should be empty");
+        softAssert.assertEquals(response.jsonPath().getInt("logoId"), 6868,
+                "logoId mismatch");
+        softAssert.assertNull(response.jsonPath().getMap("targetUrl").get("title"),
+                "targetUrl.title should be null");
+        softAssert.assertNull(response.jsonPath().getMap("targetUrl").get("href"),
+                "targetUrl.href should be null");;
+        softAssert.assertNull(response.jsonPath().get("urlTitle"),
+                "urlTitle should be null");
+        softAssert.assertTrue(response.jsonPath().getList("partnerSourceLinks").isEmpty(),
+                "partnerSourceLinks should be empty");
+        softAssert.assertTrue(response.jsonPath().getList("streetcodes").isEmpty(),
+                "streetcodes should be empty");
 
         softAssert.assertAll();
+    }
+
+    @Issue("266")
+    @Test
+    @Description("Verify edit a 'title' partner. The mandatory field, symbols limit is 100.")
+    public void editPartnerWithTooManyTitleSymbols() {
+        PartnerUpdateRequest partnerUpdateRequest = new PartnerUpdateRequest();
+
+        partnerUpdateRequest.setKeyPartner(false);
+        partnerUpdateRequest.setVisibleEverywhere(false);
+        partnerUpdateRequest.setTitle("Test Chelsea 1 Test Chelsea 1 Test Chelsea 1" +
+                " Test Chelsea 1 Test Chelsea 1 Test Chelsea 1 Test Chels1");
+        partnerUpdateRequest.setDescription("");
+        partnerUpdateRequest.setTargetUrl("http://www.google.com/");
+        partnerUpdateRequest.setLogoId(5960);
+        partnerUpdateRequest.setUrlTitle("");
+        partnerUpdateRequest.setPartnerSourceLinks(List.of());
+        partnerUpdateRequest.setStreetcodes(List.of());
+        partnerUpdateRequest.setId(3102);
+
+        Response response = client.update(partnerUpdateRequest);
+
+        softAssert.assertEquals(response.statusCode(), 400, "Expected status code to be 400");
+        softAssert.assertTrue(response.getBody().asString().contains("Максимальна довжина поля 'Назва' - 100"),
+                "Error message should contain 'Максимальна довжина поля 'Назва' - 100'");
     }
 
     @Issue("273")
@@ -231,7 +265,7 @@ public class PartnersTest extends ApiTestRunner {
         partnerUpdateRequest.setStreetcodes(List.of());
         partnerUpdateRequest.setId(3102);
 
-        Response response = client.updatePartner(partnerUpdateRequest);
+        Response response = client.update(partnerUpdateRequest);
         createdPartnerIds.add(response.jsonPath().getInt("id"));
 
         softAssert.assertEquals(response.statusCode(), 200, "Expected status code to be 200");
