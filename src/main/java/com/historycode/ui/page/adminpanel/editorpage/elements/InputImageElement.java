@@ -5,6 +5,8 @@ import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import static com.historycode.ui.utils.ImageLoader.loadImageUsingRelativePath;
 
@@ -13,7 +15,7 @@ public class InputImageElement extends BaseComponent {
 
     @FindBy(xpath = ".//label[@for='image']")
     private WebElement label;
-    @FindBy(xpath = ".//span[@class='ant-upload']")
+    @FindBy(xpath = ".//input[@id='image']")
     private WebElement uploadPlace;
     @FindBy(xpath = ".//div[@class='ant-upload-list-item-container']")
     private WebElement uploadedPlace;
@@ -39,8 +41,9 @@ public class InputImageElement extends BaseComponent {
     }
 
     public void uploadImage(String imagePath) {
-        scrollToElementJs(uploadPlace);
         loadImageUsingRelativePath(imagePath, uploadPlace);
+        actions.moveToElement(uploadedPlace).perform();
+        wait.until(ExpectedConditions.visibilityOf(previewButton));
     }
 
 }
