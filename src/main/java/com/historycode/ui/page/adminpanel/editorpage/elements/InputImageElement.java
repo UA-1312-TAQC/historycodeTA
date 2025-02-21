@@ -1,13 +1,14 @@
 package com.historycode.ui.page.adminpanel.editorpage.elements;
 
 import com.historycode.ui.component.BaseComponent;
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import static com.historycode.ui.utils.ImageLoader.loadImageUsingRelativePath;
 
-@Gertter
+@Getter
 public class InputImageElement extends BaseComponent {
 
     @FindBy(xpath = ".//label[@for='image']")
