@@ -1,14 +1,12 @@
 package com.historycode.api.adminPanel.partners;
 
 import com.historycode.api.clients.PartnersClient;
-import com.historycode.api.models.partners.PartnerRequestBody;
-import com.historycode.api.models.partners.PartnerSourceLink;
-import com.historycode.api.models.partners.PartnerUpdateRequest;
-import com.historycode.api.models.partners.PartnersStreetcodes;
+import com.historycode.api.models.partners.*;
 import com.historycode.api.testRunners.ApiTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.restassured.response.Response;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -36,8 +34,24 @@ public class PartnersTest extends ApiTestRunner {
         }
         createdPartnerIds.clear();
     }
-  
-  
+
+    private int createTestPartnerReturnID() {
+        PartnerRequestBody partnerRequestBody = new PartnerRequestBody();
+        partnerRequestBody.setKeyPartner(false);
+        partnerRequestBody.setVisibleEverywhere(false);
+        partnerRequestBody.setTitle("Enzo Fernandez");
+        partnerRequestBody.setDescription("");
+        partnerRequestBody.setTargetUrl(null);
+        partnerRequestBody.setLogoId(6868);
+        partnerRequestBody.setUrlTitle(null);
+        partnerRequestBody.setPartnerSourceLinks(List.of());
+        partnerRequestBody.setStreetcodes(List.of());
+
+        Response response = client.create(partnerRequestBody);
+        return response.jsonPath().getInt("id");
+    }
+
+
     @Issue("264")
     @Test
     @Description("Verify create a partner with a mandatory fields")
@@ -78,8 +92,17 @@ public class PartnersTest extends ApiTestRunner {
                 "partnerSourceLinks should be empty");
         softAssert.assertTrue(response.jsonPath().getList("streetcodes").isEmpty(),
                 "streetcodes should be empty");
-
         softAssert.assertAll();
+    }
+
+    @Issue("265")
+    @Test
+    @Description("Verify delete a partner from Partners page")
+    public void deletePartner() {
+        int id = createTestPartnerReturnID();
+        Response response = client.delete(id);
+
+        Assert.assertEquals(response.statusCode(), 200,"Expected status code to be 200");
     }
 
     @Issue("266")
@@ -105,6 +128,7 @@ public class PartnersTest extends ApiTestRunner {
         softAssert.assertEquals(response.statusCode(), 400, "Expected status code to be 400");
         softAssert.assertTrue(response.getBody().asString().contains("Максимальна довжина поля 'Назва' - 100"),
                 "Error message should contain 'Максимальна довжина поля 'Назва' - 100'");
+        softAssert.assertAll();
     }
 
     @Issue("267")
@@ -134,6 +158,60 @@ public class PartnersTest extends ApiTestRunner {
         softAssert.assertEquals(response.statusCode(), 400, "Expected status code to be 400");
         softAssert.assertTrue(response.getBody().asString().contains("Максимальна довжина поля 'Опис' - 450"),
                 "Error message should contain 'Максимальна довжина поля 'Опис' - 450");
+        softAssert.assertAll();
+    }
+
+    @Issue("268")
+    @Test
+    @Description("Verify edit a 'targetUrl' partner. The non-mandatory field, symbols limit is 200.")
+    public  void editPartnerWithTooManyTargetUrlSymbols() {
+        PartnerUpdateRequest partnerUpdateRequest = new PartnerUpdateRequest();
+
+        partnerUpdateRequest.setKeyPartner(false);
+        partnerUpdateRequest.setVisibleEverywhere(false);
+        partnerUpdateRequest.setTitle("Test Chelsea 1");
+        partnerUpdateRequest.setDescription("Hello");
+        partnerUpdateRequest.setTargetUrl("http://www.google.comhttp://www.google.comhttp://www.google.comhttp:" +
+                "//www.google.comhttp://www.google.comhttp://www.google.comhttp://www.google.comhttp:" +
+                "//www.google.comhttp://www.google.comhttp://www.w");
+        partnerUpdateRequest.setLogoId(5960);
+        partnerUpdateRequest.setUrlTitle("");
+        partnerUpdateRequest.setPartnerSourceLinks(List.of());
+        partnerUpdateRequest.setStreetcodes(List.of());
+        partnerUpdateRequest.setId(3102);
+
+        Response response = client.update(partnerUpdateRequest);
+
+        softAssert.assertEquals(response.statusCode(), 400, "Expected status code to be 400");
+        softAssert.assertTrue(response.getBody().asString().contains("Максимальна довжина поля 'Посилання' - 200"),
+                "Error message should contain 'Максимальна довжина поля 'Посилання' - 200");
+        softAssert.assertAll();
+    }
+
+    @Issue("269")
+    @Test
+    @Description("Verify edit a 'urlTitle' partner. The non-mandatory field, symbols limit is 100.")
+    public  void editPartnerWithTooManyUrlTitleSymbols() {
+        PartnerUpdateRequest partnerUpdateRequest = new PartnerUpdateRequest();
+
+        partnerUpdateRequest.setKeyPartner(false);
+        partnerUpdateRequest.setVisibleEverywhere(false);
+        partnerUpdateRequest.setTitle("Test Chelsea 1");
+        partnerUpdateRequest.setDescription("Hello");
+        partnerUpdateRequest.setTargetUrl("http://www.google.com");
+        partnerUpdateRequest.setLogoId(5960);
+        partnerUpdateRequest.setUrlTitle("Посилання Посилання Посилання Посилання Посилання Посилання Посилання" +
+                " Посилання Посилання посиланняхі");
+        partnerUpdateRequest.setPartnerSourceLinks(List.of());
+        partnerUpdateRequest.setStreetcodes(List.of());
+        partnerUpdateRequest.setId(3102);
+
+        Response response = client.update(partnerUpdateRequest);
+
+        softAssert.assertEquals(response.statusCode(), 400, "Expected status code to be 400");
+        softAssert.assertTrue(response.getBody().asString().contains("Максимальна довжина поля 'Назва посилання' - 100"),
+                "Error message should contain 'Максимальна довжина поля 'Назва посилання' - 100");
+        softAssert.assertAll();
     }
 
     @Issue("273")

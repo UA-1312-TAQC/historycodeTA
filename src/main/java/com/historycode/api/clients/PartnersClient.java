@@ -34,6 +34,7 @@ public class PartnersClient extends BaseClient {
     public Response delete(int id) {
         return preparedRequest()
                 .when()
-                .delete(resourceUrl + "/Delete/" + id);
+                .pathParam("id", id)
+                .delete(resourceUrl + "/Delete/{id}");
     }
 }
