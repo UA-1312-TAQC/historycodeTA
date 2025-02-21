@@ -16,67 +16,66 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
-import java.time.Instant;
 
 @Slf4j
 public class BaseNewsTests extends ApiTestRunner {
     @Getter
     @Setter
-    private Integer deleteId = null;
-    protected NewsClient client;
+    private Integer newsId = null;
+    protected NewsClient newsClient;
     protected ImageClient imageClient;
-    protected NewsRequestBody requestBody;
+    protected NewsRequestBody newsRequestBody;
 
     @BeforeClass
     public void setUpClass() {
-        client = new NewsClient(testValueProvider.getBaseAPIUrl());
-        client.setToken(testValueProvider.getAccessToken());
+        newsClient = new NewsClient(testValueProvider.getBaseAPIUrl());
+        newsClient.setToken(testValueProvider.getAccessToken());
         imageClient = new ImageClient(testValueProvider.getBaseAPIUrl());
     }
 
     @BeforeMethod
     public void initNewsRequest() {
-        requestBody = createNewsRequest();
+        newsRequestBody = createNewsRequest();
     }
 
     @AfterMethod
-    public void tearDownMethod() {
-        if (getDeleteId() != null) {
-            try {
-                Response deleteResponse = client.delete(getDeleteId());
+    public void tearDown() {
+        try {
+            Integer imageId = (newsRequestBody != null) ? newsRequestBody.getImageId() : null;
 
-                if (deleteResponse.getStatusCode() != 200)
-                    log.error("The test news item with ID {} was not deleted.", getDeleteId());
-            } finally {
-                setDeleteId(null);
+            if (newsId != null) {
+                Response deleteNewsResponse = newsClient.delete(newsId);
+                if (deleteNewsResponse.getStatusCode() != 200) {
+                    log.error("The test news item with ID {} was not deleted.", newsId);
+                }
+            } else if (imageId != null) {
+                Response deleteImageResponse = imageClient.delete(imageId);
+                if (deleteImageResponse.getStatusCode() != 200) {
+                    log.error("The test image item with ID {} was not deleted.", imageId);
+                }
             }
-        } else {
-            if (requestBody != null) {
-                Response deleteImageResponse = imageClient.delete(requestBody.getImageId());
-
-                if (deleteImageResponse.getStatusCode() != 200)
-                    log.error("The test image item with ID {} was not deleted.", requestBody.getImageId());
-            }
+        } catch (Exception ex) {
+            log.error("An error occurred while deleting test data: {}", ex.getMessage(), ex);
         }
     }
 
     private NewsRequestBody createNewsRequest() {
-        long timestamp = Instant.now().toEpochMilli();
+        long timestamp = System.currentTimeMillis();
 
-        requestBody = new NewsRequestBody();
-        requestBody.setTitle("Test News Item " + timestamp);
-        requestBody.setText("News Item Testing " + timestamp);
-        requestBody.setImageId(createNewImg());
-        requestBody.setUrl("news-item-" + timestamp);
+        newsRequestBody = new NewsRequestBody();
+        newsRequestBody.setTitle("Test News Item " + timestamp);
+        newsRequestBody.setText("News Item Testing " + timestamp);
+        newsRequestBody.setImageId(createNewImg());
+        newsRequestBody.setUrl("news-item-" + timestamp);
 
-        return requestBody;
+        return newsRequestBody;
     }
 
     private int createNewImg() {
         ImageClient imageClient = new ImageClient(testValueProvider.getBaseAPIUrl());
         ImageRequest newsImage = new ImageRequest();
 
-        newsImage.setTitle("TestImg" + Instant.now().toEpochMilli());
+        newsImage.setTitle("TestImg" + System.currentTimeMillis());
         newsImage.setBaseFormat(ImageProcessor.encodeImage("src/test/resources/newsTest.png"));
         newsImage.setMimeType("image/png");
         newsImage.setExtension("png");
@@ -89,10 +88,10 @@ public class BaseNewsTests extends ApiTestRunner {
         return response.getBody().jsonPath().getInt("id");
     }
 
-    protected void checkUnexpected200StatusCode(Response response) {
+    protected void verifyUnexpected200StatusCode(Response response) {
         if (response.getStatusCode() == 200) {
             NewsResponse newsResponse = response.body().as(NewsResponse.class);
-            setDeleteId(newsResponse.getId());
+            setNewsId(newsResponse.getId());
         }
     }
 

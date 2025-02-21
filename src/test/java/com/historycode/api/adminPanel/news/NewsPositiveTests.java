@@ -22,21 +22,21 @@ public class NewsPositiveTests extends BaseNewsTests {
     @Description("Verify that the news is created with the maximum number of characters allowed in the 'title' field using POST method")
     public void testVerifyCreationWithMaxTitleLength() {
 
-        requestBody.setTitle(RandomStringUtils.randomAlphabetic(100));
-        requestBody.setCreationDate(Instant.now().toString());
+        newsRequestBody.setTitle(RandomStringUtils.randomAlphabetic(100));
+        newsRequestBody.setCreationDate(Instant.now().toString());
 
-        Response response = client.create(requestBody);
+        Response response = newsClient.create(newsRequestBody);
 
         Assert.assertEquals(response.getStatusCode(), 200);
 
         NewsResponse newsResponse = response.body().as(NewsResponse.class);
-        setDeleteId(newsResponse.getId());
+        setNewsId(newsResponse.getId());
 
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(newsResponse.getTitle(), requestBody.getTitle());
-        softAssert.assertEquals(newsResponse.getText(), requestBody.getText());
-        softAssert.assertEquals(newsResponse.getImageId(), requestBody.getImageId());
-        softAssert.assertEquals(newsResponse.getUrl(), requestBody.getUrl());
+        softAssert.assertEquals(newsResponse.getTitle(), newsRequestBody.getTitle());
+        softAssert.assertEquals(newsResponse.getText(), newsRequestBody.getText());
+        softAssert.assertEquals(newsResponse.getImageId(), newsRequestBody.getImageId());
+        softAssert.assertEquals(newsResponse.getUrl(), newsRequestBody.getUrl());
         softAssert.assertNotNull(newsResponse.getCreationDate());
         softAssert.assertAll();
     }
@@ -46,21 +46,21 @@ public class NewsPositiveTests extends BaseNewsTests {
     @Description("Verify that the news is created with the maximum number of characters allowed in the 'url' field using POST method")
     public void testVerifyCreationWithMaxUrlLength() {
 
-        requestBody.setUrl(RandomStringUtils.randomAlphabetic(200).toLowerCase());
-        requestBody.setCreationDate(Instant.now().toString());
+        newsRequestBody.setUrl(RandomStringUtils.randomAlphabetic(200).toLowerCase());
+        newsRequestBody.setCreationDate(Instant.now().toString());
 
-        Response response = client.create(requestBody);
+        Response response = newsClient.create(newsRequestBody);
 
         Assert.assertEquals(response.getStatusCode(), 200);
 
         NewsResponse newsResponse = response.body().as(NewsResponse.class);
-        setDeleteId(newsResponse.getId());
+        setNewsId(newsResponse.getId());
 
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(newsResponse.getTitle(), requestBody.getTitle());
-        softAssert.assertEquals(newsResponse.getText(), requestBody.getText());
-        softAssert.assertEquals(newsResponse.getImageId(), requestBody.getImageId());
-        softAssert.assertEquals(newsResponse.getUrl(), requestBody.getUrl());
+        softAssert.assertEquals(newsResponse.getTitle(), newsRequestBody.getTitle());
+        softAssert.assertEquals(newsResponse.getText(), newsRequestBody.getText());
+        softAssert.assertEquals(newsResponse.getImageId(), newsRequestBody.getImageId());
+        softAssert.assertEquals(newsResponse.getUrl(), newsRequestBody.getUrl());
         softAssert.assertNotNull(newsResponse.getCreationDate());
         softAssert.assertAll();
     }
@@ -70,21 +70,21 @@ public class NewsPositiveTests extends BaseNewsTests {
     @Description("Verify that the news is created with the maximum number of characters allowed in the 'text' field using POST method")
     public void testVerifyCreationWithMaxLengthInText() {
 
-        requestBody.setText(RandomStringUtils.randomAlphabetic(15000));
-        requestBody.setCreationDate(Instant.now().toString());
+        newsRequestBody.setText(RandomStringUtils.randomAlphabetic(15000));
+        newsRequestBody.setCreationDate(Instant.now().toString());
 
-        Response response = client.create(requestBody);
+        Response response = newsClient.create(newsRequestBody);
 
         Assert.assertEquals(response.getStatusCode(), 200);
 
         NewsResponse newsResponse = response.body().as(NewsResponse.class);
-        setDeleteId(newsResponse.getId());
+        setNewsId(newsResponse.getId());
 
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(newsResponse.getTitle(), requestBody.getTitle());
-        softAssert.assertEquals(newsResponse.getText(), requestBody.getText());
-        softAssert.assertEquals(newsResponse.getImageId(), requestBody.getImageId());
-        softAssert.assertEquals(newsResponse.getUrl(), requestBody.getUrl());
+        softAssert.assertEquals(newsResponse.getTitle(), newsRequestBody.getTitle());
+        softAssert.assertEquals(newsResponse.getText(), newsRequestBody.getText());
+        softAssert.assertEquals(newsResponse.getImageId(), newsRequestBody.getImageId());
+        softAssert.assertEquals(newsResponse.getUrl(), newsRequestBody.getUrl());
         softAssert.assertNotNull(newsResponse.getCreationDate());
         softAssert.assertAll();
     }
@@ -94,22 +94,22 @@ public class NewsPositiveTests extends BaseNewsTests {
     @Description("Verify that the news is created with the future date chosen in the 'creationDate' field using POST method will have 'Запланована' статус")
     public void testVerifyCreationWithFutureDateInCreationDate() {
 
-        requestBody.setCreationDate(Instant.now().plus(7, ChronoUnit.DAYS).toString());
+        newsRequestBody.setCreationDate(Instant.now().plus(7, ChronoUnit.DAYS).toString());
 
-        Response response = client.create(requestBody);
+        Response response = newsClient.create(newsRequestBody);
 
         Assert.assertEquals(response.getStatusCode(), 200);
 
         NewsResponse newsResponse = response.body().as(NewsResponse.class);
 
-        setDeleteId(newsResponse.getId());
+        setNewsId(newsResponse.getId());
 
         SoftAssert softAssert = new SoftAssert();
         assertEquals(response.path("Status"), "Запланована");
-        softAssert.assertEquals(newsResponse.getTitle(), requestBody.getTitle());
-        softAssert.assertEquals(newsResponse.getText(), requestBody.getText());
-        softAssert.assertEquals(newsResponse.getImageId(), requestBody.getImageId());
-        softAssert.assertEquals(newsResponse.getUrl(), requestBody.getUrl());
+        softAssert.assertEquals(newsResponse.getTitle(), newsRequestBody.getTitle());
+        softAssert.assertEquals(newsResponse.getText(), newsRequestBody.getText());
+        softAssert.assertEquals(newsResponse.getImageId(), newsRequestBody.getImageId());
+        softAssert.assertEquals(newsResponse.getUrl(), newsRequestBody.getUrl());
         softAssert.assertNotNull(newsResponse.getCreationDate());
         softAssert.assertAll();
     }
@@ -119,12 +119,14 @@ public class NewsPositiveTests extends BaseNewsTests {
     @Description("Verify that the news is deleted by 'id' using DELETE method")
     public void testVerifyDeletionById() {
 
-        requestBody.setCreationDate(Instant.now().toString());
-        Response response = client.create(requestBody);
+        newsRequestBody.setCreationDate(Instant.now().toString());
 
+        Response response = newsClient.create(newsRequestBody);
+
+        assertEquals(response.getStatusCode(), 200, "Failed to create the news item");
         NewsResponse newsResponse = response.body().as(NewsResponse.class);
 
-        Response deleteResponse = client.delete(newsResponse.getId());
+        Response deleteResponse = newsClient.delete(newsResponse.getId());
 
         assertEquals(deleteResponse.getStatusCode(), 200);
     }
