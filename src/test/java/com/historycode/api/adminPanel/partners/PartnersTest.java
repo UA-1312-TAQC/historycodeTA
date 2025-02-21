@@ -107,6 +107,35 @@ public class PartnersTest extends ApiTestRunner {
                 "Error message should contain 'Максимальна довжина поля 'Назва' - 100'");
     }
 
+    @Issue("267")
+    @Test
+    @Description("Verify edit a 'description' partner. The non-mandatory field, symbols limit is 450.")
+    public  void editPartnerWithTooManyDescriptionSymbols() {
+        PartnerUpdateRequest partnerUpdateRequest = new PartnerUpdateRequest();
+
+        partnerUpdateRequest.setKeyPartner(false);
+        partnerUpdateRequest.setVisibleEverywhere(false);
+        partnerUpdateRequest.setTitle("Test Chelsea 1");
+        partnerUpdateRequest.setDescription("HelloHelloHelloHello HelloHelloHelloHello HelloHelloHelloHello" +
+                " HelloHelloHelloHello HelloHelloHelloHello HelloHelloHelloHello HelloHelloHelloHello" +
+                " HelloHelloHelloHello HelloHelloHelloHello HelloHelloHelloHello HelloHelloHelloHello" +
+                " HelloHelloHelloHello HelloHelloHelloHello HelloHelloHelloHello HelloHelloHelloHello" +
+                " HelloHelloHelloHello HelloHelloHelloHello HelloHelloHelloHello HelloHelloHelloHello" +
+                " HelloHelloHelloHello HelloHelloHelloHello HelloHello");
+        partnerUpdateRequest.setTargetUrl("http://www.google.com/");
+        partnerUpdateRequest.setLogoId(5960);
+        partnerUpdateRequest.setUrlTitle("");
+        partnerUpdateRequest.setPartnerSourceLinks(List.of());
+        partnerUpdateRequest.setStreetcodes(List.of());
+        partnerUpdateRequest.setId(3102);
+
+        Response response = client.update(partnerUpdateRequest);
+
+        softAssert.assertEquals(response.statusCode(), 400, "Expected status code to be 400");
+        softAssert.assertTrue(response.getBody().asString().contains("Максимальна довжина поля 'Опис' - 450"),
+                "Error message should contain 'Максимальна довжина поля 'Опис' - 450");
+    }
+
     @Issue("273")
     @Test
     @Description("Try to create a partner with an existing name in the system.")
