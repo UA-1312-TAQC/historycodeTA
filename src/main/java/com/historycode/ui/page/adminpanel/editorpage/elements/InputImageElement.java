@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import static com.historycode.ui.utils.ImageLoader.loadImageUsingRelativePath;
+
 @Gertter
 public class InputImageElement extends BaseComponent {
 
@@ -33,6 +35,11 @@ public class InputImageElement extends BaseComponent {
         waitUntilElementClickable(deleteButton);
         scrollToElementJs(deleteButton);
         deleteButton.click();
+    }
+
+    public void uploadImage(String imagePath) {
+        scrollToElementJs(uploadPlace);
+        loadImageUsingRelativePath(imagePath, uploadPlace);
     }
 
 }
