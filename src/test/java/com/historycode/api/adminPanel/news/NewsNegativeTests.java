@@ -94,7 +94,7 @@ public class NewsNegativeTests extends BaseNewsTests {
     @Description("Verify that the news cannot be created with special symbols ($,@,%,#) in 'url' field using POST method")
     public void testVerifyCreationWithSpecialSymbolsInUrl(String url) {
 
-        newsRequestBody.setUrl(url);
+        newsRequestBody.setUrl(url + System.currentTimeMillis());
         newsRequestBody.setCreationDate(Instant.now().toString());
 
         Response response = newsClient.create(newsRequestBody);
