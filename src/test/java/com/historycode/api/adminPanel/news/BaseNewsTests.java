@@ -41,17 +41,15 @@ public class BaseNewsTests extends ApiTestRunner {
     @AfterMethod
     public void tearDown() {
         try {
-            Integer imageId = (newsRequestBody != null) ? newsRequestBody.getImageId() : null;
-
             if (newsId != null) {
                 Response deleteNewsResponse = newsClient.delete(newsId);
                 if (deleteNewsResponse.getStatusCode() != 200) {
                     log.error("The test news item with ID {} was not deleted.", newsId);
                 }
-            } else if (imageId != null) {
-                Response deleteImageResponse = imageClient.delete(imageId);
+            } else if (newsRequestBody.getImageId() != 0) {
+                Response deleteImageResponse = imageClient.delete(newsRequestBody.getImageId());
                 if (deleteImageResponse.getStatusCode() != 200) {
-                    log.error("The test image item with ID {} was not deleted.", imageId);
+                    log.error("The test image item with ID {} was not deleted.", newsRequestBody.getImageId());
                 }
             }
         } catch (Exception ex) {

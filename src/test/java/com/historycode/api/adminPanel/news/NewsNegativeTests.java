@@ -118,7 +118,7 @@ public class NewsNegativeTests extends BaseNewsTests {
         verifyUnexpected200StatusCode(response);
         assertEquals(response.getStatusCode(), 400);
         assertEquals(response.path("errors.Text[0]"), "Max Length is 15000",
-                "Error message should indicate that the Text field is required");
+                "The error message should indicate that Text length exceeds 15000 characters limit");
     }
 
     @Issue("207")
