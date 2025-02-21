@@ -35,6 +35,10 @@ public class PartnersTest extends ApiTestRunner {
         createdPartnerIds.clear();
     }
 
+    /**
+    * Creates a test partner with default values and returns its ID.
+    * @return The ID of the created partner
+    */
     private int createTestPartnerReturnID() {
         PartnerRequestBody partnerRequestBody = new PartnerRequestBody();
         partnerRequestBody.setKeyPartner(false);
