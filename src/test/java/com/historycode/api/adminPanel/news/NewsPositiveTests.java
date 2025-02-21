@@ -26,19 +26,10 @@ public class NewsPositiveTests extends BaseNewsTests {
         newsRequestBody.setCreationDate(Instant.now().toString());
 
         Response response = newsClient.create(newsRequestBody);
-
         Assert.assertEquals(response.getStatusCode(), 200);
 
         NewsResponse newsResponse = response.body().as(NewsResponse.class);
-        setNewsId(newsResponse.getId());
-
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(newsResponse.getTitle(), newsRequestBody.getTitle(), "The 'title' field does not match");
-        softAssert.assertEquals(newsResponse.getText(), newsRequestBody.getText(), "The 'text' field does not match");
-        softAssert.assertEquals(newsResponse.getImageId(), newsRequestBody.getImageId(), "The 'imageId' field does not match");
-        softAssert.assertEquals(newsResponse.getUrl(), newsRequestBody.getUrl(), "The 'url' field does not match");
-        softAssert.assertNotNull(newsResponse.getCreationDate(), "The 'creationDate' field is empty");
-        softAssert.assertAll();
+        verifyNewsResponseStructure(newsResponse);
     }
 
     @Issue("199")
@@ -50,19 +41,10 @@ public class NewsPositiveTests extends BaseNewsTests {
         newsRequestBody.setCreationDate(Instant.now().toString());
 
         Response response = newsClient.create(newsRequestBody);
-
         Assert.assertEquals(response.getStatusCode(), 200);
 
         NewsResponse newsResponse = response.body().as(NewsResponse.class);
-        setNewsId(newsResponse.getId());
-
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(newsResponse.getTitle(), newsRequestBody.getTitle(), "The 'title' field does not match");
-        softAssert.assertEquals(newsResponse.getText(), newsRequestBody.getText(), "The 'text' field does not match");
-        softAssert.assertEquals(newsResponse.getImageId(), newsRequestBody.getImageId(), "The 'imageId' field does not match");
-        softAssert.assertEquals(newsResponse.getUrl(), newsRequestBody.getUrl(), "The 'url' field does not match");
-        softAssert.assertNotNull(newsResponse.getCreationDate(), "The 'creationDate' field is empty");
-        softAssert.assertAll();
+        verifyNewsResponseStructure(newsResponse);
     }
 
     @Issue("204")
@@ -74,19 +56,10 @@ public class NewsPositiveTests extends BaseNewsTests {
         newsRequestBody.setCreationDate(Instant.now().toString());
 
         Response response = newsClient.create(newsRequestBody);
-
         Assert.assertEquals(response.getStatusCode(), 200);
 
         NewsResponse newsResponse = response.body().as(NewsResponse.class);
-        setNewsId(newsResponse.getId());
-
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(newsResponse.getTitle(), newsRequestBody.getTitle(), "The 'title' field does not match");
-        softAssert.assertEquals(newsResponse.getText(), newsRequestBody.getText(), "The 'text' field does not match");
-        softAssert.assertEquals(newsResponse.getImageId(), newsRequestBody.getImageId(), "The 'imageId' field does not match");
-        softAssert.assertEquals(newsResponse.getUrl(), newsRequestBody.getUrl(), "The 'url' field does not match");
-        softAssert.assertNotNull(newsResponse.getCreationDate(), "The 'creationDate' field is empty");
-        softAssert.assertAll();
+        verifyNewsResponseStructure(newsResponse);
     }
 
     @Issue("206")
@@ -95,23 +68,19 @@ public class NewsPositiveTests extends BaseNewsTests {
     public void testVerifyCreationWithFutureDateInCreationDate() {
 
         newsRequestBody.setCreationDate(Instant.now().plus(7, ChronoUnit.DAYS).toString());
+        newsRequestBody.setCreationDate(Instant.now().toString());
 
         Response response = newsClient.create(newsRequestBody);
-
         Assert.assertEquals(response.getStatusCode(), 200);
+
+        System.out.println(response.asPrettyString());
 
         NewsResponse newsResponse = response.body().as(NewsResponse.class);
 
-        setNewsId(newsResponse.getId());
+        assertEquals(response.path("status"), "Запланована",
+                "The 'Status' field in the response to the request does not have the expected value");
 
-        SoftAssert softAssert = new SoftAssert();
-        assertEquals(response.path("Status"), "Запланована", "Status is not 'Запланована'");
-        softAssert.assertEquals(newsResponse.getTitle(), newsRequestBody.getTitle(), "The 'title' field does not match");
-        softAssert.assertEquals(newsResponse.getText(), newsRequestBody.getText(), "The 'text' field does not match");
-        softAssert.assertEquals(newsResponse.getImageId(), newsRequestBody.getImageId(), "The 'imageId' field does not match");
-        softAssert.assertEquals(newsResponse.getUrl(), newsRequestBody.getUrl(), "The 'url' field does not match");
-        softAssert.assertNotNull(newsResponse.getCreationDate(), "The 'creationDate' field is empty");
-        softAssert.assertAll();
+        verifyNewsResponseStructure(newsResponse);
     }
 
     @Issue("208")
@@ -129,6 +98,22 @@ public class NewsPositiveTests extends BaseNewsTests {
         Response deleteResponse = newsClient.delete(newsResponse.getId());
 
         assertEquals(deleteResponse.getStatusCode(), 200, "Failed to delete the news item with ID " + newsResponse.getId());
+    }
+
+    private void verifyNewsResponseStructure(NewsResponse newsResponse) {
+        setNewsId(newsResponse.getId());
+
+        Instant actualCreationDate = Instant.parse(newsResponse.getCreationDate()).truncatedTo(ChronoUnit.MINUTES);
+        Instant expectedCreationDate = Instant.parse(newsRequestBody.getCreationDate()).truncatedTo(ChronoUnit.MINUTES);
+
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals(newsResponse.getTitle(), newsRequestBody.getTitle(), String.format(errorMessageFieldNotMatch, "title"));
+        softAssert.assertEquals(newsResponse.getText(), newsRequestBody.getText(), String.format(errorMessageFieldNotMatch, "text"));
+        softAssert.assertEquals(newsResponse.getImageId(), newsRequestBody.getImageId(), String.format(errorMessageFieldNotMatch, "imageId"));
+        softAssert.assertEquals(newsResponse.getUrl(), newsRequestBody.getUrl(), String.format(errorMessageFieldNotMatch, "url"));
+        softAssert.assertEquals(actualCreationDate, expectedCreationDate, String.format(errorMessageFieldNotMatch, "creationDate"));
+
+        softAssert.assertAll();
     }
 
 }

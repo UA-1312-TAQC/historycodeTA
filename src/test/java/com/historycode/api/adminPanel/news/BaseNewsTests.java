@@ -19,6 +19,8 @@ import org.testng.annotations.BeforeMethod;
 
 @Slf4j
 public class BaseNewsTests extends ApiTestRunner {
+    protected final String errorMessageFieldNotMatch = "The %s field does not match";
+
     @Getter
     @Setter
     private Integer newsId = null;
@@ -35,7 +37,7 @@ public class BaseNewsTests extends ApiTestRunner {
 
     @BeforeMethod
     public void initNewsRequest() {
-        newsRequestBody = createNewsRequest();
+        newsRequestBody = createNewsRequestBody();
     }
 
     @AfterMethod
@@ -57,14 +59,14 @@ public class BaseNewsTests extends ApiTestRunner {
         }
     }
 
-    private NewsRequestBody createNewsRequest() {
+    private NewsRequestBody createNewsRequestBody() {
         long timestamp = System.currentTimeMillis();
 
         newsRequestBody = new NewsRequestBody();
         newsRequestBody.setTitle("Test News Item " + timestamp);
         newsRequestBody.setText("News Item Testing " + timestamp);
         newsRequestBody.setImageId(createNewImg());
-        newsRequestBody.setUrl("news-item-" + timestamp);
+        newsRequestBody.setUrl("news-item" + timestamp);
 
         return newsRequestBody;
     }
@@ -86,7 +88,7 @@ public class BaseNewsTests extends ApiTestRunner {
         return response.getBody().jsonPath().getInt("id");
     }
 
-    protected void verifyUnexpected200StatusCode(Response response) {
+    protected void handleUnexpected200StatusCode(Response response) {
         if (response.getStatusCode() == 200) {
             NewsResponse newsResponse = response.body().as(NewsResponse.class);
             setNewsId(newsResponse.getId());

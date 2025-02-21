@@ -35,10 +35,10 @@ public class NewsNegativeTests extends BaseNewsTests {
 
         Response response = newsClient.create(newsRequestBody);
 
-        verifyUnexpected200StatusCode(response);
+        handleUnexpected200StatusCode (response);
         assertEquals(response.getStatusCode(), 400);
         assertEquals(response.path("errors.Title[0]"), "Max Length is 100",
-                "The error message should indicate that title length exceeds 100 characters limit");
+                "The error message does not contain 'Title': 'Max Length is 100'");
     }
 
     @Issue("200")
@@ -51,10 +51,10 @@ public class NewsNegativeTests extends BaseNewsTests {
 
         Response response = newsClient.create(newsRequestBody);
 
-        verifyUnexpected200StatusCode(response);
+        handleUnexpected200StatusCode (response);
         assertEquals(response.getStatusCode(), 400);
         assertEquals(response.path("errors.URL[0]"), "Max Length is 200",
-                "The error message should indicate that URL length exceeds 200 characters limit");
+                "The error message does not contain 'URL': 'Max Length is 200'");
     }
 
     @Issue("201")
@@ -67,10 +67,10 @@ public class NewsNegativeTests extends BaseNewsTests {
 
         Response response = newsClient.create(newsRequestBody);
 
-        verifyUnexpected200StatusCode(response);
+        handleUnexpected200StatusCode(response);
         assertEquals(response.getStatusCode(), 400);
         assertTrue(response.body().asPrettyString().contains("Url Is Invalid"),
-                "Error message should contain 'Url Is Invalid' text");
+                "The error message does not contain 'Url Is Invalid'");
     }
 
     @Issue("202")
@@ -83,10 +83,10 @@ public class NewsNegativeTests extends BaseNewsTests {
 
         Response response = newsClient.create(newsRequestBody);
 
-        verifyUnexpected200StatusCode(response);
+        handleUnexpected200StatusCode(response);
         assertEquals(response.getStatusCode(), 400);
         assertTrue(response.body().asPrettyString().contains("Url Is Invalid"),
-                "Error message should contain 'Url Is Invalid' text");
+                "The error message does not contain 'Url Is Invalid'");
     }
 
     @Issue("203")
@@ -99,10 +99,10 @@ public class NewsNegativeTests extends BaseNewsTests {
 
         Response response = newsClient.create(newsRequestBody);
 
-        verifyUnexpected200StatusCode(response);
+        handleUnexpected200StatusCode(response);
         assertEquals(response.getStatusCode(), 400);
         assertTrue(response.body().asPrettyString().contains("Url Is Invalid"),
-                "Error message should contain 'Url Is Invalid' text");
+                "The error message does not contain 'Url Is Invalid'");
     }
 
     @Issue("205")
@@ -115,10 +115,10 @@ public class NewsNegativeTests extends BaseNewsTests {
 
         Response response = newsClient.create(newsRequestBody);
 
-        verifyUnexpected200StatusCode(response);
+        handleUnexpected200StatusCode(response);
         assertEquals(response.getStatusCode(), 400);
         assertEquals(response.path("errors.Text[0]"), "Max Length is 15000",
-                "The error message should indicate that Text length exceeds 15000 characters limit");
+                "The error message does not contain 'Text': 'Max Length is 15000'");
     }
 
     @Issue("207")
@@ -130,10 +130,10 @@ public class NewsNegativeTests extends BaseNewsTests {
 
         Response response = newsClient.create(newsRequestBody);
 
-        verifyUnexpected200StatusCode(response);
+        handleUnexpected200StatusCode(response);
         assertEquals(response.getStatusCode(), 400);
         assertTrue(response.body().asPrettyString().contains("The news cannot be published with a past date"),
-                "Error message should indicate that news cannot be published with a past date");
+                "Error message does not contains indicate that news cannot be published with a past date");
     }
 
     @Issue("209")
