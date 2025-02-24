@@ -74,10 +74,8 @@ public class NewsPositiveTests extends BaseNewsTests {
 
         NewsResponse newsResponse = response.body().as(NewsResponse.class);
 
-        assertEquals(response.path("status"), "Запланована",
-                "The 'Status' field in the response to the request does not have the expected value");
-
         verifyNewsResponseStructure(newsResponse);
+        assertEquals(response.path("Status"), "Запланована", "The 'Status' field is absent or has incorrect value");
     }
 
     @Issue("208")

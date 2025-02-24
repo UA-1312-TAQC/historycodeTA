@@ -19,7 +19,7 @@ import org.testng.annotations.BeforeMethod;
 
 @Slf4j
 public class BaseNewsTests extends ApiTestRunner {
-    protected final String errorMessageFieldNotMatch = "The %s field does not match";
+    protected final String errorMessageFieldNotMatch = "The %s field does not match the expected response";
 
     @Getter
     @Setter
@@ -66,7 +66,7 @@ public class BaseNewsTests extends ApiTestRunner {
         newsRequestBody.setTitle("Test News Item " + timestamp);
         newsRequestBody.setText("News Item Testing " + timestamp);
         newsRequestBody.setImageId(createNewImg());
-        newsRequestBody.setUrl("news-item" + timestamp);
+        newsRequestBody.setUrl("news-item-" + timestamp);
 
         return newsRequestBody;
     }
@@ -75,15 +75,14 @@ public class BaseNewsTests extends ApiTestRunner {
         ImageClient imageClient = new ImageClient(testValueProvider.getBaseAPIUrl());
         ImageRequest newsImage = new ImageRequest();
 
-        newsImage.setTitle("TestImg" + System.currentTimeMillis());
+        newsImage.setTitle("Test Image Item " + System.currentTimeMillis());
         newsImage.setBaseFormat(ImageProcessor.encodeImage("src/test/resources/newsTest.png"));
         newsImage.setMimeType("image/png");
         newsImage.setExtension("png");
         newsImage.setAlt("1");
 
         Response response = imageClient.post(newsImage);
-        Assert.assertEquals(response.getStatusCode(), 200,
-                "The test image item was not created.");
+        Assert.assertEquals(response.getStatusCode(), 200, "The test image item was not created.");
 
         return response.getBody().jsonPath().getInt("id");
     }
