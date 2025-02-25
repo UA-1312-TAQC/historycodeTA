@@ -44,21 +44,25 @@ public class SectionsComponent extends BaseComponent {
 
     @Step("Click Categories Section.")
     public void clickCategories() {
+        scrollToElementJs(categories);
         categories.click();
     }
 
     @Step("Click Tags Section.")
     public void clickTags() {
+        scrollToElementJs(tags);
         tags.click();
     }
 
     @Step("Click Positions Section.")
     public void clickPositions() {
+        scrollToElementJs(positions);
         positions.click();
     }
 
     @Step("Click Contexts Section.")
     public void clickContexts() {
+        scrollToElementJs(contexts);
         contexts.click();
     }
 }

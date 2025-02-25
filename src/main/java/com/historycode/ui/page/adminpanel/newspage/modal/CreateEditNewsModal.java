@@ -94,9 +94,9 @@ public class CreateEditNewsModal extends BaseCreateEditModal {
         newsTextEditor.sendKeys(newsText);
     }
 
-    public void inputNewsCreationDate(Date newsCreationDate) {
+    public void inputNewsCreationDate(Date createdDate) {
         this.newsCreationDate.getInputField().clear();
-        this.newsCreationDate.setInputField(newsCreationDate.toString());
+        this.newsCreationDate.setInputField(createdDate.toString());
     }
 
     public void clickTextEditorButton(String button) {

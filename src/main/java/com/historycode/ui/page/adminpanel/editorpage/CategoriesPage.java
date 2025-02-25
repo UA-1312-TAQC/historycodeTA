@@ -141,4 +141,33 @@ public class CategoriesPage extends BaseEditorPage {
     public boolean tableHasNextPage() {
         return grid.tableHasNextPage();
     }
+
+    public CategoriesPage moveToPageWithRow(String title) {
+
+        driver.navigate().refresh();
+        CategoriesPage currentPage = new CategoriesPage(driver);
+
+        while (currentPage.getTableRowByTitle(title) == null) {
+            if (!currentPage.tableHasNextPage()) {
+                break;
+            }
+            currentPage = currentPage.clickNextPage();
+        }
+
+        return currentPage;
+
+    }
+
+    public CategoriesPage deleteCategory(String title) {
+
+        CategoriesPage currentPage = moveToPageWithRow(title);
+        CategoriesRowComponent row = currentPage.getTableRowByTitle(title);
+        if (row != null) {
+            currentPage.deleteTableRow(row).clickOkButton();
+        }
+
+        return currentPage;
+
+    }
+
 }

@@ -141,4 +141,33 @@ public class PositionsPage extends BaseEditorPage {
     public boolean tableHasPrevPage() {
         return grid.tableHasPrevPage();
     }
+
+    public PositionsPage moveToPageWithRow(String title) {
+
+        driver.navigate().refresh();
+        PositionsPage currentPage = new CategoriesPage(driver).moveToPositions();
+
+        while (currentPage.getTableRowByTitle(title) == null) {
+            if (!currentPage.tableHasNextPage()) {
+                break;
+            }
+            currentPage = currentPage.clickNextPage();
+        }
+
+        return currentPage;
+
+    }
+
+    public PositionsPage deletePosition(String title) {
+
+        PositionsPage currentPage = moveToPageWithRow(title);
+        PositionsRowComponent row = currentPage.getTableRowByTitle(title);
+        if (row != null) {
+            currentPage.deleteTableRow(row).clickOkButton();
+        }
+
+        return currentPage;
+
+    }
+
 }

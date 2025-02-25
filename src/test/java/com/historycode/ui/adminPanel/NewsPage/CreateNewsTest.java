@@ -1,30 +1,30 @@
-package com.historycode.ui.adminPanel;
+package com.historycode.ui.adminPanel.NewsPage;
 
 import com.historycode.ui.page.adminpanel.newspage.NewsPageAdminPanel;
 import com.historycode.ui.page.adminpanel.newspage.NewsPageGridComponent;
 import com.historycode.ui.page.adminpanel.newspage.NewsRowComponent;
 import com.historycode.ui.page.adminpanel.newspage.modal.CreateEditNewsModal;
 import com.historycode.ui.testrunners.BaseTestRunnerWithAdmin;
-
 import io.qameta.allure.Issue;
 
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
-
+import java.sql.Date;
 import java.util.Random;
 
-public class DeleteNewsTest extends BaseTestRunnerWithAdmin {
+import static org.testng.Assert.*;
+
+public class CreateNewsTest extends BaseTestRunnerWithAdmin {
 
     private String createdTitle;
     private String createdLink;
     private String createdText;
-    private String imagePath = "src/test/resources/newsTest.png"; // Update this path if needed
+    private String imagePath = "src/test/resources/newsTest.png";
 
     @BeforeMethod
-    public void setupForDeleteNews() {
+    public void beforeMethod() {
         
 
         Random rand = new Random();
@@ -40,44 +40,31 @@ public class DeleteNewsTest extends BaseTestRunnerWithAdmin {
         editNewsModal.inputNewsTitle(createdTitle);
         editNewsModal.inputNewsLinkTranslit(createdLink);
         editNewsModal.inputNewsTextEditor(createdText);
-        editNewsModal.inputNewsCreationDate(new java.sql.Date(System.currentTimeMillis()));
-        
+        editNewsModal.inputNewsCreationDate(new Date(System.currentTimeMillis()));
+
         editNewsModal.clickUploadNewsPhoto(imagePath);
-        assertTrue(editNewsModal.isPhotoUploaded(), "Failed to upload news photo during setup");
+        editNewsModal.waitUntilPhotoIsUploaded();
+
         editNewsModal.saveNews();
     }
 
     @Test
-    @Issue("160")
-    public void testDeleteNews() {
+    @Issue("156")
+    public void testCreateNews() {
         NewsPageAdminPanel newsPage = new NewsPageAdminPanel(driver);
+
         NewsPageGridComponent newsGrid = newsPage.getNewsPageGridComponent();
-
         newsGrid.updateNewsRows(driver);
 
-        boolean newsDeleted = false;
-        for (int i = 0; i < newsGrid.getRowCount(); i++) {
-            NewsRowComponent newsToDelete = newsGrid.getRowById(i);
-            if (newsToDelete.getName().getText().equals(createdTitle)) {
-                newsPage.deleteNewsByIndex(i).clickOkButton();
-                newsDeleted = true;
-                break;
-            }
-        }
+        NewsRowComponent createdNews = newsGrid.getRowById(0);
+        assertNotNull(createdNews, "Created news should exist.");
+        assertEquals(createdNews.getName().getText(), createdTitle, "The title is not correct.");
+        String expectedYear = String.valueOf(java.time.Year.now().getValue());
+        assertTrue(createdNews.getDateOfCreation().getText().contains(expectedYear), "Date was not correct.");
 
-        assertTrue(newsDeleted, "The news was not found for deletion.");
-        
-        newsGrid.updateNewsRows(driver);
-        boolean newsExists = false;
-        for (int i = 0; i < newsGrid.getRowCount(); i++) {
-            NewsRowComponent news = newsGrid.getRowById(i);
-            if (news.getName().getText().equals(createdTitle)) {
-                newsExists = true;
-                break;
-            }
-        }
+        String uploadedImageUrl = createdNews.getUploadedImageUrl(); 
 
-        assertFalse(newsExists, "The news should have been deleted.");
+        assertTrue(uploadedImageUrl.contains(imagePath), "The uploaded image does not match the provided image.");
     }
 
     @AfterMethod

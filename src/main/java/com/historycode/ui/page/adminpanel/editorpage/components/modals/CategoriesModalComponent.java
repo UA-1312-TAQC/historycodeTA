@@ -1,10 +1,17 @@
 package com.historycode.ui.page.adminpanel.editorpage.components.modals;
 
+import com.historycode.ui.page.adminpanel.editorpage.CategoriesPage;
+import com.historycode.ui.page.adminpanel.editorpage.PositionsPage;
+import com.historycode.ui.page.adminpanel.editorpage.components.rows.CategoriesRowComponent;
+import com.historycode.ui.page.adminpanel.editorpage.components.rows.PositionsRowComponent;
+import com.historycode.ui.page.adminpanel.editorpage.elements.InputImageElement;
 import io.qameta.allure.Step;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
+import static com.historycode.ui.utils.ImageLoader.loadImageUsingRelativePath;
 
 public class CategoriesModalComponent extends BaseCreateEditModalComponent {
 
@@ -12,8 +19,12 @@ public class CategoriesModalComponent extends BaseCreateEditModalComponent {
     @FindBy(xpath = ".//div[@class='ant-modal-title']")
     private WebElement title;
 
+    @Getter
+    private InputImageElement inputImageComponent;
+
     public CategoriesModalComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
+        inputImageComponent = new InputImageElement(driver, rootElement);
     }
 
     @Step("Enter '{name}' Into The Category Name Input.")
@@ -36,4 +47,11 @@ public class CategoriesModalComponent extends BaseCreateEditModalComponent {
         saveButton.click();
         return new CategoriesModalComponent(driver, rootElement);
     }
+
+    @Step("Insert image into the image input.")
+    public CategoriesModalComponent enterImage(String imagePath) {
+        inputImageComponent.uploadImage(imagePath);
+        return new CategoriesModalComponent(driver, rootElement);
+    }
+
 }
