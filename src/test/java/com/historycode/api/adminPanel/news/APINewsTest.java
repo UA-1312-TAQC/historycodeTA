@@ -9,6 +9,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.restassured.response.Response;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -19,6 +20,7 @@ import java.util.List;
 
 public class APINewsTest extends ApiTestRunner {
     private NewsClient newsClient;
+    private int newsId;
 
     @BeforeClass
     public void init() {
@@ -118,5 +120,222 @@ public class APINewsTest extends ApiTestRunner {
 
         softAssert.assertAll();
     }
-}
 
+    @Issue("215")
+    @Test
+    @Description("Verify that the news cannot be updated if the mandatory field 'title' is empty using PUT method.")
+    public void testUpdateNewsWithEmptyTitle() {
+        SoftAssert softAssert = new SoftAssert();
+        GetAllNewsResponse getAllResponse = newsClient.getAll().body().as(GetAllNewsResponse.class);
+        List<News> newsList = getAllResponse.getNews();
+        softAssert.assertFalse(newsList.isEmpty(), "No news found in the system");
+
+        int newsId = newsList.get(0).getId();
+        int imageId = newsList.get(0).getImage().getId();
+
+        NewsUpdateRequestBody invalidNews = new NewsUpdateRequestBody();
+        invalidNews.setId(newsId);
+        invalidNews.setTitle("");
+        invalidNews.setText("News Testing");
+        invalidNews.setImageId(imageId);
+        invalidNews.setUrl("news");
+        invalidNews.setCreationDate(Instant.now().toString());
+
+        Response response = newsClient.update(invalidNews);
+
+        System.out.println("Response Status Code: " + response.getStatusCode());
+        System.out.println("Response Body: " + response.getBody().asString());
+
+        softAssert.assertEquals(response.getStatusCode(), 400, "Response status is not 400 Bad Request");
+
+        String responseBody = response.getBody().asString();
+        softAssert.assertTrue(responseBody.contains("The Title field is required."),
+                "Expected error message 'The Title field is required.' was not found in response body");
+
+        softAssert.assertAll();
+    }
+
+    @Issue("216")
+    @Test
+    @Description("Verify that the news cannot be updated if the mandatory field 'text' is empty using PUT method.")
+    public void testUpdateNewsWithEmptyText() {
+        SoftAssert softAssert = new SoftAssert();
+        GetAllNewsResponse getAllResponse = newsClient.getAll().body().as(GetAllNewsResponse.class);
+        List<News> newsList = getAllResponse.getNews();
+        softAssert.assertFalse(newsList.isEmpty(), "No news found in the system");
+
+        int newsId = newsList.get(0).getId();
+        int imageId = newsList.get(0).getImage().getId();
+
+        NewsUpdateRequestBody invalidNews = new NewsUpdateRequestBody();
+        invalidNews.setId(newsId);
+        invalidNews.setTitle("Invalid News");
+        invalidNews.setText("");
+        invalidNews.setImageId(imageId);
+        invalidNews.setUrl("news");
+        invalidNews.setCreationDate(Instant.now().toString());
+
+        Response response = newsClient.update(invalidNews);
+
+        System.out.println("Response Status Code: " + response.getStatusCode());
+        System.out.println("Response Body: " + response.getBody().asString());
+
+        softAssert.assertEquals(response.getStatusCode(), 400, "Response status is not 400 Bad Request");
+
+        String responseBody = response.getBody().asString();
+        softAssert.assertTrue(responseBody.contains("The Text field is required."),
+                "Expected error message 'The Text field is required.' was not found in response body");
+
+        softAssert.assertAll();
+    }
+
+    @Issue("217")
+    @Test
+    @Description("Verify that the news cannot be updated if the mandatory field 'imageId' is empty using PUT method.")
+    public void testUpdateNewsWithEmptyImageId() {
+        SoftAssert softAssert = new SoftAssert();
+
+        GetAllNewsResponse getAllResponse = newsClient.getAll().body().as(GetAllNewsResponse.class);
+        List<News> newsList = getAllResponse.getNews();
+        softAssert.assertFalse(newsList.isEmpty(), "No news found in the system");
+
+        int newsId = newsList.get(0).getId();
+
+        NewsUpdateRequestBody invalidNews = new NewsUpdateRequestBody();
+        invalidNews.setId(newsId);
+        invalidNews.setTitle("Victory for Ukraine");
+        invalidNews.setText("News Testing");
+        invalidNews.setImageId(0);
+        invalidNews.setUrl("news");
+        invalidNews.setCreationDate(Instant.now().toString());
+
+        Response response = newsClient.update(invalidNews);
+
+        String responseBody = response.getBody().asString();
+        System.out.println("Response Status Code: " + response.getStatusCode());
+        System.out.println("Response Body: " + responseBody);
+
+        softAssert.assertEquals(response.getStatusCode(), 400, "Response status is not 400 Bad Request");
+
+        softAssert.assertTrue(responseBody.contains("Поле 'Ідентифікатор картинки' не може бути пусте"),
+                "Expected error message about imageId was not found in response body. Actual response: " + responseBody);
+
+        softAssert.assertAll();
+    }
+
+    @Issue("218")
+    @Test
+    @Description("Verify that the news cannot be updated if the mandatory field 'url' is empty using PUT method.")
+    public void testUpdateNewsWithEmptyUrl() {
+        SoftAssert softAssert = new SoftAssert();
+
+        GetAllNewsResponse getAllResponse = newsClient.getAll().body().as(GetAllNewsResponse.class);
+        List<News> newsList = getAllResponse.getNews();
+        softAssert.assertFalse(newsList.isEmpty(), "No news found in the system");
+
+        int newsId = newsList.get(0).getId();
+        int imageId = newsList.get(0).getImage().getId();
+
+        NewsUpdateRequestBody invalidNews = new NewsUpdateRequestBody();
+        invalidNews.setId(newsId);
+        invalidNews.setTitle("Test News");
+        invalidNews.setText("News Testing");
+        invalidNews.setImageId(imageId);
+        invalidNews.setUrl("");
+        invalidNews.setCreationDate(Instant.now().toString());
+
+        Response response = newsClient.update(invalidNews);
+
+        String responseBody = response.getBody().asString();
+        System.out.println("Response Status Code: " + response.getStatusCode());
+        System.out.println("Response Body: " + responseBody);
+
+        softAssert.assertEquals(response.getStatusCode(), 400, "Response status is not 400 Bad Request");
+
+        softAssert.assertTrue(responseBody.contains("The URL field is required."),
+                "Expected error message 'The URL field is required.' was not found in response body. Actual response: " + responseBody);
+
+        softAssert.assertAll();
+    }
+
+    @Issue("219")
+    @Test
+    @Description("Verify that the news cannot be updated if the mandatory field 'creationDate' is empty using PUT method.")
+    public void testUpdateNewsWithEmptyCreationDate() {
+        SoftAssert softAssert = new SoftAssert();
+
+        GetAllNewsResponse getAllResponse = newsClient.getAll().body().as(GetAllNewsResponse.class);
+        List<News> newsList = getAllResponse.getNews();
+        softAssert.assertFalse(newsList.isEmpty(), "No news found in the system");
+
+        int newsId = newsList.get(0).getId();
+        int imageId = newsList.get(0).getImage().getId();
+
+        NewsUpdateRequestBody invalidNews = new NewsUpdateRequestBody();
+        invalidNews.setId(newsId);
+        invalidNews.setTitle("Test News");
+        invalidNews.setText("News Testing");
+        invalidNews.setImageId(imageId);
+        invalidNews.setUrl("news");
+        invalidNews.setCreationDate("");
+
+        Response response = newsClient.update(invalidNews);
+
+        String responseBody = response.getBody().asString();
+        System.out.println("Response Status Code: " + response.getStatusCode());
+        System.out.println("Response Body: " + responseBody);
+
+        softAssert.assertEquals(response.getStatusCode(), 400, "Response status is not 400 Bad Request");
+
+        softAssert.assertTrue(responseBody.contains("The JSON value could not be converted to System.DateTime"),
+                "Expected error message about creationDate format was not found in response body. Actual response: " + responseBody);
+
+        softAssert.assertAll();
+    }
+
+    @Issue("220")
+    @Test
+    @Description("Verify that the 'title' field cannot exceed the 100-character limit when updating news using the PUT method.")
+    public void testUpdateNewsWithLongTitle() {
+        SoftAssert softAssert = new SoftAssert();
+
+        GetAllNewsResponse getAllResponse = newsClient.getAll().body().as(GetAllNewsResponse.class);
+        List<News> newsList = getAllResponse.getNews();
+        softAssert.assertFalse(newsList.isEmpty(), "No news found in the system");
+
+        int newsId = newsList.get(0).getId();
+        int imageId = newsList.get(0).getImage().getId();
+
+        String longTitle = "A".repeat(100) + "q";
+
+        NewsUpdateRequestBody invalidNews = new NewsUpdateRequestBody();
+        invalidNews.setId(newsId);
+        invalidNews.setTitle(longTitle);
+        invalidNews.setText("News Testing");
+        invalidNews.setImageId(imageId);
+        invalidNews.setUrl("news");
+        invalidNews.setCreationDate(Instant.now().toString());
+
+        Response response = newsClient.update(invalidNews);
+
+        String responseBody = response.getBody().asString();
+        System.out.println("Response Status Code: " + response.getStatusCode());
+        System.out.println("Response Body: " + responseBody);
+
+        softAssert.assertEquals(response.getStatusCode(), 400, "Response status is not 400 Bad Request");
+
+        softAssert.assertTrue(responseBody.contains("Max Length is 100"),
+                "Expected error message 'Title: Max Length is 100' was not found in response body. Actual response: " + responseBody);
+
+        softAssert.assertAll();
+    }
+
+    @AfterClass
+    public void clearTestNews() {
+        if (newsId > 0) {
+            Response deleteResponse = newsClient.delete(newsId);
+            System.out.println("Delete Status Code: " + deleteResponse.getStatusCode());
+            System.out.println("Delete Response Body: " + deleteResponse.getBody().asString());
+        }
+    }
+}
