@@ -1,4 +1,4 @@
-package com.historycode.cucumber;
+package com.historycode.cucumber.steps;
 
 import com.historycode.ui.component.adminPanel.adminMenuBar.AdminMenuBarComponent;
 import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
@@ -11,7 +11,7 @@ import org.openqa.selenium.html5.LocalStorage;
 import org.openqa.selenium.html5.WebStorage;
 import org.openqa.selenium.remote.Augmenter;
 
-public class BaseAdminPanelSteps extends BaseStep{
+public class BaseAdminPanelSteps extends BaseStep {
 
     protected HistoryCodesAdminPanelPage historyCodesAdminPanelPage;
     protected NewsPageAdminPanel newsPageAdminPanel;

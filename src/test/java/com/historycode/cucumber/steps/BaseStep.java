@@ -1,18 +1,11 @@
-package com.historycode.cucumber;
+package com.historycode.cucumber.steps;
 
 import com.historycode.TestValueProvider;
-import com.historycode.ui.component.adminPanel.adminMenuBar.AdminMenuBarComponent;
-import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
-import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.When;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.html5.LocalStorage;
-import org.openqa.selenium.html5.WebStorage;
-import org.openqa.selenium.remote.Augmenter;
 
 import java.time.Duration;
 
@@ -24,6 +17,7 @@ public class BaseStep {
 
     @Step("init ChromeDriver")
     public void initDriver() {
+        WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
 
 //        options.addArguments("--disable-notifications");
