@@ -98,7 +98,7 @@ public class APINewsTest extends ApiTestRunner {
         NewsResponse updatedNews = new NewsResponse();
         updatedNews.setId(newsId);
         updatedNews.setTitle("News KH");
-        updatedNews.setText("C");
+        updatedNews.setText("News Testing");
         updatedNews.setImageId(imageId);
         updatedNews.setUrl("news");
         updatedNews.setCreationDate(Instant.now().toString());
