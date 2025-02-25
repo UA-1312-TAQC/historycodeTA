@@ -330,6 +330,43 @@ public class APINewsTest extends ApiTestRunner {
         softAssert.assertAll();
     }
 
+    @Issue("221")
+    @Test
+    @Description("Verify that the 'url' field does not accept values exceeding the 200-character limit when updating news using the PUT method.")
+    public void testUpdateNewsWithLongUrl() {
+        SoftAssert softAssert = new SoftAssert();
+
+        GetAllNewsResponse getAllResponse = newsClient.getAll().body().as(GetAllNewsResponse.class);
+        List<News> newsList = getAllResponse.getNews();
+        softAssert.assertFalse(newsList.isEmpty(), "No news found in the system");
+
+        int newsId = newsList.get(0).getId();
+        int imageId = newsList.get(0).getImage().getId();
+
+        String longUrl = "a".repeat(200) + "q";
+
+        NewsUpdateRequestBody invalidNews = new NewsUpdateRequestBody();
+        invalidNews.setId(newsId);
+        invalidNews.setTitle("Test News");
+        invalidNews.setText("News Testing");
+        invalidNews.setImageId(imageId);
+        invalidNews.setUrl(longUrl);
+        invalidNews.setCreationDate(Instant.now().toString());
+
+        Response response = newsClient.update(invalidNews);
+
+        String responseBody = response.getBody().asString();
+        System.out.println("Response Status Code: " + response.getStatusCode());
+        System.out.println("Response Body: " + responseBody);
+
+        softAssert.assertEquals(response.getStatusCode(), 400, "Response status is not 400 Bad Request");
+        softAssert.assertTrue(responseBody.contains("Max Length is 200"),
+                "Expected error message 'URL: Max Length is 200' was not found in response body. Actual response: " + responseBody);
+
+        softAssert.assertAll();
+    }
+
+
     @AfterClass
     public void clearTestNews() {
         if (newsId > 0) {
