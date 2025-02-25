@@ -18,6 +18,7 @@ public class APINewsTest extends ApiTestRunner {
     private NewsClient newsClient;
     private int newsId;
 
+
     @BeforeClass
     public void init() {
         newsClient = new NewsClient(testValueProvider.getBaseAPIUrl());
