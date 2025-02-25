@@ -5,43 +5,38 @@ import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
 import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.testng.Assert;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import static java.lang.Thread.sleep;
-
 public class CreateEditNewsModalSteps extends NewsPageSteps {
-
     @Given("User open the admin-panel page of the site and login admin")
     public void loginWithAdmin() {
         initDriver();
         driver.get(provider.getBaseUIUrl());
         setAccessToken();
-        driver.get(provider.getBaseUIUrl()+ "/admin-panel");
+        driver.get(provider.getBaseUIUrl() + "/admin-panel");
         historyCodesAdminPanelPage = new HistoryCodesAdminPanelPage(driver);
+    }
+        @And("I click on the Створити новину button")
+    public void ClickOnTheCreateNewsButton() {
+        createEditNewsModal = newsPageAdminPanel.clickAddNewInfo();
     }
 
     @When("I navigate to the {string} tab")
     public void navigateToTab(String name) {
-        AdminMenuBarComponent adminMenuBar= new BasePageAdminPanel(driver).getAdminMenuBar();
+        AdminMenuBarComponent adminMenuBar = new BasePageAdminPanel(driver).getAdminMenuBar();
         switch (name) {
             case "History-коди" -> historyCodesAdminPanelPage = adminMenuBar.goToHistoryCodesPage();
-            case "Новини"-> newsPageAdminPanel = adminMenuBar.goToNewsPage();
+            case "Новини" -> newsPageAdminPanel = adminMenuBar.goToNewsPage();
         }
-        try {
-            sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        sleep(1);
 
-    }
-    @When("I click on the Створити новину button")
-    public void ClickOnTheCreateNewsButton() {
-        newsPageAdminPanel.clickAddNewInfo();
     }
 
     @And("I fill in the {string} field with {string}")
@@ -51,7 +46,7 @@ public class CreateEditNewsModalSteps extends NewsPageSteps {
             case "Link" -> createEditNewsModal.inputNewsLinkTranslit(value);
             case "Text" -> createEditNewsModal.inputNewsTextEditor(value);
             case "Image" -> createEditNewsModal.clickUploadNewsPhoto(value);
-            case "Date"-> {
+            case "Date" -> {
                 Date date;
 
                 if (value.equals("current date")) {
@@ -67,6 +62,30 @@ public class CreateEditNewsModalSteps extends NewsPageSteps {
                 }
 
                 createEditNewsModal.inputNewsCreationDate(date);
+            }
+        }
+    }
+
+    @And("I click on the Зберегти button")
+    public void iClickOnTheSaveButton() {
+        createEditNewsModal.clickSaveButton();
+        sleep(1);
+    }
+
+    @Then("I should for field {string} see the error notification {string}")
+    public void iShouldSeeTheErrorNotification(String field, String value) {
+        switch (field) {
+            case "Text" -> {
+                String error = createEditNewsModal.getEditorError().getText();
+                Assert.assertEquals(error, value, "text field");
+            }
+            case "Image" -> {
+                String error = createEditNewsModal.getImageError().getText();
+                Assert.assertEquals(error, value, "Image field");
+            }
+            case "Date" -> {
+                String error = createEditNewsModal.getCreationDateError().getText();
+                Assert.assertEquals(error, value, "Date field");
             }
         }
     }

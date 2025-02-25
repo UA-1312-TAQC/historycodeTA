@@ -33,7 +33,7 @@ public class CreateEditNewsModal extends BaseCreateEditModal {
     @Getter
     private final InputElement newsLinkTranslit;
 
-    @FindBy(xpath = "//label[@for = 'editor']/../..")
+    @FindBy(xpath = ".//div[@class = 'ql-editor']")
     @Getter
     @Setter
     private WebElement newsTextEditor;
@@ -67,6 +67,16 @@ public class CreateEditNewsModal extends BaseCreateEditModal {
     @FindBy(xpath = "//div[contains(@class, 'ant-form-item-explain-error')]")
     private WebElement newsLinkTranslitErrorMessage;
 
+    @Getter
+    @FindBy(xpath = ".//div[contains(@id, 'creationDate_help')]/div")
+    private WebElement creationDateError;
+    @Getter
+    @FindBy(xpath = ".//div[contains(@id, 'image_help')]/div")
+    private WebElement imageError;
+    @Getter
+    @FindBy(xpath = ".//div[contains(@id, 'editor_help')]/div")
+    private WebElement editorError;
+
     protected PhotoModalComponent photoModalComponent;
 
     public CreateEditNewsModal(WebDriver driver, WebElement rootElement) {
@@ -90,7 +100,7 @@ public class CreateEditNewsModal extends BaseCreateEditModal {
     }
 
     public void inputNewsTextEditor(String newsText) {
-        newsTextEditor.clear();
+//        newsTextEditor.clear();
         newsTextEditor.sendKeys(newsText);
     }
 

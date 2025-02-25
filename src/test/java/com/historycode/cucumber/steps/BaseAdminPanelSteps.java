@@ -19,12 +19,15 @@ public class BaseAdminPanelSteps extends BaseStep {
     protected HistoryCodesAdminPanelPage historyCodesAdminPanelPage;
     protected NewsPageAdminPanel newsPageAdminPanel;
 
-    @Step("set AccessToken")
-    public void setAccessToken() {
-        WebStorage webStorage = (WebStorage) new Augmenter().augment(driver);
-        LocalStorage localStorage = webStorage.getLocalStorage();
-        localStorage.setItem("AccessToken", provider.getAccessToken());
-        localStorage.setItem("RefreshToken", provider.getRefreshToken());
-    }
+
+
+//    @Given("User open the admin-panel page of the site and login admin")
+//    public void loginWithAdmin() {
+//        initDriver();
+//        driver.get(provider.getBaseUIUrl());
+//        setAccessToken();
+//        driver.get(provider.getBaseUIUrl() + "/admin-panel");
+//        historyCodesAdminPanelPage = new HistoryCodesAdminPanelPage(driver);
+//    }
 
 }
