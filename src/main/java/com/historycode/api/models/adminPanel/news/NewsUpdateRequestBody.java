@@ -10,4 +10,8 @@ public class NewsUpdateRequestBody {
     private String url;
     private String creationDate;
     private int id;
+
+    public Integer getImageNull() {
+        return imageId == 0 ? null : imageId;
+    }
 }
