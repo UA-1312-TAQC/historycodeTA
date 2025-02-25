@@ -376,3 +376,4 @@ public class APINewsTest extends ApiTestRunner {
         }
     }
 }
+
