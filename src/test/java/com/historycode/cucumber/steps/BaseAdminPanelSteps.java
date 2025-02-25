@@ -27,33 +27,4 @@ public class BaseAdminPanelSteps extends BaseStep {
         localStorage.setItem("RefreshToken", provider.getRefreshToken());
     }
 
-    @Given("User open the admin-panel page of the site and login admin")
-    public void loginWithAdmin() {
-        initDriver();
-        driver.get(provider.getBaseUIUrl());
-        setAccessToken();
-        driver.get(provider.getBaseUIUrl()+ "/admin-panel");
-        historyCodesAdminPanelPage = new HistoryCodesAdminPanelPage(driver);
-    }
-
-    @When("I navigate to the {string} tab")
-    public void navigateToTab(String name) {
-        AdminMenuBarComponent adminMenuBar= new BasePageAdminPanel(driver).getAdminMenuBar();
-        switch (name) {
-            case "History-коди" -> historyCodesAdminPanelPage = adminMenuBar.goToHistoryCodesPage();
-            case "Новини"-> newsPageAdminPanel = adminMenuBar.goToNewsPage();
-        }
-        try {
-            sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-    @And("I click on the Створити новину button")
-    public void ClickOnTheCreateNewsButton() {
-         newsPageAdminPanel.clickAddNewInfo();
-    }
-
-
 }
