@@ -129,7 +129,7 @@ public class APINewsTest extends ApiTestRunner {
         int newsId = newsList.get(0).getId();
         int imageId = newsList.get(0).getImage().getId();
 
-        NewsRequestBody invalidNews = new NewsRequestBody();
+        NewsUpdateRequestBody invalidNews = new NewsUpdateRequestBody();
         invalidNews.setId(newsId);
         invalidNews.setTitle("");
         invalidNews.setText("News Testing");
@@ -137,7 +137,7 @@ public class APINewsTest extends ApiTestRunner {
         invalidNews.setUrl("news");
         invalidNews.setCreationDate(Instant.now().toString());
 
-        Response response = newsClient.create(invalidNews);
+        Response response = newsClient.update(invalidNews);
 
         System.out.println("Response Status Code: " + response.getStatusCode());
         System.out.println("Response Body: " + response.getBody().asString());
@@ -163,7 +163,7 @@ public class APINewsTest extends ApiTestRunner {
         int newsId = newsList.get(0).getId();
         int imageId = newsList.get(0).getImage().getId();
 
-        NewsRequestBody invalidNews = new NewsRequestBody();
+        NewsUpdateRequestBody invalidNews = new NewsUpdateRequestBody();
         invalidNews.setId(newsId);
         invalidNews.setTitle("Invalid News");
         invalidNews.setText("");
@@ -171,7 +171,7 @@ public class APINewsTest extends ApiTestRunner {
         invalidNews.setUrl("news");
         invalidNews.setCreationDate(Instant.now().toString());
 
-        Response response = newsClient.create(invalidNews);
+        Response response = newsClient.update(invalidNews);
 
         System.out.println("Response Status Code: " + response.getStatusCode());
         System.out.println("Response Body: " + response.getBody().asString());
@@ -197,7 +197,7 @@ public class APINewsTest extends ApiTestRunner {
 
         int newsId = newsList.get(0).getId();
 
-        NewsRequestBody invalidNews = new NewsRequestBody();
+        NewsUpdateRequestBody invalidNews = new NewsUpdateRequestBody();
         invalidNews.setId(newsId);
         invalidNews.setTitle("Victory for Ukraine");
         invalidNews.setText("News Testing");
@@ -205,7 +205,7 @@ public class APINewsTest extends ApiTestRunner {
         invalidNews.setUrl("news");
         invalidNews.setCreationDate(Instant.now().toString());
 
-        Response response = newsClient.create(invalidNews);
+        Response response = newsClient.update(invalidNews);
 
         String responseBody = response.getBody().asString();
         System.out.println("Response Status Code: " + response.getStatusCode());
@@ -232,7 +232,7 @@ public class APINewsTest extends ApiTestRunner {
         int newsId = newsList.get(0).getId();
         int imageId = newsList.get(0).getImage().getId();
 
-        NewsRequestBody invalidNews = new NewsRequestBody();
+        NewsUpdateRequestBody invalidNews = new NewsUpdateRequestBody();
         invalidNews.setId(newsId);
         invalidNews.setTitle("Test News");
         invalidNews.setText("News Testing");
@@ -240,7 +240,7 @@ public class APINewsTest extends ApiTestRunner {
         invalidNews.setUrl("");
         invalidNews.setCreationDate(Instant.now().toString());
 
-        Response response = newsClient.create(invalidNews);
+        Response response = newsClient.update(invalidNews);
 
         String responseBody = response.getBody().asString();
         System.out.println("Response Status Code: " + response.getStatusCode());
@@ -267,7 +267,7 @@ public class APINewsTest extends ApiTestRunner {
         int newsId = newsList.get(0).getId();
         int imageId = newsList.get(0).getImage().getId();
 
-        NewsRequestBody invalidNews = new NewsRequestBody();
+        NewsUpdateRequestBody invalidNews = new NewsUpdateRequestBody();
         invalidNews.setId(newsId);
         invalidNews.setTitle("Test News");
         invalidNews.setText("News Testing");
@@ -275,7 +275,7 @@ public class APINewsTest extends ApiTestRunner {
         invalidNews.setUrl("news");
         invalidNews.setCreationDate("");
 
-        Response response = newsClient.create(invalidNews);
+        Response response = newsClient.update(invalidNews);
 
         String responseBody = response.getBody().asString();
         System.out.println("Response Status Code: " + response.getStatusCode());
@@ -304,15 +304,15 @@ public class APINewsTest extends ApiTestRunner {
 
         String longTitle = "A".repeat(100) + "q";
 
-        NewsRequestBody invalidNews = new NewsRequestBody();
+        NewsUpdateRequestBody invalidNews = new NewsUpdateRequestBody();
         invalidNews.setId(newsId);
-        invalidNews.setTitle(longTitle); // 101 символ
+        invalidNews.setTitle(longTitle);
         invalidNews.setText("News Testing");
         invalidNews.setImageId(imageId);
         invalidNews.setUrl("news");
         invalidNews.setCreationDate(Instant.now().toString());
 
-        Response response = newsClient.create(invalidNews);
+        Response response = newsClient.update(invalidNews);
 
         String responseBody = response.getBody().asString();
         System.out.println("Response Status Code: " + response.getStatusCode());
