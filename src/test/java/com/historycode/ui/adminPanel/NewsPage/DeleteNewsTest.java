@@ -1,4 +1,4 @@
-package com.historycode.ui.adminPanel;
+package com.historycode.ui.adminPanel.NewsPage;
 
 import com.historycode.ui.page.adminpanel.newspage.NewsPageAdminPanel;
 import com.historycode.ui.page.adminpanel.newspage.NewsPageGridComponent;
@@ -11,29 +11,27 @@ import io.qameta.allure.Issue;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import java.sql.Date;
-import java.util.Random;
 
 import static org.testng.Assert.*;
 
-public class CreateNewsWithFutureDateTest extends BaseTestRunnerWithAdmin {
+import java.util.Random;
+
+public class DeleteNewsTest extends BaseTestRunnerWithAdmin {
 
     private String createdTitle;
     private String createdLink;
     private String createdText;
-    private String imagePath = "src/test/resources/newsTest.png"; 
-
-    final long ONE_DAY_IN_MILLIS = 24 * 60 * 60 * 1000L;
+    private String imagePath = "src/test/resources/newsTest.png"; // Update this path if needed
 
     @BeforeMethod
-    public void setupForCreateNewsWithFutureDate() {
+    public void setupForDeleteNews() {
         
 
         Random rand = new Random();
         int n = rand.nextInt(50);
         createdTitle = "Тестова новина " + n;
         createdLink = "test-link-" + n;
-        createdText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras et commodo ex. Pellentesque id sagittis ex. Morbi tincidunt volutpat ante, ut elementum turpis pulvinar et.";
+        createdText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
 
         driver.get(testValueProvider.getBaseUIUrl() + "/admin-panel/news");
         NewsPageAdminPanel newsPage = new NewsPageAdminPanel(driver);
@@ -42,37 +40,44 @@ public class CreateNewsWithFutureDateTest extends BaseTestRunnerWithAdmin {
         editNewsModal.inputNewsTitle(createdTitle);
         editNewsModal.inputNewsLinkTranslit(createdLink);
         editNewsModal.inputNewsTextEditor(createdText);
-        Date futureDate = new Date(System.currentTimeMillis() + ONE_DAY_IN_MILLIS);
-        editNewsModal.inputNewsCreationDate(futureDate);
-
-        // Upload the photo
+        editNewsModal.inputNewsCreationDate(new java.sql.Date(System.currentTimeMillis()));
+        
         editNewsModal.clickUploadNewsPhoto(imagePath);
-        editNewsModal.waitUntilPhotoIsUploaded();
-
-        // Save the news
+        assertTrue(editNewsModal.isPhotoUploaded(), "Failed to upload news photo during setup");
         editNewsModal.saveNews();
     }
 
     @Test
-    @Issue("162")
-    public void testCreateNewsWithFutureDate() {
+    @Issue("160")
+    public void testDeleteNews() {
         NewsPageAdminPanel newsPage = new NewsPageAdminPanel(driver);
-
         NewsPageGridComponent newsGrid = newsPage.getNewsPageGridComponent();
+
         newsGrid.updateNewsRows(driver);
 
-        NewsRowComponent createdNews = newsGrid.getRowById(0);
-        assertNotNull(createdNews, "Created news should exist.");
-        assertEquals(createdNews.getName().getText(), createdTitle, "The title is not correct.");
+        boolean newsDeleted = false;
+        for (int i = 0; i < newsGrid.getRowCount(); i++) {
+            NewsRowComponent newsToDelete = newsGrid.getRowById(i);
+            if (newsToDelete.getName().getText().equals(createdTitle)) {
+                newsPage.deleteNewsByIndex(i).clickOkButton();
+                newsDeleted = true;
+                break;
+            }
+        }
 
-        Date expectedDate = new Date(System.currentTimeMillis() + ONE_DAY_IN_MILLIS);
-        String expectedDateString = new java.text.SimpleDateFormat("yyyy-MM-dd").format(expectedDate);
-        assertTrue(createdNews.getDateOfCreation().getText().contains(expectedDateString), "Future date was not set correctly");
+        assertTrue(newsDeleted, "The news was not found for deletion.");
+        
+        newsGrid.updateNewsRows(driver);
+        boolean newsExists = false;
+        for (int i = 0; i < newsGrid.getRowCount(); i++) {
+            NewsRowComponent news = newsGrid.getRowById(i);
+            if (news.getName().getText().equals(createdTitle)) {
+                newsExists = true;
+                break;
+            }
+        }
 
-        assertFalse(createdNews.getDateOfCreation().getText().contains("published"), "The news should not be published yet.");
-
-        String uploadedImageUrl = createdNews.getUploadedImageUrl(); 
-        assertTrue(uploadedImageUrl.contains(imagePath), "The uploaded image does not match the provided image.");
+        assertFalse(newsExists, "The news should have been deleted.");
     }
 
     @AfterMethod

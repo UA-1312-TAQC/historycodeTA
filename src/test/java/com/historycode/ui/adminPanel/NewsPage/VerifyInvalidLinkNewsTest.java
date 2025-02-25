@@ -1,4 +1,4 @@
-package com.historycode.ui.adminPanel;
+package com.historycode.ui.adminPanel.NewsPage;
 
 import com.historycode.ui.page.adminpanel.newspage.NewsPageAdminPanel;
 import com.historycode.ui.page.adminpanel.newspage.modal.CreateEditNewsModal;
