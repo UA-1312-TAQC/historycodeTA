@@ -4,12 +4,15 @@ import com.historycode.ui.component.adminPanel.adminMenuBar.AdminMenuBarComponen
 import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
 import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
 import com.historycode.ui.page.adminpanel.newspage.NewsPageAdminPanel;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import io.qameta.allure.Step;
 import org.openqa.selenium.html5.LocalStorage;
 import org.openqa.selenium.html5.WebStorage;
 import org.openqa.selenium.remote.Augmenter;
+
+import static java.lang.Thread.sleep;
 
 public class BaseAdminPanelSteps extends BaseStep {
 
@@ -37,12 +40,20 @@ public class BaseAdminPanelSteps extends BaseStep {
     public void navigateToTab(String name) {
         AdminMenuBarComponent adminMenuBar= new BasePageAdminPanel(driver).getAdminMenuBar();
         switch (name) {
-            case "History-коди" ->
-                historyCodesAdminPanelPage = adminMenuBar.goToHistoryCodesPage();
-
-            case "Новини"->
-                    newsPageAdminPanel = adminMenuBar.goToNewsPage();
+            case "History-коди" -> historyCodesAdminPanelPage = adminMenuBar.goToHistoryCodesPage();
+            case "Новини"-> newsPageAdminPanel = adminMenuBar.goToNewsPage();
+        }
+        try {
+            sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
 
     }
+    @And("I click on the Створити новину button")
+    public void ClickOnTheCreateNewsButton() {
+         newsPageAdminPanel.clickAddNewInfo();
+    }
+
+
 }

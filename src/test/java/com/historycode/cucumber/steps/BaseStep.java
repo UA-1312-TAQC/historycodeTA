@@ -1,6 +1,7 @@
 package com.historycode.cucumber.steps;
 
 import com.historycode.TestValueProvider;
+import io.cucumber.java.After;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
@@ -28,6 +29,14 @@ public class BaseStep {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(provider.getImplicitlyWait()));
     }
+
+
+//    @After
+//    public void closeDriver(){
+//        if (driver != null){
+//            driver.quit();
+//        }
+//    }
 
 
 }

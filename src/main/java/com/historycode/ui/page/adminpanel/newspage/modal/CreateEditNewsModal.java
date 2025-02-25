@@ -14,7 +14,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
-import java.sql.Date;
+import java.util.Date;
 import java.time.Duration;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeoutException;
