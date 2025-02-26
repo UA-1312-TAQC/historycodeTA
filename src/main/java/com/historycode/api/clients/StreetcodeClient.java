@@ -45,6 +45,7 @@ public class StreetcodeClient extends BaseClient {
     }
 
     public Response createStreetcode(StreetcodeRequestBody requestBody){
+        System.out.println(baseAPIUrl + resourceUrl + "/Create");
         return preparedRequest()
                 .when()
                 .body(requestBody)

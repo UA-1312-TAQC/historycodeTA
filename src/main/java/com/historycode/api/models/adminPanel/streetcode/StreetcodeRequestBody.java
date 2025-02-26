@@ -2,8 +2,7 @@ package com.historycode.api.models.adminPanel.streetcode;
 
 import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.Date;
+import java.time.Instant;
 import java.util.List;
 
 @Data
@@ -16,8 +15,8 @@ public class StreetcodeRequestBody {
     private String alias;
     private String transliterationUrl;
     private String dateString;
-    private Date eventStartOrPersonBirthDate;
-    private Date eventEndOrPersonDeathDate;
+    private Instant eventStartOrPersonBirthDate;
+    private Instant eventEndOrPersonDeathDate;
     private List<Object> tags;
     private String teaser;
     private List<Integer> imagesIds;
@@ -79,12 +78,12 @@ public class StreetcodeRequestBody {
         return this;
     }
 
-    public StreetcodeRequestBody setEventStartOrPersonBirthDate(Date eventStartOrPersonBirthDate) {
+    public StreetcodeRequestBody setEventStartOrPersonBirthDate(Instant eventStartOrPersonBirthDate) {
         this.eventStartOrPersonBirthDate = eventStartOrPersonBirthDate;
         return this;
     }
 
-    public StreetcodeRequestBody setEventEndOrPersonDeathDate(Date eventEndOrPersonDeathDate) {
+    public StreetcodeRequestBody setEventEndOrPersonDeathDate(Instant eventEndOrPersonDeathDate) {
         this.eventEndOrPersonDeathDate = eventEndOrPersonDeathDate;
         return this;
     }

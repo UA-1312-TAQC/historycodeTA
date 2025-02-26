@@ -1,27 +1,27 @@
 package com.historycode.api.adminPanel;
 
 import com.historycode.api.clients.StreetcodeClient;
-import com.historycode.api.models.adminPanel.news.NewsRequestBody;
 import com.historycode.api.models.adminPanel.streetcode.ImageDetails;
 import com.historycode.api.models.adminPanel.streetcode.StreetcodeRequestBody;
 import com.historycode.api.models.adminPanel.streetcode.Subtitle;
 import com.historycode.api.testRunners.ApiTestRunner;
 import io.qameta.allure.Issue;
 import io.restassured.response.Response;
+import lombok.extern.slf4j.Slf4j;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
+@Slf4j
 public class StreetcodeTest extends ApiTestRunner {
     private StreetcodeClient client;
     private StreetcodeRequestBody requestBody;
-
+    int streetcodeId;
     int id;
     @BeforeClass
     public void setUpClass() {
@@ -32,6 +32,9 @@ public class StreetcodeTest extends ApiTestRunner {
     @Test
     @Issue("260")
     public void createStreetcodeTest() {
+
+        String dateString = "2024-03-31T13:46:48.769Z";
+        Instant instant = Instant.parse(dateString);
         ImageDetails imageDetails = new ImageDetails()
                 .setId(0)
                 .setImageId(5879)
@@ -44,7 +47,7 @@ public class StreetcodeTest extends ApiTestRunner {
                 .setLastName("")
                 .setAlias("")
                 .setTransliterationUrl("qwe-ewq")
-                .setEventStartOrPersonBirthDate(new Date("2024-03-31T13:46:48.769Z"))
+                .setEventStartOrPersonBirthDate(instant)
                 .setTags(new ArrayList<>())
                 .setTeaser("efasf")
                 .setImagesIds(List.of(5879))
@@ -63,15 +66,17 @@ public class StreetcodeTest extends ApiTestRunner {
                 .setToponyms(new ArrayList<>())
                 .setStatisticRecords(new ArrayList<>())
                 .setStatus(0);
+        log.debug(requestBody.toString());
         Response response = client.createStreetcode(requestBody);
         Assert.assertEquals(response.getStatusCode(), 200);
         response.body().print();
-        Assert.fail("Test is not fully implemented");
+        streetcodeId = response.jsonPath().getInt("id");
+        Assert.assertNotEquals(streetcodeId, 0);
     }
 
     @AfterMethod
     public void deleteStreetcode(){
-        //TODO finish this method
-        //client.softDeleteStreetcode(id);
+        if(id!= 0)
+            client.softDeleteStreetcode(id);
     }
 }
