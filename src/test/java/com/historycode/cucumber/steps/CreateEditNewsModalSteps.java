@@ -15,7 +15,6 @@ import java.util.Date;
 import java.util.Locale;
 
 public class CreateEditNewsModalSteps extends NewsPageSteps {
-
     @Given("User open the admin-panel page of the site and login admin")
     public void loginWithAdmin() {
         initDriver();
@@ -24,7 +23,6 @@ public class CreateEditNewsModalSteps extends NewsPageSteps {
         driver.get(provider.getBaseUIUrl() + "/admin-panel");
         historyCodesAdminPanelPage = new HistoryCodesAdminPanelPage(driver);
     }
-
     @And("I click on the Створити новину button")
     public void ClickOnTheCreateNewsButton() {
         createEditNewsModal = newsPageAdminPanel.clickAddNewInfo();
