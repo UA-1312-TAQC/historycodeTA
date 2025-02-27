@@ -47,6 +47,7 @@ public class StreetcodeTest extends ApiTestRunner {
                 .setLastName("")
                 .setAlias("")
                 .setTransliterationUrl("qwe-ewq")
+                .setDateString("65")
                 .setEventStartOrPersonBirthDate(instant)
                 .setTags(new ArrayList<>())
                 .setTeaser("efasf")
@@ -68,6 +69,7 @@ public class StreetcodeTest extends ApiTestRunner {
                 .setStatus(0);
         log.debug(requestBody.toString());
         Response response = client.createStreetcode(requestBody);
+        response.body().print();
         Assert.assertEquals(response.getStatusCode(), 200);
         response.body().print();
         streetcodeId = response.jsonPath().getInt("id");
