@@ -1,8 +1,11 @@
-package com.historycode.cucumber.steps;
+package com.historycode.cucumber.steps.adminpanel;
 
+import com.historycode.cucumber.steps.BaseStep;
 import com.historycode.ui.component.adminPanel.adminMenuBar.AdminMenuBarComponent;
 import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
 import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
+import com.historycode.ui.page.adminpanel.newspage.NewsPageAdminPanel;
+import com.historycode.ui.page.adminpanel.newspage.modal.CreateEditNewsModal;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -14,7 +17,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class CreateEditNewsModalSteps extends NewsPageSteps {
+public class CreateEditNewsModalSteps extends BaseStep {
+    private HistoryCodesAdminPanelPage historyCodesAdminPanelPage;
+    private CreateEditNewsModal createEditNewsModal;
+
     @Given("User open the admin-panel page of the site and login admin")
     public void loginWithAdmin() {
         initDriver();
@@ -23,20 +29,11 @@ public class CreateEditNewsModalSteps extends NewsPageSteps {
         driver.get(provider.getBaseUIUrl() + "/admin-panel");
         historyCodesAdminPanelPage = new HistoryCodesAdminPanelPage(driver);
     }
-        @And("I click on the Створити новину button")
+
+    @And("I click on the Створити новину button")
     public void ClickOnTheCreateNewsButton() {
-        createEditNewsModal = newsPageAdminPanel.clickAddNewInfo();
-    }
 
-    @When("I navigate to the {string} tab")
-    public void navigateToTab(String name) {
-        AdminMenuBarComponent adminMenuBar = new BasePageAdminPanel(driver).getAdminMenuBar();
-        switch (name) {
-            case "History-коди" -> historyCodesAdminPanelPage = adminMenuBar.goToHistoryCodesPage();
-            case "Новини" -> newsPageAdminPanel = adminMenuBar.goToNewsPage();
-        }
-        sleep(1);
-
+        createEditNewsModal = new NewsPageAdminPanel(driver).clickAddNewInfo();
     }
 
     @And("I fill in the {string} field with {string}")
