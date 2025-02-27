@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class CreateEditNewsModalSteps extends NewsPageSteps {
-    @Given("User open the admin-panel page of the site and login admin")
+    /*@Given("User open the admin-panel page of the site and login admin")
     public void loginWithAdmin() {
         initDriver();
         driver.get(provider.getBaseUIUrl());
@@ -23,6 +23,7 @@ public class CreateEditNewsModalSteps extends NewsPageSteps {
         driver.get(provider.getBaseUIUrl() + "/admin-panel");
         historyCodesAdminPanelPage = new HistoryCodesAdminPanelPage(driver);
     }
+
     @And("I click on the Створити новину button")
     public void ClickOnTheCreateNewsButton() {
         createEditNewsModal = newsPageAdminPanel.clickAddNewInfo();
@@ -34,10 +35,12 @@ public class CreateEditNewsModalSteps extends NewsPageSteps {
         switch (name) {
             case "History-коди" -> historyCodesAdminPanelPage = adminMenuBar.goToHistoryCodesPage();
             case "Новини" -> newsPageAdminPanel = adminMenuBar.goToNewsPage();
+            case "Партнери" -> partnersPageAdminPanel = adminMenuBar.goToPartnersPage();
         }
         sleep(1);
 
     }
+    */
 
     @And("I fill in the {string} field with {string}")
     public void iFillInTheFieldWith(String field, String value) {

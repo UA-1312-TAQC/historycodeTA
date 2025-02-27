@@ -4,6 +4,7 @@ import com.historycode.ui.component.adminPanel.adminMenuBar.AdminMenuBarComponen
 import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
 import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
 import com.historycode.ui.page.adminpanel.newspage.NewsPageAdminPanel;
+import com.historycode.ui.page.adminpanel.partnerspage.PartnersPageAdminPanel;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
@@ -18,6 +19,7 @@ public class BaseAdminPanelSteps extends BaseStep {
 
     protected HistoryCodesAdminPanelPage historyCodesAdminPanelPage;
     protected NewsPageAdminPanel newsPageAdminPanel;
+    protected PartnersPageAdminPanel partnersPageAdminPanel;
 
 
 
