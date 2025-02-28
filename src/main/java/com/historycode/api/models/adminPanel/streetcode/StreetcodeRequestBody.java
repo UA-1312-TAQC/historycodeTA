@@ -83,6 +83,10 @@ public class StreetcodeRequestBody {
         return this;
     }
 
+    public String getEventStartOrPersonBirthDate() {
+        return eventStartOrPersonBirthDate.toString();
+    }
+
     public StreetcodeRequestBody setEventEndOrPersonDeathDate(Instant eventEndOrPersonDeathDate) {
         this.eventEndOrPersonDeathDate = eventEndOrPersonDeathDate;
         return this;

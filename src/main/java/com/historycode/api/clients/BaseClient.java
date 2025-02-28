@@ -33,6 +33,8 @@ public class BaseClient {
 
     protected RequestSpecification preparedRequest() {
         RequestSpecification request = RestAssured.given()
+//                .log()
+//                .body()
                 .baseUri(baseAPIUrl)
                 .contentType(contentType);
         if (token != null) {
