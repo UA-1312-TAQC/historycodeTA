@@ -18,12 +18,17 @@ import java.util.Date;
 import java.util.Locale;
 
 public class CreateEditNewsModalSteps extends BaseStep {
-
+    private HistoryCodesAdminPanelPage historyCodesAdminPanelPage;
     private CreateEditNewsModal createEditNewsModal;
+
+    @Given("User open the admin-panel page of the site and login admin")
+    public void loginWithAdminPanel() {
+        loginWithAdmin();
+    }
 
     @And("I click on the Створити новину button")
     public void ClickOnTheCreateNewsButton() {
-        createEditNewsModal = new NewsPageAdminPanel(driver).clickAddNewInfo();
+     createEditNewsModal = new NewsPageAdminPanel(driver).clickAddNewInfo();
     }
 
     @And("I fill in the {string} field with {string}")

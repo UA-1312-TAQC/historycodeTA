@@ -1,5 +1,6 @@
 package com.historycode.api.clients;
 
+import com.historycode.api.models.adminPanel.streetcode.StreetcodeRequestBody;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
@@ -41,5 +42,20 @@ public class StreetcodeClient extends BaseClient {
                 .when()
                 .pathParam("index", index)
                 .get(resourceUrl + "/GetByIndex/{index}");
+    }
+
+    public Response createStreetcode(StreetcodeRequestBody requestBody){
+        System.out.println(baseAPIUrl + resourceUrl + "/Create");
+        return preparedRequest()
+                .when()
+                .body(requestBody)
+                .post(resourceUrl + "/Create");
+    }
+
+    public Response softDeleteStreetcode(int id) {
+        return preparedRequest()
+                .when()
+                .pathParam("id", id)
+                .delete(resourceUrl + "/SoftDelete/{id}");
     }
 }
