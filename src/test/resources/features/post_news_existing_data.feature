@@ -1,16 +1,27 @@
-And the image with 'imageId' was previously created
-And a news item has been created with the following data:
-| title  | url        | text                                                                                                  | imageId | creationDate |
-| Тестова новина | test-link | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras et commodo ex. Pellentesque id sagittis ex. Morbi tincidunt volutpat ante, ut elementum turpis pulvinar et. | created image ID | Current date |
-And the POST method is chosen
-And all required data has been added to the body:
-| field        | value                        |
-| title        | Тестова новина              |
-| text         | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras et commodo ex. Pellentesque id sagittis ex. Morbi tincidunt volutpat ante, ut elementum turpis pulvinar et. |
-| imageId      | created image ID            |
-| url         | test-link                    |
-| creationDate | Current date                |
-When I input a valid endpoint "https://backend.historycode.online/api/News/GetByIdCreate"
-And I click the 'Send' button
-Then the news is not created
-And the response status code should be 400
+Feature: Verify that a news item cannot be created with an already existing title and link
+
+  Background:
+    Given The image with 'imageId' was previously created
+    And A news item has been created in the system with the following data:
+      | Title  | Тестова новина |
+      | Link   | test-link |
+      | Text   | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras et commodo ex. Pellentesque id sagittis ex. Morbi tincidunt volutpat ante, ut elementum turpis pulvinar et. |
+      | Image  | from previous point |
+      | Date   | Current date |
+    And The POST method is chosen
+
+  Scenario: Verify that creating a news item with the same title and link fails
+    Given The request body contains the following data:
+      """
+      {
+        "title": "Тестова новина",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras et commodo ex. Pellentesque id sagittis ex. Morbi tincidunt volutpat ante, ut elementum turpis pulvinar et.",
+        "imageId": "Id of created in point 2 image",
+        "url": "test-link",
+        "creationDate": "Current date"
+      }
+      """
+    And The valid endpoint "https://backend.historycode.online/api/News/GetByIdCreate" is selected
+    When The user clicks the 'Send' button
+    Then The response status code should be 400
+    And The news item should not be created

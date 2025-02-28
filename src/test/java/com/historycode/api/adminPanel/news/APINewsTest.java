@@ -366,7 +366,6 @@ public class APINewsTest extends ApiTestRunner {
         softAssert.assertAll();
     }
 
-
     @AfterClass
     public void clearTestNews() {
         if (newsId > 0) {
