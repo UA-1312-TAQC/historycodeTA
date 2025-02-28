@@ -360,7 +360,6 @@ public class APINewsTest extends ApiTestRunner {
         System.out.println("Response Body: " + responseBody);
 
         softAssert.assertEquals(response.getStatusCode(), 400, "Response status is not 400 Bad Request");
-
         softAssert.assertTrue(responseBody.contains("Max Length is 200"),
                 "Expected error message 'URL: Max Length is 200' was not found in response body. Actual response: " + responseBody);
 
@@ -376,4 +375,3 @@ public class APINewsTest extends ApiTestRunner {
         }
     }
 }
-
