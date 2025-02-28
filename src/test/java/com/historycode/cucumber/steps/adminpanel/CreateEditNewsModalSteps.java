@@ -1,8 +1,11 @@
-package com.historycode.cucumber.steps;
+package com.historycode.cucumber.steps.adminpanel;
 
+import com.historycode.cucumber.steps.BaseStep;
 import com.historycode.ui.component.adminPanel.adminMenuBar.AdminMenuBarComponent;
 import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
 import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
+import com.historycode.ui.page.adminpanel.newspage.NewsPageAdminPanel;
+import com.historycode.ui.page.adminpanel.newspage.modal.CreateEditNewsModal;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -14,33 +17,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class CreateEditNewsModalSteps extends NewsPageSteps {
-    /*@Given("User open the admin-panel page of the site and login admin")
-    public void loginWithAdmin() {
-        initDriver();
-        driver.get(provider.getBaseUIUrl());
-        setAccessToken();
-        driver.get(provider.getBaseUIUrl() + "/admin-panel");
-        historyCodesAdminPanelPage = new HistoryCodesAdminPanelPage(driver);
-    }
+public class CreateEditNewsModalSteps extends BaseStep {
+
+    private CreateEditNewsModal createEditNewsModal;
 
     @And("I click on the Створити новину button")
     public void ClickOnTheCreateNewsButton() {
-        createEditNewsModal = newsPageAdminPanel.clickAddNewInfo();
+        createEditNewsModal = new NewsPageAdminPanel(driver).clickAddNewInfo();
     }
-
-    @When("I navigate to the {string} tab")
-    public void navigateToTab(String name) {
-        AdminMenuBarComponent adminMenuBar = new BasePageAdminPanel(driver).getAdminMenuBar();
-        switch (name) {
-            case "History-коди" -> historyCodesAdminPanelPage = adminMenuBar.goToHistoryCodesPage();
-            case "Новини" -> newsPageAdminPanel = adminMenuBar.goToNewsPage();
-            case "Партнери" -> partnersPageAdminPanel = adminMenuBar.goToPartnersPage();
-        }
-        sleep(1);
-
-    }
-    */
 
     @And("I fill in the {string} field with {string}")
     public void iFillInTheFieldWith(String field, String value) {

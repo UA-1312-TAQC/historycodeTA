@@ -16,7 +16,7 @@ import java.time.Duration;
 
 public class BaseStep {
 
-    protected WebDriver driver;
+    protected static WebDriver driver;
     protected TestValueProvider provider = new TestValueProvider();
 
 
