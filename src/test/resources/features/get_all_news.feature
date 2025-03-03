@@ -4,31 +4,15 @@ Feature: Get all news
   So that I can see the latest updates
 
   Background:
-    Given I input a valid endpoint
+    Given User open the admin-panel page of the site and login admin
 
   Scenario: Successfully retrieve all news
-    When Get all News
-    Then the response status code should be 200
-    And the response body should be in JSON format
-    And the response should contain the following fields:
-      | field        | type   |
-      | id          | int    |
-      | title       | string |
-      | text        | string |
-      | imageId     | int    |
-      | url         | string |
-      | image       | object |
+    When I navigate to the "Новини" tab
+    Then I Get all News
+    And I click on the first News
+    And the News should contain the information:
+      | title        | string |
+      | text         | string |
+      | imageId      | int    |
+      | image        | object |
       | creationDate | string |
-    And the image object should contain:
-      | field        | type   |
-      | id          | int    |
-      | blobName    | string |
-      | base64      | string |
-      | mimeType    | string |
-      | imageDetails | object |
-    And the imageDetails object should contain:
-      | field   | type   |
-      | id      | int    |
-      | title   | string |
-      | alt     | string |
-      | imageId | int    |

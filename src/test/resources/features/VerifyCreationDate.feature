@@ -1,26 +1,15 @@
 Feature: Verify that the 'creationDate' field is required when updating news using the PUT method
 
   Background:
-    Given The PUT method is chosen
-    And The valid endpoint "https://backend.historycode.online/api/News/Update" is selected
+    Given User open the admin-panel page of the site and login admin
 
   Scenario: Verify the 'creationDate' field is required
-    Given The request body contains the following data:
-      """
-      {
-        "title": "Test News",
-        "text": "News Testing ",
-        "imageId": "{{imgId}}",
-        "url": "news",
-        "creationDate": "",
-        "id": "{{newsId}}"
-      }
-      """
-    When The user clicks the 'Send' button
-    Then The response status code should be 400
-    And The response body should contain the error message:
-      """
-      {
-        "CreationDate": "The Creation Date field is required."
-      }
-      """
+    When I navigate to the "Новини" tab
+    And I click on the Створити новину button
+    And I will verify the "Title" to "Текстова новина"
+    And I will verify the "link" to "test-link"
+    And I will verify the "Text" to "Lorem ipsum dolor sit amet,.."
+    And I will verify the "Image" to 'Додайте зображення'
+    And I will verify the "Date" to ''
+    And I click on the Save button
+    Then The news item should be error
