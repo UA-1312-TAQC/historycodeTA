@@ -68,11 +68,29 @@ public class CreateEditNewsModal extends BaseCreateEditModal {
     private WebElement newsLinkTranslitErrorMessage;
 
     @Getter
+    @FindBy(xpath = ".//div[@class='my-message-custom-content my-message-success']")
+    private WebElement successMessage;
+
+    @Getter
+    @FindBy(xpath = ".//div[@class='my-message-custom-content my-message-error']")
+    private WebElement errorMessage;
+
+    @Getter
+    @FindBy(xpath = ".//div[@id='title_help']")
+    private WebElement similarTitleError;
+
+    @Getter
+    @FindBy(xpath = ".//div[id='url_help']")
+    private WebElement similarUrlError;
+
+    @Getter
     @FindBy(xpath = ".//div[contains(@id, 'creationDate_help')]/div")
     private WebElement creationDateError;
+
     @Getter
     @FindBy(xpath = ".//div[contains(@id, 'image_help')]/div")
     private WebElement imageError;
+
     @Getter
     @FindBy(xpath = ".//div[contains(@id, 'editor_help')]/div")
     private WebElement editorError;
