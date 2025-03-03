@@ -58,4 +58,11 @@ public class StreetcodeClient extends BaseClient {
                 .pathParam("id", id)
                 .delete(resourceUrl + "/SoftDelete/{id}");
     }
+
+    public Response deleteStreetcode(int id) {
+        return preparedRequest()
+                .when()
+                .pathParam("id", id)
+                .delete(resourceUrl + "/Delete/{id}");
+    }
 }

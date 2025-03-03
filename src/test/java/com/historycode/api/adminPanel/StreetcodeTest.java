@@ -35,11 +35,11 @@ public class StreetcodeTest extends ApiTestRunner {
     public void createStreetcodeTest() {
 
         String dateString = "2024-03-31T13:46:48.769Z";
-        int imageId = ImageCreator.createNewImg("src/test/resources/logo.jpe");
+        int imageId = ImageCreator.createNewImg("src/test/resources/logo.jpeg");
         Instant instant = Instant.parse(dateString);
         ImageDetails imageDetails = new ImageDetails()
                 .setId(0)
-                .setImageId(5879)
+                .setImageId(imageId)
                 .setAlt("1");
         requestBody = new StreetcodeRequestBody()
                 .setIndex(623)
@@ -73,14 +73,14 @@ public class StreetcodeTest extends ApiTestRunner {
         Response response = client.createStreetcode(requestBody);
         response.body().print();
         Assert.assertEquals(response.getStatusCode(), 200);
-        response.body().print();
-        streetcodeId = response.getBody().jsonPath().getInt("id");
+        streetcodeId = Integer.parseInt(response.getBody().asString());
+        System.out.println(streetcodeId);
         Assert.assertNotEquals(streetcodeId, 0);
     }
 
     @AfterMethod
     public void deleteStreetcode(){
         if(id!= 0)
-            client.softDeleteStreetcode(id);
+            client.deleteStreetcode(id);
     }
 }
