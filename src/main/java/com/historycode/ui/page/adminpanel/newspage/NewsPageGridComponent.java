@@ -14,7 +14,6 @@ public class NewsPageGridComponent extends BaseGridComponent {
         super(driver, rootElement);
     }
 
-    @Getter
     List<NewsRowComponent> newsRowComponents;
 
     public List<NewsRowComponent> updateNewsRows(WebDriver driver) {
@@ -59,4 +58,14 @@ public class NewsPageGridComponent extends BaseGridComponent {
         pagination.clickPrevFivePages();
         this.newsRowComponents = updateNewsRows(driver);
     }
+
+    public NewsRowComponent getRowByIndex(int index) {
+        return newsRowComponents.get(index);
+    }
+
+    public void clickOnNewsByIndex(int index) {
+        getRowByIndex(index).getName().click();
+
+    }
 }
+
