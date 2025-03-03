@@ -5,8 +5,8 @@ Feature: Verify different types of navigation on the StreetCode page
 
   Scenario: Interacting with navigation elements in the interesting facts blockGiven the StreetCode page
 
-  //When I click on the 'previous' card (on the left side from the one that is in the front)
-  // Then the clicked card should move to the front
+    When I click on the 'previous' card (on the left side from the one that is in the front)
+    Then the clicked card should move to the front
 
     When I click on the right arrow
     Then the cards should change along with the squares under the cards

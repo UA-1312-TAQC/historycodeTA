@@ -16,6 +16,21 @@ public class StreetcodeWowFactCarouselSteps {
     private int cardIndexAfterClick;
     private int squareIndexAfterClick;
 
+    @When("I click on the {string} card (on the left side from the one that is in the front)")
+    public void iClickOnThePreviousCardOnTheLeftSideFromTheOneThatIsInTheFront() {
+        interestingFactsComponent = streetCodePage.getFacts();
+
+        cardExpectedIndex = interestingFactsComponent.getPreviousCardIndex();
+        interestingFactsComponent.clickPreviousCard();
+        cardIndexAfterClick = interestingFactsComponent.getCurrentCardIndex();
+    }
+
+    @Then("the clicked card should move to the front")
+    public void theClickedCardShouldMoveToTheFront() {
+        softAssert.assertEquals(cardIndexAfterClick, cardExpectedIndex, "Card is not changing.");
+        softAssert.assertAll();
+    }
+
     @When("I click on the right arrow")
     public void iClickOnTheRightArrow() {
         interestingFactsComponent = streetCodePage.getFacts();
@@ -65,4 +80,5 @@ public class StreetcodeWowFactCarouselSteps {
 
         Assert.assertNotEquals(cardIndexBeforeClick, cardIndexAfterClick, "Card is not changing.");
     }
+
 }
