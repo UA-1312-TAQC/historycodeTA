@@ -28,39 +28,57 @@ public class APINewsTest extends ApiTestRunner {
         newsClient.setToken(testValueProvider.getAccessToken());
     }
 
-    @Issue("190")
-    @Test
-    @Description("Verify if all news are displayed using GET method.")
-    public void testGetAllNews() {
-        Response response = newsClient.getAll();
-        SoftAssert softAssert = new SoftAssert();
+        @Issue("190")
+        @Test
+        @Description("Verify if all news are displayed using GET method.")
+        public void testGetAllNews() {
+            Response response = newsClient.getAll();
+            SoftAssert softAssert = new SoftAssert();
 
-        Assert.assertEquals(response.getStatusCode(), 200, "Response status is not 200 OK");
-        GetAllNewsResponse getAllResponse = response.body().as(GetAllNewsResponse.class);
-        Assert.assertTrue(getAllResponse.getTotalAmount() > 0, "Total amount of news is 0");
+            System.out.println("Response Status Code: " + response.getStatusCode());
+            System.out.println("Response Body: " + response.getBody().asString());
 
-        for (News news : getAllResponse.getNews()) {
-            softAssert.assertNotNull(news.getId(), "Key 'id' is missing in the response for news");
-            softAssert.assertNotNull(news.getTitle(), "Key 'title' is missing in the response for news");
-            softAssert.assertNotNull(news.getText(), "Key 'text' is missing in the response for news");
-            softAssert.assertNotNull(news.getCreationDate(), "Key 'creationDate' is missing in the response for news");
+            Assert.assertEquals(response.getStatusCode(), 200, "Response status is not 200 OK");
 
-            NewsImage image = news.getImage();
-            if (image != null) {
-                softAssert.assertNotNull(image.getId(), "Key 'image.id' is missing in the response for news");
-                softAssert.assertNotNull(image.getBlobName(), "Key 'image.blobName' is missing in the response for news");
-                softAssert.assertNotNull(image.getMimeType(), "Key 'image.mimeType' is missing in the response for news");
+            GetAllNewsResponse getAllResponse = response.body().as(GetAllNewsResponse.class);
+            Assert.assertTrue(getAllResponse.getTotalAmount() > 0, "Total amount of news is 0");
 
-                ImageDetails imageDetails = image.getImageDetails();
-                if (imageDetails != null) {
-                    softAssert.assertNotNull(imageDetails.getId(), "Key 'imageDetails.id' is missing in the response for news");
-                    softAssert.assertNotNull(imageDetails.getTitle(), "Key 'imageDetails.title' is missing in the response for news");
-                    softAssert.assertNotNull(imageDetails.getAlt(), "Key 'imageDetails.alt' is missing in the response for news");
+            for (News news : getAllResponse.getNews()) {
+                System.out.println("\n--- News ---");
+                System.out.println("ID: " + news.getId());
+                System.out.println("Title: " + news.getTitle());
+                System.out.println("Text: " + news.getText());
+                System.out.println("Creation Date: " + news.getCreationDate());
+
+                softAssert.assertNotNull(news.getId(), "Key 'id' is missing in the response for news");
+                softAssert.assertNotNull(news.getTitle(), "Key 'title' is missing in the response for news");
+                softAssert.assertNotNull(news.getText(), "Key 'text' is missing in the response for news");
+                softAssert.assertNotNull(news.getCreationDate(), "Key 'creationDate' is missing in the response for news");
+
+                NewsImage image = news.getImage();
+                if (image != null) {
+                    System.out.println("Image ID: " + image.getId());
+                    System.out.println("Blob Name: " + image.getBlobName());
+                    System.out.println("MIME Type: " + image.getMimeType());
+
+                    softAssert.assertNotNull(image.getId(), "Key 'image.id' is missing in the response for news");
+                    softAssert.assertNotNull(image.getBlobName(), "Key 'image.blobName' is missing in the response for news");
+                    softAssert.assertNotNull(image.getMimeType(), "Key 'image.mimeType' is missing in the response for news");
+
+                    ImageDetails imageDetails = image.getImageDetails();
+                    if (imageDetails != null) {
+                        System.out.println("Image Details ID: " + imageDetails.getId());
+                        System.out.println("Title: " + imageDetails.getTitle());
+                        System.out.println("Alt: " + imageDetails.getAlt());
+
+                        softAssert.assertNotNull(imageDetails.getId(), "Key 'imageDetails.id' is missing in the response for news");
+                        softAssert.assertNotNull(imageDetails.getTitle(), "Key 'imageDetails.title' is missing in the response for news");
+                        softAssert.assertNotNull(imageDetails.getAlt(), "Key 'imageDetails.alt' is missing in the response for news");
+                    }
                 }
             }
+            softAssert.assertAll();
         }
-        softAssert.assertAll();
-    }
 
     @Issue("213")
     @Test
@@ -107,6 +125,10 @@ public class APINewsTest extends ApiTestRunner {
         updatedNews.setCreationDate(Instant.now().toString());
 
         Response updateResponse = newsClient.update(updatedNews);
+
+        System.out.println("Update Response Body: " + updateResponse.getBody().asString());
+        System.out.println("Update Response Status Code: " + updateResponse.getStatusCode());
+
         softAssert.assertEquals(updateResponse.getStatusCode(), 200, "News update failed");
 
         Response updatedNewsData = newsClient.getById(newsId);
