@@ -1,5 +1,6 @@
 package com.historycode.cucumber.steps.streetcodePage;
 
+import com.historycode.cucumber.steps.BaseStep;
 import com.historycode.ui.page.streetCodePage.StreetCodePage;
 import com.historycode.ui.page.streetCodePage.components.InterestingFactsComponent;
 import io.cucumber.java.en.Then;
@@ -7,7 +8,7 @@ import io.cucumber.java.en.When;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
-public class StreetcodeWowFactCarouselSteps {
+public class StreetcodeWowFactCarouselSteps extends BaseStep {
     private StreetCodePage streetCodePage;
     private InterestingFactsComponent interestingFactsComponent;
     private SoftAssert softAssert = new SoftAssert();
@@ -16,9 +17,10 @@ public class StreetcodeWowFactCarouselSteps {
     private int cardIndexAfterClick;
     private int squareIndexAfterClick;
 
-    @When("I click on the {string} card (on the left side from the one that is in the front)")
+    @When("I click on the 'previous' card (on the left side from the one that is in the front)")
     public void iClickOnThePreviousCardOnTheLeftSideFromTheOneThatIsInTheFront() {
         interestingFactsComponent = streetCodePage.getFacts();
+        streetCodePage.scrollToWowFactCarousel();
 
         cardExpectedIndex = interestingFactsComponent.getPreviousCardIndex();
         interestingFactsComponent.clickPreviousCard();
@@ -33,10 +35,6 @@ public class StreetcodeWowFactCarouselSteps {
 
     @When("I click on the right arrow")
     public void iClickOnTheRightArrow() {
-        interestingFactsComponent = streetCodePage.getFacts();
-        interestingFactsComponent.waitUntilPageLouder();
-        streetCodePage.scrollToWowFactCarousel();
-
         cardExpectedIndex = interestingFactsComponent.getNextCardIndex();
         squareExpectedIndex = interestingFactsComponent.getNextWowFactsSquareIndex();
 
@@ -57,8 +55,6 @@ public class StreetcodeWowFactCarouselSteps {
     @When("I click on the left arrow")
     public void iClickOnTheLeftArrow() {
         interestingFactsComponent = streetCodePage.getFacts();
-        interestingFactsComponent.waitUntilPageLouder();
-        streetCodePage.scrollToWowFactCarousel();
 
         squareExpectedIndex = interestingFactsComponent.getPreviousSquareIndex();
         cardExpectedIndex = interestingFactsComponent.getPreviousCardIndex();
