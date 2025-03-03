@@ -1,6 +1,7 @@
 package com.historycode.ui;
 
 import com.historycode.ui.page.homePage.*;
+import com.historycode.ui.page.streetCodePage.StreetCodePage;
 import com.historycode.ui.page.streetcodecatalogpage.StreetCodeCatalogPage;
 import com.historycode.ui.testrunners.BaseTestRunner;
 import io.qameta.allure.Description;
@@ -9,13 +10,17 @@ import io.qameta.allure.Issue;
 import io.qameta.allure.Story;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.Nullable;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.time.Instant;
 import java.util.List;
 
 @Slf4j
@@ -339,26 +344,30 @@ public class SmokeHomePageTest extends BaseTestRunner {
         log.info("Test completed successfully: Card with the expected name and description found.");
     }
 
-//    @Test
-//    @Description("Verify clicking the 'toHistoryCode' button navigates to the correct page.")
-//    @Step("Click on 'toHistoryCode' button and verify navigation to the new page.")
-//    public void testClickToHistoryCodeButton() {
-//        log.info("Starting test: Click on 'toHistoryCode' button and verify navigation.");
-//        homePage.scrollUntilElementIsVisible(homePage.getPersonCarouselElement());
-//        homePage.getPersonsCarousel()
-//                .getActiveSlideComponent()
-//                .clickToHistoryCode();
-//
-//        StreetCodeCatalogPage historyCodePage = new StreetCodeCatalogPage(driver);
-//        SoftAssert softAssert = new SoftAssert();
-//
-//       / WebElement historyCodeLink = historyCodePage.getStreetsCodesLink();
-//        log.info("Validating the header on the new page: '{}'.", historyCodeLink);
-//        softAssert.assertNotNull(historyCodeLink, "The page title is null.");
-//        softAssert.assertFalse(!historyCodeLink.isDisplayed(), "The page title is blank.");
-//
-//        softAssert.assertAll();
-//
-//        log.info("Test completed successfully: Verified navigation to the new page after clicking the button.");
-//    }
+    @Test
+    @Description("Verify clicking the 'toHistoryCode' button navigates to a different page.")
+    @Step("Click on 'toHistoryCode' button and verify the page changes.")
+    public void testClickToHistoryCodeButton() {
+        log.info("Starting test: Click on 'toHistoryCode' button and verify page navigation.");
+        homePage.scrollUntilElementIsVisible(homePage.getPersonCarouselElement());
+
+        String initialUrl = driver.getCurrentUrl();
+        log.info("Initial URL: {}", initialUrl);
+
+        homePage.getPersonsCarousel()
+                .getActiveSlideComponent()
+                .clickToHistoryCode();
+
+        String newUrl = driver.getCurrentUrl();
+        log.info("New URL: {}", newUrl);
+
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertNotEquals(newUrl, initialUrl, "The page URL did not change.");
+        softAssert.assertNotNull(newUrl, "The new URL is null.");
+        softAssert.assertFalse(newUrl.isEmpty(), "The new URL is blank.");
+
+        softAssert.assertAll();
+
+        log.info("Test completed successfully: Verified navigation to a different page.");
+    }
 }
