@@ -80,7 +80,7 @@ public class CreateEditNewsModal extends BaseCreateEditModal {
     private WebElement similarTitleError;
 
     @Getter
-    @FindBy(xpath = ".//div[id='url_help']")
+    @FindBy(xpath = ".//div[@id='url_help']")
     private WebElement similarUrlError;
 
     @Getter
