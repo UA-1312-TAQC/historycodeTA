@@ -1,0 +1,93 @@
+package com.historycode.cucumber.steps.adminpanel;
+
+import com.historycode.cucumber.steps.BaseStep;
+import com.historycode.ui.component.adminPanel.adminMenuBar.AdminMenuBarComponent;
+import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
+import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
+import com.historycode.ui.page.adminpanel.newspage.NewsPageAdminPanel;
+import com.historycode.ui.page.adminpanel.newspage.modal.CreateEditNewsModal;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+import lombok.Getter;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
+@Getter
+public class CreateNewsUrlRequired extends BaseStep {
+    private final SoftAssert softAssert = new SoftAssert();
+
+    private NewsPageAdminPanel pageAdminPanel;
+    private HistoryCodesAdminPanelPage historyCodesAdminPanelPage;
+    private CreateEditNewsModal createEditNewsModal;
+
+    private final String newsTitle = "History Ukraine";
+    private final String newsLink = "";
+    private final String newsText = "Test Text";
+    private final String imagePath = "src/test/resources/test-image.jpg";
+    private final String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+    @Given("User open the admin-panel page of the site and login admin")
+    public void loginWithAdmin() {
+        initDriver();
+        driver.get(provider.getBaseUIUrl());
+        setAccessToken();
+        driver.get(provider.getBaseUIUrl() + "/admin-panel");
+        historyCodesAdminPanelPage = new HistoryCodesAdminPanelPage(driver);
+    }
+
+    @When("I navigate to the {string} tab")
+    public void navigateToNews(String name) {
+        AdminMenuBarComponent adminMenuBar = new BasePageAdminPanel(driver).getAdminMenuBar();
+        switch (name) {
+            case "History-коди" -> historyCodesAdminPanelPage = adminMenuBar.goToHistoryCodesPage();
+            case "Новини" -> pageAdminPanel = adminMenuBar.goToNewsPage();
+        }
+        sleep(1);
+    }
+
+    @And("I click on the Створити новину button")
+    public void clickOnTheCreateNewsButton() {
+        createEditNewsModal = new NewsPageAdminPanel(driver).clickAddNewInfo();
+    }
+
+    @And("fill in the field {string} to {string}")
+    public void fillNewsDetails() {
+        createEditNewsModal.inputNewsTitle(newsTitle);
+        createEditNewsModal.inputNewsLinkTranslit(newsLink);
+        createEditNewsModal.inputNewsTextEditor(newsText);
+        createEditNewsModal.clickUploadNewsPhoto(imagePath);
+        try {
+            Date parsedDate = dateFormat.parse(currentDate);
+            createEditNewsModal.inputNewsCreationDate(parsedDate);
+        } catch (ParseException e) {
+            throw new RuntimeException("Failed to parse date: " + currentDate, e);
+        }
+    }
+
+    @And("I save the news")
+    public void saveNews() {
+        createEditNewsModal.saveNews();
+    }
+
+    @Then("The news item should be successfully created")
+    public void verifyNewsCreated() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement successMessage = wait.until(ExpectedConditions.visibilityOf(createEditNewsModal.getSuccessMessage()));
+        Assert.assertTrue(successMessage.isDisplayed(), "Success message was not displayed.");
+        Assert.assertEquals(successMessage.getText(), "Новину успішно додано/оновлено!",
+                "Unexpected success message text.");
+    }
+}

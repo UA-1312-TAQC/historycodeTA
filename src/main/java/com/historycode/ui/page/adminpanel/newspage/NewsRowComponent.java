@@ -14,6 +14,10 @@ public class NewsRowComponent extends BaseComponent {
     @Getter
     private WebElement name;
 
+    @FindBy(xpath = ".//div[@class='newsTextArea']")
+    @Getter
+    private WebElement text;
+
     @FindBy(xpath = "//td[2]//img[@class='partners-table-logo']")
     @Getter
     private WebElement picture;
@@ -23,11 +27,11 @@ public class NewsRowComponent extends BaseComponent {
     private WebElement dateOfCreation;
 
     @FindBy(xpath = "//td[4]//span[contains(@class, 'anticon-delete')]")
-    @Getter
+
     private WebElement actionDelete;
 
     @FindBy(xpath = "//td[4]//span[contains(@class, 'anticon-edit')]")
-    @Getter
+
     private WebElement actionEdit;
 
     public NewsRowComponent(WebDriver driver, WebElement rootElement) {
