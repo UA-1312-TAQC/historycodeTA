@@ -3,7 +3,10 @@ package com.historycode.api.clients;
 import com.historycode.api.models.adminPanel.streetcode.StreetcodeRequestBody;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import lombok.extern.slf4j.Slf4j;
 
+
+@Slf4j
 public class StreetcodeClient extends BaseClient {
     protected String resourceUrl = "/Streetcode";
     public StreetcodeClient(String baseUrl) {
@@ -45,11 +48,26 @@ public class StreetcodeClient extends BaseClient {
     }
 
     public Response createStreetcode(StreetcodeRequestBody requestBody){
-        System.out.println(baseAPIUrl + resourceUrl + "/Create");
         return preparedRequest()
                 .when()
                 .body(requestBody)
                 .post(resourceUrl + "/Create");
+    }
+
+    public Response updateStreetcode(StreetcodeRequestBody requestBody){
+        log.warn(baseAPIUrl + resourceUrl + "/Update");
+        return preparedRequest()
+                .when()
+                .body(requestBody)
+                .put(resourceUrl + "/Update");
+    }
+
+    public Response patchStage(int id, int status){
+        return preparedRequest()
+                .when()
+                .pathParam("id", id)
+                .pathParam("status", status)
+                .put(resourceUrl + "/PatchStage/{id}/{status}");
     }
 
     public Response softDeleteStreetcode(int id) {
