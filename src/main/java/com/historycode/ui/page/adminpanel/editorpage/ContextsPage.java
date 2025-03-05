@@ -3,6 +3,7 @@ package com.historycode.ui.page.adminpanel.editorpage;
 import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
 import com.historycode.ui.page.adminpanel.editorpage.components.grids.ContextsGridComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.ContextsModalComponent;
+import com.historycode.ui.page.adminpanel.editorpage.components.rows.CategoriesRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.ContextsRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.elements.AddButtonElement;
 import io.qameta.allure.Step;
@@ -137,19 +138,33 @@ public class ContextsPage extends BaseEditorPage {
     public boolean tableHasNextPage() {
         return grid.tableHasNextPage();
     }
-}
 
-//    public DeleteItemModal deleteTableRow(ContextsRowComponent row) {
-//        waitUntilElementVisible(gridRootElement);
-//        return gridComponent.deleteRow(row);
-//    }
-//    @Step("Add new context")
-//    public ContextsModalComponent addContext() {
-//        addNewContextButton.click();
-//        waitUntilElementVisible(createModalRootElement);
-//        return new ContextsModalComponent(driver, createModalRootElement);
-//    }
-//    public ContextsRowComponent getTableRowByTitle(String title) {
-//        waitUntilElementVisible(gridRootElement);
-//        return gridComponent.getRowByTitle(title);
-//    }
+    public ContextsPage moveToPageWithRow(String title) {
+
+        driver.navigate().refresh();
+        ContextsPage currentPage = new ContextsPage(driver);
+
+        while (currentPage.getTableRowByTitle(title) == null) {
+            if (!currentPage.tableHasNextPage()) {
+                break;
+            }
+            currentPage = currentPage.clickNextPage();
+        }
+
+        return currentPage;
+
+    }
+
+    public ContextsPage deleteCategory(String title) {
+
+        ContextsPage currentPage = moveToPageWithRow(title);
+        ContextsRowComponent row = currentPage.getTableRowByTitle(title);
+        if (row != null) {
+            currentPage.deleteTableRow(row).clickOkButton();
+        }
+
+        return currentPage;
+
+    }
+
+}
