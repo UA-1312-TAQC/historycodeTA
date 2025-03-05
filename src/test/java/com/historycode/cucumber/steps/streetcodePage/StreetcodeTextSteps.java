@@ -12,16 +12,9 @@ public class StreetcodeTextSteps extends BaseStep {
     private StreetCodePage streetCodePage;
     private int initialParagraphCount;
 
-    @Given("the StreetCode page is opened")
-    public void theStreetCodePageIsOpen() {
-        initDriver();
-        driver.get(provider.getBaseUIUrl() + "/roman-ratushnyi-seneka");
-        streetCodePage = new StreetCodePage(driver);
-        sleep(10);
-    }
-
     @When("I click on the {string} button")
     public void iClickOnTheButton(String buttonName) {
+        streetCodePage = new StreetCodePage(driver);
         switch (buttonName) {
             case "Трохи ще":
                 streetCodePage.getTextBlock().clickReadMoreButton();

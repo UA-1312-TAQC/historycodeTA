@@ -22,6 +22,7 @@ public class StreetcodeWowFactCarouselSteps extends BaseStep {
 
     @Before
     public void setUp() {
+        streetCodePage = new StreetCodePage(driver);
         interestingFactsComponent = streetCodePage.getFacts();
     }
 

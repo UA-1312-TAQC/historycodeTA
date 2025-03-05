@@ -14,6 +14,7 @@ public class StreetcodeSourceLinkSteps extends BaseStep {
 
     @When("I click on the source link under the text")
     public void iClickOnTheSourceLinkUnderTheText() {
+        streetCodePage = new StreetCodePage(driver);
         StreetCodeTextBlockComponent textBlock = streetCodePage.getTextBlock();
         String link = textBlock.getLinksInNewsContent().getFirst();
         expectedUrl = link;
