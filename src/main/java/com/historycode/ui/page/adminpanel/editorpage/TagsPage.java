@@ -3,6 +3,7 @@ package com.historycode.ui.page.adminpanel.editorpage;
 import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
 import com.historycode.ui.page.adminpanel.editorpage.components.grids.TagsGridComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.TagsModalComponent;
+import com.historycode.ui.page.adminpanel.editorpage.components.rows.PositionsRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.TagsRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.elements.AddButtonElement;
 import io.qameta.allure.Step;
@@ -138,4 +139,33 @@ public class TagsPage extends BaseEditorPage {
     public boolean tableHasNextPage() {
         return grid.tableHasNextPage();
     }
+
+    public TagsPage moveToPageWithRow(String title) {
+
+        driver.navigate().refresh();
+        TagsPage currentPage = new CategoriesPage(driver).moveToTags();
+
+        while (currentPage.getTableRowByTitle(title) == null) {
+            if (!currentPage.tableHasNextPage()) {
+                break;
+            }
+            currentPage = currentPage.clickNextPage();
+        }
+
+        return currentPage;
+
+    }
+
+    public TagsPage deletePosition(String title) {
+
+        TagsPage currentPage = moveToPageWithRow(title);
+        TagsRowComponent row = currentPage.getTableRowByTitle(title);
+        if (row != null) {
+            currentPage.deleteTableRow(row).clickOkButton();
+        }
+
+        return currentPage;
+
+    }
+
 }
