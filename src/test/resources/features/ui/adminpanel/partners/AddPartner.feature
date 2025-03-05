@@ -15,3 +15,4 @@ Feature: Create a Partner Item
     And I click on the Зберегти button for partner
     And I click on the close button for partner
     Then I should see new partner with name "Test partner name" and logo "uploadfiles/logo.webp"
+    And I delete partner with name "Test partner name"

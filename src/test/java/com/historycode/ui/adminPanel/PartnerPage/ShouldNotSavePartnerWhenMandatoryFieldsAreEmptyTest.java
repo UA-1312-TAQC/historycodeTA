@@ -12,7 +12,7 @@ import io.qameta.allure.Story;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-public class TestCase128 extends TestAdminPartnerPage  {
+public class ShouldNotSavePartnerWhenMandatoryFieldsAreEmptyTest extends TestAdminPartnerPage  {
 
     @Test
     @Epic("AdminPartners")
@@ -20,7 +20,7 @@ public class TestCase128 extends TestAdminPartnerPage  {
     @Story("64")
     @Description("Verify that the system does not save a new partner if all mandatory fields are not filled " +
             "in the 'Додати партнера' modal window.")
-    public void test128 () {
+    public void shouldNotSavePartnerWhenMandatoryFieldsAreEmpty() {
         SoftAssert softAssert = new SoftAssert();
 
         CreatePartnersModal createModal = openCreateModal();

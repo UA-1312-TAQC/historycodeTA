@@ -7,6 +7,7 @@ import io.cucumber.java.Before;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.asserts.SoftAssert;
 
 public class StreetcodeWowFactCarouselSteps extends BaseStep {
@@ -20,7 +21,9 @@ public class StreetcodeWowFactCarouselSteps extends BaseStep {
 
     private int cardIndexBeforeClick;
 
-    @Before
+    // TODO: method setUp does not work if we use the @Before annotation,
+    // so I changed the annotation to @BeforeClass
+    @BeforeClass
     public void setUp() {
         streetCodePage = new StreetCodePage(driver);
         interestingFactsComponent = streetCodePage.getFacts();
