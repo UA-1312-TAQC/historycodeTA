@@ -1,6 +1,8 @@
 package com.historycode.api.adminPanel;
 
 import com.historycode.api.clients.StreetcodeClient;
+import com.historycode.api.dataProviders.StreetcodeDataProvider;
+import com.historycode.api.dataProviders.enums.Status;
 import com.historycode.api.models.adminPanel.streetcode.ImageDetails;
 import com.historycode.api.models.adminPanel.streetcode.StreetcodeRequestBody;
 import com.historycode.api.models.adminPanel.streetcode.Subtitle;
@@ -23,36 +25,33 @@ public class StreetcodeTest extends ApiTestRunner {
     private StreetcodeClient client;
     private StreetcodeRequestBody requestBody;
     int streetcodeId;
-    int id;
     @BeforeClass
     public void setUpClass() {
         client = new StreetcodeClient(testValueProvider.getBaseAPIUrl());
         client.setToken(testValueProvider.getAccessToken());
     }
 
-    @Test
-    @Issue("260")
-    public void createStreetcodeTest() {
 
+    public void createStreetcode(){
         String dateString = "2024-03-31T13:46:48.769Z";
-        int imageId = ImageCreator.createNewImg("src/test/resources/logo.jpe");
+        int imageId = ImageCreator.createNewImg("src/test/resources/logo.jpeg");
         Instant instant = Instant.parse(dateString);
         ImageDetails imageDetails = new ImageDetails()
                 .setId(0)
-                .setImageId(5879)
+                .setImageId(imageId)
                 .setAlt("1");
         requestBody = new StreetcodeRequestBody()
-                .setIndex(623)
+                .setIndex(625)
                 .setStreetcodeType(1)
                 .setTitle("qwe")
                 .setFirstName("")
                 .setLastName("")
                 .setAlias("")
-                .setTransliterationUrl("qwe-ewq")
+                .setTransliterationUrl("qwe-ewqfefd")
                 .setDateString("65")
                 .setEventStartOrPersonBirthDate(instant)
                 .setTags(new ArrayList<>())
-                .setTeaser("efasf")
+                .setTeaser("efasfdfdfd")
                 .setImagesIds(List.of(imageId))
                 .setImagesDetails(List.of(imageDetails))
                 .setVideos(new ArrayList<>())
@@ -69,18 +68,53 @@ public class StreetcodeTest extends ApiTestRunner {
                 .setToponyms(new ArrayList<>())
                 .setStatisticRecords(new ArrayList<>())
                 .setStatus(0);
+    }
+
+    public int getNewStreetcodeId(){
+        createStreetcode();
+        Response response = client.createStreetcode(requestBody);
+        streetcodeId =  Integer.parseInt(response.getBody().asString());
+        return this.streetcodeId;
+    }
+
+    @Test
+    @Issue("260")
+    public void createStreetcodeTest() {
+        createStreetcode();
         log.debug(requestBody.toString());
         Response response = client.createStreetcode(requestBody);
         response.body().print();
         Assert.assertEquals(response.getStatusCode(), 200);
-        response.body().print();
-        streetcodeId = response.getBody().jsonPath().getInt("id");
+        streetcodeId = Integer.parseInt(response.getBody().asString());
+        log.debug(String.valueOf(streetcodeId));
         Assert.assertNotEquals(streetcodeId, 0);
+    }
+
+
+
+    @Issue("263")
+    @Test(dataProvider = "streetcodeStatusDataProvider",  dataProviderClass = StreetcodeDataProvider.class)
+    public void streetcodeStatusChangeTest(Status status){
+        createStreetcode();
+        requestBody.setStatus(status.getCode());
+        Response response = client.updateStreetcode(requestBody);
+        response.body().print();
+        Assert.assertEquals(response.getStatusCode(), 200);
+        streetcodeId = Integer.parseInt(response.getBody().asString());
+        log.debug(String.valueOf(streetcodeId));
+    }
+
+    @Issue("263")
+    @Test(dataProvider = "streetcodeStatusDataProvider",  dataProviderClass = StreetcodeDataProvider.class)
+    public void streetcodePatchStatusTest(Status status){
+        int id = getNewStreetcodeId();
+        Response response = client.patchStage(id, status.getCode());
+        Assert.assertEquals(response.getStatusCode(), 200);
     }
 
     @AfterMethod
     public void deleteStreetcode(){
-        if(id!= 0)
-            client.softDeleteStreetcode(id);
+        if(streetcodeId!= 0)
+            client.deleteStreetcode(streetcodeId);
     }
 }
