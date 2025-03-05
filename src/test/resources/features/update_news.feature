@@ -2,31 +2,16 @@ Feature: News API Testing
   As a user
   I want to verify different API functionalities
   So that I can ensure correct behavior
+  Background:
+    Given User open the admin-panel page of the site and login admin
 
   Scenario: Successfully update an existing news item
-    Given Postman is opened
-    And the user is authorized
-    And there are existing news in the system
-    And I retrieve a valid "id" using "https://backend.historycode.online/api/News/GetAll"
-    And the PUT method is chosen
-    And all required data has been added to the body:
-      | field         | value                  |
-      | title         | Test News              |
-      | text          | News Testing           |
-      | imageId       | {{imgId}}              |
-      | url          | news                   |
-      | creationDate  | {{currentDateTime}}    |
-      | id           | {{newsId}}             |
-    When I input a valid endpoint "https://backend.historycode.online/api/News/Update"
-    And I click the 'Send' button
-    Then the news is updated
-    And the response status code should be 200
-    And the response body should be in JSON format
-    And the response should contain the following fields:
-      | field         | type   |
-      | title         | string |
-      | text          | string |
-      | imageId       | int    |
-      | url          | string |
-      | creationDate  | string |
-      | id           | int    |
+    When I navigate to the "Новини" tab
+    And I click on the Edite News
+    And I will change the "Текстова новина" to "Ukraine"
+    And I will change the "test-link" to "ukraine-link"
+    And I will change the "Lorem ipsum dolor sit amet,.." to "The brave have happiness"
+    And I will change the "Image" to 'Додайте зображення'
+    And I will change the "Date" to 'Введіть дату'
+    And I click on the Save button
+
