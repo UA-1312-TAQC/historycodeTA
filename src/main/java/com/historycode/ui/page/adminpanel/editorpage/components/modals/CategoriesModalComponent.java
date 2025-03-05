@@ -45,6 +45,7 @@ public class CategoriesModalComponent extends BaseCreateEditModalComponent {
     @Step("Click Categories Modal Save Button.")
     public CategoriesModalComponent save() {
         saveButton.click();
+        sleep(2000); //ToDo Remove it
         return new CategoriesModalComponent(driver, rootElement);
     }
 
