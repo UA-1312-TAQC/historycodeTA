@@ -22,7 +22,7 @@ public class CreateEditNewsModalSteps extends AdminPanelPages {
     private CreateEditNewsModal createEditNewsModal;
 
 
-    @And("I click on the Створити новину button")
+    //@And("I click on the Створити новину button")
     public void ClickOnTheCreateNewsButton() {
      createEditNewsModal = new NewsPageAdminPanel(driver).clickAddNewInfo();
     }

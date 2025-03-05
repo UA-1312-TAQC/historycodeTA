@@ -15,13 +15,15 @@ public class NewsPageSteps extends AdminPanelPages {
         return new NewsPageAdminPanel(driver);
     }
 
-
+    /*
     @When("I navigate to the {string} tab")
     public void iNavigateToTab(String name) {
         navigateToTab(name);
         sleep(1);
 
     }
+
+     */
 
 
 }

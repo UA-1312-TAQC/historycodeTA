@@ -33,7 +33,7 @@ public class GetAllNewsSteps extends BaseStep {
     private HistoryCodesAdminPanelPage historyCodesAdminPanelPage;
     private NewsPageAdminPanel pageAdminPanel;
     private List<NewsRowComponent> newsRowComponents;
-
+    /*
     @Given("User open the admin-panel page of the site and login admin")
     public void loginAdmin() {
         initDriver();
@@ -52,6 +52,8 @@ public class GetAllNewsSteps extends BaseStep {
         }
         sleep(1);
     }
+
+     */
 
     @Then("I Get all News")
     public void allGetNews() {
