@@ -3,6 +3,7 @@ package com.historycode.cucumber.steps.streetcodePage;
 import com.historycode.cucumber.steps.BaseStep;
 import com.historycode.ui.page.streetCodePage.StreetCodePage;
 import com.historycode.ui.page.streetCodePage.components.InterestingFactsComponent;
+import io.cucumber.java.Before;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.testng.Assert;
@@ -17,9 +18,15 @@ public class StreetcodeWowFactCarouselSteps extends BaseStep {
     private int cardIndexAfterClick;
     private int squareIndexAfterClick;
 
-    @When("I click on the 'previous' card (on the left side from the one that is in the front)")
-    public void iClickOnThePreviousCardOnTheLeftSideFromTheOneThatIsInTheFront() {
+    private int cardIndexBeforeClick;
+
+    @Before
+    public void setUp() {
         interestingFactsComponent = streetCodePage.getFacts();
+    }
+
+    @When("I click on the previous card \\(on the left side from the one that is in the front)")
+    public void iClickOnThePreviousCardOnTheLeftSideFromTheOneThatIsInTheFront() {
         streetCodePage.scrollToWowFactCarousel();
 
         cardExpectedIndex = interestingFactsComponent.getPreviousCardIndex();
@@ -30,7 +37,6 @@ public class StreetcodeWowFactCarouselSteps extends BaseStep {
     @Then("the clicked card should move to the front")
     public void theClickedCardShouldMoveToTheFront() {
         softAssert.assertEquals(cardIndexAfterClick, cardExpectedIndex, "Card is not changing.");
-        softAssert.assertAll();
     }
 
     @When("I click on the right arrow")
@@ -48,14 +54,10 @@ public class StreetcodeWowFactCarouselSteps extends BaseStep {
 
         softAssert.assertEquals(cardIndexAfterClick, cardExpectedIndex, "Card is not changing.");
         softAssert.assertEquals(squareExpectedIndex, squareIndexAfterClick, "Square is not changing.");
-
-        softAssert.assertAll();
     }
 
     @When("I click on the left arrow")
     public void iClickOnTheLeftArrow() {
-        interestingFactsComponent = streetCodePage.getFacts();
-
         squareExpectedIndex = interestingFactsComponent.getPreviousSquareIndex();
         cardExpectedIndex = interestingFactsComponent.getPreviousCardIndex();
 
@@ -64,17 +66,17 @@ public class StreetcodeWowFactCarouselSteps extends BaseStep {
 
     @When("I click on any navigation indicator under the cards")
     public void iClickOnAnyNavigationIndicatorUnderTheCards() {
-        interestingFactsComponent = streetCodePage.getFacts();
-        interestingFactsComponent.waitUntilPageLouder();
-        streetCodePage.scrollToWowFactSquare();
-
-        int cardIndexBeforeClick = interestingFactsComponent.getCurrentCardIndex();
+        cardIndexBeforeClick = interestingFactsComponent.getCurrentCardIndex();
 
         interestingFactsComponent.clickRandomWowFactsSquare();
+    }
 
+    @Then("the cards should change")
+    public void theCardsShouldChange() {
         cardIndexAfterClick = interestingFactsComponent.getCurrentCardIndex();
 
-        Assert.assertNotEquals(cardIndexBeforeClick, cardIndexAfterClick, "Card is not changing.");
+        Assert.assertNotEquals(cardIndexBeforeClick, cardIndexAfterClick,
+                "Expected the card to change after clicking the navigation indicator, but it didn't.");
     }
 
 }
