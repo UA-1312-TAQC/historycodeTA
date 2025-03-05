@@ -1,11 +1,11 @@
 package com.historycode.cucumber.steps.adminpanel.partners;
 
-import com.historycode.cucumber.steps.BaseStep;
+import com.historycode.cucumber.steps.adminpanel.AdminPanelPages;
 import com.historycode.ui.page.partnerPage.PartnerPage;
 import io.cucumber.java.en.And;
 import org.testng.Assert;
 
-public class PartnerFrontPage extends BaseStep {
+public class PartnerFrontPageSteps extends AdminPanelPages {
     @And("I see key partner with title {string} description {string}")
     public void iSeeKeyPartnerWithDescription(String name, String description) {
         createdPartners.add(name);

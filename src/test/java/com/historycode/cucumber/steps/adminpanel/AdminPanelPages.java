@@ -3,9 +3,9 @@ package com.historycode.cucumber.steps.adminpanel;
 import com.historycode.cucumber.steps.BaseStep;
 import com.historycode.ui.component.adminPanel.adminMenuBar.AdminMenuBarComponent;
 import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
-import com.historycode.ui.page.adminpanel.historycodePage.HistoryCodesAdminPanelPage;
-import com.historycode.ui.page.adminpanel.jobspage.JobsPageAdminPanel;
-import com.historycode.ui.page.adminpanel.newspage.NewsPageAdminPanel;
+import com.historycode.ui.page.adminpanel.partnerspage.PartnersPageAdminPanel;
+import com.historycode.ui.page.adminpanel.partnerspage.modal.CreatePartnersModal;
+import io.cucumber.java.en.And;
 
 public class AdminPanelPages extends BaseStep {
 
@@ -14,7 +14,7 @@ public class AdminPanelPages extends BaseStep {
         switch (name) {
             case "History-коди" -> adminMenuBar.goToHistoryCodesPage();
             case "Новини" -> adminMenuBar.goToNewsPage();
-            case "Партнери" ->adminMenuBar.goToPartnersPage();
+            case "Партнери" -> adminMenuBar.goToPartnersPage();
         }
     }
 
@@ -24,5 +24,5 @@ public class AdminPanelPages extends BaseStep {
         setAccessToken();
         driver.get(provider.getBaseUIUrl() + "/admin-panel");
     }
-
 }
+

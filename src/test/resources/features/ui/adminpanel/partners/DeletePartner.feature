@@ -6,6 +6,7 @@ Feature: Delete a Partner Item
 
   Background:
     Given User open the admin-panel page of the site and login admin
+    And I create new partner with name "Test partner name" and with logo "uploadfiles/logo.webp"
 
   Scenario: Remove a partner from the "Партнери" block
     When I navigate to the "Партнери" tab

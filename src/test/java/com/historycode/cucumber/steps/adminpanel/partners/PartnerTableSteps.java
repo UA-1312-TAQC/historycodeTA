@@ -1,6 +1,6 @@
 package com.historycode.cucumber.steps.adminpanel.partners;
 
-import com.historycode.cucumber.steps.BaseStep;
+import com.historycode.cucumber.steps.adminpanel.AdminPanelPages;
 import com.historycode.ui.page.adminpanel.partnerspage.PartnersPageAdminPanel;
 import com.historycode.ui.page.adminpanel.partnerspage.PartnersRowComponent;
 import io.cucumber.java.en.And;
@@ -10,7 +10,7 @@ import org.testng.asserts.SoftAssert;
 
 import static com.historycode.ui.utils.ImageLoader.getBase64FromFile;
 
-public class PartnerTable extends BaseStep {
+public class PartnerTableSteps extends AdminPanelPages {
 
     private PartnersRowComponent newPartnerBeforeDelete;
     private SoftAssert softAssert = new SoftAssert();
@@ -34,6 +34,12 @@ public class PartnerTable extends BaseStep {
     public void deletePartnerUsingFeature(String name) {
         iFindPartnerWithNameInLastPage(name);
         iClickDeleteButtonAndConfirm();
+    }
+
+    @And("I return to the admin-panel partner page")
+    public void iReturnToPartnerPage() {
+        driver.get(provider.getBaseUIUrl() + "/admin-panel");
+        navigateToTab("Партнери");
     }
 
     @Then("I should not see partner with name {string} in the list")
