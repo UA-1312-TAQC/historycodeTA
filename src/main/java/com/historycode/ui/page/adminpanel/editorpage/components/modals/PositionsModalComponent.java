@@ -38,6 +38,7 @@ public class PositionsModalComponent extends BaseCreateEditModalComponent {
     @Step("Click Positions Modal Save Button.")
     public PositionsModalComponent save() {
         saveButton.click();
+        sleep(2000); //ToDo Remove it
         return new PositionsModalComponent(driver, rootElement);
     }
 }

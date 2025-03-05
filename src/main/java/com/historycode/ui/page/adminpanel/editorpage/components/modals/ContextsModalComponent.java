@@ -33,9 +33,8 @@ public class ContextsModalComponent extends BaseCreateEditModalComponent {
 
     @Step("Click Contexts Modal Save Button.")
     public ContextsModalComponent save() {
-        sleep(1000);
         saveButton.click();
-        sleep(1000);
+        sleep(2000); //ToDo Remove it
         return new ContextsModalComponent(driver, rootElement);
     }
 }

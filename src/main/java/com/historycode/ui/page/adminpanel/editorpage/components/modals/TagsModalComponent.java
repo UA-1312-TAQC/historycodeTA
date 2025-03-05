@@ -40,6 +40,7 @@ public class TagsModalComponent extends BaseCreateEditModalComponent {
     @Step("Click Tags Modal Save Button.")
     public TagsModalComponent save() {
         saveButton.click();
+        sleep(2000); //ToDo Remove it
         return new TagsModalComponent(driver, rootElement);
     }
 }
