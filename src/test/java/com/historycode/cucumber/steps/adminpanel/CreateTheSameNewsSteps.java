@@ -40,6 +40,7 @@ public class CreateTheSameNewsSteps extends BaseStep {
     private final String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
+    /*
     @Given("User open the admin-panel page of the site and login admin")
     public void loginWithAdmin() {
         initDriver();
@@ -58,8 +59,8 @@ public class CreateTheSameNewsSteps extends BaseStep {
         }
         sleep(1);
     }
-
-    @And("I click on the Створити новину button")
+    */
+    //@And("I click on the Створити новину button")
     public void clickOnTheCreateNewsButton() {
         createEditNewsModal = new NewsPageAdminPanel(driver).clickAddNewInfo();
     }
@@ -78,12 +79,12 @@ public class CreateTheSameNewsSteps extends BaseStep {
         }
     }
 
-    @And("I save the news")
+    //@And("I save the news")
     public void saveNews() {
         createEditNewsModal.saveNews();
     }
 
-    @Then("The news item should be successfully created")
+    //@Then("The news item should be successfully created")
     public void verifyNewsCreated() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement successMessage = wait.until(ExpectedConditions.visibilityOf(createEditNewsModal.getSuccessMessage()));

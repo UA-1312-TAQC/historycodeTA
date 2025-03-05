@@ -12,7 +12,7 @@ public class PartnersPageAdminPanel extends BasePageAdminPanel {
 
     protected PartnersPageGridComponent partnersPageGridComponent;
 
-    @FindBy(xpath = "//button[span[text()='Створити партнера']]")
+    @FindBy(xpath = "//button[span[text()='Створити нового партнера']]")
     private WebElement addNewPartnersButton;
 
     @FindBy(xpath = "//div[@class = 'ant-table-container']")

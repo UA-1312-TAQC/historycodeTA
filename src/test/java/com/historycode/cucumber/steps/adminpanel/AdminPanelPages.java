@@ -14,6 +14,15 @@ public class AdminPanelPages extends BaseStep {
         switch (name) {
             case "History-коди" -> adminMenuBar.goToHistoryCodesPage();
             case "Новини" -> adminMenuBar.goToNewsPage();
+            case "Партнери" ->adminMenuBar.goToPartnersPage();
         }
     }
+
+    public void loginWithAdmin() {
+        initDriver();
+        driver.get(provider.getBaseUIUrl());
+        setAccessToken();
+        driver.get(provider.getBaseUIUrl() + "/admin-panel");
+    }
+
 }

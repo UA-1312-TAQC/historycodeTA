@@ -38,7 +38,7 @@ public class CreateNewsUrlRequired extends BaseStep {
     private final String imagePath = "src/test/resources/test-image.jpg";
     private final String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
+    /*
     @Given("User open the admin-panel page of the site and login admin")
     public void loginWithAdmin() {
         initDriver();
@@ -58,7 +58,9 @@ public class CreateNewsUrlRequired extends BaseStep {
         sleep(1);
     }
 
-    @And("I click on the Створити новину button")
+     */
+
+    //@And("I click on the Створити новину button")
     public void clickOnTheCreateNewsButton() {
         createEditNewsModal = new NewsPageAdminPanel(driver).clickAddNewInfo();
     }
@@ -76,7 +78,7 @@ public class CreateNewsUrlRequired extends BaseStep {
             throw new RuntimeException("Failed to parse date: " + currentDate, e);
         }
     }
-
+    /*
     @And("I save the news")
     public void saveNews() {
         createEditNewsModal.saveNews();
@@ -90,4 +92,6 @@ public class CreateNewsUrlRequired extends BaseStep {
         Assert.assertEquals(successMessage.getText(), "Новину успішно додано/оновлено!",
                 "Unexpected success message text.");
     }
+
+     */
 }

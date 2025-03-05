@@ -1,13 +1,17 @@
-Feature: Adding a partner to the StreetCode page
+Feature: Create a Partner Item
+
+  As an admin
+  I want to create a partner item
+  So that it appears on the site
 
   Background:
-    Given I am logged in as an admin
-    And I open the new StreetCode page or the StreetCode page for editing
+    Given User open the admin-panel page of the site and login admin
 
-  Scenario: Add a partner to the "Партнери" block
-    When I scroll down to the "Партнери" block
-    And I click on the "Додати" button
-    And I fill mandatory fields "Назва" and "Лого" in the modal window
-    And I click on the "Зберегти" button
-    Then The added partner should be displayed in the dropdown in the input field
-    And The partner should be saved on the "Партнери" page
+  Scenario: Successfully create a 'partner' item
+    When I navigate to the "Партнери" tab
+    And I click on the Створити нового партнера button
+    And I fill in the "Title" field with "Test partner name" for partner
+    And I fill in the "Image" field with "uploadfiles/logo.webp" for partner
+    And I click on the Зберегти button for partner
+    And I click on the close button for partner
+    Then I should see new partner with name "Test partner name" and logo "uploadfiles/logo.webp"

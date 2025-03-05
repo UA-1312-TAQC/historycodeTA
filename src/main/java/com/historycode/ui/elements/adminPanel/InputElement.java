@@ -26,7 +26,6 @@ public class InputElement extends BaseComponent {
     }
 
     public void setInputField(String value) {
-
         inputField.click();
         String os = System.getProperty("os.name").toLowerCase();
         if (os.contains("mac")) {

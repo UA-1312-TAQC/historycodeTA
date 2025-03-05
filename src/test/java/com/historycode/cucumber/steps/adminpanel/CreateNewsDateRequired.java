@@ -31,7 +31,7 @@ public class CreateNewsDateRequired extends BaseStep {
     private final String newsLink = "test-link";
     private final String newsText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras et commodo ex. Pellentesque id sagittis ex. Morbi tincidunt volutpat ante, ut elementum turpis pulvinar et.";
     private final String imagePath = "src/test/resources/test-image.jpg";
-
+    /*
     @Given("User open the admin-panel page of the site and login admin")
     public void loginWithAdmin() {
         initDriver();
@@ -50,6 +50,8 @@ public class CreateNewsDateRequired extends BaseStep {
         }
         sleep(1);
     }
+
+     */
 
     @And("I click on the Створити новину button")
     public void clickOnTheCreateNewsButton() {

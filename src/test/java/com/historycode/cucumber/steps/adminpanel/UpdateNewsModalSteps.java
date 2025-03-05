@@ -24,7 +24,7 @@ public class UpdateNewsModalSteps extends BaseStep {
     private NewsPageAdminPanel pageAdminPanel;
     private HistoryCodesAdminPanelPage historyCodesAdminPanelPage;
     private CreateEditNewsModal createEditNewsModal;
-
+    /*
     @Given("User open the admin-panel page of the site and login admin")
     public void loginWithAdmin() {
         initDriver();
@@ -43,6 +43,8 @@ public class UpdateNewsModalSteps extends BaseStep {
         }
         sleep(1);
     }
+
+     */
 
     @And("I click on the Edite News")
     public void clickOnTheEditNews() {

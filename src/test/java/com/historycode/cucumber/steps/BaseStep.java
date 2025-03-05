@@ -1,7 +1,10 @@
 package com.historycode.cucumber.steps;
 
 import com.historycode.TestValueProvider;
+import com.historycode.ui.page.adminpanel.partnerspage.PartnersPageAdminPanel;
+import com.historycode.ui.page.adminpanel.partnerspage.PartnersRowComponent;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -9,15 +12,18 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.html5.LocalStorage;
 import org.openqa.selenium.html5.WebStorage;
 import org.openqa.selenium.remote.Augmenter;
+import org.testng.annotations.AfterMethod;
 
 import java.time.Duration;
-
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class BaseStep {
 
     protected static WebDriver driver;
     protected TestValueProvider provider = new TestValueProvider();
+    protected static List<String> createdPartners = new ArrayList<>();
 
 
     @Step("init ChromeDriver")
@@ -50,5 +56,20 @@ public class BaseStep {
         localStorage.setItem("RefreshToken", provider.getRefreshToken());
     }
 
+    @AfterMethod(alwaysRun = true)
+    public void cleanCreatedPartner() {
+        if (!createdPartners.isEmpty()) {
+            driver.get(provider.getBaseUIUrl() + "/admin-panel");
+            PartnersRowComponent newPartner = new PartnersPageAdminPanel(driver)
+                    .getAdminMenuBar()
+                    .goToPartnersPage()
+                    .clickLastPage()
+                    .getPartnersPageGridComponent()
+                    .findPartnerByName(createdPartners.getLast());
 
+            if (newPartner != null) {
+                newPartner.clickDelete().clickOkButton();
+            }
+        }
+    }
 }
