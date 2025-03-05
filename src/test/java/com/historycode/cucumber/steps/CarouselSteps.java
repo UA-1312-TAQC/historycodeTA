@@ -2,28 +2,25 @@ package com.historycode.cucumber.steps;
 
 import com.historycode.ui.component.BaseComponent;
 import com.historycode.ui.page.homePage.*;
-import com.historycode.ui.testrunners.BaseTestRunner;
 import io.cucumber.java.en.*;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.asserts.SoftAssert;
 import java.util.List;
-
 import static org.testng.Assert.assertNotNull;
 
 @Slf4j
-public class CarouselSteps extends BaseTestRunner {
+public class CarouselSteps extends BaseStep {
 
-    private final HomePage homePage;
+    private HomePage homePage;
     private final SoftAssert softAssert = new SoftAssert();
     private CarouselComponent<?> carousel;
 
-    public CarouselSteps() {
-        homePage = new HomePage(driver);
-    }
 
     @Given("I open the Home Page")
     public void openHomePage() {
-        driver.get(testValueProvider.getBaseUIUrl());
+        initDriver();
+        driver.get(provider.getBaseUIUrl());
+        homePage = new HomePage(driver);
         log.info("Opened Home Page.");
     }
 
