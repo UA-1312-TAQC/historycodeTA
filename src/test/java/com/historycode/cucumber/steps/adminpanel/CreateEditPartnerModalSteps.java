@@ -58,6 +58,7 @@ public class CreateEditPartnerModalSteps {
 
         @Then("I should see new partner with name {string} and logo {string}")
         public void iShouldSeeNewPartnerOnPartnerPage(String name, String logoSrc) {
+            createdPartners.add(name);
             PartnersRowComponent newPartner = new PartnersPageAdminPanel(driver)
                     .clickLastPage()
                     .getPartnersPageGridComponent()
@@ -66,13 +67,27 @@ public class CreateEditPartnerModalSteps {
             softAssert.assertEquals(newPartner.getNameText(), name);
             softAssert.assertEquals(getBase64FromFile(logoSrc), newPartner.getLogoSrc(),
                     "Img code base64 don't match");
+            softAssert.assertAll();
         }
 
         @And("I see key partner with title {string} description {string}")
         public void iSeeKeyPartnerWithDescription(String name, String description) {
+            createdPartners.add(name);
             PartnerPage basePage = new PartnerPage(driver);
             basePage.scrollToEndOfPage();
             basePage.hoverOverPartner(name, PartnerPage.PartnerType.KEY);
+
+            Assert.assertEquals(basePage.getPopoverDescription(), description);
+
+        }
+
+        @And("I see not key partner with title {string} description {string}")
+        public void iSeeNotPartnerWithDescription(String name, String description) {
+            createdPartners.add(name);
+            PartnerPage basePage = new PartnerPage(driver);
+            basePage.openBurgerMenu().goToPartnerPage();
+            basePage.scrollToEndOfPage();
+            basePage.hoverOverPartner(name, PartnerPage.PartnerType.NOT_KEY);
 
             Assert.assertEquals(basePage.getPopoverDescription(), description);
 
