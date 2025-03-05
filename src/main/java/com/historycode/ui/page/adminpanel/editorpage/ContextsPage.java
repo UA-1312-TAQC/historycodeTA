@@ -5,6 +5,7 @@ import com.historycode.ui.page.adminpanel.editorpage.components.grids.ContextsGr
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.ContextsModalComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.CategoriesRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.ContextsRowComponent;
+import com.historycode.ui.page.adminpanel.editorpage.components.rows.PositionsRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.elements.AddButtonElement;
 import io.qameta.allure.Step;
 import lombok.Getter;
@@ -142,7 +143,7 @@ public class ContextsPage extends BaseEditorPage {
     public ContextsPage moveToPageWithRow(String title) {
 
         driver.navigate().refresh();
-        ContextsPage currentPage = new ContextsPage(driver);
+        ContextsPage currentPage = new CategoriesPage(driver).moveToContexts();
 
         while (currentPage.getTableRowByTitle(title) == null) {
             if (!currentPage.tableHasNextPage()) {
@@ -155,7 +156,7 @@ public class ContextsPage extends BaseEditorPage {
 
     }
 
-    public ContextsPage deleteCategory(String title) {
+    public ContextsPage deletePosition(String title) {
 
         ContextsPage currentPage = moveToPageWithRow(title);
         ContextsRowComponent row = currentPage.getTableRowByTitle(title);
