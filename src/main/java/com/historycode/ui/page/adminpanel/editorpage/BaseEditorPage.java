@@ -13,7 +13,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public abstract class BaseEditorPage extends BasePageAdminPanel {
+public class BaseEditorPage extends BasePageAdminPanel {
 
     @Getter
     private final String LOADING_GIF_XPATH = "//div[@id='loadingGif']";
@@ -32,6 +32,8 @@ public abstract class BaseEditorPage extends BasePageAdminPanel {
     @Getter
     protected WebElement gridNode;
     private SectionsComponent sections;
+    @Getter
+    private String selectedSection;
 
     public BaseEditorPage(WebDriver driver) {
         super(driver);
@@ -39,6 +41,8 @@ public abstract class BaseEditorPage extends BasePageAdminPanel {
         setAddButtonNode();
         setGridNode();
         sections = new SectionsComponent(driver, sectionsNode);
+        setSelectedSection();
+        System.out.println("Selected section: " + selectedSection);
     }
 
     public void setAddButtonNode() {
@@ -90,6 +94,13 @@ public abstract class BaseEditorPage extends BasePageAdminPanel {
                 .filter(WebElement::isDisplayed)
                 .findFirst()
                 .orElse(null);
+    }
+
+    public void setSelectedSection() {
+        if (this.sections.getCategories().getAttribute("class").contains("active")) { this.selectedSection = "Categories"; }
+        else if (this.sections.getTags().getAttribute("class").contains("active")) { this.selectedSection = "Tags"; }
+        else if (this.sections.getPositions().getAttribute("class").contains("active")) { this.selectedSection = "Positions"; }
+        else if (this.sections.getContexts().getAttribute("class").contains("active")) { this.selectedSection = "Contexts"; }
     }
 
     @Override

@@ -10,16 +10,16 @@ import org.openqa.selenium.support.FindBy;
 public class SectionsComponent extends BaseComponent {
 
     @Getter
-    @FindBy(xpath = ".//div[@data-node-key='1']//div[@role='tab']")
+    @FindBy(xpath = ".//div[@data-node-key='1']//div[@role='tab']/..")
     private WebElement categories;
     @Getter
-    @FindBy(xpath = ".//div[@data-node-key='2']//div[@role='tab']")
+    @FindBy(xpath = ".//div[@data-node-key='2']//div[@role='tab']/..")
     private WebElement tags;
     @Getter
-    @FindBy(xpath = ".//div[@data-node-key='3']//div[@role='tab']")
+    @FindBy(xpath = ".//div[@data-node-key='3']//div[@role='tab']/..")
     private WebElement contexts;
     @Getter
-    @FindBy(xpath = ".//div[@data-node-key='4']//div[@role='tab']")
+    @FindBy(xpath = ".//div[@data-node-key='4']//div[@role='tab']/..")
     private WebElement positions;
 
     public SectionsComponent(WebDriver driver, WebElement rootElement) {
