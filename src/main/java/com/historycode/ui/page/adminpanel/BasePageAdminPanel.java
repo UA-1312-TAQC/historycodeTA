@@ -1,6 +1,7 @@
 package com.historycode.ui.page.adminpanel;
 
 import com.historycode.ui.component.adminPanel.adminMenuBar.AdminMenuBarComponent;
+
 import com.historycode.ui.component.adminPanel.modalAdminPanel.PopUpMessageComponent;
 import com.historycode.ui.page.BasePage;
 import lombok.Getter;
@@ -12,7 +13,7 @@ import org.openqa.selenium.support.FindBy;
 public class BasePageAdminPanel extends BasePage {
 
     @Getter
-    protected AdminMenuBarComponent adminMenuBar;
+    public AdminMenuBarComponent adminMenuBar;
     @FindBy(xpath = "//div[contains(@class,'PageBarContainer')]")
     private WebElement adminMenuBarNode;
 
