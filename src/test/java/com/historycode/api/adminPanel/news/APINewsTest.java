@@ -1,6 +1,8 @@
 package com.historycode.api.adminPanel.news;
 
-import com.historycode.api.clients.ImageClient;
+import com.historycode.utils.ImageCreator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.historycode.api.clients.NewsClient;
 
 import com.historycode.api.models.adminPanel.news.*;
@@ -28,57 +30,52 @@ public class APINewsTest extends ApiTestRunner {
         newsClient.setToken(testValueProvider.getAccessToken());
     }
 
-        @Issue("190")
-        @Test
-        @Description("Verify if all news are displayed using GET method.")
-        public void testGetAllNews() {
-            Response response = newsClient.getAll();
-            SoftAssert softAssert = new SoftAssert();
+    @Issue("190")
+    @Test
+    @Description("Verify if all news are displayed using GET method.")
+    public void testGetAllNews() {
+        Logger logger = LoggerFactory.getLogger(getClass());
+        Response response = newsClient.getAll();
+        SoftAssert softAssert = new SoftAssert();
 
-            System.out.println("Response Status Code: " + response.getStatusCode());
-            System.out.println("Response Body: " + response.getBody().asString());
+        logger.info("Response Status Code: {}", response.getStatusCode());
+        //logger.info("Response Body: {}", response.getBody().asString());
 
-            Assert.assertEquals(response.getStatusCode(), 200, "Response status is not 200 OK");
+        Assert.assertEquals(response.getStatusCode(), 200, "Response status is not 200 OK");
 
-            GetAllNewsResponse getAllResponse = response.body().as(GetAllNewsResponse.class);
-            Assert.assertTrue(getAllResponse.getTotalAmount() > 0, "Total amount of news is 0");
+        GetAllNewsResponse getAllResponse = response.body().as(GetAllNewsResponse.class);
+        Assert.assertTrue(getAllResponse.getTotalAmount() > 0, "Total amount of news is 0");
 
-            for (News news : getAllResponse.getNews()) {
-                System.out.println("\n--- News ---");
-                System.out.println("ID: " + news.getId());
-                System.out.println("Title: " + news.getTitle());
-                System.out.println("Text: " + news.getText());
-                System.out.println("Creation Date: " + news.getCreationDate());
+        for (News news : getAllResponse.getNews()) {
+            logger.info("\n--- News ---");
+            logger.info("ID: {}", news.getId());
+            logger.info("Title: {}", news.getTitle());
+            logger.info("Text: {}", news.getText());
+            logger.info("Creation Date: {}", news.getCreationDate());
 
-                softAssert.assertNotNull(news.getId(), "Key 'id' is missing in the response for news");
-                softAssert.assertNotNull(news.getTitle(), "Key 'title' is missing in the response for news");
-                softAssert.assertNotNull(news.getText(), "Key 'text' is missing in the response for news");
-                softAssert.assertNotNull(news.getCreationDate(), "Key 'creationDate' is missing in the response for news");
+            softAssert.assertNotNull(news.getId(), "Key 'id' is missing in the response for news");
+            softAssert.assertNotNull(news.getTitle(), "Key 'title' is missing in the response for news");
+            softAssert.assertNotNull(news.getText(), "Key 'text' is missing in the response for news");
+            softAssert.assertNotNull(news.getCreationDate(), "Key 'creationDate' is missing in the response for news");
 
-                NewsImage image = news.getImage();
-                if (image != null) {
-                    System.out.println("Image ID: " + image.getId());
-                    System.out.println("Blob Name: " + image.getBlobName());
-                    System.out.println("MIME Type: " + image.getMimeType());
+            NewsImage image = news.getImage();
+            if (image != null) {
 
-                    softAssert.assertNotNull(image.getId(), "Key 'image.id' is missing in the response for news");
-                    softAssert.assertNotNull(image.getBlobName(), "Key 'image.blobName' is missing in the response for news");
-                    softAssert.assertNotNull(image.getMimeType(), "Key 'image.mimeType' is missing in the response for news");
+                softAssert.assertNotNull(image.getId(), "Key 'image.id' is missing in the response for news");
+                softAssert.assertNotNull(image.getBlobName(), "Key 'image.blobName' is missing in the response for news");
+                softAssert.assertNotNull(image.getMimeType(), "Key 'image.mimeType' is missing in the response for news");
 
-                    ImageDetails imageDetails = image.getImageDetails();
-                    if (imageDetails != null) {
-                        System.out.println("Image Details ID: " + imageDetails.getId());
-                        System.out.println("Title: " + imageDetails.getTitle());
-                        System.out.println("Alt: " + imageDetails.getAlt());
+                ImageDetails imageDetails = image.getImageDetails();
+                if (imageDetails != null) {
 
-                        softAssert.assertNotNull(imageDetails.getId(), "Key 'imageDetails.id' is missing in the response for news");
-                        softAssert.assertNotNull(imageDetails.getTitle(), "Key 'imageDetails.title' is missing in the response for news");
-                        softAssert.assertNotNull(imageDetails.getAlt(), "Key 'imageDetails.alt' is missing in the response for news");
-                    }
+                    softAssert.assertNotNull(imageDetails.getId(), "Key 'imageDetails.id' is missing in the response for news");
+                    softAssert.assertNotNull(imageDetails.getTitle(), "Key 'imageDetails.title' is missing in the response for news");
+                    softAssert.assertNotNull(imageDetails.getAlt(), "Key 'imageDetails.alt' is missing in the response for news");
                 }
             }
-            softAssert.assertAll();
         }
+        softAssert.assertAll();
+    }
 
     @Issue("213")
     @Test
@@ -90,7 +87,8 @@ public class APINewsTest extends ApiTestRunner {
         invalidNews.setTitle("Тестова новина");
         invalidNews.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
                 + "Cras et commodo ex. Pellentesque id sagittis ex. Morbi tincidunt volutpat ante, ut elementum turpis pulvinar et.");
-        invalidNews.setImageId(0);
+        int imageId = ImageCreator.createNewImg("src/test/resources/uploadfiles/images.jpg");
+        invalidNews.setImageId(imageId);
         invalidNews.setUrl("test-link");
         invalidNews.setCreationDate(Instant.now().toString());
 
@@ -98,8 +96,15 @@ public class APINewsTest extends ApiTestRunner {
 
         System.out.println("Response Status Code: " + response.getStatusCode());
         System.out.println("Response Body: " + response.getBody().asString());
+        softAssert.assertEquals(response.getStatusCode(), 201, "First news item was not created successfully");
 
-        softAssert.assertEquals(response.getStatusCode(), 400, "Response status is not 400 Bad Request");
+        Response duplicateResponse = newsClient.create(invalidNews);
+
+        System.out.println("Duplicate Response Status Code: " + duplicateResponse.getStatusCode());
+        System.out.println("Duplicate Response Body: " + duplicateResponse.getBody().asString());
+
+        softAssert.assertTrue(duplicateResponse.getStatusCode() == 400 || duplicateResponse.getStatusCode() == 409,
+                "Duplicate news item was created unexpectedly");
 
         softAssert.assertAll();
     }
@@ -152,8 +157,8 @@ public class APINewsTest extends ApiTestRunner {
         List<News> newsList = getAllResponse.getNews();
         softAssert.assertFalse(newsList.isEmpty(), "No news found in the system");
 
-        int newsId = newsList.get(0).getId();
-        int imageId = newsList.get(0).getImage().getId();
+        int newsId = newsList.getFirst().getId();
+        int imageId = newsList.getFirst().getImage().getId();
 
         NewsUpdateRequestBody invalidNews = new NewsUpdateRequestBody();
         invalidNews.setId(newsId);
@@ -186,8 +191,8 @@ public class APINewsTest extends ApiTestRunner {
         List<News> newsList = getAllResponse.getNews();
         softAssert.assertFalse(newsList.isEmpty(), "No news found in the system");
 
-        int newsId = newsList.get(0).getId();
-        int imageId = newsList.get(0).getImage().getId();
+        int newsId = newsList.getFirst().getId();
+        int imageId = newsList.getFirst().getImage().getId();
 
         NewsUpdateRequestBody invalidNews = new NewsUpdateRequestBody();
         invalidNews.setId(newsId);
@@ -221,7 +226,7 @@ public class APINewsTest extends ApiTestRunner {
         List<News> newsList = getAllResponse.getNews();
         softAssert.assertFalse(newsList.isEmpty(), "No news found in the system");
 
-        int newsId = newsList.get(0).getId();
+        int newsId = newsList.getFirst().getId();
 
         NewsUpdateRequestBody invalidNews = new NewsUpdateRequestBody();
         invalidNews.setId(newsId);
@@ -255,8 +260,8 @@ public class APINewsTest extends ApiTestRunner {
         List<News> newsList = getAllResponse.getNews();
         softAssert.assertFalse(newsList.isEmpty(), "No news found in the system");
 
-        int newsId = newsList.get(0).getId();
-        int imageId = newsList.get(0).getImage().getId();
+        int newsId = newsList.getFirst().getId();
+        int imageId = newsList.getFirst().getImage().getId();
 
         NewsUpdateRequestBody invalidNews = new NewsUpdateRequestBody();
         invalidNews.setId(newsId);
@@ -290,8 +295,8 @@ public class APINewsTest extends ApiTestRunner {
         List<News> newsList = getAllResponse.getNews();
         softAssert.assertFalse(newsList.isEmpty(), "No news found in the system");
 
-        int newsId = newsList.get(0).getId();
-        int imageId = newsList.get(0).getImage().getId();
+        int newsId = newsList.getFirst().getId();
+        int imageId = newsList.getFirst().getImage().getId();
 
         NewsUpdateRequestBody invalidNews = new NewsUpdateRequestBody();
         invalidNews.setId(newsId);
@@ -325,8 +330,8 @@ public class APINewsTest extends ApiTestRunner {
         List<News> newsList = getAllResponse.getNews();
         softAssert.assertFalse(newsList.isEmpty(), "No news found in the system");
 
-        int newsId = newsList.get(0).getId();
-        int imageId = newsList.get(0).getImage().getId();
+        int newsId = newsList.getFirst().getId();
+        int imageId = newsList.getFirst().getImage().getId();
 
         String longTitle = "A".repeat(100) + "q";
 
@@ -362,8 +367,8 @@ public class APINewsTest extends ApiTestRunner {
         List<News> newsList = getAllResponse.getNews();
         softAssert.assertFalse(newsList.isEmpty(), "No news found in the system");
 
-        int newsId = newsList.get(0).getId();
-        int imageId = newsList.get(0).getImage().getId();
+        int newsId = newsList.getFirst().getId();
+        int imageId = newsList.getFirst().getImage().getId();
 
         String longUrl = "a".repeat(200) + "q";
 
