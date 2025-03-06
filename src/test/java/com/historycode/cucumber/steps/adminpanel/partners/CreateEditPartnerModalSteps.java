@@ -29,16 +29,6 @@ public class CreateEditPartnerModalSteps extends AdminPanelPages {
         }
     }
 
-    @And("I create new partner with name {string} and with logo {string}")
-    public void iCreatePartnerItem(String name, String logoSrc) {
-        navigateToTab("Партнери");
-        iClickOnTheCreatePartnerButton();
-        iFillInTheFieldWith("Title", name);
-        iFillInTheFieldWith("Image", logoSrc);
-        iClickOnTheSaveButton();
-        iClickOnTheCloseButton();
-    }
-
     @And("I click on the Зберегти button for partner")
     public void iClickOnTheSaveButton() {
         createPartnersModal.clickSaveButton();
@@ -47,5 +37,15 @@ public class CreateEditPartnerModalSteps extends AdminPanelPages {
     @And("I click on the close button for partner")
     public void iClickOnTheCloseButton() {
         createPartnersModal.clickCloseButton();
+    }
+
+    @And("I create new partner with name {string} and with logo {string}")
+    public void iCreatePartnerItem(String name, String logoSrc) {
+        navigateToTab("Партнери");
+        iClickOnTheCreatePartnerButton();
+        iFillInTheFieldWith("Title", name);
+        iFillInTheFieldWith("Image", logoSrc);
+        iClickOnTheSaveButton();
+        iClickOnTheCloseButton();
     }
 }

@@ -4,6 +4,7 @@ import com.historycode.cucumber.steps.BaseStep;
 import com.historycode.ui.component.adminPanel.adminMenuBar.AdminMenuBarComponent;
 import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
 import com.historycode.ui.page.adminpanel.partnerspage.PartnersPageAdminPanel;
+import com.historycode.ui.page.adminpanel.partnerspage.PartnersRowComponent;
 import com.historycode.ui.page.adminpanel.partnerspage.modal.CreatePartnersModal;
 import io.cucumber.java.en.And;
 
@@ -23,6 +24,13 @@ public class AdminPanelPages extends BaseStep {
         driver.get(provider.getBaseUIUrl());
         setAccessToken();
         driver.get(provider.getBaseUIUrl() + "/admin-panel");
+    }
+
+    public PartnersRowComponent findPartnerWithNameInLastPage(String name) {
+        return new PartnersPageAdminPanel(driver)
+                .clickLastPage()
+                .getPartnersPageGridComponent()
+                .findPartnerByName(name);
     }
 }
 

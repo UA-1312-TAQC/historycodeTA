@@ -23,7 +23,6 @@ public class BaseStep {
 
     protected static WebDriver driver;
     protected TestValueProvider provider = new TestValueProvider();
-    protected static List<String> createdPartners = new ArrayList<>();
 
 
     @Step("init ChromeDriver")
@@ -54,22 +53,5 @@ public class BaseStep {
         LocalStorage localStorage = webStorage.getLocalStorage();
         localStorage.setItem("AccessToken", provider.getAccessToken());
         localStorage.setItem("RefreshToken", provider.getRefreshToken());
-    }
-
-    @AfterMethod(alwaysRun = true)
-    public void cleanCreatedPartner() {
-        if (!createdPartners.isEmpty()) {
-            driver.get(provider.getBaseUIUrl() + "/admin-panel");
-            PartnersRowComponent newPartner = new PartnersPageAdminPanel(driver)
-                    .getAdminMenuBar()
-                    .goToPartnersPage()
-                    .clickLastPage()
-                    .getPartnersPageGridComponent()
-                    .findPartnerByName(createdPartners.getLast());
-
-            if (newPartner != null) {
-                newPartner.clickDelete().clickOkButton();
-            }
-        }
     }
 }

@@ -8,8 +8,8 @@ import org.testng.Assert;
 public class PartnerFrontPageSteps extends AdminPanelPages {
     @And("I see key partner with title {string} description {string}")
     public void iSeeKeyPartnerWithDescription(String name, String description) {
-        createdPartners.add(name);
         PartnerPage basePage = new PartnerPage(driver);
+        basePage.openBurgerMenu().goToPartnerPage();
         basePage.scrollToElementJs(basePage.getNotKeyPartners().getFirst());
         basePage.hoverOverPartner(name, PartnerPage.PartnerType.KEY);
 
@@ -19,7 +19,6 @@ public class PartnerFrontPageSteps extends AdminPanelPages {
 
     @And("I see not key partner with title {string} description {string}")
     public void iSeeNotPartnerWithDescription(String name, String description) {
-        createdPartners.add(name);
         PartnerPage basePage = new PartnerPage(driver);
         basePage.openBurgerMenu().goToPartnerPage();
         basePage.scrollToEndOfPage();
