@@ -2,7 +2,9 @@ package com.historycode.ui.page.adminpanel.editorpage;
 
 import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
 import com.historycode.ui.page.adminpanel.editorpage.components.grids.ContextsGridComponent;
+import com.historycode.ui.page.adminpanel.editorpage.components.modals.CategoriesModalComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.ContextsModalComponent;
+import com.historycode.ui.page.adminpanel.editorpage.components.rows.CategoriesRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.ContextsRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.PositionsRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.elements.AddButtonElement;
@@ -77,9 +79,9 @@ public class ContextsPage extends BaseEditorPage {
         return addContextButton.getButtonText();
     }
 
-    public ContextsModalComponent editTableRow(ContextsRowComponent row) throws InterruptedException {
+    public ContextsModalComponent editTableRow(ContextsRowComponent row) {
         grid.editRow(row);
-        Thread.sleep(500);
+        wait.until(driver -> getDisplayedModalRoot() != null);
         return new ContextsModalComponent(driver, getDisplayedModalRoot());
     }
 
@@ -155,16 +157,19 @@ public class ContextsPage extends BaseEditorPage {
 
     }
 
-    public ContextsPage deletePosition(String title) {
-
+    public ContextsPage deleteContext(String title) {
         ContextsPage currentPage = moveToPageWithRow(title);
         ContextsRowComponent row = currentPage.getTableRowByTitle(title);
         if (row != null) {
             currentPage.deleteTableRow(row).clickOkButton();
         }
-
         return currentPage;
+    }
 
+    public ContextsModalComponent editContext(String name) {
+        ContextsPage currentPage = moveToPageWithRow(name);
+        ContextsRowComponent row = currentPage.getTableRowByTitle(name);
+        return editTableRow(row);
     }
 
 }

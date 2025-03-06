@@ -159,15 +159,18 @@ public class CategoriesPage extends BaseEditorPage {
     }
 
     public CategoriesPage deleteCategory(String title) {
-
         CategoriesPage currentPage = moveToPageWithRow(title);
         CategoriesRowComponent row = currentPage.getTableRowByTitle(title);
         if (row != null) {
             currentPage.deleteTableRow(row).clickOkButton();
         }
-
         return currentPage;
+    }
 
+    public CategoriesModalComponent editCategory(String name) {
+        CategoriesPage currentPage = moveToPageWithRow(name);
+        CategoriesRowComponent row = currentPage.getTableRowByTitle(name);
+        return editTableRow(row);
     }
 
 }

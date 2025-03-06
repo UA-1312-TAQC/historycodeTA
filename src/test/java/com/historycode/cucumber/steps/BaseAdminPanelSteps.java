@@ -24,6 +24,7 @@ public class BaseAdminPanelSteps extends BaseStep {
         driver.get(provider.getBaseUIUrl() + "/admin-panel");
     }
 
+    @Given("I clicked the {string} button in the left navigation panel.")
     @When("I click the {string} button in the left navigation panel.")
     public void clickButtonInLeftNavigationPanel(String name) {
         BasePageAdminPanel page = new BasePageAdminPanel(ScenarioContext.getDriver());

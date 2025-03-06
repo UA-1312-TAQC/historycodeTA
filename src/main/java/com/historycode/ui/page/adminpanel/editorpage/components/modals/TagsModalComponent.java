@@ -9,7 +9,7 @@ import org.openqa.selenium.support.FindBy;
 public class TagsModalComponent extends BaseCreateEditModalComponent {
 
     @Getter
-    @FindBy(xpath = ".//div[@class='ant-modal-title']")
+    @FindBy(xpath = ".//div[@class='center']/h2")
     private WebElement title;
 
     public TagsModalComponent(WebDriver driver, WebElement rootElement) {

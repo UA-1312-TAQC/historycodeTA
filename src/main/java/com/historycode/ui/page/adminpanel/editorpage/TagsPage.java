@@ -2,7 +2,9 @@ package com.historycode.ui.page.adminpanel.editorpage;
 
 import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
 import com.historycode.ui.page.adminpanel.editorpage.components.grids.TagsGridComponent;
+import com.historycode.ui.page.adminpanel.editorpage.components.modals.CategoriesModalComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.TagsModalComponent;
+import com.historycode.ui.page.adminpanel.editorpage.components.rows.CategoriesRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.PositionsRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.TagsRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.elements.AddButtonElement;
@@ -156,16 +158,19 @@ public class TagsPage extends BaseEditorPage {
 
     }
 
-    public TagsPage deletePosition(String title) {
-
+    public TagsPage deleteTag(String title) {
         TagsPage currentPage = moveToPageWithRow(title);
         TagsRowComponent row = currentPage.getTableRowByTitle(title);
         if (row != null) {
             currentPage.deleteTableRow(row).clickOkButton();
         }
-
         return currentPage;
+    }
 
+    public TagsModalComponent editTag(String name) {
+        TagsPage currentPage = moveToPageWithRow(name);
+        TagsRowComponent row = currentPage.getTableRowByTitle(name);
+        return editTableRow(row);
     }
 
 }

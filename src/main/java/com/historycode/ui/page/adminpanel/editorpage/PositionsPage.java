@@ -2,7 +2,9 @@ package com.historycode.ui.page.adminpanel.editorpage;
 
 import com.historycode.ui.component.adminPanel.modalAdminPanel.DeleteItemModal;
 import com.historycode.ui.page.adminpanel.editorpage.components.grids.PositionsGridComponent;
+import com.historycode.ui.page.adminpanel.editorpage.components.modals.CategoriesModalComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.modals.PositionsModalComponent;
+import com.historycode.ui.page.adminpanel.editorpage.components.rows.CategoriesRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.components.rows.PositionsRowComponent;
 import com.historycode.ui.page.adminpanel.editorpage.elements.AddButtonElement;
 import io.qameta.allure.Step;
@@ -159,15 +161,18 @@ public class PositionsPage extends BaseEditorPage {
     }
 
     public PositionsPage deletePosition(String title) {
-
         PositionsPage currentPage = moveToPageWithRow(title);
         PositionsRowComponent row = currentPage.getTableRowByTitle(title);
         if (row != null) {
             currentPage.deleteTableRow(row).clickOkButton();
         }
-
         return currentPage;
+    }
 
+    public PositionsModalComponent editPosition(String name) {
+        PositionsPage currentPage = moveToPageWithRow(name);
+        PositionsRowComponent row = currentPage.getTableRowByTitle(name);
+        return editTableRow(row);
     }
 
 }
