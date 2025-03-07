@@ -48,8 +48,8 @@ public class PartnerTableSteps extends AdminPanelPages {
     public void iShouldSeeNewPartnerOnPartnerPage(String name, String logoSrc) {
         partnerItem = findPartnerWithNameInLastPage(name);
         softAssert.assertEquals(partnerItem.getNameText(), name);
-        //softAssert.assertEquals(getBase64FromFile(logoSrc), partnerItem.getLogoSrc(),
-        //        "Img code base64 don't match");
+        softAssert.assertEquals(getBase64FromFile(logoSrc), partnerItem.getLogoSrc(),
+                "Img code base64 don't match");
         softAssert.assertAll();
     }
 }

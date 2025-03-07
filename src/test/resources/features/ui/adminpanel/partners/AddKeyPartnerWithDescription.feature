@@ -20,4 +20,4 @@ Feature: Create a not key partner item with test description
     And I navigate to the "Партнери" tab on main page
     And I see key partner with title "Test partner name" description "Our cooker and guru"
     And I return to the admin-panel partner page
-    And I delete partner with name "Test partner name"s
+    And I delete partner with name "Test partner name"
