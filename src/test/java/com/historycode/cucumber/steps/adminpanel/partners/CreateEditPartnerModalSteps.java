@@ -37,6 +37,7 @@ public class CreateEditPartnerModalSteps extends AdminPanelPages {
     @And("I click on the close button for partner")
     public void iClickOnTheCloseButton() {
         createPartnersModal.clickCloseButton();
+        createPartnersModal = null;
     }
 
     @And("I create new partner with name {string} and with logo {string}")

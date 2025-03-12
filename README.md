@@ -30,6 +30,7 @@ implicitlyWait=10
 
 admin.email=admin.email@gmail.com
 admin.pass=admin.pass
+admin.path=/admin-panel
 
 AccessToken=...
 RefreshToken=...

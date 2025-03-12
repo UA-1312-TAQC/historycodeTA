@@ -10,7 +10,7 @@ public class PartnerFrontPageSteps extends AdminPanelPages {
     private PartnerPage basePage;
 
     @And("I am redirected to the partner block on the main page")
-    public void IRedirectToPartnerBlockOnMainPage() {
+    public void iRedirectToPartnerBlockOnMainPage() {
         basePage = new PartnerPage(driver);
         basePage.openBurgerMenu().goToPartnerPage();
     }
@@ -20,7 +20,6 @@ public class PartnerFrontPageSteps extends AdminPanelPages {
         basePage.scrollToElementJs(basePage.getNotKeyPartners().getFirst());
         basePage.hoverOverPartner(name, PartnerPage.PartnerType.KEY);
         Assert.assertEquals(basePage.getPopoverDescription(), description);
-
     }
 
     @And("I see not key partner with title {string} and description {string} on the page")
@@ -28,6 +27,5 @@ public class PartnerFrontPageSteps extends AdminPanelPages {
         basePage.scrollToElementJs(basePage.getNotKeyPartners().getLast());
         basePage.hoverOverPartner(name, PartnerPage.PartnerType.NOT_KEY);
         Assert.assertEquals(basePage.getPopoverDescription(), description);
-
     }
 }

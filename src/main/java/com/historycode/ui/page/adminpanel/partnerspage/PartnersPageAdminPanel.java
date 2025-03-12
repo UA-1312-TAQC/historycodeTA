@@ -33,7 +33,7 @@ public class PartnersPageAdminPanel extends BasePageAdminPanel {
         return partnersPageGridComponent;
     }
 
-    @Step("Click the 'Створити нового члена команди' button")
+    @Step("Click the 'Додати партнера' button")
     public CreatePartnersModal clickAddNewPartnersButton() {
         addNewPartnersButton.click();
         waitUntilElementVisible(createModalRootElement);

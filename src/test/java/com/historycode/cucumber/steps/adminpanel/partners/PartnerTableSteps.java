@@ -32,7 +32,7 @@ public class PartnerTableSteps extends AdminPanelPages {
 
     @And("I return to the admin-panel partner page")
     public void iReturnToPartnerPage() {
-        driver.get(provider.getBaseUIUrl() + "/admin-panel");
+        driver.get(provider.getBaseUIUrl() + provider.getAdminPanelPath());
         navigateToTab("Партнери");
     }
 

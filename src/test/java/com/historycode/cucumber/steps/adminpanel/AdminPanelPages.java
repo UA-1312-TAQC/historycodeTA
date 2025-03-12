@@ -5,8 +5,7 @@ import com.historycode.ui.component.adminPanel.adminMenuBar.AdminMenuBarComponen
 import com.historycode.ui.page.adminpanel.BasePageAdminPanel;
 import com.historycode.ui.page.adminpanel.partnerspage.PartnersPageAdminPanel;
 import com.historycode.ui.page.adminpanel.partnerspage.PartnersRowComponent;
-import com.historycode.ui.page.adminpanel.partnerspage.modal.CreatePartnersModal;
-import io.cucumber.java.en.And;
+
 
 public class AdminPanelPages extends BaseStep {
 
