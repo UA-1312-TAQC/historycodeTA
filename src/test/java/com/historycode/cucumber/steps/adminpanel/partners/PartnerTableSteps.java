@@ -1,7 +1,6 @@
 package com.historycode.cucumber.steps.adminpanel.partners;
 
 import com.historycode.cucumber.steps.adminpanel.AdminPanelPages;
-import com.historycode.ui.page.adminpanel.partnerspage.PartnersPageAdminPanel;
 import com.historycode.ui.page.adminpanel.partnerspage.PartnersRowComponent;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -48,6 +47,7 @@ public class PartnerTableSteps extends AdminPanelPages {
     public void iShouldSeeNewPartnerOnPartnerPage(String name, String logoSrc) {
         partnerItem = findPartnerWithNameInLastPage(name);
         softAssert.assertEquals(partnerItem.getNameText(), name);
+        // Temporarily disabled due to bug #278. Needs a fix.
         softAssert.assertEquals(getBase64FromFile(logoSrc), partnerItem.getLogoSrc(),
                 "Img code base64 don't match");
         softAssert.assertAll();

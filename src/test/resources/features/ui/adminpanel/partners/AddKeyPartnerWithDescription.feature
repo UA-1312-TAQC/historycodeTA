@@ -17,7 +17,7 @@ Feature: Create a not key partner item with test description
     And I click on the Зберегти button for partner
     And I click on the close button for partner
     Then I open the StreetCode page
-    And I navigate to the "Партнери" tab on main page
-    And I see key partner with title "Test partner name" description "Our cooker and guru"
+    And I am redirected to the partner block on the main page
+    And I see key partner with title "Test partner name" and description "Our cooker and guru" on the page
     And I return to the admin-panel partner page
     And I delete partner with name "Test partner name"
