@@ -12,7 +12,7 @@ public class PartnersPageAdminPanel extends BasePageAdminPanel {
 
     protected PartnersPageGridComponent partnersPageGridComponent;
 
-    @FindBy(xpath = "//button[span[text()='Створити нового партнера']]")
+    @FindBy(xpath = "//button[span[text()='Додати партнера']]")
     private WebElement addNewPartnersButton;
 
     @FindBy(xpath = "//div[@class = 'ant-table-container']")
@@ -33,7 +33,7 @@ public class PartnersPageAdminPanel extends BasePageAdminPanel {
         return partnersPageGridComponent;
     }
 
-    @Step("Click the 'Створити нового члена команди' button")
+    @Step("Click the 'Додати партнера' button")
     public CreatePartnersModal clickAddNewPartnersButton() {
         addNewPartnersButton.click();
         waitUntilElementVisible(createModalRootElement);

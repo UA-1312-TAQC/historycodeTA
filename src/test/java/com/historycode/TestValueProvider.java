@@ -21,6 +21,9 @@ public class TestValueProvider {
     public String getBaseUIUrl(){
         return  properties != null ? properties.getProperty("base.ui.url") : System.getenv("BASE_UI_URL");
     }
+    public String getAdminPanelPath(){
+        return  properties != null ? properties.getProperty("admin.path") : System.getenv("ADMIN_PATH");
+    }
     public int getImplicitlyWait(){
         return  properties != null ? Integer.parseInt(properties.getProperty("implicitlyWait")) : Integer.parseInt(System.getenv("IMPLICITLY_WAIT"));
     }

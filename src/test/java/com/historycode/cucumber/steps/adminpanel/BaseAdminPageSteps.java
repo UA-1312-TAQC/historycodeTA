@@ -1,13 +1,12 @@
 package com.historycode.cucumber.steps.adminpanel;
 
-import com.historycode.ui.component.BurgerMenu.BurgerMenuComponent;
-import com.historycode.ui.page.BasePage;
+
 import com.historycode.ui.page.partnerPage.PartnerPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.testng.Assert;
+
 
 public class BaseAdminPageSteps extends AdminPanelPages {
 
